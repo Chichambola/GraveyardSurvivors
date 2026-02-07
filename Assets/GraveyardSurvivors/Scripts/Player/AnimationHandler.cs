@@ -10,7 +10,7 @@ public class AnimationHandler : MonoBehaviour
     [SerializeField] private Animator _controller;
     [SerializeField] private float _dampTime = 0.1f;
 
-    public void PlayRunAnimation(float speed)
+    public void PlayMovementAnimation(float speed)
     {
         speed = Mathf.Max(speed, 0);
         

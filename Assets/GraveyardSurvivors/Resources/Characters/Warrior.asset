@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c5f0ba2826352b408325e9bf9dd2420, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  _health: 130
-  _healthRegeneration: 2
-  _armorPercent: 20
-  _movementSpeedPercent: 100
-  _attackSpeedPercent: 100
-  _attackRadiusPercent: 100
-  _pickUpRadiusPercent: 100
-  _blockChancePercent: 15
-  _critChancePercent: 10
-  _critMultiplier: 2
-  _xpMultiplier: 1
-  _goldMultiplier: 1
-  _evasionChancePercent: 0
-  _luckPercent: 1
+  _characterStats:
+    Health: 130
+    HealthRegeneration: 2
+    Armor: 20
+    MovementSpeed: 100
+    AttackSpeed: 100
+    AttackRadius: 100
+    PickUpRadius: 100
+    BlockChance: 15
+    EvasionChance: 0
+    CritChance: 10
+    CritMultiplier: 2
+    XpMultiplier: 1
+    GoldMultiplier: 1
+    Luck: 1
