@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     
     private void FixedUpdate()
     {
-        _mover.Move(_inputReader.MovementDirection, _currentStats.MovementSpeed);
+        _mover.Move(_inputReader.MovementDirection.normalized, _currentStats.MovementSpeed);
         _controller.PlayRunAnimation(_inputReader.MovementDirection.magnitude);
     }
     
