@@ -94,6 +94,34 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Interaction",
+            "id": "624dfc1f-d2c0-4e7a-a489-0933afbee785",
+            "actions": [
+                {
+                    "name": "Interact",
+                    "type": "Value",
+                    "id": "06bd6143-958e-41dc-b4a5-ad8221b65da0",
+                    "expectedControlType": "DiscreteButton",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ab8520ad-48ae-4f13-ad34-0b6dce6b6c20",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAndMouse",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

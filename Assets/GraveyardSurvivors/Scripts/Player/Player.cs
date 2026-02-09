@@ -5,14 +5,17 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader))]
-public class Player : MonoBehaviour, IBuffable
+public class Player : MonoBehaviour, IBuffable, IAttacker
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private AnimationHandler _controller;
+    [SerializeField] private InteractorHandler _InteractorHandler;
     [SerializeField] private Mover _mover;
     [SerializeField] private Rotator _rotator;
     [SerializeField] private PlayerInfo _baseStats;
 
+    public event Action InteractionButtonPressed;
+    
     private readonly List<IBuff> _buffs = new ();
     
     public CharacterStats CurrentStats { get; private set; }
@@ -33,10 +36,29 @@ public class Player : MonoBehaviour, IBuffable
     private void FixedUpdate()
     {
         _mover.Move(_inputReader.MovementDirection.normalized, CurrentStats.MovementSpeed);
-        _rotator.Rotate(_inputReader.MovementDirection.normalized);
+            
+        if (_inputReader.MovementDirection != Vector3.zero)
+        {
+            _rotator.Rotate(_inputReader.MovementDirection.normalized);
+        }
+
+        if (_inputReader.IsInteractionButtonPressed)
+        {
+            InteractionButtonPressed?.Invoke();
+        }
+            
         _controller.PlayMovementAnimation(_inputReader.MovementDirection.magnitude);
     }
 
+    public void TakeDamage(float damage)
+    {
+        var stats = CurrentStats;
+        
+        stats.Health -= damage;
+        
+        CurrentStats = stats;
+    }
+    
     public void AddBuff(IBuff buff)
     {
         _buffs.Add(buff);

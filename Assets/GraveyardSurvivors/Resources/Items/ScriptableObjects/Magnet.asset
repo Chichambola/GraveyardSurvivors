@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03a01e5b95c4973f9933558dcf298178, type: 3}
-  m_Name: FeltSocks
+  m_Name: Magnet
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
-  _name: Felt socks
-  _description: +5% Evasion chance
+  _sprite: {fileID: 21300000, guid: 42db1a269aeb1a746b0aa6f4f29588b8, type: 3}
+  _name: Magnet
+  _description: +10% pick up radius
   _rarityLevel: 0

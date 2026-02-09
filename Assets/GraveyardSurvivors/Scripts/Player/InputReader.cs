@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Composites;
+using UnityEngine.InputSystem.HID;
 
 public class InputReader : MonoBehaviour
 {
     private PlayerInput _playerInput;
 
     public Vector3 MovementDirection { get; private set; }
+    public bool IsInteractionButtonPressed { get; private set; }
 
     private void Awake()
     {
@@ -20,7 +23,7 @@ public class InputReader : MonoBehaviour
     {
         _playerInput.Enable();
     }
-
+    
     private void OnDisable()
     {
         _playerInput.Disable();
@@ -29,5 +32,6 @@ public class InputReader : MonoBehaviour
     private void Update()
     {
         MovementDirection = _playerInput.Movement.Move.ReadValue<Vector3>();
+        IsInteractionButtonPressed = _playerInput.Interaction.Interact.IsPressed();
     }
 }
