@@ -8,12 +8,9 @@ using Random = UnityEngine.Random;
 
 public class ChestHandler : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private RarityEvaluator _rarityEvalutor;
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private ChestSpawner _chestSpawner;
-
-    private int _lowestPercent = 0;
-    private int _highestPercent = 100;
     
     private int _commonChancePercent = 60;
     private int _rareChancePercent = 75;
@@ -29,48 +26,10 @@ public class ChestHandler : MonoBehaviour
         _chestSpawner.ChestWasReleased -= OnChestReleased;
     }
 
-    private void OnChestReleased()
+    private void OnChestReleased(Chest chest)
     {
-        float percentChance = GetChance();
-
-        Item item = GetItem(percentChance);
+        RarityLevel rarityLevel = _rarityEvalutor.GetRarityLevel(_commonChancePercent, _rareChancePercent, _legendaryChancePercent);
         
-        Debug.Log(item);
-    }
-
-    private float GetChance()
-    {
-        float percentChance = Random.Range(_lowestPercent, _highestPercent);
-
-        percentChance += _player.CurrentStats.Luck;
-
-        if (percentChance > _highestPercent)
-            percentChance = _highestPercent;
-        
-        return percentChance;
-    }
-
-    private Item GetItem(float value)
-    {
-        Item tempItem;
-        
-        if (value >= _lowestPercent && value <= _commonChancePercent)
-        {
-            return tempItem = _itemsHandler.GetItem(RarityLevel.Common);
-        }
-
-        if (value > _commonChancePercent && value <= _rareChancePercent)
-        {
-            return tempItem = _itemsHandler.GetItem(RarityLevel.Rare);
-        }
-
-        if (value > _legendaryChancePercent && value <= _highestPercent)
-        {
-            return tempItem = _itemsHandler.GetItem(RarityLevel.Legendary);
-        }
-
-        tempItem = null;
-        
-        return tempItem;
+        _itemsHandler.SpawnRandomItem(chest.transform.position, rarityLevel);
     }
 }

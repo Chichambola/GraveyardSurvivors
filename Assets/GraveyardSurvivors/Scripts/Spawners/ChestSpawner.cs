@@ -7,7 +7,7 @@ public class ChestSpawner : Spawner<Chest>
 {
     [SerializeField] private Transform _point;
 
-    public event Action ChestWasReleased;
+    public event Action<Chest> ChestWasReleased;
     
     private void OnEnable()
     {
@@ -29,6 +29,6 @@ public class ChestSpawner : Spawner<Chest>
         
         base.ActionOnRelease(chest);
         
-        ChestWasReleased?.Invoke();
+        ChestWasReleased?.Invoke(chest);
     }
 }

@@ -27,6 +27,11 @@ public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable
             maxSize: MaxPoolCapacity);
     }
 
+    public void SetPrefab(T objectToSpawn)
+    {
+        _objectPrefab = objectToSpawn;
+    }
+    
     public void ReleaseAll() 
     {
         if (ActiveObjects.Count != 0)

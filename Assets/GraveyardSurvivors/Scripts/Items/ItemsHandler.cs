@@ -10,14 +10,13 @@ using Random = UnityEngine.Random;
 
 public class ItemsHandler : MonoBehaviour
 {
+    [SerializeField] private ItemSpawner _itemSpawner;
     [SerializeField] private List<Item> _items;
     
     private List<Item> _commonItems;
     private List<Item> _rareItems;
     private List<Item> _legendaryItems;
-
     private Dictionary<RarityLevel, List<Item>> _itemsLists;
-    
 
     private void Awake()
     {
@@ -27,6 +26,11 @@ public class ItemsHandler : MonoBehaviour
     }
 
     private void OnEnable()
+    {
+        SetItemsList();
+    }
+
+    private void SetItemsList()
     {
         if (_items.Count != 0)
         {
@@ -44,24 +48,25 @@ public class ItemsHandler : MonoBehaviour
 
             _itemsLists = new Dictionary<RarityLevel, List<Item>>()
             {
-                { RarityLevel.Common,  _commonItems},
+                {RarityLevel.Common,  _commonItems},
                 {RarityLevel.Rare, _rareItems},
                 {RarityLevel.Legendary, _legendaryItems}
             };
         }
     }
 
-    public Item GetItem(RarityLevel rarityLevel)
+    public void SpawnRandomItem(Vector3 position, RarityLevel rarity)
     {
         if (_itemsLists == null)
             throw new Exception();
 
         int firstIndex = 0;
         
-        List<Item> desiredList = _itemsLists[rarityLevel].ToList();
+        List<Item> desiredList = _itemsLists[rarity].ToList();
 
         int randomIndex = Random.Range(firstIndex, desiredList.Count - 1);
         
-        return desiredList[randomIndex];
+        _itemSpawner.SetPrefab(desiredList[randomIndex]);
+        _itemSpawner.Spawn(position);
     }
 }
