@@ -7,10 +7,12 @@ public class ItemSpawner : Spawner<Item>
     [SerializeField] private Thrower _thrower;
     
     private Vector3 _spawnPosition;
+    private QuadraticCurvePoints _curvePoints;
     
-    public void Spawn(Vector3 position)
+    public void Spawn(Vector3 itemPosition, QuadraticCurvePoints curvePoints)
     {
-        _spawnPosition = position;
+        _spawnPosition = itemPosition;
+        _curvePoints = curvePoints;
         
         GetObject();
     }
@@ -24,7 +26,7 @@ public class ItemSpawner : Spawner<Item>
         
         base.ActionOnGet(item);
         
-        _thrower.Throw(item);
+        _thrower.StartThrowing(item, _curvePoints);
     }
 
     protected override void ActionOnRelease(Item item)

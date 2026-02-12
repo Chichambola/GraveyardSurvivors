@@ -20,12 +20,12 @@ public class RarityEvaluator : MonoBehaviour
             return RarityLevel.Common;
         }
 
-        if (currentPercent > commonChance && currentPercent <= rareChance)
+        if (currentPercent >= commonChance && currentPercent <= rareChance)
         {
             return RarityLevel.Rare;
         }
 
-        if (currentPercent > legendaryChance && currentPercent <= _highestPercent)
+        if (currentPercent >= legendaryChance && currentPercent <= _highestPercent)
         {
             return RarityLevel.Legendary;
         }

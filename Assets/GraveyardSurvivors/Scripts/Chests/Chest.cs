@@ -11,8 +11,11 @@ public class Chest : MonoBehaviour, IInteractable, IPoolable
     [SerializeField] private float _cost;
     [SerializeField] private Outline _outline;
     [SerializeField] private Animator _animator;
-
+    [SerializeField] private QuadraticCurvePoints _points;
+    
     public event Action<Chest> CanBeReleased;
+    
+    public QuadraticCurvePoints Points => _points;
     
     public float Cost { get; private set; }
 

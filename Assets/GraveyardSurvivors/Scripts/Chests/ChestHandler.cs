@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class ChestHandler : MonoBehaviour
 {
+    [SerializeField] private Thrower _thrower;
     [SerializeField] private RarityEvaluator _rarityEvalutor;
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private ChestSpawner _chestSpawner;
@@ -30,6 +31,6 @@ public class ChestHandler : MonoBehaviour
     {
         RarityLevel rarityLevel = _rarityEvalutor.GetRarityLevel(_commonChancePercent, _rareChancePercent, _legendaryChancePercent);
         
-        _itemsHandler.SpawnRandomItem(chest.transform.position, rarityLevel);
+        _itemsHandler.SpawnRandomItem(chest.transform.position, chest.Points, rarityLevel);
     }
 }

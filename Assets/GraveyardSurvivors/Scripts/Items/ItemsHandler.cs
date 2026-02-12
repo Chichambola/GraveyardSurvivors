@@ -55,7 +55,7 @@ public class ItemsHandler : MonoBehaviour
         }
     }
 
-    public void SpawnRandomItem(Vector3 position, RarityLevel rarity)
+    public void SpawnRandomItem(Vector3 position, QuadraticCurvePoints points, RarityLevel rarity)
     {
         if (_itemsLists == null)
             throw new Exception();
@@ -67,6 +67,6 @@ public class ItemsHandler : MonoBehaviour
         int randomIndex = Random.Range(firstIndex, desiredList.Count - 1);
         
         _itemSpawner.SetPrefab(desiredList[randomIndex]);
-        _itemSpawner.Spawn(position);
+        _itemSpawner.Spawn(position, points);
     }
 }
