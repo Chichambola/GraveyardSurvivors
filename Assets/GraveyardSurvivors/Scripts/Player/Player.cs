@@ -19,9 +19,8 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
     [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
     [SerializeField] private StatsViewer _statsViewer;
+    [SerializeField] private Health _health;
     [SerializeField] private Wallet _wallet;
-
-    private float _maxHealth;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
@@ -29,7 +28,7 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
     private readonly List<IBuff> _buffs = new ();
     
     public CharacterStats CurrentStats { get; private set; }
-    public float MaxHealth => _maxHealth;
+    public float MaxHealth => _health.MaxHealth;
     
     private void Awake()
     {
@@ -39,17 +38,20 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
     private void OnEnable()
     {
         _collisionDetector.ItemDetected += AddBuff;
+        _health.ValueChanged += OnHealthValueChanged;
         
         if (_baseStats == null)
             throw new Exception();
         
         CurrentStats = _baseStats.Stats;
-        _maxHealth = CurrentStats.Health;
+        
+        _health.SetStartHealthStats(CurrentStats.Health, CurrentStats.HealthRegeneration);
     }
 
     private void OnDisable()
     {
         _collisionDetector.ItemDetected -= AddBuff;
+        _health.ValueChanged -= OnHealthValueChanged;
     }
 
     private void Start()
@@ -94,14 +96,27 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
     
     public bool HasEnoughHealth(float value)
     {
-        return !(CurrentStats.Health < value);
+        return !(_health.CurrentValue < value);
+    }
+    
+    private void OnHealthValueChanged(float value)
+    {
+        var stats = CurrentStats;
+
+        stats.Health = value;
+        
+        CurrentStats = stats;
+        
+        StatsChanged?.Invoke(stats);
     }
     
     public void TakeDamage(float damage)
     {
+        _health.TakeDamage(damage);
+        
         var stats = CurrentStats;
         
-        stats.Health -= damage;
+        stats.Health = _health.CurrentValue;
         
         CurrentStats = stats;
         
@@ -128,6 +143,8 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
         {
             CurrentStats = buff.ApplyBuff(CurrentStats);
         }
+        
+        Debug.Log(CurrentStats.Health);
         
         StatsChanged?.Invoke(CurrentStats);
     }
