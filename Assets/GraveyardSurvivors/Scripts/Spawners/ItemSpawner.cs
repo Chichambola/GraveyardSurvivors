@@ -1,32 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemSpawner : Spawner<Item>
 {
-    [SerializeField] private Thrower _thrower;
+    [SerializeField] private PlaceholderSpawner _placeholderSpawner;
     
     private Vector3 _spawnPosition;
-    private QuadraticCurvePoints _curvePoints;
-    
-    public void Spawn(Vector3 itemPosition, QuadraticCurvePoints curvePoints)
+
+    private void OnEnable()
     {
-        _spawnPosition = itemPosition;
-        _curvePoints = curvePoints;
-        
-        GetObject();
+        _placeholderSpawner.ItemStoppedMoving += OnItemStoppedMoving;
+    }
+
+    private void OnDisable()
+    {
+        _placeholderSpawner.ItemStoppedMoving -= OnItemStoppedMoving;
+    }
+
+    public void Spawn(QuadraticCurvePoints points)
+    {
+        _placeholderSpawner.Spawn(points);
     }
     
     protected override void ActionOnGet(Item item)
     {
-        item.transform.parent = transform.parent;
         item.transform.position = _spawnPosition;
-        
+        item.transform.parent = transform;
+
         item.CanBeReleased += Release;
         
         base.ActionOnGet(item);
-        
-        _thrower.StartThrowing(item, _curvePoints);
     }
 
     protected override void ActionOnRelease(Item item)
@@ -34,5 +39,12 @@ public class ItemSpawner : Spawner<Item>
         item.CanBeReleased -= Release;
         
         base.ActionOnRelease(item);
+    }
+
+    private void OnItemStoppedMoving(Vector3 position)
+    {
+        _spawnPosition = position;
+        
+        GetObject();
     }
 }

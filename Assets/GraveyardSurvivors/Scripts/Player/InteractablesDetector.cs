@@ -63,7 +63,7 @@ public class InteractablesDetector : MonoBehaviour
 
                 float distance = Vector3.Distance(gameObject.transform.position, _hitColliders[i].transform.position);
 
-                if (distance < minDistance)
+                if (distance < minDistance && interactable.IsCurrentlyAvailable)
                 {
                     minDistance = distance;
 
@@ -73,7 +73,7 @@ public class InteractablesDetector : MonoBehaviour
                 _nearbyInteractables.Add(interactable);
             }
         }
-
+        
         DefineHighlightStatus(count);
     }
 
@@ -92,7 +92,7 @@ public class InteractablesDetector : MonoBehaviour
             {
                 if (interactable != _nearestInteractable)
                     interactable.ChangeOutlineVisibility(false);
-                else
+                else if(_nearestInteractable.IsCurrentlyAvailable)
                     _nearestInteractable.ChangeOutlineVisibility(true);
             }
         }

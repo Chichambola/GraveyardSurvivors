@@ -1,0 +1,47 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using UnityEditor;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class ChestHandler : ChanceHandlerBase
+{
+    [SerializeField] private ChestSpawner _chestSpawner;
+    
+    private void OnEnable()
+    {
+        _chestSpawner.ChestWasChosen += OnChestChosen;
+    }
+
+    private void OnDisable()
+    {
+        _chestSpawner.ChestWasChosen -= OnChestChosen;
+    }
+
+    private void OnChestChosen(Chest chest)
+    {
+        if (chest == null)
+            throw new Exception(nameof(chest));
+
+        float currentChestCost = chest.CurrentCost;
+        
+        if (Player.HasEnoughMoney(currentChestCost) == false)
+        {
+            Debug.Log("Not enough money");
+        }
+        else
+        {
+            Player.ReduceMoneyAmount(currentChestCost);
+            
+            int commonChance = chest.CommonChance;
+            int rareChance = chest.RareChance;
+            int legendaryChance = chest.LegendaryChance;
+        
+            ERarityLevel rarityLevel = RarityEvaluator.GetRarityLevel(commonChance, rareChance, legendaryChance);
+        
+            ItemsHandler.SpawnRandomItem(chest.CurrentPoints, rarityLevel);
+        }
+    }
+}

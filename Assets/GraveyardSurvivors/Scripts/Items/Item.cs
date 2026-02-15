@@ -1,21 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public abstract class Item : MonoBehaviour, IPoolable
+public abstract class Item : MonoBehaviour, IPoolable<Item>
 {
     [SerializeField] private ItemInfo _info;
     [SerializeField] protected int InscreaseValue;
 
     public event Action<Item> CanBeReleased;
-    
+
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
     
     public Rigidbody Rigidbody => _rigidbody;
-    
     public ItemInfo Info => _info;
     
     private void Awake()
@@ -29,6 +29,8 @@ public abstract class Item : MonoBehaviour, IPoolable
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Collider>().isTrigger = true;
     }
+
+    public void ResetCharacteristics() { }
 
     public void Release()
     {

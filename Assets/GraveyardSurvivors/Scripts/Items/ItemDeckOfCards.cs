@@ -8,7 +8,7 @@ public class ItemDeckOfCards : Item, IBuff
     {
         var newStats = baseStats;
 
-        newStats.AttackSpeed = Mathf.Max(InscreaseValue, 0);
+        newStats.AttackSpeed += Mathf.Max(InscreaseValue, 0);
         
         return newStats;
     }

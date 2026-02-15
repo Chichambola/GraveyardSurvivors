@@ -8,7 +8,7 @@ public class ItemHolyWater : Item, IBuff
     {
         var newStats = baseStats;
 
-        newStats.BlockChance = Mathf.Max(InscreaseValue, 0);
+        newStats.BlockChance += Mathf.Max(InscreaseValue, 0);
         
         return newStats;
     }

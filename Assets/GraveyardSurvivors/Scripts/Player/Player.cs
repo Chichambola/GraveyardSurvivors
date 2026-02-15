@@ -8,13 +8,20 @@ using UnityEngine;
 public class Player : MonoBehaviour, IBuffable, IAttacker
 {
     [SerializeField] private InputReader _inputReader;
+    [SerializeField] private CollisionDetector _collisionDetector;
+    [Header("Handlers")]
     [SerializeField] private AnimationHandler _controller;
     [SerializeField] private InteractorHandler _InteractorHandler;
+    [Header("Movement")]
     [SerializeField] private Mover _mover;
     [SerializeField] private Rotator _rotator;
+    [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
+    [SerializeField] private StatsViewer _statsViewer;
+    [SerializeField] private Wallet _wallet;
 
     public event Action InteractionButtonPressed;
+    public event Action<CharacterStats> StatsChanged;
     
     private readonly List<IBuff> _buffs = new ();
     
@@ -27,10 +34,22 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
 
     private void OnEnable()
     {
+        _collisionDetector.ItemDetected += AddBuff;
+        
         if (_baseStats == null)
             throw new Exception();
-
+        
         CurrentStats = _baseStats.Stats;
+    }
+
+    private void OnDisable()
+    {
+        _collisionDetector.ItemDetected -= AddBuff;
+    }
+
+    private void Start()
+    {
+        StatsChanged?.Invoke(CurrentStats);
     }
 
     private void FixedUpdate()
@@ -50,6 +69,23 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
         _controller.PlayMovementAnimation(_inputReader.MovementDirection.magnitude);
     }
 
+    public bool HasEnoughMoney(float amount)
+    {
+        return !(_wallet.CurrentMoneyAmount < amount);
+    }
+    
+    public void ReduceMoneyAmount(float amount)
+    {
+        _wallet.ReduceMoneyAmount(amount);
+
+        Debug.Log(_wallet.CurrentMoneyAmount);
+    }
+    
+    public bool HasEnoughHealth(float value)
+    {
+        throw new NotImplementedException();
+    }
+    
     public void TakeDamage(float damage)
     {
         var stats = CurrentStats;
@@ -81,5 +117,7 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
         {
             CurrentStats = buff.ApplyBuff(CurrentStats);
         }
+        
+        StatsChanged?.Invoke(CurrentStats);
     }
 }
