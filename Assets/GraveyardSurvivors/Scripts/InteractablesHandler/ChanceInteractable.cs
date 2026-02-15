@@ -11,7 +11,8 @@ public abstract class ChanceInteractable<T> : Interactable
     [SerializeField] protected int LegendaryChancePercent;
     [SerializeField] protected QuadraticCurvePoints Points;
 
-    public abstract event Action<T> WasChosen;
+    public abstract event Action<T> WasChosen; 
+    
     public QuadraticCurvePoints CurrentPoints => Points;
     
     public int CommonChance => CommonChancePercent;

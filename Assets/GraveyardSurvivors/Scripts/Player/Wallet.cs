@@ -31,6 +31,13 @@ public class Wallet : MonoBehaviour
         UpdateAmount(_currentMoneyAmount);
     }
 
+    public void ReceiveMoney(float value)
+    {
+        _currentMoneyAmount += value;
+        
+        UpdateAmount(_currentMoneyAmount);
+    }
+    
     private void UpdateAmount(float value)
     {
         _text.text = $"Money: {value}";

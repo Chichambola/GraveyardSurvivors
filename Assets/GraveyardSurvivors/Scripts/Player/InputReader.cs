@@ -32,6 +32,6 @@ public class InputReader : MonoBehaviour
     private void Update()
     {
         MovementDirection = _playerInput.Movement.Move.ReadValue<Vector3>();
-        IsInteractionButtonPressed = _playerInput.Interaction.Interact.IsPressed();
+        IsInteractionButtonPressed = _playerInput.Interaction.Interact.WasPressedThisFrame();
     }
 }

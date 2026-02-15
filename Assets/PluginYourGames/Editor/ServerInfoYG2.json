@@ -8,7 +8,7 @@
     "modules": [
         {
             "name": "PluginYG2",
-            "version": "2.007",
+            "version": "2.008",
             "download": "https://max-games.ru/public/pluginYG2/other/PluginYG2.unitypackage",
             "doc": "https://max-games.ru/plugin-yg/doc/"
         },
@@ -65,7 +65,7 @@
         },
         {
             "name": "Localization",
-            "version": "1.01",
+            "version": "1.02",
             "download": "https://max-games.ru/public/pluginYG2/modules/Localization.unitypackage",
             "doc": "https://max-games.ru/plugin-yg/doc/lang/"
         },
@@ -158,7 +158,7 @@
         },
         {
             "name": "YandexGames",
-            "version": "1.007",
+            "version": "1.008",
             "download": "https://max-games.ru/public/pluginYG2/platforms/YandexGames.unitypackage",
             "doc": "https://max-games.ru/plugin-yg/yandexgames/",
             "platform": true

@@ -15,7 +15,7 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
     
     public event Action<Chest> CanBeReleased;
     public override event Action<Chest> WasChosen;
-    
+
     private Coroutine _coroutine;
     private float _initialCost;
 
@@ -23,7 +23,7 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
     {
         if (Cost <= 0)
             throw new Exception(nameof(Cost));
-
+        
         _initialCost = Cost;
     }
 
@@ -32,13 +32,16 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
         if (!IsAvailable) 
             return;
         
+        WasChosen?.Invoke(this);
+    }
+
+    public void Open()
+    {
         IsAvailable = false;
         
         _animator.SetBool(IsOpened, true);
         
         ChangeOutlineVisibility(false);
-        
-        WasChosen?.Invoke(this);
     }
 
     public void Release()
@@ -67,7 +70,7 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
 
     public void ResetCharacteristics()
     {
-        SetCost(_initialCost);
+        Cost = _initialCost;
         IsAvailable = true;
     }
 }

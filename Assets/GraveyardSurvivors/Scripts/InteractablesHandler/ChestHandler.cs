@@ -33,6 +33,8 @@ public class ChestHandler : ChanceHandlerBase
         }
         else
         {
+            chest.Open();
+            
             Player.ReduceMoneyAmount(currentChestCost);
             
             int commonChance = chest.CommonChance;

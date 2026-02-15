@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class Spawner<T> : MonoBehaviour where T : MonoBehaviour
+public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
 {
     [SerializeField] private T _objectPrefab;
     [SerializeField] protected int PoolCapacity;

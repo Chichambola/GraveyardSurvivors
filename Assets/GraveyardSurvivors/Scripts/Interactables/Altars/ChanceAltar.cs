@@ -20,16 +20,19 @@ public class ChanceAltar : ChanceInteractable<ChanceAltar>, IPoolable<ChanceAlta
         if (IsAvailable == false || _currentInteractionsAmount == _maxInteractionsAmount)
             return;
         
-        if(_coroutine != null)
-            StopCoroutine(_coroutine);
-        
         WasChosen?.Invoke(this);
+    }
+
+    public void StartCountdown()
+    {
+        if(_coroutine != null)
+            StopCoroutine(_coroutine);    
         
         ChangeOutlineVisibility(false);
 
         StartCoroutine(CooldownRoutine());
     }
-
+    
     public void ResetCharacteristics()
     {
         IsAvailable = true;

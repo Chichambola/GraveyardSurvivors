@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader))]
-public class Player : MonoBehaviour, IBuffable, IAttacker
+public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
@@ -20,12 +21,15 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
     [SerializeField] private StatsViewer _statsViewer;
     [SerializeField] private Wallet _wallet;
 
+    private float _maxHealth;
+    
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
     
     private readonly List<IBuff> _buffs = new ();
     
     public CharacterStats CurrentStats { get; private set; }
+    public float MaxHealth => _maxHealth;
     
     private void Awake()
     {
@@ -40,6 +44,7 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
             throw new Exception();
         
         CurrentStats = _baseStats.Stats;
+        _maxHealth = CurrentStats.Health;
     }
 
     private void OnDisable()
@@ -52,6 +57,14 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
         StatsChanged?.Invoke(CurrentStats);
     }
 
+    private void Update()
+    {
+        if (_inputReader.IsInteractionButtonPressed)
+        {
+            InteractionButtonPressed?.Invoke();
+        }
+    }
+
     private void FixedUpdate()
     {
         _mover.Move(_inputReader.MovementDirection.normalized, CurrentStats.MovementSpeed);
@@ -59,11 +72,6 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
         if (_inputReader.MovementDirection != Vector3.zero)
         {
             _rotator.Rotate(_inputReader.MovementDirection.normalized);
-        }
-
-        if (_inputReader.IsInteractionButtonPressed)
-        {
-            InteractionButtonPressed?.Invoke();
         }
             
         _controller.PlayMovementAnimation(_inputReader.MovementDirection.magnitude);
@@ -77,13 +85,16 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
     public void ReduceMoneyAmount(float amount)
     {
         _wallet.ReduceMoneyAmount(amount);
+    }
 
-        Debug.Log(_wallet.CurrentMoneyAmount);
+    public void ReceiveMoney(float value)
+    {
+        _wallet.ReceiveMoney(value);
     }
     
     public bool HasEnoughHealth(float value)
     {
-        throw new NotImplementedException();
+        return !(CurrentStats.Health < value);
     }
     
     public void TakeDamage(float damage)
@@ -93,6 +104,8 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
         stats.Health -= damage;
         
         CurrentStats = stats;
+        
+        StatsChanged?.Invoke(CurrentStats);
     }
     
     public void AddBuff(IBuff buff)
@@ -111,8 +124,6 @@ public class Player : MonoBehaviour, IBuffable, IAttacker
 
     private void ApplyBuffs()
     {
-        CurrentStats = _baseStats.Stats;
-
         foreach (var buff in _buffs)
         {
             CurrentStats = buff.ApplyBuff(CurrentStats);

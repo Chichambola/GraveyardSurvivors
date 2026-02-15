@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChanceAltarHandler : ChanceHandlerBase
 {
     [SerializeField] private ChanceAltarSpawner _chanceAltarSpawner;
-
+    
     private void OnEnable()
     {
         _chanceAltarSpawner.AltarWasChosen += OnChanceAltarChosen;
@@ -32,6 +32,8 @@ public class ChanceAltarHandler : ChanceHandlerBase
             return;
         }
 
+        altar.StartCountdown();
+        
         if (currentPercent < commonChance)
         {
             Debug.Log("Nothing to drop");   
@@ -42,8 +44,7 @@ public class ChanceAltarHandler : ChanceHandlerBase
             
             ItemsHandler.SpawnRandomItem(altar.CurrentPoints, rarityLevel);   
         }
-
-
+        
         Player.ReduceMoneyAmount(altar.CurrentCost);
     }
 }
