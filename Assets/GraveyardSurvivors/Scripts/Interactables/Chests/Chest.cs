@@ -17,15 +17,6 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
     public override event Action<Chest> WasChosen;
 
     private Coroutine _coroutine;
-    private float _initialCost;
-
-    private void Start()
-    {
-        if (Cost <= 0)
-            throw new Exception(nameof(Cost));
-        
-        _initialCost = Cost;
-    }
 
     public override void ProcessInteraction()
     {
@@ -52,6 +43,11 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
         StartCoroutine(ReleaseCountdown());
     }
 
+    public void ResetCharacteristics()
+    {
+        IsAvailable = true;
+    }
+    
     private IEnumerator ReleaseCountdown()
     {
         float timePassed = 0;
@@ -66,11 +62,5 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
         ResetCharacteristics();
         
         CanBeReleased?.Invoke(this);
-    }
-
-    public void ResetCharacteristics()
-    {
-        Cost = _initialCost;
-        IsAvailable = true;
     }
 }

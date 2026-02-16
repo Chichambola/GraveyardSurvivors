@@ -13,8 +13,8 @@ public class InteractablesDetector : MonoBehaviour
     [SerializeField] private int _numberOfColliders = 10;
 
     private SphereCollider _collider;
-    private IInteractable _nearestInteractable;
     private Collider[] _hitColliders;
+    private IInteractable _nearestInteractable;
     private List<IInteractable> _nearbyInteractables;
 
     private void Awake()
@@ -82,7 +82,12 @@ public class InteractablesDetector : MonoBehaviour
         if (count == 0 && _nearbyInteractables.Count != 0)
         {
             foreach (var interactable in _nearbyInteractables)
+            {
+                if(interactable.IsCurrentlyShowingValue)
+                    interactable.HideValue(false);
+                
                 interactable.ChangeOutlineVisibility(false);
+            }
 
             _nearestInteractable = null;
         }
@@ -92,8 +97,15 @@ public class InteractablesDetector : MonoBehaviour
             {
                 if (interactable != _nearestInteractable)
                     interactable.ChangeOutlineVisibility(false);
-                else if(_nearestInteractable.IsCurrentlyAvailable)
+                else if (_nearestInteractable.IsCurrentlyAvailable)
+                {
+                    if (_nearestInteractable.IsCurrentlyShowingValue == false)
+                    {
+                        _nearestInteractable   
+                    }
+                    
                     _nearestInteractable.ChangeOutlineVisibility(true);
+                }
             }
         }
     }

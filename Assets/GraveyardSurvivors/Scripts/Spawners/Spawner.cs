@@ -12,7 +12,7 @@ public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
     [SerializeField] protected int MaxPoolCapacity;
 
     private ObjectPool<T> _pool;
-    protected List<T> ActiveObjects = new();
+    public readonly List<T> ActiveObjects = new();
 
     private void Awake()
     {

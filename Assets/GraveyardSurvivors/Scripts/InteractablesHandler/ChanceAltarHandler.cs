@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChanceAltarHandler : ChanceHandlerBase
 {
     [SerializeField] private ChanceAltarSpawner _chanceAltarSpawner;
-    
+
     private void OnEnable()
     {
         _chanceAltarSpawner.AltarWasChosen += OnChanceAltarChosen;
@@ -46,5 +46,8 @@ public class ChanceAltarHandler : ChanceHandlerBase
         }
         
         Player.ReduceMoneyAmount(altar.CurrentCost);
+        
+        CalculateCost();
+        altar.SetCost(Cost);
     }
 }

@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class ChestHandler : ChanceHandlerBase
 {
     [SerializeField] private ChestSpawner _chestSpawner;
-    
+
     private void OnEnable()
     {
         _chestSpawner.ChestWasChosen += OnChestChosen;
@@ -24,10 +24,8 @@ public class ChestHandler : ChanceHandlerBase
     {
         if (chest == null)
             throw new Exception(nameof(chest));
-
-        float currentChestCost = chest.CurrentCost;
         
-        if (Player.HasEnoughMoney(currentChestCost) == false)
+        if (Player.HasEnoughMoney(CurrentCost) == false)
         {
             Debug.Log("Not enough money");
         }
@@ -35,7 +33,7 @@ public class ChestHandler : ChanceHandlerBase
         {
             chest.Open();
             
-            Player.ReduceMoneyAmount(currentChestCost);
+            Player.ReduceMoneyAmount(CurrentCost);
             
             int commonChance = chest.CommonChance;
             int rareChance = chest.RareChance;
@@ -44,6 +42,8 @@ public class ChestHandler : ChanceHandlerBase
             ERarityLevel rarityLevel = RarityEvaluator.GetRarityLevel(commonChance, rareChance, legendaryChance);
         
             ItemsHandler.SpawnRandomItem(chest.CurrentPoints, rarityLevel);
+            
+            CalculateCost();
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public interface IInteractable
 {
+    public bool IsCurrentlyShowingValue { get; }
     public bool IsCurrentlyAvailable { get; }
     void ChangeOutlineVisibility(bool value);
     void ProcessInteraction();

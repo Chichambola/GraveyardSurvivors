@@ -18,6 +18,4 @@ public abstract class ChanceInteractable<T> : Interactable
     public int CommonChance => CommonChancePercent;
     public int RareChance => RareChancePercent;
     public int LegendaryChance => LegendaryChancePercent;
-
-
 }

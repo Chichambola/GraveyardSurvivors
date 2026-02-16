@@ -8,6 +8,10 @@ public class ChanceAltar : ChanceInteractable<ChanceAltar>, IPoolable<ChanceAlta
 {
     [SerializeField] private int _maxInteractionsAmount = 2;
     [SerializeField] private float _countdownTime = 1.5f;
+
+    private float _currentCost;
+    
+    public float CurrentCost => _currentCost;
     
     public override event Action<ChanceAltar> WasChosen;
     public event Action<ChanceAltar> CanBeReleased;
@@ -39,6 +43,11 @@ public class ChanceAltar : ChanceInteractable<ChanceAltar>, IPoolable<ChanceAlta
         _currentInteractionsAmount = 0;
     }
 
+    public void SetCost(float value)
+    {
+        _currentCost = value;
+    }
+    
     public void Release()
     {
         CanBeReleased?.Invoke(this);

@@ -17,6 +17,8 @@ public class ChestSpawner : Spawner<Chest>
 
     protected override void ActionOnGet(Chest chest)
     {
+        ActiveObjects.Add(chest);
+        
         chest.transform.position = _point.transform.position;
         chest.transform.parent = transform;
 
@@ -28,6 +30,8 @@ public class ChestSpawner : Spawner<Chest>
 
     protected override void ActionOnRelease(Chest chest)
     {
+        ActiveObjects.Remove(chest);
+        
         chest.CanBeReleased -= Release;
         chest.WasChosen -= OnChestChosen; 
         

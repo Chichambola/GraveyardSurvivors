@@ -12,6 +12,8 @@ public class RarityEvaluator : MonoBehaviour
     private int _lowestPercent = 0;
     private int _highestPercent = 100;
     
+    public int HighestPercent => _highestPercent;
+    
     public ERarityLevel GetRarityLevel(float commonChance, float rareChance, float legendaryChance)
     {
         float currentPercent = GetChance();

@@ -21,6 +21,8 @@ public class ChanceAltarSpawner : Spawner<ChanceAltar>
     
     protected override void ActionOnGet(ChanceAltar altar)
     {
+        ActiveObjects.Add(altar);
+        
         altar.transform.position = _point.position;
 
         altar.CanBeReleased += Release;
@@ -35,6 +37,8 @@ public class ChanceAltarSpawner : Spawner<ChanceAltar>
         altar.WasChosen -= OnAltarChosen;
         
         base.ActionOnRelease(altar);
+        
+        ActiveObjects.Remove(altar);
     }
 
     private void OnAltarChosen(ChanceAltar altar)
