@@ -1434,6 +1434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c42036a07961fc4ebafc5d2dd95535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cost: 25
+  IncreasePercent: 40
   RarityEvaluator: {fileID: 1204296358}
   ItemsHandler: {fileID: 1204296356}
   _chestSpawner: {fileID: 94142642}
@@ -1851,6 +1853,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0e242efc953d40b21d302614c520c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cost: 17
+  IncreasePercent: 40
   RarityEvaluator: {fileID: 1204296358}
   ItemsHandler: {fileID: 1204296356}
   _chanceAltarSpawner: {fileID: 788480388}

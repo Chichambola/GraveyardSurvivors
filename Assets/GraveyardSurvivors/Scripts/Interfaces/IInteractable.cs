@@ -9,4 +9,6 @@ public interface IInteractable
     public bool IsCurrentlyAvailable { get; }
     void ChangeOutlineVisibility(bool value);
     void ProcessInteraction();
+    void ShowValue();
+    void HideValue();
 }

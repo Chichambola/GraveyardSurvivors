@@ -24,8 +24,6 @@ public abstract class Interactable: MonoBehaviour, IInteractable
     {
         Outline.enabled = value;
     }
-
-    public abstract void ProcessInteraction();
     
     public void ShowValue()
     {
@@ -39,4 +37,6 @@ public abstract class Interactable: MonoBehaviour, IInteractable
         ValueViewer.SetVisibility(false);
         IsShowingValue = false;
     }
+    
+    public abstract void ProcessInteraction();
 }
