@@ -28,7 +28,6 @@ public abstract class Interactable: MonoBehaviour, IInteractable
     public void ShowValue()
     {
         ValueViewer.SetVisibility(true);
-        ValueViewer.ShowValue();
         IsShowingValue = true;
     }
 
@@ -36,6 +35,11 @@ public abstract class Interactable: MonoBehaviour, IInteractable
     {
         ValueViewer.SetVisibility(false);
         IsShowingValue = false;
+    }
+
+    public void SetValue(float value)
+    {
+        ValueViewer.SetValue(value);
     }
     
     public abstract void ProcessInteraction();

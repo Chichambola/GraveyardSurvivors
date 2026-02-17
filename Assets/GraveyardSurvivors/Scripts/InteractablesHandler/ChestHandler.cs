@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,6 +11,14 @@ public class ChestHandler : ChanceHandlerBase
 {
     [SerializeField] private ChestSpawner _chestSpawner;
 
+    private void Start()
+    {
+        if(Cost <= 0)
+            throw new Exception("Cost must be greater than 0.");
+        
+        SetObjectsValue();
+    }
+    
     private void OnEnable()
     {
         _chestSpawner.ChestWasChosen += OnChestChosen;
@@ -44,6 +53,14 @@ public class ChestHandler : ChanceHandlerBase
             ItemsHandler.SpawnRandomItem(chest.CurrentPoints, rarityLevel);
             
             CalculateCost();
+        }
+    }
+
+    protected override void SetObjectsValue()
+    {
+        foreach (var chest in _chestSpawner.SpawnedObjects)
+        {
+            chest.SetValue(Cost);
         }
     }
 }

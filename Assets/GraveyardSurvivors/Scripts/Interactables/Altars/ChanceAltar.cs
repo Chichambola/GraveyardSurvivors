@@ -46,6 +46,8 @@ public class ChanceAltar : ChanceInteractable<ChanceAltar>, IPoolable<ChanceAlta
     public void SetCost(float value)
     {
         _currentCost = value;
+        
+        ValueViewer.SetValue(_currentCost);
     }
     
     public void Release()

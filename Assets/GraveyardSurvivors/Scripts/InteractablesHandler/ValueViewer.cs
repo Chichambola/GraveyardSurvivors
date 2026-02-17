@@ -18,11 +18,6 @@ public class ValueViewer : MonoBehaviour
         SetVisibility(false);
     }
 
-    public void ShowValue()
-    {
-        Debug.Log($"{_text.text} {_value}");
-    }
-
     public void SetVisibility(bool isShowing)
     {
         _text.enabled = isShowing;
@@ -31,5 +26,7 @@ public class ValueViewer : MonoBehaviour
     public void SetValue(float value)
     {
         _value = value;
+        
+        _text.text = _valueDiscription + _value;
     }
 }

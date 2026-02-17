@@ -17,6 +17,22 @@ public class ChanceAltarHandler : ChanceHandlerBase
         _chanceAltarSpawner.AltarWasChosen -= OnChanceAltarChosen;
     }
     
+    private void Start()
+    {
+        if(Cost <= 0)
+            throw new Exception("Cost must be greater than 0.");
+        
+        SetObjectsValue();
+    }
+
+    protected override void SetObjectsValue()
+    {
+        foreach (var altar in _chanceAltarSpawner.SpawnedObjects)
+        {
+            altar.SetCost(Cost);
+        }
+    }
+
     private void OnChanceAltarChosen(ChanceAltar altar)
     {
         int commonChance = altar.CommonChance;
@@ -32,6 +48,7 @@ public class ChanceAltarHandler : ChanceHandlerBase
             return;
         }
 
+        Player.ReduceMoneyAmount(altar.CurrentCost);
         altar.StartCountdown();
         
         if (currentPercent < commonChance)
@@ -44,8 +61,6 @@ public class ChanceAltarHandler : ChanceHandlerBase
             
             ItemsHandler.SpawnRandomItem(altar.CurrentPoints, rarityLevel);   
         }
-        
-        Player.ReduceMoneyAmount(altar.CurrentCost);
         
         CalculateCost();
         altar.SetCost(Cost);

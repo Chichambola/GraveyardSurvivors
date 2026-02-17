@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class ChanceHandlerBase : InteractableHandler
 {
     [SerializeField] protected float Cost;
-    [SerializeField] protected int IncreasePercent;
+    [SerializeField] protected float IncreasePercent;
     [SerializeField] protected RarityEvaluator RarityEvaluator;
     [SerializeField] protected ItemsHandler ItemsHandler;
 
@@ -25,6 +25,10 @@ public abstract class ChanceHandlerBase : InteractableHandler
 
     protected virtual void CalculateCost()
     {
-        Cost *= (1 - (IncreasePercent / RarityEvaluator.HighestPercent));
+        float tempCost = Cost * (1 + (IncreasePercent / RarityEvaluator.HighestPercent));
+        
+        Cost = Mathf.Round(tempCost);
     }
+    
+    protected abstract void SetObjectsValue();
 }

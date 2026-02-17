@@ -144,8 +144,6 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
             CurrentStats = buff.ApplyBuff(CurrentStats);
         }
         
-        Debug.Log(CurrentStats.Health);
-        
         StatsChanged?.Invoke(CurrentStats);
     }
 }
