@@ -13,8 +13,6 @@ public class ValueViewer : MonoBehaviour
     
     private void Start()
     {
-        _text.text = _valueDiscription;
-        
         SetVisibility(false);
     }
 
