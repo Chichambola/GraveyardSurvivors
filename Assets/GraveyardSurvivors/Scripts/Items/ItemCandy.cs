@@ -6,10 +6,15 @@ public class ItemCandy : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.HealthRegeneration >= HighestValue)
+            return baseStats;
+
+        float clampedValue = baseStats.HealthRegeneration / HighestValue;
+
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
         
-        newStats.HealthRegeneration += Mathf.Max(InscreaseValue, 0);
+        baseStats.HealthRegeneration = Mathf.Floor(Mathf.Min(baseStats.HealthRegeneration + (InscreaseValue * multiplier), HighestValue));
         
-        return newStats;
+        return baseStats;
     }
 }

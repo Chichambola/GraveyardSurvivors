@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
-    [SerializeField] private Player _player;
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private float _initialValue = 50;
 

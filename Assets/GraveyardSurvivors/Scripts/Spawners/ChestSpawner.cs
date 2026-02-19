@@ -18,12 +18,13 @@ public class ChestSpawner : Spawner<Chest>
     protected override void ActionOnGet(Chest chest)
     {
         ActiveObjects.Add(chest);
-        
+
         chest.transform.position = _point.transform.position;
+
         chest.transform.parent = transform;
 
         chest.CanBeReleased += Release;
-        chest.WasChosen += OnChestChosen; 
+        chest.WasChosen += OnChestChosen;
         
         base.ActionOnGet(chest);
     }

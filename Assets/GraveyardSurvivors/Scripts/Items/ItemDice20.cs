@@ -6,10 +6,15 @@ public class ItemDice20 : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
-        
-        newStats.Luck += Mathf.Max(InscreaseValue, 0);
+        if (baseStats.Luck >= HighestValue)
+            return baseStats;
 
-        return newStats;
+        float clampedValue = baseStats.Luck / HighestValue;
+
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
+        
+        baseStats.Luck = Mathf.Floor(Mathf.Min(baseStats.Luck + (InscreaseValue * multiplier), HighestValue));
+        
+        return baseStats;
     }
 }

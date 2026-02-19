@@ -6,10 +6,15 @@ public class ItemWitchesBroom : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.MovementSpeed >= HighestValue)
+            return baseStats;
+
+        float clampedValue = baseStats.MovementSpeed / HighestValue;
+
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
         
-        newStats.MovementSpeed += Mathf.Max(InscreaseValue, 0);
+        baseStats.MovementSpeed = Mathf.Floor(Mathf.Min(baseStats.MovementSpeed + (InscreaseValue * multiplier), HighestValue));
         
-        return newStats;
+        return baseStats;
     }
 }

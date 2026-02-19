@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class PlaceholderSpawner : Spawner<ItemPlaceholder>
 {
@@ -37,7 +38,7 @@ public class PlaceholderSpawner : Spawner<ItemPlaceholder>
 
         @object.CanBeReleased += Release;
 
-        _currentPlaceholder = @object; 
+        ActiveObjects.Add(@object);
         
         _thrower.StartThrowing(@object, _curvePoints);
     }
@@ -47,12 +48,17 @@ public class PlaceholderSpawner : Spawner<ItemPlaceholder>
         base.ActionOnRelease(@object);
 
         @object.CanBeReleased -= Release;
+
+        ActiveObjects.Remove(@object);
     }
     
-    private void OnFinishedMoving()
+    private void OnFinishedMoving(IThrowable throwable)
     {
-        ItemStoppedMoving?.Invoke(_currentPlaceholder.Rigidbody.position);
+        if (throwable is ItemPlaceholder item == false)
+            throw new Exception();
+            
+        ItemStoppedMoving?.Invoke(item.Rigidbody.position);
         
-        _currentPlaceholder.Release();
+        item.Release();
     }
 }

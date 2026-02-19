@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 8060998351124851371}
   - component: {fileID: 7514767359008438798}
   - component: {fileID: 831034912937131186}
+  - component: {fileID: 8151128714832802890}
   m_Layer: 0
   m_Name: ChanceAltar
   m_TagString: Untagged
@@ -562,11 +563,11 @@ MonoBehaviour:
   CommonChancePercent: 50
   RareChancePercent: 85
   LegendaryChancePercent: 95
-  Points:
-    APoint: {fileID: 439135852860042417}
-    BPoint: {fileID: 906995193382246293}
-    ControlPoint: {fileID: 8710713397835284121}
-  _maxInteractionsAmount: 2
+  _aPoint: {fileID: 439135852860042417}
+  _bPoint: {fileID: 906995193382246293}
+  _controlPoint: {fileID: 8710713397835284121}
+  _points: {fileID: 8151128714832802890}
+  _maxInteractionsAmount: 3
   _countdownTime: 1.5
 --- !u!114 &831034912937131186
 MonoBehaviour:
@@ -582,3 +583,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 6726502443609083068}
   _valueDiscription: '$ '
+--- !u!114 &8151128714832802890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865451181957286708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f903b480371ef2c448c165b39f380e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

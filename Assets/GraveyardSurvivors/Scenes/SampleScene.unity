@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465878, g: 0.4964224, b: 0.57482475, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 61.65
+  m_fontSize: 72
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1504,6 +1504,7 @@ MonoBehaviour:
   - {fileID: -6795875221895891607, guid: 6548f24377d81df42a1242d04aa49566, type: 3}
   - {fileID: -7635428409179756100, guid: 80d50f06a33dcff449b0c9b1a450cdc3, type: 3}
   - {fileID: 7111968728577630430, guid: 4d70d33fb54921646826d70a3fac7680, type: 3}
+  - {fileID: 2840532805630495736, guid: 1206a0e4f7623734e8857d4e5c79df10, type: 3}
 --- !u!4 &1204296357
 Transform:
   m_ObjectHideFlags: 0
@@ -2253,6 +2254,8 @@ MonoBehaviour:
   _statsViewer: {fileID: 919132147938965922}
   _health: {fileID: 919132147938965924}
   _wallet: {fileID: 919132147938965923}
+  _defender: {fileID: 919132147938965926}
+  _evader: {fileID: 919132147938965925}
 --- !u!114 &2139489488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2484,6 +2487,8 @@ GameObject:
   - component: {fileID: 919132147938965923}
   - component: {fileID: 919132147938965917}
   - component: {fileID: 919132147938965918}
+  - component: {fileID: 919132147938965926}
+  - component: {fileID: 919132147938965925}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Untagged
@@ -2606,9 +2611,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fe0161eae0d8b49a69273f96910f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 2139489487}
   _text: {fileID: 306250852}
-  _initialValue: 50
+  _initialValue: 1e+13
 --- !u!114 &919132147938965924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2621,8 +2625,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b6448363ccd849b0480fa16993d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 2139489487}
   _cooldownRate: 1
+--- !u!114 &919132147938965925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147938965916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952be9847603a494bb098e868b747457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &919132147938965926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147938965916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1481ca4d124db1148a7aaf6c6507ad45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dividerNumber: 2
 --- !u!4 &952076724452973554
 Transform:
   m_ObjectHideFlags: 0

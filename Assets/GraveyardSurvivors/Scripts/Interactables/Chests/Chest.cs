@@ -8,8 +8,9 @@ using UnityEngine;
 
 public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
 {
-    public const string IsOpened = nameof(IsOpened); 
+    public const string IsOpened = nameof(IsOpened);
     
+    [Header("Animator values")]
     [SerializeField] private int _countdownTime = 3;
     [SerializeField] private Animator _animator;
     

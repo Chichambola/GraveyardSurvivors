@@ -16,14 +16,14 @@ MonoBehaviour:
     Health: 130
     HealthRegeneration: 2
     Armor: 20
-    MovementSpeed: 100
-    AttackSpeed: 100
-    AttackRadius: 100
-    PickUpRadius: 100
+    MovementSpeed: 0
+    AttackSpeed: 0
+    AttackRadius: 0
+    PickUpRadius: 55
     BlockChance: 15
-    EvasionChance: 0
     CritChance: 10
     CritMultiplier: 2
     XpMultiplier: 1
     GoldMultiplier: 1
+    EvasionChance: 0
     Luck: 1

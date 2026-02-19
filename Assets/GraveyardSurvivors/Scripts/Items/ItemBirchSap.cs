@@ -6,10 +6,15 @@ public class ItemBirchSap : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.AttackSpeed >= HighestValue)
+            return baseStats;
+
+        float clampedValue = baseStats.AttackSpeed / HighestValue;
+
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
         
-        newStats.AttackSpeed += Mathf.Max(InscreaseValue, 0);
+        baseStats.AttackSpeed = Mathf.Floor(Mathf.Min(baseStats.AttackSpeed + (InscreaseValue * multiplier), HighestValue));
         
-        return newStats;
+        return baseStats;
     }
 }

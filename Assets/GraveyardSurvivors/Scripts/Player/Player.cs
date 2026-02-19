@@ -19,8 +19,11 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
     [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
     [SerializeField] private StatsViewer _statsViewer;
+    [Header("Stats handlers")]
     [SerializeField] private Health _health;
     [SerializeField] private Wallet _wallet;
+    [SerializeField] private Defender _defender;
+    [SerializeField] private Evader _evader;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
@@ -40,14 +43,9 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
         _collisionDetector.ItemDetected += AddBuff;
         _health.ValueChanged += OnHealthValueChanged;
         
-        if (_baseStats == null)
-            throw new Exception();
-        
-        CurrentStats = _baseStats.Stats;
-        
-        _health.SetStartHealthStats(CurrentStats.Health, CurrentStats.HealthRegeneration);
+        SetStats();
     }
-
+    
     private void OnDisable()
     {
         _collisionDetector.ItemDetected -= AddBuff;
@@ -99,51 +97,64 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
         return !(_health.CurrentValue < value);
     }
     
-    private void OnHealthValueChanged(float value)
-    {
-        var stats = CurrentStats;
-
-        stats.Health = value;
-        
-        CurrentStats = stats;
-        
-        StatsChanged?.Invoke(stats);
-    }
-    
     public void TakeDamage(float damage)
     {
+        if (_evader.CanEvade(CurrentStats.Luck))
+        {
+            Debug.Log("Evaded");
+            
+            return;
+        }
+        
+        if (_defender.CanBlock(CurrentStats.Luck))
+        {
+            Debug.Log("Blocked");
+            
+            damage = _defender.GetBlockedDamage(damage);
+        }
+        
+        damage = _defender.GetDamageAmount(damage);
+        
         _health.TakeDamage(damage);
-        
-        var stats = CurrentStats;
-        
-        stats.Health = _health.CurrentValue;
-        
-        CurrentStats = stats;
-        
-        StatsChanged?.Invoke(CurrentStats);
     }
     
     public void AddBuff(IBuff buff)
     {
         _buffs.Add(buff);
         
-        ApplyBuffs();
+        ApplyBuff(buff);
     }
 
     public void RemoveBuff(IBuff buff)
     {
         _buffs.Remove(buff);
         
-        ApplyBuffs();
+        ApplyBuff(buff);
     }
 
-    private void ApplyBuffs()
+    private void ApplyBuff(IBuff buff)
     {
-        foreach (var buff in _buffs)
-        {
-            CurrentStats = buff.ApplyBuff(CurrentStats);
-        }
+        CurrentStats = buff.ApplyBuff(CurrentStats);
         
         StatsChanged?.Invoke(CurrentStats);
+    }
+    
+    private void OnHealthValueChanged(float value)
+    {
+        CurrentStats.Health = value;
+        
+        StatsChanged?.Invoke(CurrentStats);
+    }
+    
+    private void SetStats()
+    {
+        if (_baseStats == null)
+            throw new Exception();
+
+        CurrentStats = _baseStats.GetStats();
+        
+        _health.SetInitialStats(CurrentStats.Health, CurrentStats.HealthRegeneration);
+        _defender.SetInitialStats(CurrentStats.Armor, CurrentStats.BlockChance);
+        _evader.SetInitialStats(CurrentStats.EvasionChance);
     }
 }

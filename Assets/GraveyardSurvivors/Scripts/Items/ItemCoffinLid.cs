@@ -7,10 +7,15 @@ public class ItemCoffinLid : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.Armor >= HighestValue)
+            return baseStats;
+
+        float clampedValue = baseStats.Armor / HighestValue;
+
+        float multiplier = (1 - clampedValue);
         
-        newStats.Armor += Mathf.Max(InscreaseValue, 0);
+        baseStats.Armor = Mathf.Floor(Mathf.Min(baseStats.Armor + (InscreaseValue * multiplier), HighestValue));
         
-        return newStats;
+        return baseStats;
     }
 }

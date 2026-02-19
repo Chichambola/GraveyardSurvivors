@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private Player _player;
     [SerializeField] private float _cooldownRate = 1f;
 
     public event Action<float> ValueChanged;
@@ -28,7 +27,7 @@ public class Health : MonoBehaviour
         StartCoroutine(RegenerationRoutine());
     }
 
-    public void SetStartHealthStats(float health, float healthRegenerationRate)
+    public void SetInitialStats(float health, float healthRegenerationRate)
     {
         _maxValue = health;
         _currentValue = health;
@@ -38,6 +37,8 @@ public class Health : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _currentValue -= damage;
+        
+        ValueChanged?.Invoke(_currentValue);
     }
 
     private IEnumerator RegenerationRoutine()

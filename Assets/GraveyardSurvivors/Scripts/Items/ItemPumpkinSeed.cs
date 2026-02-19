@@ -6,10 +6,15 @@ public class ItemPumpkinSeed : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.CritMultiplier >= HighestValue)
+            return baseStats;
+
+        float clampedValue = baseStats.CritMultiplier / HighestValue;
+
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
         
-        newStats.Health += Mathf.Max(InscreaseValue,0);
+        baseStats.CritMultiplier = Mathf.Floor(Mathf.Min(baseStats.CritMultiplier + (InscreaseValue * multiplier), HighestValue));
         
-        return newStats;
+        return baseStats;
     }
 }

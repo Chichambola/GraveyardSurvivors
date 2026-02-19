@@ -6,10 +6,15 @@ public class ItemJackOLantern : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.AttackRadius >= HighestValue)
+            return baseStats;
 
-        newStats.AttackRadius += Mathf.Max(InscreaseValue, 0);
+        float clampedValue = baseStats.AttackRadius / HighestValue;
+
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
         
-        return newStats;
+        baseStats.AttackRadius = Mathf.Floor(Mathf.Min(baseStats.AttackRadius + (InscreaseValue * multiplier), HighestValue));
+        
+        return baseStats;
     }
 }

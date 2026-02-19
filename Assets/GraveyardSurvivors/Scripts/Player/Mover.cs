@@ -19,7 +19,7 @@ public class Mover : MonoBehaviour
 
     public void Move(Vector3 direction, float speedMultiplier)
     {
-        float currentSpeed = _speed * (speedMultiplier / MaxPercent);
+        float currentSpeed = UserUtils.AddPercentToNumber(_speed, speedMultiplier);
         
         Vector3 nextPosition = _rigidbody.position + direction * (Time.fixedDeltaTime * currentSpeed);
         

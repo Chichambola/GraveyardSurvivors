@@ -6,10 +6,15 @@ public class ItemHolyWater : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.BlockChance >= HighestValue)
+            return baseStats;
 
-        newStats.BlockChance += Mathf.Max(InscreaseValue, 0);
+        float clampedValue = baseStats.BlockChance / HighestValue;
+
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
         
-        return newStats;
+        baseStats.BlockChance = Mathf.Floor(Mathf.Min(baseStats.BlockChance + (InscreaseValue * multiplier), HighestValue));
+        
+        return baseStats;
     }
 }

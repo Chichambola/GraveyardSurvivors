@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Outline))]
 public abstract class Interactable: MonoBehaviour, IInteractable
 {
+    [Header("Interactables specific fields")]
     [SerializeField] protected Outline Outline;
     [SerializeField] protected ValueViewer ValueViewer;
     

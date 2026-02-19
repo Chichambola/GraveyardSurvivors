@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemMagnet : Item, IBuff
+public class ItemMagnet : Item
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.PickUpRadius >= HighestValue)
+            return baseStats;
+
+        float clampedValue = baseStats.PickUpRadius / HighestValue;
+
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
         
-        newStats.PickUpRadius += Mathf.Max(InscreaseValue, 0);
+        baseStats.PickUpRadius = Mathf.Floor(Mathf.Min(baseStats.PickUpRadius + (InscreaseValue * multiplier), HighestValue));
         
-        return newStats;
+        return baseStats;
     }
 }

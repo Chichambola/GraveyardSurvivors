@@ -6,10 +6,15 @@ public class ItemFeltSocks : Item, IBuff
 {
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        var newStats = baseStats;
+        if (baseStats.EvasionChance >= HighestValue)
+            return baseStats;
 
-        newStats.EvasionChance += Mathf.Max(InscreaseValue, 0);
+        float clampedValue = baseStats.EvasionChance / HighestValue;
+
+        float multiplier = (1 - clampedValue);
         
-        return newStats;
+        baseStats.EvasionChance = Mathf.Floor(Mathf.Min(baseStats.EvasionChance + (InscreaseValue * multiplier), HighestValue));
+        
+        return baseStats;
     }
 }

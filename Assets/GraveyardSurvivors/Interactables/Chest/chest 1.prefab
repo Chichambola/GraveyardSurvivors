@@ -244,7 +244,7 @@ Transform:
   m_GameObject: {fileID: 1453159880347583006}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.71, z: 1.071}
+  m_LocalPosition: {x: 0, y: 4.71, z: 1.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 389328422361486788}
   - component: {fileID: 9074495386139287288}
   - component: {fileID: -8920939765684463614}
+  - component: {fileID: -4650140399277152426}
   m_Layer: 0
   m_Name: chest 1
   m_TagString: Untagged
@@ -377,10 +378,10 @@ MonoBehaviour:
   CommonChancePercent: 60
   RareChancePercent: 75
   LegendaryChancePercent: 90
-  Points:
-    APoint: {fileID: 6071187561532665750}
-    BPoint: {fileID: 3116285745774186417}
-    ControlPoint: {fileID: 1455544774472003890}
+  _aPoint: {fileID: 6071187561532665750}
+  _bPoint: {fileID: 3116285745774186417}
+  _controlPoint: {fileID: 1455544774472003890}
+  _points: {fileID: -4650140399277152426}
   _countdownTime: 3
   _animator: {fileID: 4237362373901554536}
 --- !u!114 &9074495386139287288
@@ -3149,6 +3150,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 7053638026720906069}
   _valueDiscription: '$ '
+--- !u!114 &-4650140399277152426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3508089657252754247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f903b480371ef2c448c165b39f380e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4474479682124367714
 GameObject:
   m_ObjectHideFlags: 0

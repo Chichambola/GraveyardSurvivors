@@ -61,7 +61,7 @@ public class ItemsHandler : MonoBehaviour
             throw new Exception();
 
         Item tempItem = GetRandomItem(rarity);
-
+        
         _itemSpawner.SetPrefab(tempItem);
         _itemSpawner.Spawn(points);
     }

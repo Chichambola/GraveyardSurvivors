@@ -9,10 +9,10 @@ public class Thrower : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _speed;
 
-    public event Action FinishedMoving;
+    public event Action<IThrowable> FinishedMoving;
     
     private Coroutine _coroutine; 
-    private float _sampleTime = 0f;
+    private readonly float _sampleTime = 0f;
 
     public void StartThrowing(IThrowable throwable, QuadraticCurvePoints curvePoints)
     {
@@ -39,7 +39,7 @@ public class Thrower : MonoBehaviour
             yield return null;
         }
 
-        FinishedMoving?.Invoke();
+        FinishedMoving?.Invoke(throwable);
         
         yield return null;
     }

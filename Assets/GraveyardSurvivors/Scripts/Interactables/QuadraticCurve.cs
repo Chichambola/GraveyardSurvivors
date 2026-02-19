@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,14 +23,6 @@ public class QuadraticCurve : MonoBehaviour
     {
         _aPoint = curvePoints.APoint.position;
         _bPoint = curvePoints.BPoint.position;
-        _controlPoint = curvePoints.ControlPoint.position;
-    }
-
-    private void OnDrawGizmos()
-    {
-        for (int i = 0; i < 20; i++)
-        {
-            Gizmos.DrawWireSphere(Evaluate(i/20f),0.1f);;
-        }
+        _controlPoint = curvePoints.CPoint.position;
     }
 }

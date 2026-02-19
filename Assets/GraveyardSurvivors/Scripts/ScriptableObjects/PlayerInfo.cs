@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerInfo", menuName = "Characters/New Player")]
+[Serializable]
+[CreateAssetMenu(fileName = "PlayerInfo", menuName = "Characters/New character")]
 public class PlayerInfo : ScriptableObject
 {
     [SerializeField] private CharacterStats _characterStats;
 
-    public CharacterStats Stats => _characterStats;
+    public CharacterStats GetStats()
+    {
+        return new CharacterStats(_characterStats);
+    }
 }
