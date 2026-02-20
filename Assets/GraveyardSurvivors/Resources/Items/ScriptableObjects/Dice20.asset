@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _name: Dice20
   _description: +3% Luck chance
-  _rarityLevel: 1
+  _weight: 75
+  _rarityLevel: 2

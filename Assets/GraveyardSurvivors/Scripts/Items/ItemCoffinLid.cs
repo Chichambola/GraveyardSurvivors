@@ -12,9 +12,9 @@ public class ItemCoffinLid : Item, IBuff
 
         float clampedValue = baseStats.Armor / HighestValue;
 
-        float multiplier = (1 - clampedValue);
+        float multiplier = (1 - clampedValue) * (1 - clampedValue);
         
-        baseStats.Armor = Mathf.Floor(Mathf.Min(baseStats.Armor + (InscreaseValue * multiplier), HighestValue));
+        baseStats.Armor = Mathf.Floor(Mathf.Max(baseStats.Armor + (InscreaseValue * multiplier), HighestValue));
         
         return baseStats;
     }

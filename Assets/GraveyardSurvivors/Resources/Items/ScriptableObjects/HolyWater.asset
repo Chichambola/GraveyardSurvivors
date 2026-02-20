@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _name: Holy water
   _description: +5% Block chance
-  _rarityLevel: 0
+  _weight: 90
+  _rarityLevel: 1

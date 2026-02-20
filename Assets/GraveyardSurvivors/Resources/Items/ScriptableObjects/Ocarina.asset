@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _name: Ocarina
   _description: +20% damage to enemies with over 90% HP
-  _rarityLevel: 1
+  _weight: 70
+  _rarityLevel: 2

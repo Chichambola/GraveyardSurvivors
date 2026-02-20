@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _name: Cross
   _description: +5% XP multiplier
+  _weight: 75
   _rarityLevel: 1

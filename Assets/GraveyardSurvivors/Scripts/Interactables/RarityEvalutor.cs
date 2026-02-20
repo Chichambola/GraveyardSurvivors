@@ -3,64 +3,86 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class RarityEvaluator : MonoBehaviour
 {
     [SerializeField] private Player _player;
-
-    private int _lowestPercent = 0;
-    private int _highestPercent = 100;
     
-    public int HighestPercent => _highestPercent;
+    public float HighestPercent => UserUtils.HighestPercent;
+    public float LowestPercent => UserUtils.LowestPercent;
     
     public ERarityLevel GetRarityLevel(float commonChance, float rareChance, float legendaryChance)
     {
-        float currentPercent = GetChance();
+        rareChance += _player.CurrentStats.Luck;
+        legendaryChance += _player.CurrentStats.Luck;
         
-        var ranges = new[]
+        var tempRarityDict = new Dictionary<ERarityLevel, float>()
         {
-            (max: _lowestPercent, rarity: ERarityLevel.Common),
-            (max: commonChance, rarity: ERarityLevel.Common),
-            (max: rareChance, rarity: ERarityLevel.Rare),
-            (max: legendaryChance, rarity: ERarityLevel.Legendary),
-            (max: _highestPercent, rarity: ERarityLevel.Legendary)
+            {ERarityLevel.Common, commonChance},
+            {ERarityLevel.Rare, rareChance},
+            {ERarityLevel.Legendary, legendaryChance}
         };
+
+        ERarityLevel rarityLevel = ERarityLevel.Common;
         
-        var rarityLevel = ranges.First(r => currentPercent < r.max).rarity;
-        
+        float totalWeight = 0;
+
+        foreach (var item in tempRarityDict)
+        {
+            float weight = item.Value;
+            
+            if(weight <= 0)
+                continue;
+            
+            float randomNumber = Random.Range(0, totalWeight + weight);
+            
+            if (randomNumber >= totalWeight)
+            {
+                rarityLevel =  item.Key;
+            }
+            
+            totalWeight += weight;
+        }
+
         return rarityLevel;
     }
     
-    public ERarityLevel GetRarityLevel(float commonChance, float rareChance, float legendaryChance, out float currentPercent)
+    public ERarityLevel GetRarityLevel(float noneChance, float commonChance, float rareChance, float legendaryChance)
     {
-        currentPercent = GetChance();
+        rareChance += _player.CurrentStats.Luck;
+        legendaryChance += _player.CurrentStats.Luck;
         
-        var ranges = new[]
+        var tempRarityDict = new Dictionary<ERarityLevel, float>()
         {
-            (max: _lowestPercent, rarity: ERarityLevel.Common),
-            (max: commonChance, rarity: ERarityLevel.Common),
-            (max: rareChance, rarity: ERarityLevel.Rare),
-            (max: legendaryChance, rarity: ERarityLevel.Legendary),
-            (max: _highestPercent, rarity: ERarityLevel.Legendary)
+            {ERarityLevel.None, noneChance},
+            {ERarityLevel.Common, commonChance},
+            {ERarityLevel.Rare, rareChance},
+            {ERarityLevel.Legendary, legendaryChance}
         };
 
-        var currentNumber = currentPercent;
+        ERarityLevel rarityLevel = ERarityLevel.Common;
         
-        var rarityLevel = ranges.First(r => currentNumber < r.max).rarity;
-        
+        float totalWeight = 0;
+
+        foreach (var item in tempRarityDict)
+        {
+            float weight = item.Value;
+            
+            if(weight <= 0)
+                continue;
+            
+            float randomNumber = Random.Range(0, totalWeight + weight);
+
+            if (randomNumber >= totalWeight)
+            {
+                rarityLevel = item.Key;
+            }
+            
+            totalWeight += weight;
+        }
+
         return rarityLevel;
-    }
-    
-    private float GetChance()
-    {
-        float percentChance = Random.Range(_lowestPercent, _highestPercent);
-
-        percentChance += _player.CurrentStats.Luck;
-
-        if (percentChance > _highestPercent)
-            percentChance = _highestPercent;
-        
-        return percentChance;
     }
 }

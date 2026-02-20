@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 266c257993a4d9c4289c30b504d1c91f, type: 3}
   _name: Coffin lid
   _description: +2% Armor
-  _rarityLevel: 0
+  _weight: 95
+  _rarityLevel: 1

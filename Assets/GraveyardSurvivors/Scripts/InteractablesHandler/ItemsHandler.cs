@@ -68,12 +68,32 @@ public class ItemsHandler : MonoBehaviour
 
     private Item GetRandomItem(ERarityLevel rarity)
     {
-        int firstIndex = 0;
+        int totalWeight = 0;
         
         List<Item> desiredList = _itemsLists[rarity].ToList();
-
-        int randomIndex = Random.Range(firstIndex, desiredList.Count);
         
-        return desiredList[randomIndex];
-    }
+        if (desiredList == null || !desiredList.Any())
+            throw new Exception();
+        
+        Item selected = null;
+
+        foreach (var item in desiredList)
+        {
+            int weight = item.Info.Weight;
+            
+            if(weight <= 0)
+                continue;
+
+            int randomNumber = Random.Range(0, totalWeight + weight);
+
+            if (randomNumber >= totalWeight)
+            {
+                selected = item;
+            }
+
+            totalWeight += weight;
+        }
+
+        return selected;
+    } 
 }

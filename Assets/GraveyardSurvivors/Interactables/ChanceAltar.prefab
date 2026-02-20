@@ -560,15 +560,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Outline: {fileID: 8060998351124851371}
   ValueViewer: {fileID: 831034912937131186}
-  CommonChancePercent: 50
-  RareChancePercent: 85
-  LegendaryChancePercent: 95
+  CommonChanceWeight: 40
+  RareChanceWeight: 20
+  LegendaryChanceWeight: 5
   _aPoint: {fileID: 439135852860042417}
   _bPoint: {fileID: 906995193382246293}
   _controlPoint: {fileID: 8710713397835284121}
   _points: {fileID: 8151128714832802890}
-  _maxInteractionsAmount: 3
+  _maxInteractionsAmount: 2
   _countdownTime: 1.5
+  _noneChance: 40
 --- !u!114 &831034912937131186
 MonoBehaviour:
   m_ObjectHideFlags: 0

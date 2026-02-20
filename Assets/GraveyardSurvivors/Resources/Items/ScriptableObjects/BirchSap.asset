@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _name: Birch sap
   _description: +10% Movement speed
-  _rarityLevel: 0
+  _weight: 90
+  _rarityLevel: 1

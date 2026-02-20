@@ -35,11 +35,12 @@ public class ChanceAltarHandler : ChanceHandlerBase
 
     private void OnChanceAltarChosen(ChanceAltar altar)
     {
+        int noneChance = altar.NoneChance;
         int commonChance = altar.CommonChance;
         int rareChance = altar.RareChance;
         int legendaryChance = altar.LegendaryChance;
         
-        ERarityLevel rarityLevel = RarityEvaluator.GetRarityLevel(commonChance, rareChance, legendaryChance, out float currentPercent);
+        ERarityLevel rarityLevel = RarityEvaluator.GetRarityLevel(noneChance, commonChance, rareChance, legendaryChance);
 
         if (Player.HasEnoughMoney(altar.CurrentCost) == false)
         {
@@ -51,7 +52,9 @@ public class ChanceAltarHandler : ChanceHandlerBase
         Player.ReduceMoneyAmount(altar.CurrentCost);
         altar.StartCountdown();
         
-        if (currentPercent < commonChance)
+        Debug.Log(rarityLevel);
+        
+        if (rarityLevel == ERarityLevel.None)
         {
             Debug.Log("Nothing to drop");   
         }

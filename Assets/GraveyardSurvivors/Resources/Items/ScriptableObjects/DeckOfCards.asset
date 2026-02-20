@@ -16,4 +16,5 @@ MonoBehaviour:
   _name: Deck of cards
   _description: +8% Attack speed, if player has item Jester's cap, +15% gold multiplier
     pick up
-  _rarityLevel: 0
+  _weight: 80
+  _rarityLevel: 1

@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _name: Pumpkin seed
   _description: +15 HP
-  _rarityLevel: 0
+  _weight: 100
+  _rarityLevel: 1

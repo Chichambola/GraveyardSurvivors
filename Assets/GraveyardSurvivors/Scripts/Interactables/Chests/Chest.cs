@@ -24,6 +24,8 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
         if (!IsAvailable) 
             return;
         
+        HideValue();
+        
         WasChosen?.Invoke(this);
     }
 

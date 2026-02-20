@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 5d65dfd00f4701f93a13cce9175a11d4, type: 3}
   _name: Candy
   _description: +1 Health regeneration
-  _rarityLevel: 0
+  _weight: 90
+  _rarityLevel: 1

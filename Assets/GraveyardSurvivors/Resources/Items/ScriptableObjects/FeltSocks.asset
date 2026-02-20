@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 9a4c3f65b7622214ebd13e6ad514a16e, type: 3}
   _name: Felt socks
   _description: +5% Evasion chance
-  _rarityLevel: 0
+  _weight: 89
+  _rarityLevel: 1

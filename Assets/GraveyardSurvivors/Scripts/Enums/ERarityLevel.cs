@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum ERarityLevel
 {
-    Common = 0,
-    Rare = 1,
-    Legendary = 2
+    None = 0,
+    Common = 1,
+    Rare = 2,
+    Legendary = 3
 }

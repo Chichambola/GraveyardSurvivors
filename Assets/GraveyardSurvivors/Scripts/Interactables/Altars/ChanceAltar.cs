@@ -6,23 +6,27 @@ using UnityEngine;
 
 public class ChanceAltar : ChanceInteractable<ChanceAltar>, IPoolable<ChanceAltar>
 {
+    [Header("Altar specific fields")]
     [SerializeField] private int _maxInteractionsAmount = 2;
     [SerializeField] private float _countdownTime = 1.5f;
+    [SerializeField] private int _noneChance = 40;
 
-    private float _currentCost;
-    
-    public float CurrentCost => _currentCost;
-    
     public override event Action<ChanceAltar> WasChosen;
     public event Action<ChanceAltar> CanBeReleased;
     
+    private float _currentCost;
     private int _currentInteractionsAmount;
     private Coroutine _coroutine;
+    
+    public float CurrentCost => _currentCost;
+    public int NoneChance => _noneChance;
     
     public override void ProcessInteraction()
     {
         if (IsAvailable == false || _currentInteractionsAmount == _maxInteractionsAmount)
             return;
+        
+        HideValue();
         
         WasChosen?.Invoke(this);
     }

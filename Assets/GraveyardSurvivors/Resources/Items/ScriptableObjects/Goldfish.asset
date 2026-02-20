@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _name: Goldfish
   _description: +5% Gold multiplier
-  _rarityLevel: 1
+  _weight: 60
+  _rarityLevel: 2

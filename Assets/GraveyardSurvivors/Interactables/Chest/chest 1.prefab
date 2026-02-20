@@ -375,9 +375,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Outline: {fileID: 9074495386139287288}
   ValueViewer: {fileID: -8920939765684463614}
-  CommonChancePercent: 60
-  RareChancePercent: 75
-  LegendaryChancePercent: 90
+  CommonChanceWeight: 100
+  RareChanceWeight: 55
+  LegendaryChanceWeight: 15
   _aPoint: {fileID: 6071187561532665750}
   _bPoint: {fileID: 3116285745774186417}
   _controlPoint: {fileID: 1455544774472003890}

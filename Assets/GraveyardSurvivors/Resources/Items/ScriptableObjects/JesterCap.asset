@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 0}
   _name: Jester's cap
   _description: +10% Crit chance
-  _rarityLevel: 1
+  _weight: 60
+  _rarityLevel: 2

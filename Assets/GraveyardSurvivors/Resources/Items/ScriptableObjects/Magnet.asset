@@ -15,4 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 42db1a269aeb1a746b0aa6f4f29588b8, type: 3}
   _name: Magnet
   _description: +10% pick up radius
-  _rarityLevel: 0
+  _weight: 95
+  _rarityLevel: 1

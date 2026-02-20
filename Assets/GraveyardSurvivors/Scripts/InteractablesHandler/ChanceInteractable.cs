@@ -7,10 +7,10 @@ using Object = UnityEngine.Object;
 
 public abstract class ChanceInteractable<T> : Interactable
 {
-    [Header("Chances")]
-    [SerializeField] protected int CommonChancePercent;
-    [SerializeField] protected int RareChancePercent;
-    [SerializeField] protected int LegendaryChancePercent;
+    [Header("Weights")]
+    [SerializeField] protected int CommonChanceWeight;
+    [SerializeField] protected int RareChanceWeight;
+    [SerializeField] protected int LegendaryChanceWeight;
     [Header("Quadratic curve points")]
     [SerializeField] private Transform _aPoint;
     [SerializeField] private Transform _bPoint;
@@ -21,9 +21,9 @@ public abstract class ChanceInteractable<T> : Interactable
     
     public QuadraticCurvePoints CurrentPoints => _points;
     
-    public int CommonChance => CommonChancePercent;
-    public int RareChance => RareChancePercent;
-    public int LegendaryChance => LegendaryChancePercent;
+    public int CommonChance => CommonChanceWeight;
+    public int RareChance => RareChanceWeight;
+    public int LegendaryChance => LegendaryChanceWeight;
 
     private void OnEnable()
     {
