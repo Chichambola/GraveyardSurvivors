@@ -2,18 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDeckOfCards : Item, IBuff
+public class ItemDeckOfCards : Item
 {
-    public CharacterStats ApplyBuff(CharacterStats baseStats)
+    public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        if (baseStats.AttackSpeed >= HighestValue)
-            return baseStats;
-
-        float clampedValue = baseStats.AttackSpeed / HighestValue;
-
-        float multiplier = (1 - clampedValue) * (1 - clampedValue);
-        
-        baseStats.AttackSpeed = Mathf.Floor(Mathf.Min(baseStats.AttackSpeed + (InscreaseValue * multiplier), HighestValue));
+        baseStats.AttackSpeed = CalculateBuffAmount(baseStats.AttackSpeed);
         
         return baseStats;
     }

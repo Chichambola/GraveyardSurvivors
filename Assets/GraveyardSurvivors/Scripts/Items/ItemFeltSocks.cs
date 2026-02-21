@@ -2,18 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemFeltSocks : Item, IBuff
+public class ItemFeltSocks : Item
 {
-    public CharacterStats ApplyBuff(CharacterStats baseStats)
+    public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        if (baseStats.EvasionChance >= HighestValue)
-            return baseStats;
-
-        float clampedValue = baseStats.EvasionChance / HighestValue;
-
-        float multiplier = (1 - clampedValue);
-        
-        baseStats.EvasionChance = Mathf.Floor(Mathf.Min(baseStats.EvasionChance + (InscreaseValue * multiplier), HighestValue));
+        baseStats.EvasionChance = CalculateBuffAmount(baseStats.EvasionChance);
         
         return baseStats;
     }

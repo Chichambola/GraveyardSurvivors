@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemCoffinLid : Item, IBuff
+public class ItemCoffinLid : Item
 {
-    public CharacterStats ApplyBuff(CharacterStats baseStats)
+    public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        if (baseStats.Armor >= HighestValue)
-            return baseStats;
-
-        float clampedValue = baseStats.Armor / HighestValue;
-
-        float multiplier = (1 - clampedValue) * (1 - clampedValue);
-        
-        baseStats.Armor = Mathf.Floor(Mathf.Max(baseStats.Armor + (InscreaseValue * multiplier), HighestValue));
+        baseStats.Armor = CalculateBuffAmount(baseStats.Armor);
         
         return baseStats;
     }

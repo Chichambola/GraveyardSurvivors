@@ -15,11 +15,11 @@ MonoBehaviour:
   _characterStats:
     Health: 130
     HealthRegeneration: 2
-    Armor: 20
+    Armor: 85
     MovementSpeed: 0
     AttackSpeed: 0
     AttackRadius: 0
-    PickUpRadius: 55
+    PickUpRadius: 0
     BlockChance: 15
     CritChance: 10
     CritMultiplier: 2

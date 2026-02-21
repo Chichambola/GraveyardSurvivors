@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public abstract class Item : MonoBehaviour, IPoolable<Item>
+public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff
 {
     [SerializeField] private ItemInfo _info;
     [SerializeField] protected int InscreaseValue;
@@ -15,7 +15,8 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>
     protected float HighestValue = UserUtils.HighestPercent;
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
-    
+    private IBuff _buffImplementation;
+
     public Rigidbody Rigidbody => _rigidbody;
     public ItemInfo Info => _info;
     
@@ -36,5 +37,21 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>
     public void Release()
     {
         CanBeReleased?.Invoke(this);
+    }
+
+    public abstract CharacterStats ApplyBuff(CharacterStats baseStats);
+    
+    protected float CalculateBuffAmount(float value)
+    {
+        if (value >= HighestValue)
+            return value;
+
+        float clampedValue = value / HighestValue;
+
+        float multiplier = (1 - clampedValue);
+        
+        value = Mathf.Min(value + (InscreaseValue * multiplier),HighestValue);
+        
+        return value;
     }
 }

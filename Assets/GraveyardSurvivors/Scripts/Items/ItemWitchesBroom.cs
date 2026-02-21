@@ -2,18 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemWitchesBroom : Item, IBuff 
+public class ItemWitchesBroom : Item
 {
-    public CharacterStats ApplyBuff(CharacterStats baseStats)
+    public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        if (baseStats.MovementSpeed >= HighestValue)
-            return baseStats;
-
-        float clampedValue = baseStats.MovementSpeed / HighestValue;
-
-        float multiplier = (1 - clampedValue) * (1 - clampedValue);
-        
-        baseStats.MovementSpeed = Mathf.Floor(Mathf.Min(baseStats.MovementSpeed + (InscreaseValue * multiplier), HighestValue));
+        baseStats.MovementSpeed = CalculateBuffAmount(baseStats.MovementSpeed);
         
         return baseStats;
     }

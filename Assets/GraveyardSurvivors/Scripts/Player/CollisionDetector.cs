@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]
-public class CollisionDetector : MonoBehaviour
+public class CollisionDetector : Detector
 {
     public event Action<IBuff> ItemDetected;
     
@@ -16,7 +16,7 @@ public class CollisionDetector : MonoBehaviour
         _collider = GetComponent<CapsuleCollider>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Item item))
         {
@@ -28,4 +28,6 @@ public class CollisionDetector : MonoBehaviour
             }
         }
     }
+
+    protected override void OnTriggerExit(Collider other) { }
 }

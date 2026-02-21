@@ -22,19 +22,19 @@ public class StatsViewer : MonoBehaviour
     
     private void OnStatsChanged(CharacterStats stats)
     {
-        _text.text = $"Health: {stats.Health} \n" +
-                     $"Health regeneration: {stats.HealthRegeneration}\n" +
-                     $"Armor: {stats.Armor}\n" +
-                     $"MS: {stats.MovementSpeed}\n" +
-                     $"Attack speed: {stats.AttackSpeed}\n" +
-                     $"Attack radius: {stats.AttackRadius}\n" +
-                     $"Pickup radius: {stats.PickUpRadius}\n" +
-                     $"Block chance: {stats.BlockChance}\n" +
-                     $"Evasion chance: {stats.EvasionChance}\n" +
-                     $"Crit chance: {stats.CritChance}\n" +
-                     $"Crit multiplier: {stats.CritMultiplier}\n" +
-                     $"XP Multiplier: {stats.XpMultiplier}\n" +
-                     $"Gold multiplier: {stats.GoldMultiplier}\n" +
-                     $"Luck: {stats.Luck}";
+        _text.text = $"Health: {stats.Health:f1} \n" +
+                     $"Health regeneration: {stats.HealthRegeneration:f1}\n" +
+                     $"Armor: {stats.Armor:f1}\n" +
+                     $"MS: {stats.MovementSpeed:f1}\n" +
+                     $"Attack speed: {stats.AttackSpeed:f1}\n" +
+                     $"Attack radius: {stats.AttackRadius:f1}\n" +
+                     $"Pickup radius: {stats.PickUpRadius:f1}\n" +
+                     $"Block chance: {stats.BlockChance:f1}\n" +
+                     $"Evasion chance: {stats.EvasionChance:f1}\n" +
+                     $"Crit chance: {stats.CritChance:f1}\n" +
+                     $"Crit multiplier: {stats.CritMultiplier:f1}\n" +
+                     $"XP Multiplier: {stats.XpMultiplier:f1}\n" +
+                     $"Gold multiplier: {stats.GoldMultiplier:f1}\n" +
+                     $"Luck: {stats.Luck:f1}";
     }
 }
