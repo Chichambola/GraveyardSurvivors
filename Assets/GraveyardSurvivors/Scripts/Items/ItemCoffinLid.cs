@@ -11,4 +11,11 @@ public class ItemCoffinLid : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.Armor -= CalculateBuffAmount(baseStats.Armor);
+        
+        return baseStats;
+    }
 }

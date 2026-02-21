@@ -10,4 +10,11 @@ public class ItemHolyWater : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.BlockChance -= CalculateBuffAmount(baseStats.BlockChance);
+        
+        return baseStats;
+    }
 }

@@ -6,7 +6,14 @@ public class ItemMysticalLiquid : Item
 {
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.PickUpRadius = CalculateBuffAmount(baseStats.PickUpRadius);
+        baseStats.CritMultiplier = CalculateBuffAmount(baseStats.CritMultiplier);
+        
+        return baseStats;
+    }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.CritMultiplier -= CalculateBuffAmount(baseStats.CritMultiplier);
         
         return baseStats;
     }

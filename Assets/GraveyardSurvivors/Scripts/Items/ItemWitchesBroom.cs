@@ -10,4 +10,11 @@ public class ItemWitchesBroom : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.MovementSpeed -= CalculateBuffAmount(baseStats.MovementSpeed);
+        
+        return baseStats;
+    }
 }

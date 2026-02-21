@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class InteractableHandler : MonoBehaviour, IInteractableHandler
 {
-    protected IPlayer Player; 
+    protected IPlayerStats Player; 
     
-    public void Init(IPlayer player)
+    public void Init(IPlayerStats player)
     {
         if(player == null)
             throw new System.ArgumentNullException("player");

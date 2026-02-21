@@ -40,7 +40,8 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff
     }
 
     public abstract CharacterStats ApplyBuff(CharacterStats baseStats);
-    
+    public abstract CharacterStats RemoveBuff(CharacterStats baseStats);
+
     protected float CalculateBuffAmount(float value)
     {
         if (value >= HighestValue)

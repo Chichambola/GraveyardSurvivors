@@ -10,4 +10,11 @@ public class ItemMagnet : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.PickUpRadius -= CalculateBuffAmount(baseStats.PickUpRadius);
+        
+        return baseStats;
+    }
 }

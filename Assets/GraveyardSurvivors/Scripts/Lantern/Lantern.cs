@@ -5,5 +5,5 @@ using UnityEngine;
 
 public class Lantern : MonoBehaviour
 {
-    [SerializeField] private Healer _healer;
+    
 }

@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader))]
-public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
+public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
@@ -27,8 +27,6 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
-    
-    private readonly List<IBuff> _buffs = new ();
     
     public CharacterStats CurrentStats { get; private set; }
     public float MaxHealth => _health.MaxHealth;
@@ -120,21 +118,14 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayer
     
     public void AddBuff(IBuff buff)
     {
-        _buffs.Add(buff);
+        CurrentStats = buff.ApplyBuff(CurrentStats);
         
-        ApplyBuff(buff);
+        StatsChanged?.Invoke(CurrentStats);
     }
 
     public void RemoveBuff(IBuff buff)
     {
-        _buffs.Remove(buff);
-        
-        ApplyBuff(buff);
-    }
-
-    private void ApplyBuff(IBuff buff)
-    {
-        CurrentStats = buff.ApplyBuff(CurrentStats);
+        CurrentStats = buff.RemoveBuff(CurrentStats);
         
         StatsChanged?.Invoke(CurrentStats);
     }

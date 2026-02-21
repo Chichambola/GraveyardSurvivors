@@ -6,7 +6,14 @@ public class ItemPumpkinSeed : Item
 {
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.PickUpRadius = CalculateBuffAmount(baseStats.PickUpRadius);
+        baseStats.Health = CalculateBuffAmount(baseStats.Health);
+        
+        return baseStats;
+    }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.Health -= CalculateBuffAmount(baseStats.Health);
         
         return baseStats;
     }

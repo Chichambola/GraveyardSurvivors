@@ -10,4 +10,11 @@ public class ItemFeltSocks : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.EvasionChance -= CalculateBuffAmount(baseStats.EvasionChance);
+        
+        return baseStats;
+    }
 }

@@ -10,4 +10,11 @@ public class ItemDeckOfCards : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.AttackSpeed -= CalculateBuffAmount(baseStats.AttackSpeed);
+        
+        return baseStats;
+    }
 }

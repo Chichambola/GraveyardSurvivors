@@ -10,4 +10,11 @@ public class ItemCandy : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.HealthRegeneration -= CalculateBuffAmount(baseStats.HealthRegeneration);
+        
+        return baseStats;
+    }
 }

@@ -9,4 +9,9 @@ public class ItemHeartOfNecropolis : Item
     {
         throw new InvalidImplementationException();
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        throw new InvalidImplementationException();
+    }
 }

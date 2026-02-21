@@ -10,4 +10,11 @@ public class ItemJackOLantern : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.AttackRadius -= CalculateBuffAmount(baseStats.AttackRadius);
+        
+        return baseStats;
+    }
 }

@@ -10,4 +10,11 @@ public class ItemDice20 : Item
         
         return baseStats;
     }
+    
+    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    {
+        baseStats.Luck -= CalculateBuffAmount(baseStats.Luck);
+        
+        return baseStats;
+    }
 }

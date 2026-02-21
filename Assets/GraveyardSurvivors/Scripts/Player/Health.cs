@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private float _cooldownRate = 1f;
 
     public event Action<float> ValueChanged;
@@ -20,11 +21,23 @@ public class Health : MonoBehaviour
     public float CurrentValue => _currentValue;
 
     private void OnEnable()
-    { 
+    {
+        _player.StatsChanged += OnStatsChanged;
+        
         if(_coroutine != null)
             StopCoroutine(_coroutine);
 
         StartCoroutine(RegenerationRoutine());
+    }
+
+    private void OnDisable()
+    {
+        _player.StatsChanged -= OnStatsChanged;
+    }
+
+    private void OnStatsChanged(CharacterStats stats)
+    {
+        _healthRegenerationValue = stats.HealthRegeneration;
     }
 
     public void SetInitialStats(float health, float healthRegenerationRate)
