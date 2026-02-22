@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-[CreateAssetMenu(fileName = "PlayerInfo", menuName = "Characters/New character")]
+[CreateAssetMenu(fileName = "PlayerInfo", menuName = "Characters/New character player")]
 public class PlayerInfo : ScriptableObject
 {
     [SerializeField] private CharacterStats _characterStats;

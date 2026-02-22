@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
     [SerializeField] private Wallet _wallet;
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
+    [SerializeField] private Attacker _attacker;
+    [SerializeField] private Weapon _weapon;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
@@ -41,9 +44,14 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
         _collisionDetector.ItemDetected += AddBuff;
         _health.ValueChanged += OnHealthValueChanged;
         
+        if (_baseStats == null)
+            throw new Exception();
+
+        CurrentStats = _baseStats.GetStats();
+
         SetStats();
     }
-    
+
     private void OnDisable()
     {
         _collisionDetector.ItemDetected -= AddBuff;
@@ -139,13 +147,10 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
     
     private void SetStats()
     {
-        if (_baseStats == null)
-            throw new Exception();
-
-        CurrentStats = _baseStats.GetStats();
-        
-        _health.SetInitialStats(CurrentStats.Health, CurrentStats.HealthRegeneration);
-        _defender.SetInitialStats(CurrentStats.Armor, CurrentStats.BlockChance);
-        _evader.SetInitialStats(CurrentStats.EvasionChance);
+        _defender.SetInitialStats(CurrentStats);
+        _health.SetInitialStats(CurrentStats);
+        _evader.SetInitialStats(CurrentStats);
+        _attacker.SetInitialStats(CurrentStats);
+        _attacker.SetWeapon(_weapon);
     }
 }

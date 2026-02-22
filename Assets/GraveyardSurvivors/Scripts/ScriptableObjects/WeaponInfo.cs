@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 [CreateAssetMenu(fileName = "WeaponInfo", menuName = "Weapons/New Weapon")]
 public class WeaponInfo : ScriptableObject
 {

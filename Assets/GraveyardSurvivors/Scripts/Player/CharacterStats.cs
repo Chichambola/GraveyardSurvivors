@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-public class CharacterStats
+public class CharacterStats : IStat
 {
     public float Health;
     public float HealthRegeneration;

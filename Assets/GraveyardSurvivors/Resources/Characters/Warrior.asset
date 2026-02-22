@@ -15,7 +15,7 @@ MonoBehaviour:
   _characterStats:
     Health: 130
     HealthRegeneration: 2
-    Armor: 85
+    Armor: 20
     MovementSpeed: 0
     AttackSpeed: 0
     AttackRadius: 0

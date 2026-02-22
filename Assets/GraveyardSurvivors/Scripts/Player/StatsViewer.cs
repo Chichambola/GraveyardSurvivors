@@ -5,22 +5,22 @@ using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
 
-public class StatsViewer : MonoBehaviour
+public class StatsViewer : Stats<CharacterStats>
 {
     [SerializeField] private Player _player;
     [SerializeField] private TextMeshProUGUI _text;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
         _player.StatsChanged += OnStatsChanged;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         _player.StatsChanged -= OnStatsChanged;
     }
     
-    private void OnStatsChanged(CharacterStats stats)
+    protected override void OnStatsChanged(CharacterStats stats)
     {
         _text.text = $"Health: {stats.Health:f1} \n" +
                      $"Health regeneration: {stats.HealthRegeneration:f1}\n" +
@@ -37,4 +37,6 @@ public class StatsViewer : MonoBehaviour
                      $"Gold multiplier: {stats.GoldMultiplier:f1}\n" +
                      $"Luck: {stats.Luck:f1}";
     }
+
+    public override void SetInitialStats(CharacterStats stats) { }
 }

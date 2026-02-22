@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : Stats<CharacterStats>
 {
     [SerializeField] private Player _player;
     [SerializeField] private float _cooldownRate = 1f;
@@ -20,7 +20,7 @@ public class Health : MonoBehaviour
     public float MaxHealth => _maxValue;
     public float CurrentValue => _currentValue;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
         _player.StatsChanged += OnStatsChanged;
         
@@ -30,21 +30,9 @@ public class Health : MonoBehaviour
         StartCoroutine(RegenerationRoutine());
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         _player.StatsChanged -= OnStatsChanged;
-    }
-
-    private void OnStatsChanged(CharacterStats stats)
-    {
-        _healthRegenerationValue = stats.HealthRegeneration;
-    }
-
-    public void SetInitialStats(float health, float healthRegenerationRate)
-    {
-        _maxValue = health;
-        _currentValue = health;
-        _healthRegenerationValue = healthRegenerationRate;
     }
 
     public void TakeDamage(float damage)
@@ -52,6 +40,22 @@ public class Health : MonoBehaviour
         _currentValue -= damage;
         
         ValueChanged?.Invoke(_currentValue);
+    }
+
+    protected override void OnStatsChanged(CharacterStats stats)
+    {
+        _currentValue = stats.Health;
+        _healthRegenerationValue = stats.HealthRegeneration;
+        
+        if(_currentValue >= _maxValue)
+            _maxValue = _currentValue;
+    }
+
+    public override void SetInitialStats(CharacterStats stats)
+    {
+        _currentValue = stats.Health;
+        _maxValue = _currentValue;
+        _healthRegenerationValue = stats.HealthRegeneration;
     }
 
     private IEnumerator RegenerationRoutine()
@@ -70,4 +74,6 @@ public class Health : MonoBehaviour
             yield return wait;
         }
     }
+    
+    
 }

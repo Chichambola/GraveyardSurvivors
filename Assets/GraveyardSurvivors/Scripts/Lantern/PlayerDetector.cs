@@ -12,8 +12,6 @@ public class PlayerDetector : Detector
     {
         if (other.TryGetComponent(out IBuffable player))
         {
-            Debug.Log("Player detected");
-            
             PlayerDetected?.Invoke(player);
         }
     }

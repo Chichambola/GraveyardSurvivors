@@ -13,4 +13,11 @@ public static class UserUtils
 
         return finalNumber;
     }
+
+    public static float SubstractPercentFromNumber(float originalNumber, float percent)
+    {
+        float finalNumber = originalNumber * (1 - percent / HighestPercent);
+
+        return finalNumber;
+    }
 }

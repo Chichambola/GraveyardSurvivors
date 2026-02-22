@@ -4,17 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Defender : MonoBehaviour
+public class Defender : Stats<CharacterStats>
 {
+    [SerializeField] private Player _player;
     [SerializeField] private int _dividerNumber = 2;
     
     private float _armorPercent;
     private float _blockChance;
-    
-    public void SetInitialStats(float armorPercent, float blockChance)
+
+    protected override void OnEnable()
     {
-        _armorPercent = armorPercent;
-        _blockChance = blockChance;
+        _player.StatsChanged += OnStatsChanged;
+    }
+
+    protected override void OnDisable()
+    {
+        _player.StatsChanged -= OnStatsChanged;
     }
 
     public bool CanBlock(float luck)
@@ -38,12 +43,24 @@ public class Defender : MonoBehaviour
     
     public float GetDamageAmount(float damage)
     {
-        damage *= (1 - (_armorPercent / UserUtils.HighestPercent));
+        damage = UserUtils.SubstractPercentFromNumber(damage, _armorPercent);
 
         damage = Mathf.Round(damage);
         
         Debug.Log($"Damage was blocked! Final blocked damage: {damage}");
         
         return damage;
+    }
+    
+    protected override void OnStatsChanged(CharacterStats stats)
+    {
+        _armorPercent = stats.Armor;
+        _blockChance = stats.BlockChance;
+    }
+
+    public override void SetInitialStats(CharacterStats stats)
+    {
+        _armorPercent = stats.Armor;
+        _blockChance = stats.BlockChance;
     }
 }
