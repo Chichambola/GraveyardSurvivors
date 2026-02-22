@@ -50,6 +50,8 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
         CurrentStats = _baseStats.GetStats();
 
         SetStats();
+        
+        _attacker.StartAttacking();
     }
 
     private void OnDisable()

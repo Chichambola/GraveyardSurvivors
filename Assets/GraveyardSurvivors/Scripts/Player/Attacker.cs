@@ -17,11 +17,6 @@ public class Attacker : Stats<CharacterStats>
     protected override void OnEnable()
     {
         _player.StatsChanged += OnStatsChanged;
-
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(AttackingCoroutine());
     }
 
     protected override void OnDisable()
@@ -39,13 +34,21 @@ public class Attacker : Stats<CharacterStats>
         _attackSpeed = stats.AttackSpeed;
         _attackRadius = stats.AttackRadius;
     }
+
+    public void StartAttacking()
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(AttackingCoroutine());
+    }
     
     protected override void OnStatsChanged(CharacterStats stats)
     {
         _attackSpeed = stats.AttackSpeed;
         _attackRadius = stats.AttackRadius;
     }
-
+    
     private IEnumerator AttackingCoroutine()
     {
         _cooldown = UserUtils.SubstractPercentFromNumber(_cooldown, _attackSpeed);
