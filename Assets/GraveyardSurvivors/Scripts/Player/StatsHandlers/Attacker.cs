@@ -7,7 +7,7 @@ using UnityEngine;
 public class Attacker : Stats<CharacterStats>
 {
     [SerializeField] private Player _player;
-    [SerializeField] private float _cooldown = 3f;
+    [SerializeField] private float _cooldown = 1.5f;
 
     private float _attackSpeed;
     private float _attackRadius;
@@ -48,18 +48,30 @@ public class Attacker : Stats<CharacterStats>
         _attackSpeed = stats.AttackSpeed;
         _attackRadius = stats.AttackRadius;
     }
-    
+
     private IEnumerator AttackingCoroutine()
     {
-        _cooldown = UserUtils.SubstractPercentFromNumber(_cooldown, _attackSpeed);
+        float currentCooldown = _cooldown;
         
-        var wait = new WaitForSeconds(_cooldown);
-
         while (enabled)
         {
-            _weapon.Attack();
+            if (!Mathf.Approximately(currentCooldown, _cooldown))
+            {
+                _cooldown = UserUtils.SubstractPercentFromNumber(_cooldown, _attackSpeed);
+                
+                currentCooldown = _cooldown;
+            }
+        
+            var wait = new WaitForSeconds(currentCooldown);
+            
+            _weapon.Attack(currentCooldown);
 
             yield return wait;
         }
+    }
+    
+    private void OnEnemyDetected(IAttacker attacker)
+    {
+        attacker.TakeDamage(_weapon.Info.Damage);
     }
 }

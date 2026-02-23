@@ -47,8 +47,6 @@ public class Defender : Stats<CharacterStats>
 
         damage = Mathf.Round(damage);
         
-        Debug.Log($"Damage was blocked! Final blocked damage: {damage}");
-        
         return damage;
     }
     

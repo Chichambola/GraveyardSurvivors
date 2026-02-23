@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IWeapon
 {
     public WeaponInfo Info { get; }
-    void Attack();
+    void Attack(float duration);
 }
