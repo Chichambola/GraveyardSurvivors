@@ -7,16 +7,13 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader))]
-public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
+public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 {
+    [Header("Base")]
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
     [Header("Handlers")]
-    [SerializeField] private AnimationHandler _controller;
     [SerializeField] private InteractorHandler _InteractorHandler;
-    [Header("Movement")]
-    [SerializeField] private Mover _mover;
-    [SerializeField] private Rotator _rotator;
     [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
     [SerializeField] private StatsViewer _statsViewer;
@@ -33,10 +30,12 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
     
     public CharacterStats CurrentStats { get; private set; }
     public float MaxHealth => _health.MaxHealth;
-    
-    private void Awake()
+
+    protected override void Awake()
     {
         _inputReader = GetComponent<InputReader>();
+
+        InitializeStateMachine();
     }
 
     private void OnEnable()
@@ -65,26 +64,33 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
         StatsChanged?.Invoke(CurrentStats);
     }
 
-    private void Update()
+    protected override void Update()
     {
+        StateMachine.Update();
+        
         if (_inputReader.IsInteractionButtonPressed)
         {
             InteractionButtonPressed?.Invoke();
         }
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        _mover.Move(_inputReader.MovementDirection.normalized, CurrentStats.MovementSpeed);
-            
-        if (_inputReader.MovementDirection != Vector3.zero)
-        {
-            _rotator.Rotate(_inputReader.MovementDirection.normalized);
-        }
-            
-        _controller.PlayMovementAnimation(_inputReader.MovementDirection.magnitude);
+        StateMachine.FixedUpdate();
+        
+        HandleMovement();
     }
 
+    public override void HandleMovement()
+    {
+        Mover.Move(_inputReader.MovementDirection.normalized, CurrentStats.MovementSpeed);
+        
+        if (_inputReader.MovementDirection != Vector3.zero)
+        {
+            Rotator.Rotate(_inputReader.MovementDirection.normalized);
+        }
+    }
+    
     public bool HasEnoughMoney(float amount)
     {
         return !(_wallet.CurrentMoneyAmount < amount);
@@ -154,5 +160,18 @@ public class Player : MonoBehaviour, IBuffable, IAttacker, IPlayerStats
         _evader.SetInitialStats(CurrentStats);
         _attacker.SetInitialStats(CurrentStats);
         _attacker.SetWeapon(_weapon);
+    }
+    
+    private void InitializeStateMachine()
+    {
+        StateMachine = new StateMachine();
+
+        var runState = new RunState(this, Animator);
+        var idleState = new IdleState(this, Animator);
+        
+        DefineAtTransition(idleState, runState, new FuncPredicate(() => _inputReader.MovementDirection.magnitude > 0));
+        DefineAtTransition(runState, idleState, new FuncPredicate(() => _inputReader.MovementDirection.magnitude <= 0));
+        
+        StateMachine.SetState(idleState);
     }
 }

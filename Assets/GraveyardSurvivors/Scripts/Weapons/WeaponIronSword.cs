@@ -6,17 +6,18 @@ using UnityEngine;
 
 public class WeaponIronSword : Weapon
 {
-    [SerializeField] private ParticleSystem _slash;
     [SerializeField] private AttackArea _area;
+    [SerializeField] private float _waitTime = 0.1f;
+    [SerializeField] private ParticleSystem _slash;
     
     private Coroutine _slashCoroutine;
-
+    
     private void OnEnable()
     {
         if(_slashCoroutine != null)
             StopCoroutine(_slashCoroutine);
 
-        _slashCoroutine = StartCoroutine(CountingParticles());
+        _slashCoroutine = StartCoroutine(VisibilityCoroutine());
     }
 
     public override void Attack(float duration)
@@ -38,13 +39,15 @@ public class WeaponIronSword : Weapon
         slashMain.duration = duration;
     }
 
-    private IEnumerator CountingParticles()
+    private IEnumerator VisibilityCoroutine()
     {
+        var wait = new WaitForSeconds(_waitTime);
+        
         while (enabled)
         {
+            yield return wait;
+            
             _area.SetVisibility(_slash.particleCount > 0);
-
-            yield return null;
         }
     }
 }

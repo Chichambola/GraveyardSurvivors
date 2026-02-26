@@ -20,4 +20,12 @@ public static class UserUtils
 
         return finalNumber;
     }
+
+    public static Vector3 GetDirection(Vector3 startPosition, Vector3 endPosition)
+    {
+        Vector3 aimDirection = (startPosition - endPosition).normalized;
+
+        return aimDirection;
+    }
+    
 }

@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class PlayerDetector : Detector
 {
-    public event Action<IBuffable> PlayerDetected;
+    public event Action<Player> PlayerDetected;
     public event Action PlayerLeft;
-    
+    public bool IsPlayerNear { get; private set; }
+
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IBuffable player))
+        if (other.TryGetComponent(out Player player))
         {
             PlayerDetected?.Invoke(player);
+
+            IsPlayerNear = true;
         }
     }
 
@@ -21,6 +24,8 @@ public class PlayerDetector : Detector
         if (other.TryGetComponent(out Player _))
         {
             PlayerLeft?.Invoke();
+
+            IsPlayerNear = false;
         }
     }
 }

@@ -29,7 +29,7 @@ public class Thrower : MonoBehaviour
         float initialSampleTime = _sampleTime;
         int finishValue = 1;
 
-        while (initialSampleTime < finishValue)
+        while (initialSampleTime <= finishValue)
         {        
             initialSampleTime += Time.deltaTime * _speed;
             
