@@ -4,38 +4,21 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Attacker : Stats<CharacterStats>
+public class Attacker : AttackerHandlerBase<CharacterStats>
 {
-    [SerializeField] private Player _player;
     [SerializeField] private float _cooldown = 1.5f;
 
     private float _attackSpeed;
     private float _attackRadius;
     private Coroutine _coroutine;
     private IWeapon _weapon;
-    
-    protected override void OnEnable()
-    {
-        _player.StatsChanged += OnStatsChanged;
-    }
 
-    protected override void OnDisable()
-    {
-        _player.StatsChanged -= OnStatsChanged;
-    }
-
-    public void SetWeapon(IWeapon weapon)
+    public override void SetWeapon(IWeapon weapon)
     {
         _weapon = weapon ?? throw new Exception();
     }
-    
-    public override void SetInitialStats(CharacterStats stats)
-    {
-        _attackSpeed = stats.AttackSpeed;
-        _attackRadius = stats.AttackRadius;
-    }
 
-    public void StartAttacking()
+    public override void StartAttacking()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -43,13 +26,13 @@ public class Attacker : Stats<CharacterStats>
         _coroutine = StartCoroutine(AttackingCoroutine());
     }
     
-    protected override void OnStatsChanged(CharacterStats stats)
+    public override void UpdateStats(CharacterStats stats)
     {
         _attackSpeed = stats.AttackSpeed;
         _attackRadius = stats.AttackRadius;
     }
 
-    private IEnumerator AttackingCoroutine()
+    protected override IEnumerator AttackingCoroutine()
     {
         float currentCooldown = _cooldown;
         
@@ -69,8 +52,8 @@ public class Attacker : Stats<CharacterStats>
             yield return wait;
         }
     }
-    
-    private void OnEnemyDetected(IAttacker attacker)
+
+    public override void OnEnemyDetected(IAttacker attacker)
     {
         attacker.TakeDamage(_weapon.Info.Damage);
     }

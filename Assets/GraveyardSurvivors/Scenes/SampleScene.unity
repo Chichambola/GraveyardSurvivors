@@ -1058,7 +1058,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b6448363ccd849b0480fa16993d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 2139489487}
   _cooldownRate: 1
 --- !u!1 &885650734
 GameObject:
@@ -6668,7 +6667,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1481ca4d124db1148a7aaf6c6507ad45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 2139489487}
   _dividerNumber: 2
 --- !u!1 &1285563990
 GameObject:
@@ -12575,7 +12573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2203646241a39628614ec57cc33667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 2139489487}
   _cooldown: 3
 --- !u!4 &2035850620
 Transform:

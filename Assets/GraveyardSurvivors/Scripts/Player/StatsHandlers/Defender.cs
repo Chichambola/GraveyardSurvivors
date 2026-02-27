@@ -6,21 +6,10 @@ using Random = UnityEngine.Random;
 
 public class Defender : Stats<CharacterStats>
 {
-    [SerializeField] private Player _player;
     [SerializeField] private int _dividerNumber = 2;
     
     private float _armorPercent;
     private float _blockChance;
-
-    protected override void OnEnable()
-    {
-        _player.StatsChanged += OnStatsChanged;
-    }
-
-    protected override void OnDisable()
-    {
-        _player.StatsChanged -= OnStatsChanged;
-    }
 
     public bool CanBlock(float luck)
     {
@@ -50,13 +39,7 @@ public class Defender : Stats<CharacterStats>
         return damage;
     }
     
-    protected override void OnStatsChanged(CharacterStats stats)
-    {
-        _armorPercent = stats.Armor;
-        _blockChance = stats.BlockChance;
-    }
-
-    public override void SetInitialStats(CharacterStats stats)
+    public override void UpdateStats(CharacterStats stats)
     {
         _armorPercent = stats.Armor;
         _blockChance = stats.BlockChance;

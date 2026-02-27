@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class EnemyStats
+public class EnemyStats : IStat
 {
     public float Health;
     public float Damage;
     public float Armor;
     public float MovementSpeed;
+    public float AttackSpeed;
     public float MoneyForKill;
     public float XpForKill;
     public float LanternEnergy;
@@ -23,6 +24,7 @@ public class EnemyStats
         Damage = stats.Damage;
         Armor = stats.Armor;
         MovementSpeed = stats.MovementSpeed;
+        AttackSpeed = stats.AttackSpeed;
         MoneyForKill = stats.MoneyForKill;
         XpForKill = stats.XpForKill;
         LanternEnergy = stats.LanternEnergy;

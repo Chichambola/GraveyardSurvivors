@@ -10,17 +10,17 @@ public class StatsViewer : Stats<CharacterStats>
     [SerializeField] private Player _player;
     [SerializeField] private TextMeshProUGUI _text;
 
-    protected override void OnEnable()
+    private void OnEnable()
     {
-        _player.StatsChanged += OnStatsChanged;
+        _player.StatsChanged += UpdateStats;
     }
 
-    protected override void OnDisable()
+    private void OnDisable()
     {
-        _player.StatsChanged -= OnStatsChanged;
+        _player.StatsChanged -= UpdateStats;
     }
     
-    protected override void OnStatsChanged(CharacterStats stats)
+    public override void UpdateStats(CharacterStats stats)
     {
         _text.text = $"Health: {stats.Health:f1} \n" +
                      $"Health regeneration: {stats.HealthRegeneration:f1}\n" +
@@ -37,6 +37,4 @@ public class StatsViewer : Stats<CharacterStats>
                      $"Gold multiplier: {stats.GoldMultiplier:f1}\n" +
                      $"Luck: {stats.Luck:f1}";
     }
-
-    public override void SetInitialStats(CharacterStats stats) { }
 }

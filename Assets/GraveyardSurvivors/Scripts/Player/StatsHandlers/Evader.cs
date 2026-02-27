@@ -7,16 +7,6 @@ public class Evader : Stats<CharacterStats>
     [SerializeField] private Player _player;
     
     private float _evasionPercent;
-    
-    protected override void OnEnable()
-    {
-        _player.StatsChanged += OnStatsChanged;
-    }
-
-    protected override void OnDisable()
-    {
-        _player.StatsChanged -= OnStatsChanged;
-    }
 
     public bool CanEvade(float luck)
     {
@@ -27,12 +17,7 @@ public class Evader : Stats<CharacterStats>
         return !(randomPercent > currentEvasionChance);
     }
     
-    protected override void OnStatsChanged(CharacterStats stats)
-    {
-        _evasionPercent = stats.EvasionChance;
-    }
-
-    public override void SetInitialStats(CharacterStats stats)
+    public override void UpdateStats(CharacterStats stats)
     {
         _evasionPercent = stats.EvasionChance;
     }

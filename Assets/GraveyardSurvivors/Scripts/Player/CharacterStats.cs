@@ -21,7 +21,7 @@ public class CharacterStats : IStat
     public float GoldMultiplier;
     public float EvasionChance;
     public float Luck;
-
+    
     public CharacterStats(CharacterStats stats)
     {
         if (stats == null)

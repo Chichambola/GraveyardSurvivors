@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Health : Stats<CharacterStats>
 {
-    [SerializeField] private Player _player;
     [SerializeField] private float _cooldownRate = 1f;
 
     public event Action<float> ValueChanged;
@@ -20,19 +19,12 @@ public class Health : Stats<CharacterStats>
     public float MaxHealth => _maxValue;
     public float CurrentValue => _currentValue;
 
-    protected override void OnEnable()
+    protected void OnEnable()
     {
-        _player.StatsChanged += OnStatsChanged;
-        
         if(_coroutine != null)
             StopCoroutine(_coroutine);
 
         StartCoroutine(RegenerationRoutine());
-    }
-
-    protected override void OnDisable()
-    {
-        _player.StatsChanged -= OnStatsChanged;
     }
 
     public void TakeDamage(float damage)
@@ -42,20 +34,13 @@ public class Health : Stats<CharacterStats>
         ValueChanged?.Invoke(_currentValue);
     }
 
-    protected override void OnStatsChanged(CharacterStats stats)
+    public override void UpdateStats(CharacterStats stats)
     {
         _currentValue = stats.Health;
         _healthRegenerationValue = stats.HealthRegeneration;
         
         if(_currentValue >= _maxValue)
             _maxValue = _currentValue;
-    }
-
-    public override void SetInitialStats(CharacterStats stats)
-    {
-        _currentValue = stats.Health;
-        _maxValue = _currentValue;
-        _healthRegenerationValue = stats.HealthRegeneration;
     }
 
     private IEnumerator RegenerationRoutine()
@@ -74,6 +59,4 @@ public class Health : Stats<CharacterStats>
             yield return wait;
         }
     }
-    
-    
 }

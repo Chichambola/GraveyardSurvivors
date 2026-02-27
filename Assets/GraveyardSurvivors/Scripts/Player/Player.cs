@@ -27,6 +27,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
+
+    private readonly List<Stats<CharacterStats>> _stats = new(); 
     
     public CharacterStats CurrentStats { get; private set; }
     public float MaxHealth => _health.MaxHealth;
@@ -48,9 +50,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 
         CurrentStats = _baseStats.GetStats();
 
-        SetStats();
-        
-        _attacker.StartAttacking();
+        SetInitialStats();
     }
 
     private void OnDisable()
@@ -136,30 +136,47 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
     {
         CurrentStats = buff.ApplyBuff(CurrentStats);
         
-        StatsChanged?.Invoke(CurrentStats);
+        UpdateStats();
     }
 
     public void RemoveBuff(IBuff buff)
     {
         CurrentStats = buff.RemoveBuff(CurrentStats);
         
-        StatsChanged?.Invoke(CurrentStats);
+        UpdateStats();
     }
     
     private void OnHealthValueChanged(float value)
     {
         CurrentStats.Health = value;
         
-        StatsChanged?.Invoke(CurrentStats);
+        _health.UpdateStats(CurrentStats);
     }
     
-    private void SetStats()
+    private void SetInitialStats()
     {
-        _defender.SetInitialStats(CurrentStats);
-        _health.SetInitialStats(CurrentStats);
-        _evader.SetInitialStats(CurrentStats);
-        _attacker.SetInitialStats(CurrentStats);
+        _stats.Add(_defender);
+        _stats.Add(_health);
+        _stats.Add(_evader);
+        _stats.Add(_attacker);
+        _stats.Add(_statsViewer);
+
+        foreach (var stat in _stats)
+        {
+            stat.UpdateStats(CurrentStats);
+        }
+        
         _attacker.SetWeapon(_weapon);
+        
+        _attacker.StartAttacking();
+    }
+
+    private void UpdateStats()
+    {
+        foreach (var stat in _stats)
+        {
+            stat.UpdateStats(CurrentStats);
+        }
     }
     
     private void InitializeStateMachine()
