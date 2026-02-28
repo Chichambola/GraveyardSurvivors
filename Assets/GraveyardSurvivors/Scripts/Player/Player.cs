@@ -12,26 +12,30 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
     [Header("Base")]
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
+    
     [Header("Handlers")]
     [SerializeField] private InteractorHandler _InteractorHandler;
+    
     [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
     [SerializeField] private StatsViewer _statsViewer;
-    [Header("Stats handlers")]
-    [SerializeField] private Health _health;
-    [SerializeField] private Wallet _wallet;
+
+    [Header("Services")] 
+    [SerializeField] private HealthRegenerator _regenerator;
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
+    [SerializeField] private Wallet _wallet;
     [SerializeField] private Attacker _attacker;
     [SerializeField] private Weapon _weapon;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
-
-    private readonly List<Stats<CharacterStats>> _stats = new(); 
     
     public CharacterStats CurrentStats { get; private set; }
-    public float MaxHealth => _health.MaxHealth;
+    
+    public float MoneyAmount => _wallet.CurrentMoneyAmount;
+    public float CurrentHealth => CurrentStats.Health;
+    public float MaxHealth { get; private set; }
 
     protected override void Awake()
     {
@@ -42,21 +46,21 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 
     private void OnEnable()
     {
-        _collisionDetector.ItemDetected += AddBuff;
-        _health.ValueChanged += OnHealthValueChanged;
-        
         if (_baseStats == null)
             throw new Exception();
 
         CurrentStats = _baseStats.GetStats();
-
-        SetInitialStats();
+        
+        _collisionDetector.ItemDetected += AddBuff;
+        _regenerator.HealthRegenerated += OnHeal;
+        
+        MaxHealth = CurrentStats.Health;
     }
 
     private void OnDisable()
     {
         _collisionDetector.ItemDetected -= AddBuff;
-        _health.ValueChanged -= OnHealthValueChanged;
+        _regenerator.HealthRegenerated -= OnHeal;
     }
 
     private void Start()
@@ -91,11 +95,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         }
     }
     
-    public bool HasEnoughMoney(float amount)
-    {
-        return !(_wallet.CurrentMoneyAmount < amount);
-    }
-    
     public void ReduceMoneyAmount(float amount)
     {
         _wallet.ReduceMoneyAmount(amount);
@@ -106,77 +105,27 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         _wallet.ReceiveMoney(value);
     }
     
-    public bool HasEnoughHealth(float value)
-    {
-        return !(_health.CurrentValue < value);
-    }
-    
     public void TakeDamage(float damage)
     {
-        if (_evader.CanEvade(CurrentStats.Luck))
-        {
-            Debug.Log("Evaded");
-            
-            return;
-        }
+        damage = DetermineDamageAmount(damage);
+
+        CurrentStats.Health -= damage;
         
-        if (_defender.CanBlock(CurrentStats.Luck))
-        {
-            Debug.Log("Blocked");
-            
-            damage = _defender.GetBlockedDamage(damage);
-        }
-        
-        damage = _defender.GetDamageAmount(damage);
-        
-        _health.TakeDamage(damage);
+        StatsChanged?.Invoke(CurrentStats);
     }
-    
+
     public void AddBuff(IBuff buff)
     {
         CurrentStats = buff.ApplyBuff(CurrentStats);
         
-        UpdateStats();
+        StatsChanged?.Invoke(CurrentStats);
     }
 
     public void RemoveBuff(IBuff buff)
     {
         CurrentStats = buff.RemoveBuff(CurrentStats);
         
-        UpdateStats();
-    }
-    
-    private void OnHealthValueChanged(float value)
-    {
-        CurrentStats.Health = value;
-        
-        _health.UpdateStats(CurrentStats);
-    }
-    
-    private void SetInitialStats()
-    {
-        _stats.Add(_defender);
-        _stats.Add(_health);
-        _stats.Add(_evader);
-        _stats.Add(_attacker);
-        _stats.Add(_statsViewer);
-
-        foreach (var stat in _stats)
-        {
-            stat.UpdateStats(CurrentStats);
-        }
-        
-        _attacker.SetWeapon(_weapon);
-        
-        _attacker.StartAttacking();
-    }
-
-    private void UpdateStats()
-    {
-        foreach (var stat in _stats)
-        {
-            stat.UpdateStats(CurrentStats);
-        }
+        StatsChanged?.Invoke(CurrentStats);
     }
     
     private void InitializeStateMachine()
@@ -190,5 +139,38 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         DefineAtTransition(runState, idleState, new FuncPredicate(() => _inputReader.MovementDirection.magnitude <= 0));
         
         StateMachine.SetState(idleState);
+    }
+    
+    private float DetermineDamageAmount(float damage)
+    {
+        if (_evader.CanEvade(CurrentStats.EvasionChance, CurrentStats.Luck))
+        {
+            Debug.Log("Evaded");
+
+            return damage;
+        }
+        
+        if (_defender.CanBlock(CurrentStats.BlockChance, CurrentStats.Luck))
+        {
+            Debug.Log("Blocked");
+            
+            damage = _defender.GetBlockedDamage(damage);
+        }
+        
+        damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
+        
+        return damage;
+    }
+    
+    private void OnHeal(float value)
+    {
+        CurrentStats.Health += value;
+
+        if (CurrentStats.Health >= MaxHealth)
+        {
+            CurrentStats.Health = MaxHealth;
+        }
+        
+        StatsChanged?.Invoke(CurrentStats);
     }
 }

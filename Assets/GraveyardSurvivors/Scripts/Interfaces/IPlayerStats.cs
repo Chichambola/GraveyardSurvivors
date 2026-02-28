@@ -5,8 +5,8 @@ using UnityEngine;
 public interface IPlayerStats
 {
     public float MaxHealth { get; }
-    bool HasEnoughHealth(float value);
-    bool HasEnoughMoney(float value);
+    public float MoneyAmount { get; }
+    public float CurrentHealth { get; }
     void ReduceMoneyAmount(float value);
     void ReceiveMoney (float value);
     void TakeDamage(float value);

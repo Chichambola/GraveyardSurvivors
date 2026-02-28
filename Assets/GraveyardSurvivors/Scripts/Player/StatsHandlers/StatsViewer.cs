@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
 
-public class StatsViewer : Stats<CharacterStats>
+public class StatsViewer : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private TextMeshProUGUI _text;
@@ -20,7 +20,7 @@ public class StatsViewer : Stats<CharacterStats>
         _player.StatsChanged -= UpdateStats;
     }
     
-    public override void UpdateStats(CharacterStats stats)
+    public void UpdateStats(CharacterStats stats)
     {
         _text.text = $"Health: {stats.Health:f1} \n" +
                      $"Health regeneration: {stats.HealthRegeneration:f1}\n" +

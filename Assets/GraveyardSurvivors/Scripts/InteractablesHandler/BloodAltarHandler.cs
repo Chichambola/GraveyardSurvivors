@@ -22,7 +22,7 @@ public class BloodAltarHandler : InteractableHandler
     {
         float necessaryHealth = GetAmountOfNecessaryHealth(Player.MaxHealth, altar);
 
-        if (Player.HasEnoughHealth(necessaryHealth) == false)
+        if (Player.CurrentHealth <= necessaryHealth)
         {
             Debug.Log("Not enough health");
             

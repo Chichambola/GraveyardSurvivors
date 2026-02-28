@@ -42,7 +42,7 @@ public class ChanceAltarHandler : ChanceHandlerBase
         
         ERarityLevel rarityLevel = RarityEvaluator.GetRarityLevel(noneChance, commonChance, rareChance, legendaryChance);
 
-        if (Player.HasEnoughMoney(altar.CurrentCost) == false)
+        if (Player.MoneyAmount <= altar.CurrentCost)
         {
             Debug.Log($"Not enough money");
             

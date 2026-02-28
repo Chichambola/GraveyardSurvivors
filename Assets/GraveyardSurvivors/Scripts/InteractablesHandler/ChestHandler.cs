@@ -34,7 +34,7 @@ public class ChestHandler : ChanceHandlerBase
         if (chest == null)
             throw new Exception(nameof(chest));
         
-        if (Player.HasEnoughMoney(CurrentCost) == false)
+        if (Player.MoneyAmount <= CurrentCost)
         {
             Debug.Log("Not enough money");
         }

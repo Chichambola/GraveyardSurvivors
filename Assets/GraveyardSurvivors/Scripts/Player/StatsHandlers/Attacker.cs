@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Attacker : AttackerHandlerBase<CharacterStats>
+public class Attacker : MonoBehaviour
 {
     [SerializeField] private float _cooldown = 1.5f;
 
@@ -13,26 +13,20 @@ public class Attacker : AttackerHandlerBase<CharacterStats>
     private Coroutine _coroutine;
     private IWeapon _weapon;
 
-    public override void SetWeapon(IWeapon weapon)
+    public void SetWeapon(IWeapon weapon)
     {
         _weapon = weapon ?? throw new Exception();
     }
 
-    public override void StartAttacking()
+    public void StartAttacking()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
         _coroutine = StartCoroutine(AttackingCoroutine());
     }
-    
-    public override void UpdateStats(CharacterStats stats)
-    {
-        _attackSpeed = stats.AttackSpeed;
-        _attackRadius = stats.AttackRadius;
-    }
 
-    protected override IEnumerator AttackingCoroutine()
+    private IEnumerator AttackingCoroutine()
     {
         float currentCooldown = _cooldown;
         
@@ -53,7 +47,7 @@ public class Attacker : AttackerHandlerBase<CharacterStats>
         }
     }
 
-    public override void OnEnemyDetected(IAttacker attacker)
+    public void OnEnemyDetected(IAttacker attacker)
     {
         attacker.TakeDamage(_weapon.Info.Damage);
     }
