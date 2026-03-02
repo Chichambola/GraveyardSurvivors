@@ -8,8 +8,8 @@ public class WeaponIronSword : Weapon
 {
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _slash;
-    [SerializeField] private float _waitTime = 0.1f;
     
+    private float _waitTime = 0.1f;
     private Coroutine _slashCoroutine;
     
     private void OnEnable()
@@ -27,6 +27,11 @@ public class WeaponIronSword : Weapon
         _area.SetSize(radius);
         
         _slash.Play();
+        
+        if (_area.TryGetAttacker(out IAttacker attacker))
+        {
+            attacker.TakeDamage(_info.Damage);
+        }
     }
 
     private void SetParticleSystemDuration(float duration)

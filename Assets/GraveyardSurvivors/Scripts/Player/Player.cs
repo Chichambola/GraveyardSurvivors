@@ -49,15 +49,17 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         MaxHealth = CurrentStats.Health;
         
         _collisionDetector.ItemDetected += AddBuff;
+        _collisionDetector.EnemyDetected += TakeDamage;
         _regenerator.HealthRegenerated += OnHeal;
         
-        _attacker.StartAttacking(CurrentStats.AttackSpeed, CurrentStats.AttackRadius);
+        _attacker.StartAttacking();
     }
 
     private void OnDisable()
     {
         _collisionDetector.ItemDetected -= AddBuff;
         _regenerator.HealthRegenerated -= OnHeal;
+        _collisionDetector.EnemyDetected -= TakeDamage;
     }
 
     private void Start()
@@ -144,7 +146,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         {
             Debug.Log("Evaded");
 
-            return damage;
+            return 0;
         }
         
         if (_defender.CanBlock(CurrentStats.BlockChance, CurrentStats.Luck))

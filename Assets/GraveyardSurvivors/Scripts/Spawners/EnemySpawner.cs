@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Apple.ReplayKit;
 using UnityEngine.Rendering;
 
 public class EnemySpawner : Spawner<Enemy>
@@ -22,6 +23,7 @@ public class EnemySpawner : Spawner<Enemy>
     protected override void ActionOnGet(Enemy enemy)
     {
         enemy.Init(_player);
+        enemy.CanBeReleased += Release;
         
         ActiveObjects.Add(enemy);
         
@@ -30,6 +32,7 @@ public class EnemySpawner : Spawner<Enemy>
 
     protected override void ActionOnRelease(Enemy enemy)
     {
+        enemy.CanBeReleased -= Release;
         enemy.ResetCharacteristics();
         
         ActiveObjects.Remove(enemy);

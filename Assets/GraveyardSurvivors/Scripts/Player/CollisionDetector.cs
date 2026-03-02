@@ -8,6 +8,7 @@ using UnityEngine;
 public class CollisionDetector : Detector
 {
     public event Action<IBuff> ItemDetected;
+    public event Action<float> EnemyDetected;
     
     private CapsuleCollider _collider;
 
@@ -26,6 +27,11 @@ public class CollisionDetector : Detector
                 
                 ItemDetected?.Invoke(buff);   
             }
+        }
+
+        if (other.TryGetComponent(out Enemy enemy))
+        {
+            EnemyDetected?.Invoke(enemy.Damage);
         }
     }
 

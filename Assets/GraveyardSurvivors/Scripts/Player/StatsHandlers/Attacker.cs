@@ -6,33 +6,32 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private float _cooldown = 1.5f;
 
     private float _attackSpeed;
     private float _attackRadius;
     private Coroutine _coroutine;
-    
-    public bool IsAttacking { get; private set; }
 
-    public void Attack(float duration)
+    private void OnEnable()
     {
-        IsAttacking = true;
-        
-        _weapon.Attack(duration);
+        _player.StatsChanged += OnStatsChanged;
     }
-    
-    public void StartAttacking(float attackSpeedMultiplier, float attackRadiusMultiplier)
+
+    private void OnDisable()
     {
-        _attackSpeed = attackSpeedMultiplier;
-        _attackRadius = attackRadiusMultiplier;
-        
+        _player.StatsChanged -= OnStatsChanged;
+    }
+
+    public void StartAttacking()
+    {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
         _coroutine = StartCoroutine(AttackingCoroutine());
     }
-
+    
     private IEnumerator AttackingCoroutine()
     {
         float currentCooldown = _cooldown;
@@ -60,8 +59,14 @@ public class Attacker : MonoBehaviour
 
         return currentCooldown;
     }
-
-    public void OnEnemyDetected(IAttacker attacker)
+    
+    private void OnStatsChanged(CharacterStats stats)
+    {
+        _attackSpeed = stats.AttackSpeed;
+        _attackRadius = stats.AttackRadius;
+    }
+    
+    private void OnEnemyDetected(IAttacker attacker)
     {
         attacker.TakeDamage(_weapon.Info.Damage);
     }

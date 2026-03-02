@@ -12,7 +12,7 @@ public class Defender : MonoBehaviour
     {
         blockChance += luck;
 
-        if (blockChance > UserUtils.s_HighestPercent)
+        if (blockChance >= UserUtils.s_HighestPercent)
         {
             return true;
         }
@@ -30,8 +30,6 @@ public class Defender : MonoBehaviour
     public float GetDamageAmount(float armorPercent, float damage)
     {
         damage = UserUtils.SubtractPercentFromNumber(damage, armorPercent);
-
-        damage = Mathf.Round(damage);
         
         return damage;
     }

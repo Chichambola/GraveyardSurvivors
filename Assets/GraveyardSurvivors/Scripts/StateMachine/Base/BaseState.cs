@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class BaseState : IState
 {
     protected readonly CharacterBase Character;
     protected readonly Animator Animator;
-
+    
     protected static readonly int s_Run = Animator.StringToHash("Run");
     protected static readonly int s_Idle = Animator.StringToHash("Idle");
     protected static readonly int s_Attack = Animator.StringToHash("Attack");
+    protected static readonly int s_Death = Animator.StringToHash("Death");
 
     protected const float CrossFadeDuration = 0.1f;
 
@@ -19,23 +22,11 @@ public class BaseState : IState
         Animator = animator;
     }
     
-    public virtual void DoExit()
-    {
-        // noop
-    }
+    public virtual void DoExit(){ }
 
-    public virtual void DoEnter()
-    {
-        // noop
-    }
+    public virtual void DoEnter() { }
 
-    public virtual void FixedUpdate()
-    {
-        // noop
-    }
+    public virtual void FixedUpdate() { }
 
-    public virtual void Update()
-    {
-        // noop
-    }
+    public virtual void Update() { }
 }

@@ -40,7 +40,7 @@ public class StateMachine
 
     public void AddAnyTransition(IState to, IPredicate condition)
     {
-        _anyTransitions.Add(new Transition(to, condition));
+        _anyTransitions.Add(new Transition(GetOrAdd(to).State, condition));
     }
     
     private StateNode GetOrAdd(IState state)
@@ -62,10 +62,12 @@ public class StateMachine
             return;
 
         var previousState = _current.State;
+        
         var nextState = _nodes[state.GetType()].State;
         
         previousState?.DoExit();
         nextState?.DoEnter();
+        
         _current = _nodes[state.GetType()];
     }
 

@@ -45,4 +45,29 @@ public class AttackArea : MonoBehaviour
         
         _collider.size = newSize;
     }
+
+    public bool TryGetAttacker(out IAttacker attacker)
+    {
+        float scaleOffset = 0.5f;
+        
+        Vector3 detectAreaCenter = _collider.transform.TransformPoint(_collider.center);
+        Vector3 detectAreaHalfExtents = Vector3.Scale(_collider.size, _collider.transform.lossyScale) * scaleOffset;
+
+        Collider[] hitColliders =
+            Physics.OverlapBox(detectAreaCenter, detectAreaHalfExtents, _collider.transform.rotation);
+
+        foreach (var hit in hitColliders)
+        {
+            if (hit.TryGetComponent(out IAttacker tempAttacker))
+            {
+                attacker = tempAttacker;
+
+                return true;
+            }
+        }
+
+        attacker = null;
+
+        return false;
+    }
 }
