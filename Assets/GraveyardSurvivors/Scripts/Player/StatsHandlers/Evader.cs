@@ -8,7 +8,7 @@ public class Evader : MonoBehaviour
     {
         currentEvasionChance += luck;
         
-        int randomPercent = Random.Range(UserUtils.LowestPercent, UserUtils.HighestPercent);
+        int randomPercent = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
 
         return !(randomPercent > currentEvasionChance);
     }

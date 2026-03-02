@@ -8,5 +8,5 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     
     public WeaponInfo Info => _info;
 
-    public abstract void Attack(float duration);
+    public abstract void Attack(float duration, float radius = 0f);
 }

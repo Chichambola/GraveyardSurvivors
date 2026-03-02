@@ -9,12 +9,10 @@ using UnityEngine;
 [RequireComponent(typeof(InputReader))]
 public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 {
-    [Header("Base")]
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
-    
-    [Header("Handlers")]
     [SerializeField] private InteractorHandler _InteractorHandler;
+    [SerializeField] private Attacker _attacker;
     
     [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
@@ -25,8 +23,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
-    [SerializeField] private Attacker _attacker;
-    [SerializeField] private Weapon _weapon;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
@@ -50,11 +46,12 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
             throw new Exception();
 
         CurrentStats = _baseStats.GetStats();
+        MaxHealth = CurrentStats.Health;
         
         _collisionDetector.ItemDetected += AddBuff;
         _regenerator.HealthRegenerated += OnHeal;
         
-        MaxHealth = CurrentStats.Health;
+        _attacker.StartAttacking(CurrentStats.AttackSpeed, CurrentStats.AttackRadius);
     }
 
     private void OnDisable()

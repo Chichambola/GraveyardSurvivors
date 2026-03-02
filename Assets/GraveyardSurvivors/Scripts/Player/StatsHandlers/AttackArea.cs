@@ -33,4 +33,16 @@ public class AttackArea : MonoBehaviour
     {
         _collider.enabled = value;
     }
+
+    public void SetSize(float value)
+    {
+        var size = _collider.size;
+        
+        size.x = UserUtils.AddPercentToNumber(size.x, value);
+        size.y = UserUtils.AddPercentToNumber(size.x, value);
+        
+        Vector3 newSize = new Vector3(size.x, _collider.size.y, size.z);
+        
+        _collider.size = newSize;
+    }
 }

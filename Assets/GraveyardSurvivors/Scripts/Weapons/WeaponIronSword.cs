@@ -7,8 +7,8 @@ using UnityEngine;
 public class WeaponIronSword : Weapon
 {
     [SerializeField] private AttackArea _area;
-    [SerializeField] private float _waitTime = 0.1f;
     [SerializeField] private ParticleSystem _slash;
+    [SerializeField] private float _waitTime = 0.1f;
     
     private Coroutine _slashCoroutine;
     
@@ -20,9 +20,11 @@ public class WeaponIronSword : Weapon
         _slashCoroutine = StartCoroutine(VisibilityCoroutine());
     }
 
-    public override void Attack(float duration)
+    public override void Attack(float duration, float radius)
     {
         SetParticleSystemDuration(duration);
+        
+        _area.SetSize(radius);
         
         _slash.Play();
     }

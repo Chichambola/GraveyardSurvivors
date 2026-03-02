@@ -7,7 +7,6 @@ using UnityEngine;
 public class EnemyStats : IStat
 {
     public float Health;
-    public float Damage;
     public float Armor;
     public float MovementSpeed;
     public float AttackSpeed;
@@ -21,7 +20,6 @@ public class EnemyStats : IStat
             throw new Exception();
         
         Health = stats.Health;
-        Damage = stats.Damage;
         Armor = stats.Armor;
         MovementSpeed = stats.MovementSpeed;
         AttackSpeed = stats.AttackSpeed;

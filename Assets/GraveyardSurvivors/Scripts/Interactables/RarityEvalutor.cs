@@ -10,8 +10,8 @@ public class RarityEvaluator : MonoBehaviour
 {
     [SerializeField] private Player _player;
     
-    public float HighestPercent => UserUtils.HighestPercent;
-    public float LowestPercent => UserUtils.LowestPercent;
+    public float SHighestPercent => UserUtils.s_HighestPercent;
+    public float SLowestPercent => UserUtils.s_LowestPercent;
     
     public ERarityLevel GetRarityLevel(float commonChance, float rareChance, float legendaryChance)
     {

@@ -25,7 +25,7 @@ public abstract class ChanceHandlerBase : InteractableHandler
 
     protected virtual void CalculateCost()
     {
-        float tempCost = Cost * (1 + (IncreasePercent / UserUtils.HighestPercent));
+        float tempCost = Cost * (1 + (IncreasePercent / UserUtils.s_HighestPercent));
         
         Cost = Mathf.Round(tempCost);
     }

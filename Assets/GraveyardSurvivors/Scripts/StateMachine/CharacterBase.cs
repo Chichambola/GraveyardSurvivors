@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class CharacterBase : MonoBehaviour
 {
+    [Header("Base")]
     [SerializeField] protected Animator Animator;
     [SerializeField] protected Rotator Rotator;
     [SerializeField] protected Mover Mover;

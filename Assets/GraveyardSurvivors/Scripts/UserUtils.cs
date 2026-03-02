@@ -4,19 +4,19 @@ using UnityEngine;
 
 public static class UserUtils
 {
-    public static readonly int HighestPercent = 100;
-    public static readonly int LowestPercent = 100;
+    public static readonly int s_HighestPercent = 100;
+    public static readonly int s_LowestPercent = 100;
 
     public static float AddPercentToNumber(float originalNumber, float percent)
     {
-        float finalNumber = originalNumber * (1 + percent / HighestPercent);
+        float finalNumber = originalNumber * (1 + percent / s_HighestPercent);
 
         return finalNumber;
     }
 
-    public static float SubstractPercentFromNumber(float originalNumber, float percent)
+    public static float SubtractPercentFromNumber(float originalNumber, float percent)
     {
-        float finalNumber = originalNumber * (1 - percent / HighestPercent);
+        float finalNumber = originalNumber * (1 - percent / s_HighestPercent);
 
         return finalNumber;
     }

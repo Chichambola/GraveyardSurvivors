@@ -12,7 +12,7 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff
 
     public event Action<Item> CanBeReleased;
 
-    protected float HighestValue = UserUtils.HighestPercent;
+    protected float HighestValue = UserUtils.s_HighestPercent;
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
     private IBuff _buffImplementation;
