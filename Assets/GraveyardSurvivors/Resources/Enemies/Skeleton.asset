@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stats:
     Health: 6
-    Damage: 6
     Armor: 0
     MovementSpeed: 0
+    AttackSpeed: 0
     MoneyForKill: 6
     XpForKill: 3
     LanternEnergy: 1

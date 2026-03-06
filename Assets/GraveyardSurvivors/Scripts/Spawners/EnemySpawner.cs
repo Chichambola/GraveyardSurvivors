@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 
 public class EnemySpawner : Spawner<Enemy>
 {
+    [SerializeField] private CoinSpawner _coinSpawner;
     [SerializeField] private Transform _point;
     [SerializeField] private Player _player;
 
@@ -32,6 +33,8 @@ public class EnemySpawner : Spawner<Enemy>
 
     protected override void ActionOnRelease(Enemy enemy)
     {
+        _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
+        
         enemy.CanBeReleased -= Release;
         enemy.ResetCharacteristics();
         

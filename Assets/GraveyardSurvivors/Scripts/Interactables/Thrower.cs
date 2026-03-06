@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Thrower : MonoBehaviour
 {
@@ -9,10 +10,9 @@ public class Thrower : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _speed;
 
-    public event Action<IThrowable> FinishedMoving;
+    public event Action FinishedMoving;
     
     private Coroutine _coroutine; 
-    private readonly float _sampleTime = 0f;
 
     public void StartThrowing(IThrowable throwable, QuadraticCurvePoints curvePoints)
     {
@@ -26,20 +26,20 @@ public class Thrower : MonoBehaviour
     
     private IEnumerator ThrowCoroutine(IThrowable throwable)
     {
-        float initialSampleTime = _sampleTime;
+        float initialSampleTime = 0f;
         int finishValue = 1;
 
         while (initialSampleTime <= finishValue)
         {        
             initialSampleTime += Time.deltaTime * _speed;
             
-            throwable.Rigidbody.transform.position = _curve.Evaluate(initialSampleTime);
-            throwable.Rigidbody.transform.forward = _curve.Evaluate(initialSampleTime + _rotationSpeed) - throwable.Rigidbody.transform.position;
+            throwable.Transform.position = _curve.Evaluate(initialSampleTime);
+            throwable.Transform.forward = _curve.Evaluate(initialSampleTime + _rotationSpeed) - throwable.Transform.position;
             
             yield return null;
         }
-
-        FinishedMoving?.Invoke(throwable);
+        
+        FinishedMoving?.Invoke();
         
         yield return null;
     }

@@ -2,21 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ItemPlaceholder : MonoBehaviour, IThrowable, IPoolable<ItemPlaceholder>
+public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
 {
     [SerializeField] private Transform _aPoint;
     [SerializeField] private Transform _bPoint;
     [SerializeField] private Transform _cPoint;
     [SerializeField] private QuadraticCurvePoints _points;
     [SerializeField] private Thrower _thrower;
-
-    private Vector3 _initialForwardRotation;
     
-    public event Action<ItemPlaceholder> CanBeReleased;
+    public event Action<Coin> CanBeReleased;
+    
+    private Vector3 _initialForwardRotation;
+
     public Transform Transform => transform;
+    
     public QuadraticCurvePoints Points => _points;
 
     private void Awake()
@@ -27,15 +28,8 @@ public class ItemPlaceholder : MonoBehaviour, IThrowable, IPoolable<ItemPlacehol
     private void OnEnable()
     {
         _initialForwardRotation = transform.forward;
-        
-        _thrower.FinishedMoving += Release;
     }
-
-    private void OnDisable()
-    {
-        _thrower.FinishedMoving -= Release;
-    }
-
+    
     public void ResetCharacteristics()
     {
         transform.forward = _initialForwardRotation;

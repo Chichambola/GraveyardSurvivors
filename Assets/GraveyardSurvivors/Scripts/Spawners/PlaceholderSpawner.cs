@@ -6,59 +6,39 @@ using UnityEngine.TextCore.Text;
 
 public class PlaceholderSpawner : Spawner<ItemPlaceholder>
 {
-    [SerializeField] private Thrower _thrower;
-
     public event Action<Vector3> ItemStoppedMoving;
     
-    private QuadraticCurvePoints _curvePoints;
-    private ItemPlaceholder _currentPlaceholder;
+    private Vector3 _spawnPosition;
 
-    private void OnEnable()
+    public void Spawn(Vector3 position)
     {
-        _thrower.FinishedMoving += OnFinishedMoving;
-    }
-
-    private void OnDisable()
-    {
-        _thrower.FinishedMoving -= OnFinishedMoving;
-    }
-
-    public void Spawn(QuadraticCurvePoints curvePoints)
-    {
-        _curvePoints = curvePoints;
+        _spawnPosition = position;
         
         GetObject();
     }
     
-    protected override void ActionOnGet(ItemPlaceholder @object)
+    protected override void ActionOnGet(ItemPlaceholder placeholder)
     {
-        @object.transform.parent = transform;
+        base.ActionOnGet(placeholder);
         
-        base.ActionOnGet(@object);
+        placeholder.transform.parent = transform;
+        placeholder.transform.position = _spawnPosition;
+        placeholder.CanBeReleased += Release;
 
-        @object.CanBeReleased += Release;
-
-        ActiveObjects.Add(@object);
+        ActiveObjects.Add(placeholder);
         
-        _thrower.StartThrowing(@object, _curvePoints);
+        placeholder.StartMoving();
     }
 
-    protected override void ActionOnRelease(ItemPlaceholder @object)
+    protected override void ActionOnRelease(ItemPlaceholder placeholder)
     {
-        base.ActionOnRelease(@object);
-
-        @object.CanBeReleased -= Release;
-
-        ActiveObjects.Remove(@object);
-    }
-    
-    private void OnFinishedMoving(IThrowable throwable)
-    {
-        if (throwable is ItemPlaceholder item == false)
-            throw new Exception();
-            
-        ItemStoppedMoving?.Invoke(item.Rigidbody.position);
+        placeholder.CanBeReleased -= Release;
+        ItemStoppedMoving?.Invoke(placeholder.transform.position);
         
-        item.Release();
+        ActiveObjects.Remove(placeholder);
+        
+        placeholder.ResetCharacteristics();
+        
+        base.ActionOnRelease(placeholder);
     }
 }

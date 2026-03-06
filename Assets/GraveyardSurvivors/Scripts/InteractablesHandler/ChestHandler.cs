@@ -50,7 +50,7 @@ public class ChestHandler : ChanceHandlerBase
         
             ERarityLevel rarityLevel = RarityEvaluator.GetRarityLevel(commonChance, rareChance, legendaryChance);
             
-            ItemsHandler.SpawnRandomItem(chest.CurrentPoints, rarityLevel);
+            ItemsHandler.SpawnRandomItem(chest.transform.position, rarityLevel);
             
             CalculateCost();
         }

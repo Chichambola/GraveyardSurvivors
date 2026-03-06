@@ -5,9 +5,8 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]
-public class CollisionDetector : Detector
+public class CollisionDetector : MonoBehaviour
 {
-    public event Action<IBuff> ItemDetected;
     public event Action<float> EnemyDetected;
     
     private CapsuleCollider _collider;
@@ -17,23 +16,11 @@ public class CollisionDetector : Detector
         _collider = GetComponent<CapsuleCollider>();
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Item item))
-        {
-            if (item is IBuff buff)
-            {
-                item.Release();
-                
-                ItemDetected?.Invoke(buff);   
-            }
-        }
-
         if (other.TryGetComponent(out Enemy enemy))
         {
             EnemyDetected?.Invoke(enemy.Damage);
         }
     }
-
-    protected override void OnTriggerExit(Collider other) { }
 }

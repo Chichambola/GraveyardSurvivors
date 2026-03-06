@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff
+public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable
 {
     [SerializeField] private ItemInfo _info;
-    [SerializeField] protected int InscreaseValue;
+    [SerializeField] protected int IncreaseValue;
 
     public event Action<Item> CanBeReleased;
 
@@ -47,12 +48,12 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff
         if (value >= HighestValue)
             return value;
 
-        float clampedValue = value / HighestValue;
+        float currentPercent = UserUtils.SubtractPercentFromNumber(HighestValue, value);
 
-        float multiplier = (1 - clampedValue);
-        
-        value = Mathf.Min(value + (InscreaseValue * multiplier),HighestValue);
-        
+        float finalAvailablePercent = UserUtils.SubtractPercentFromNumber(currentPercent, IncreaseValue);
+
+        value += currentPercent - finalAvailablePercent;
+
         return value;
     }
 }

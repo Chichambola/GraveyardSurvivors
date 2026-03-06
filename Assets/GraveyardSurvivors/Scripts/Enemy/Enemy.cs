@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CapsuleCollider))]
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
     [SerializeField] private EnemyInfo _info;
@@ -14,7 +15,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public event Action<Enemy> CanBeReleased;
 
     private Player _player;
-    
+    private CapsuleCollider _collider;
+
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAttacking { get; private set; }
     public float Damage => _weapon.Info.Damage;
@@ -26,6 +28,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     protected override void Awake()
     {
+        _collider = GetComponent<CapsuleCollider>();
+        
         CurrentStats = _info.GetStats();
 
         InitializeStateMachine();
@@ -54,6 +58,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public void ResetCharacteristics()
     {
         _player = null;
+        _collider.enabled = true;
     }
     
     public void Release() => CanBeReleased?.Invoke(this);
@@ -64,7 +69,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
         CurrentStats.Health -= damage;
         
-        Debug.Log(damage);
+        if (CurrentStats.Health <= 0)
+        {
+            _collider.enabled = false;
+        }
     }
 
     public override void HandleMovement()

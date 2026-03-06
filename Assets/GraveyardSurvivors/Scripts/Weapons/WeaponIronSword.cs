@@ -8,6 +8,8 @@ public class WeaponIronSword : Weapon
 {
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _slash;
+
+    public override event Action<IAttacker> AttackerDetected; 
     
     private float _waitTime = 0.1f;
     private Coroutine _slashCoroutine;
@@ -30,7 +32,7 @@ public class WeaponIronSword : Weapon
         
         if (_area.TryGetAttacker(out IAttacker attacker))
         {
-            attacker.TakeDamage(_info.Damage);
+            AttackerDetected?.Invoke(attacker);
         }
     }
 

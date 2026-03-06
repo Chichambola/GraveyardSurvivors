@@ -5,5 +5,7 @@ using UnityEngine;
 
 public interface IThrowable
 {
-    public Rigidbody Rigidbody { get; }
+    public Transform Transform { get; }
+    public QuadraticCurvePoints Points { get; }
+    void StartMoving();
 }

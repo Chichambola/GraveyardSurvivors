@@ -11,6 +11,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
+    [SerializeField] private PickablesDetector _pickUpsDetector;
     [SerializeField] private InteractorHandler _InteractorHandler;
     [SerializeField] private Attacker _attacker;
     
@@ -48,7 +49,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         CurrentStats = _baseStats.GetStats();
         MaxHealth = CurrentStats.Health;
         
-        _collisionDetector.ItemDetected += AddBuff;
+        _pickUpsDetector.BuffDetected += AddBuff;
+        _pickUpsDetector.CoinDetected += ReceiveMoney;
         _collisionDetector.EnemyDetected += TakeDamage;
         _regenerator.HealthRegenerated += OnHeal;
         
@@ -57,9 +59,10 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 
     private void OnDisable()
     {
-        _collisionDetector.ItemDetected -= AddBuff;
-        _regenerator.HealthRegenerated -= OnHeal;
+        _pickUpsDetector.BuffDetected -= AddBuff;
+        _pickUpsDetector.CoinDetected -= ReceiveMoney;
         _collisionDetector.EnemyDetected -= TakeDamage;
+        _regenerator.HealthRegenerated -= OnHeal;
     }
 
     private void Start()

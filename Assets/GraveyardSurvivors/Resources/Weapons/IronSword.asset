@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 0}
   _name: Iron sword
-  _damage: 6
+  _damage: 2
   _percentMultiplierPerWeapon: 3

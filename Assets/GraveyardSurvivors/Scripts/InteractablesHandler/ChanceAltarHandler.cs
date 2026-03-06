@@ -62,7 +62,7 @@ public class ChanceAltarHandler : ChanceHandlerBase
         {
             altar.IncreaseInteractionsAmount();
             
-            ItemsHandler.SpawnRandomItem(altar.CurrentPoints, rarityLevel);   
+            ItemsHandler.SpawnRandomItem(altar.transform.position, rarityLevel);   
         }
         
         CalculateCost();

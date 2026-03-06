@@ -23,7 +23,7 @@ public abstract class ChanceHandlerBase : InteractableHandler
         Cost = _initialValue;
     }
 
-    protected virtual void CalculateCost()
+    protected void CalculateCost()
     {
         float tempCost = Cost * (1 + (IncreasePercent / UserUtils.s_HighestPercent));
         

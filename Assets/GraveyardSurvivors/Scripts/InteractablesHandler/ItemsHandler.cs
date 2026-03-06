@@ -55,7 +55,7 @@ public class ItemsHandler : MonoBehaviour
         }
     }
 
-    public void SpawnRandomItem(QuadraticCurvePoints points, ERarityLevel rarity)
+    public void SpawnRandomItem(Vector3 position, ERarityLevel rarity)
     {
         if (_itemsLists == null)
             throw new Exception();
@@ -63,7 +63,7 @@ public class ItemsHandler : MonoBehaviour
         Item tempItem = GetRandomItem(rarity);
         
         _itemSpawner.SetPrefab(tempItem);
-        _itemSpawner.Spawn(points);
+        _itemSpawner.Spawn(position);
     }
 
     private Item GetRandomItem(ERarityLevel rarity)

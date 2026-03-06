@@ -19,9 +19,9 @@ public class ItemSpawner : Spawner<Item>
         _placeholderSpawner.ItemStoppedMoving -= OnItemStoppedMoving;
     }
 
-    public void Spawn(QuadraticCurvePoints points)
+    public void Spawn(Vector3 position)
     {
-        _placeholderSpawner.Spawn(points);
+        _placeholderSpawner.Spawn(position);
     }
     
     protected override void ActionOnGet(Item item)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Attacker : MonoBehaviour
 {
@@ -12,16 +13,20 @@ public class Attacker : MonoBehaviour
 
     private float _attackSpeed;
     private float _attackRadius;
+    private float _critChance;
+    private float _critMultipler;
     private Coroutine _coroutine;
 
     private void OnEnable()
     {
         _player.StatsChanged += OnStatsChanged;
+        _weapon.AttackerDetected += OnEnemyDetected;
     }
 
     private void OnDisable()
     {
         _player.StatsChanged -= OnStatsChanged;
+        _weapon.AttackerDetected -= OnEnemyDetected;
     }
 
     public void StartAttacking()
@@ -64,10 +69,32 @@ public class Attacker : MonoBehaviour
     {
         _attackSpeed = stats.AttackSpeed;
         _attackRadius = stats.AttackRadius;
+        _critChance = stats.CritChance;
+        _critMultipler = stats.CritMultiplier;
     }
     
     private void OnEnemyDetected(IAttacker attacker)
     {
-        attacker.TakeDamage(_weapon.Info.Damage);
+        float damage = _weapon.Info.Damage;
+
+        float currentCritChance = _critChance + _player.CurrentStats.Luck;
+
+        if (IsEnoughChanceToCrit(currentCritChance))
+        {
+            damage *= _critMultipler;
+        }
+     
+        Debug.Log(damage);
+        
+        attacker.TakeDamage(damage);
+    }
+
+    private bool IsEnoughChanceToCrit(float critChance)
+    {
+        float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
+
+        Debug.Log($"Number: {randomNumber}");
+        
+        return critChance >= randomNumber;
     }
 }

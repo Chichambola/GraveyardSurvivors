@@ -148,4 +148,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: d18b98822f104e34b90b3b25cef1e804, type: 2}
-  InscreaseValue: 5
+  IncreaseValue: 5
