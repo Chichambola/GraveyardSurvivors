@@ -6,8 +6,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour, IWeapon
 {
     [SerializeField] protected WeaponInfo _info;
-
-    public virtual event Action<Weapon> FinishedAttacking;
+    
     public virtual event Action<IAttacker> AttackerDetected;
     
     public WeaponInfo Info => _info;

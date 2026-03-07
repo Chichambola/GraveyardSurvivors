@@ -8,7 +8,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
     [SerializeField] private EnemyInfo _info;
     [SerializeField] private PlayerDetector _playerDetector;
-    [SerializeField] private Weapon _weapon;
+    [SerializeField] private WeaponSkeletonArm _weapon;
     [SerializeField] private float _attackCooldown = 0.5f;
     [SerializeField] private Defender _defender;
     

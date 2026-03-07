@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponIronSword : Weapon
 {
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _slash;
+    [SerializeField] private Effect[] _bleedingEffect;
 
     public override event Action<IAttacker> AttackerDetected; 
     

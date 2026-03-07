@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -92,8 +89,6 @@ public class Attacker : MonoBehaviour
     private bool IsEnoughChanceToCrit(float critChance)
     {
         float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
-
-        Debug.Log($"Number: {randomNumber}");
         
         return critChance >= randomNumber;
     }

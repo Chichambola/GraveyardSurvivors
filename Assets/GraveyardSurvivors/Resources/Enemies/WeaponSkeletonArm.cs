@@ -7,7 +7,7 @@ public class WeaponSkeletonArm : Weapon
 {
     [SerializeField] private AttackArea _area;
 
-    public override event Action<Weapon> FinishedAttacking;
+    public event Action<Weapon> FinishedAttacking;
 
     private Coroutine _coroutine;
     
