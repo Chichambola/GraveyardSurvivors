@@ -12,39 +12,30 @@ public class DamageOvertime : IEffect<Enemy>
     [SerializeField] private float _damagePerTick = 1f;
 
     private Enemy _currentTarget;
-    private Coroutine _coroutine;
+    private IntervalTimer _timer;
     
     public void Apply(Enemy attacker)
     {
         _currentTarget = attacker;
-
-        /*if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(DealingDamage());*/
+        _timer = new IntervalTimer(_duration, _tickInterval);
+        _timer.IntervalReached += OnIntervalReached;
+        _timer.TimerStopped += OnTimerStopped;
+        _timer.Start();
     }
 
     public void Cancel()
     {
-        _currentTarget = null;
-        //StopCoroutine(_coroutine);
+        _timer?.Stop();
+        CleanUp();
     }
+    
+    private void OnIntervalReached() => _currentTarget?.TakeDamage(_damagePerTick);
 
-    private IEnumerator DealingDamage()
+    private void OnTimerStopped() => CleanUp();
+
+    private void CleanUp()
     {
-        var wait = new WaitForSeconds(_tickInterval);
-
-        float currentTime = 0f;
-        
-        while (currentTime < _duration)
-        {
-            Debug.Log("Dealing damage");
-            
-            _currentTarget.TakeDamage(_damagePerTick);
-
-            yield return wait;
-        }
-        
-        Cancel();
+        _timer = null;
+        _currentTarget = null;
     }
 }
