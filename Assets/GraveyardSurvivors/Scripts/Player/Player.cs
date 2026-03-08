@@ -24,7 +24,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
-    
+    private IAttacker _attackerImplementation;
+
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
     
@@ -114,6 +115,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         CurrentStats.Health -= damage;
         
         StatsChanged?.Invoke(CurrentStats);
+    }
+
+    public void ApplyEffect(IEffect<IAttacker> effectFactory)
+    {
+        throw new NotImplementedException();
     }
 
     public void AddBuff(IBuff buff)

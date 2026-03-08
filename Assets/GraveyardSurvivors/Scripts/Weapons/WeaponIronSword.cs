@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WeaponIronSword : Weapon
 {
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _slash;
     [SerializeField] private Effect[] _bleedingEffect;
+    [SerializeField] private float _effectChance;
 
     public override event Action<IAttacker> AttackerDetected; 
     
@@ -33,6 +36,14 @@ public class WeaponIronSword : Weapon
         if (_area.TryGetAttacker(out IAttacker attacker))
         {
             AttackerDetected?.Invoke(attacker);
+            
+            if (CanEffectProc())
+            {
+                foreach (var effect in _bleedingEffect)
+                {
+                    effect.Execute(attacker);
+                }
+            }
         }
     }
 
@@ -58,5 +69,12 @@ public class WeaponIronSword : Weapon
             
             _area.SetVisibility(_slash.particleCount > 0);
         }
+    }
+
+    private bool CanEffectProc()
+    {
+        float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
+
+        return _effectChance >= randomNumber;
     }
 }

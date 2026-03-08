@@ -2,15 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
-public class DamageEffect : IEffect<Enemy>
+public struct DamageEffect : IEffect<IAttacker>
 {
-    [SerializeField] private float _damageAmount = 1f;
+    public float DamageAmount;
     
-    public void Apply(Enemy attacker)
+    public event Action<IEffect<IAttacker>> EffectCompleted;
+    
+    public void Apply(IAttacker attacker)
     {
-        attacker.TakeDamage(_damageAmount);
+        attacker.TakeDamage(DamageAmount);
+        EffectCompleted?.Invoke(this);
     }
 
     public void Cancel() { }

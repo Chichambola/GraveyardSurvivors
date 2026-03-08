@@ -7,13 +7,15 @@ using UnityEngine;
 [Serializable]
 public class Effect
 {
-    [SerializeReference] private List<IEffect<Enemy>> _effects = new();
+    [SerializeReference] private List<IEffectFactory<IAttacker>> _effects = new();
 
-    public void Execute(Enemy attacker)
+    public virtual void Execute(IAttacker attacker)
     {
         foreach (var effect in _effects)
         {
-            effect.Apply(attacker);
+            var runtimeEffect = effect.Create();
+            
+            attacker.ApplyEffect(runtimeEffect);
         }
     }
 }

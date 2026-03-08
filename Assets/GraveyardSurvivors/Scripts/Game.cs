@@ -8,6 +8,11 @@ public class Game : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private List<InteractableHandler> _interactables;
 
+    private void Update()
+    {
+        TimerController.UpdateTimers();
+    }
+
     private void OnEnable()
     {
         if(_interactables == null) 

@@ -5,18 +5,21 @@ using UnityEngine;
 
 public static class TimerController
 {
-    private static List<Timer> _timers = new();
+    private static List<Timer> s_Timers = new();
 
-    public static void RegisterTimer(Timer timer) => _timers.Add(timer);
-    public static void DeregisterTimer(Timer timer) => _timers.Remove(timer);
+    public static void RegisterTimer(Timer timer) => s_Timers.Add(timer);
+    public static void DeregisterTimer(Timer timer) => s_Timers.Remove(timer);
 
-    public static void UpdateTimer()
+    public static void UpdateTimers()
     {
-        foreach (var timer in _timers)
-        {   
-            timer.Tick();
+        if (s_Timers.Count > 0)
+        {
+            foreach (var timer in new List<Timer>(s_Timers))
+            {
+                timer?.Tick();
+            }   
         }
     }
 
-    public static void Clear() => _timers.Clear();
+    public static void Clear() => s_Timers.Clear();
 }

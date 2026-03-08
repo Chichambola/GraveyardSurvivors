@@ -39,7 +39,7 @@ public abstract class Timer : IDisposable
     public void Start()
     {
         CurrentTime = InitialTime;
-
+        
         if (!IsRunning)
         {
             IsRunning = true;

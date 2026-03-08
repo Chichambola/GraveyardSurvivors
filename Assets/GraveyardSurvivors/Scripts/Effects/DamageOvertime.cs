@@ -2,22 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MEC;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
-public class DamageOvertime : IEffect<Enemy>
+public struct DamageOvertime : IEffect<IAttacker>
 {
-    [SerializeField] private float _duration = 5f;
-    [SerializeField] private float _tickInterval = 1f;
-    [SerializeField] private float _damagePerTick = 1f;
+    public float Duration;
+    public float TickInterval;
+    public float DamagePerTick;
+    public ParticleEffectSpawner Effect;
 
-    private Enemy _currentTarget;
+    public event Action<IEffect<IAttacker>> EffectCompleted;
+    
+    private IAttacker _currentTarget;
     private IntervalTimer _timer;
     
-    public void Apply(Enemy attacker)
+    public void Apply(IAttacker attacker)
     {
-        _currentTarget = attacker;
-        _timer = new IntervalTimer(_duration, _tickInterval);
+        _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
+        
+        var target = _currentTarget as MonoBehaviour;
+        
+        Effect.Spawn(target.gameObject);
+        
+        _timer = new IntervalTimer(Duration, TickInterval);
         _timer.IntervalReached += OnIntervalReached;
         _timer.TimerStopped += OnTimerStopped;
         _timer.Start();
@@ -29,12 +39,25 @@ public class DamageOvertime : IEffect<Enemy>
         CleanUp();
     }
     
-    private void OnIntervalReached() => _currentTarget?.TakeDamage(_damagePerTick);
+    private void OnIntervalReached()
+    {
+        if (_currentTarget != null)
+        {
+            _currentTarget.TakeDamage(DamagePerTick);
+            Debug.Log($"{_currentTarget} took {DamagePerTick} damage");
+        }
+    }
 
-    private void OnTimerStopped() => CleanUp();
+    private void OnTimerStopped()
+    {
+        CleanUp();
+    }
 
     private void CleanUp()
     {
+        EffectCompleted?.Invoke(this);
+        _timer.IntervalReached -= OnIntervalReached;
+        _timer.TimerStopped -= OnTimerStopped;
         _timer = null;
         _currentTarget = null;
     }

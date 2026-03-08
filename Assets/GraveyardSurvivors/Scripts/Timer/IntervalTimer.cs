@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class IntervalTimer : Timer
 {
@@ -12,8 +14,8 @@ public class IntervalTimer : Timer
 
     public IntervalTimer(float totalTime, float intervalSeconds) : base(totalTime)
     {
-        _nextInterval = totalTime - _interval;
         _interval = intervalSeconds;
+        _nextInterval = totalTime - _interval;
     }
 
     public override void Tick()
