@@ -5,15 +5,36 @@ using UnityEngine;
 
 public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
 {
+    [SerializeField] private ParticleSystem _particleSystem;
+    
     public event Action<ParticleEffect> CanBeReleased;
     
     public void ResetCharacteristics()
     {
-        throw new NotImplementedException();
+        
     }
 
     public void Release()
     {
         CanBeReleased?.Invoke(this);
+    }
+
+    public void SetDuration(float duration)
+    {
+        _particleSystem.Stop();
+        
+        if(_particleSystem.isPlaying)
+            return;
+        
+        var systemMain = _particleSystem.main;
+
+        systemMain.duration = duration;
+        
+        _particleSystem.Play();
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        _particleSystem.transform.position = position;
     }
 }

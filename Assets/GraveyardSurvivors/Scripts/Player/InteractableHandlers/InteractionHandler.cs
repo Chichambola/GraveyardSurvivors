@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class InteractorHandler : MonoBehaviour
+public class InteractionHandler : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private InteractablesDetector _detector;

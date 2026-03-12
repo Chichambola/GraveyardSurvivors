@@ -7,6 +7,7 @@ public class PlayerDetector : Detector
 {
     public event Action<Player> PlayerDetected;
     public event Action PlayerLeft;
+    
     public bool IsPlayerNear { get; private set; }
 
     protected override void OnTriggerEnter(Collider other)

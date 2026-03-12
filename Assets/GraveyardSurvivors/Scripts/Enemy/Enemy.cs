@@ -1,16 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
-    [SerializeField] private EnemyInfo _info;
     [SerializeField] private PlayerDetector _playerDetector;
-    [SerializeField] private WeaponSkeletonArm _weapon;
+    [SerializeField] private EnemyInfo _info;
+    [Header("Weapon")]
+    [SerializeField] private Weapon _weapon;
     [SerializeField] private float _attackCooldown = 0.5f;
+    [Header("Services")]
     [SerializeField] private Defender _defender;
+    [SerializeField] private TextMeshProUGUI _health;
 
     public event Action<Enemy> CanBeReleased;
 
@@ -19,7 +23,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private List<IEffect<IAttacker>> _currentEffects;
 
     public EnemyStats CurrentStats { get; private set; }
-    public bool IsAttacking { get; private set; }
     public float Damage => _weapon.Info.Damage;
 
     public void Init(Player player)
@@ -35,16 +38,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         CurrentStats = _info.GetStats();
 
         InitializeStateMachine();
-    }
-
-    private void OnEnable()
-    {
-        _weapon.FinishedAttacking += OnWeaponFinishedAttacking;
-    }
-
-    private void OnDisable()
-    {
-        _weapon.FinishedAttacking -= OnWeaponFinishedAttacking;
+        
+        _health.text = $"{CurrentStats.Health}";
     }
 
     protected override void Update()
@@ -67,10 +62,14 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public void TakeDamage(float damage)
     {
+        Debug.Log(damage);
+        
         damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
 
         CurrentStats.Health -= damage;
 
+        _health.text = $"{CurrentStats.Health}";
+        
         if (CurrentStats.Health <= 0)
         {
             Die();
@@ -101,18 +100,20 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleAttack()
     {
-        IsAttacking = true;
-
         _weapon.Attack(_attackCooldown);
     }
 
-    private void OnWeaponFinishedAttacking(Weapon weapon)
+    public void Die()
     {
-        IsAttacking = false;
+        CurrentStats.Health = 0;
+        
+        _collider.enabled = false;
 
-        weapon.StopAttacking();
+        _health.text = $"{CurrentStats.Health}";
+        
+        RemoveAllEffects();
     }
-
+    
     private void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
@@ -125,17 +126,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         DefineAtTransition(idleState, runState, new FuncPredicate(() => _player != null));
         DefineAtTransition(runState, attackState, new FuncPredicate(() => _playerDetector.IsPlayerNear));
         DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !_playerDetector.IsPlayerNear && !IsAttacking));
+            new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking));
         DefineAnyTransition(dieState, new FuncPredicate(() => CurrentStats.Health <= 0));
 
         StateMachine.SetState(idleState);
-    }
-
-    private void Die()
-    {
-        _collider.enabled = false;
-
-        RemoveAllEffects();
     }
 
     private void RemoveAllEffects()

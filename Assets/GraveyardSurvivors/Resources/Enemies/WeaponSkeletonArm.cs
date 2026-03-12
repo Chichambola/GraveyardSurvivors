@@ -1,45 +1,63 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponSkeletonArm : Weapon
 {
-    [SerializeField] private AttackArea _area;
-
-    public event Action<Weapon> FinishedAttacking;
-
+    private bool _isAttacking;
     private Coroutine _coroutine;
-    
-    public override void Attack(float duration)
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+    private float _duration;
 
-        _coroutine = StartCoroutine(AttackingRoutine(duration));
+    public override bool IsAttacking => _isAttacking;
+
+    private void OnEnable()
+    {
+        AttackStrategy.AttackerDetected += OnAttackerDetected;
     }
 
-    private IEnumerator AttackingRoutine(float duration)
+    private void OnDisable()
     {
-        var wait = new WaitForSecondsRealtime(duration);
+        AttackStrategy.AttackerDetected -= OnAttackerDetected;
+    }
+
+    public override void Attack(float duration)
+    {
+        _isAttacking = true;
+        _duration = duration;
+        
+        if(_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(AttackingRoutine());
+    }
+
+    private IEnumerator AttackingRoutine()
+    {
+        var wait = new WaitForSecondsRealtime(_duration);
 
         while (enabled)
         {
             yield return wait;
-
-            if (_area.TryGetAttacker(out IAttacker attacker))
-            {
-                attacker.TakeDamage(_info.Damage);
-            }
-            else
-            {
-                FinishedAttacking?.Invoke(this);
-            }
+            
+            AttackStrategy.Execute();
+            
+            _isAttacking = false;
         }
     }
-
-    public override void StopAttacking()
+    
+    private void OnAttackerDetected(List<IAttacker> attackers)
     {
-        StopCoroutine(_coroutine);
+        if (attackers == null)
+            return;
+        
+        foreach (var attacker in attackers)
+        {
+            if (attacker is Player player)
+            {
+                player.TakeDamage(Info.Damage);
+            }
+        }
     }
 }

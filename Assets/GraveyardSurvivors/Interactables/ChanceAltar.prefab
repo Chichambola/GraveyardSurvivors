@@ -235,7 +235,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
 --- !u!1 &8865451181957286708
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,12 +253,13 @@ GameObject:
   - component: {fileID: 7514767359008438798}
   - component: {fileID: 831034912937131186}
   - component: {fileID: 8151128714832802890}
+  - component: {fileID: 1215712349551245528}
   m_Layer: 0
   m_Name: ChanceAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1924703730408470448
 Transform:
@@ -464,3 +465,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f903b480371ef2c448c165b39f380e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &1215712349551245528
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865451181957286708}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

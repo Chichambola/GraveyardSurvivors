@@ -6,14 +6,18 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class AttackArea : MonoBehaviour
 {
+    [SerializeField] private int _numberOfCollider = 10;
+    
     public event Action<IAttacker> EnemyDetected;
     
     private BoxCollider _collider;
+    private Collider[] _hitColliders;
 
     private void Awake()
     {
         _collider = GetComponent<BoxCollider>();
         _collider.enabled = false;
+        _hitColliders = new Collider[_numberOfCollider];
     }
 
     private void OnValidate()
@@ -45,29 +49,35 @@ public class AttackArea : MonoBehaviour
         
         _collider.size = newSize;
     }
-
-    public bool TryGetAttacker(out IAttacker attacker)
+    
+    public bool TryGetAttackers(out List<IAttacker> attackers)
     {
         float scaleOffset = 0.5f;
         
         Vector3 detectAreaCenter = _collider.transform.TransformPoint(_collider.center);
         Vector3 detectAreaHalfExtents = Vector3.Scale(_collider.size, _collider.transform.lossyScale) * scaleOffset;
 
-        Collider[] hitColliders =
-            Physics.OverlapBox(detectAreaCenter, detectAreaHalfExtents, _collider.transform.rotation);
-
-        foreach (var hit in hitColliders)
+        int hits = Physics.OverlapBoxNonAlloc(detectAreaCenter, detectAreaHalfExtents, _hitColliders, _collider.transform.rotation);
+        
+        attackers = new List<IAttacker>();
+        
+        for (int i = 0; i < hits; i++)
         {
-            if (hit.TryGetComponent(out IAttacker tempAttacker))
+            if (_hitColliders[i].TryGetComponent(out IAttacker attacker))
             {
-                attacker = tempAttacker;
-
-                return true;
+                attackers.Add(attacker);
             }
         }
 
-        attacker = null;
+        if (attackers.Count <= 0)
+        {
+            attackers = null;
 
-        return false;
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }

@@ -1,17 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.iOS;
 
 [RequireComponent(typeof(SphereCollider))]
 public class LanternLight : MonoBehaviour
 {
-    [SerializeField] private float _shrinkRate = 0.1f;
     [SerializeField] private ParticleSystem _lightArea;
-    [SerializeField] private float _initialLightAreaScale = 2f;
     [SerializeField] private Light _light;
+    [SerializeField] private float _initialRadius = 3f;
+    [SerializeField] private float _disableThreshold = 0.3f;
+    [SerializeField] private float _shrinkRate = 0.1f;
+
+    public event Action ThresholdReached;
     
     private SphereCollider _collider;
     private Coroutine _coroutine;
+
+    public float CurrentRadius => _collider.radius;
     
     private void Awake()
     {
@@ -20,31 +27,54 @@ public class LanternLight : MonoBehaviour
 
     private void OnEnable()
     {
-        var particleSize = new Vector3(_initialLightAreaScale, _initialLightAreaScale, _initialLightAreaScale);
-
-        _lightArea.transform.localScale = particleSize;
-        
         if(_coroutine != null)
             StopCoroutine(_coroutine);
 
-        StartCoroutine(ShrinkingCoroutine());
+        _coroutine = StartCoroutine(ShrinkingCoroutine());
     }
 
+    private void Start()
+    {
+        SetLightRadiusForAllAxis(_initialRadius);
+    }
+    
+    public void ReceiveEnergy(float energyAmount) => _collider.radius = UserUtils.AddPercentToNumber(_collider.radius, energyAmount);
+    
+    public void SetRadius(float radius) => _collider.radius = radius;
+    
+    private void SetLightRadiusForAllAxis(float value)
+    {
+        var particleSize = new Vector3(value, value, value);
+
+        _lightArea.transform.localScale = particleSize;
+        _collider.radius = value;
+    }
+    
     private IEnumerator ShrinkingCoroutine()
     {
+        float finalValue = 0;
+        
         while (enabled)
         {
-            float shrinkRate = Time.deltaTime * _shrinkRate;
-            
-            _collider.radius  = Mathf.Lerp(_collider.radius, 0, shrinkRate);
+            _collider.radius = DecreaseValue(_collider.radius, finalValue);
 
-            _light.range = Mathf.Lerp(_light.range, 0, shrinkRate);
+            _light.range = DecreaseValue(_light.range, finalValue);
             
-            var particleSize = new Vector3(_collider.radius, _collider.radius, _collider.radius);
-            
-            _lightArea.transform.localScale = particleSize;
+            SetLightRadiusForAllAxis(_collider.radius);
+
+            if (_collider.radius <= _disableThreshold)
+            {
+                ThresholdReached?.Invoke();
+            }
             
             yield return null;
         }
+    }
+
+    private float DecreaseValue(float currentValue, float finalValue)
+    {
+        float value = Mathf.Lerp(currentValue, finalValue, _shrinkRate * Time.deltaTime);
+
+        return value;
     }
 }

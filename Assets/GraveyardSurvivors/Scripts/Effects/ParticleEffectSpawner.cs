@@ -4,25 +4,21 @@ using UnityEngine;
 
 public class ParticleEffectSpawner : Spawner<ParticleEffect>
 {
-    private GameObject _parentObject;
+    private float _duration;
     
-    public void Spawn(float interval, GameObject gameObject)
+    public ParticleEffect Spawn(float interval = 1f)
     {
-        _parentObject = gameObject;
+        _duration = interval;
         
-        GetObject();
-    }
+        var effect = GetObject();
 
-    public void Spawn(GameObject gameObject)
-    {
-        _parentObject = gameObject;
-        
-        GetObject();
+        return effect;
     }
     
     protected override void ActionOnGet(ParticleEffect effect)
     {
-        effect.transform.parent = _parentObject.transform;
+        effect.transform.parent = transform;
+        effect.SetDuration(_duration);
         effect.CanBeReleased += Release;
         ActiveObjects.Add(effect);
         
@@ -32,6 +28,7 @@ public class ParticleEffectSpawner : Spawner<ParticleEffect>
     protected override void ActionOnRelease(ParticleEffect effect)
     {
         effect.CanBeReleased -= Release;
+        effect.ResetCharacteristics();
         ActiveObjects.Remove(effect);
         
         base.ActionOnRelease(effect);

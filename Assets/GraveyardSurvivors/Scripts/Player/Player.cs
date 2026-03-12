@@ -5,14 +5,16 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
+[RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
 public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
     [SerializeField] private PickablesDetector _pickUpsDetector;
-    [SerializeField] private InteractorHandler _InteractorHandler;
+    [SerializeField] private InteractionHandler _interactionHandler;
     [SerializeField] private Attacker _attacker;
     
     [Header("Stats")]
@@ -24,10 +26,10 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
-    private IAttacker _attackerImplementation;
-
+    
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
+    public event Action<Enemy> EnemyWasKilled;
     
     public CharacterStats CurrentStats { get; private set; }
     
@@ -37,6 +39,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 
     protected override void Awake()
     {
+        Animator = GetComponent<Animator>();
+        Rotator = GetComponent<Rotator>();
+        Mover = GetComponent<Mover>();
+        Collider = GetComponent<CapsuleCollider>();
+        _interactionHandler = GetComponent<InteractionHandler>();
         _inputReader = GetComponent<InputReader>();
 
         InitializeStateMachine();
@@ -54,6 +61,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         _pickUpsDetector.CoinDetected += ReceiveMoney;
         _collisionDetector.EnemyDetected += TakeDamage;
         _regenerator.HealthRegenerated += OnHeal;
+        _attacker.EnemyWasKilled += OnEnemyDeath;
         
         _attacker.StartAttacking();
     }
@@ -64,6 +72,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         _pickUpsDetector.CoinDetected -= ReceiveMoney;
         _collisionDetector.EnemyDetected -= TakeDamage;
         _regenerator.HealthRegenerated -= OnHeal;
+        _attacker.EnemyWasKilled -= OnEnemyDeath;
     }
 
     private void Start()
@@ -105,6 +114,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
 
     public void ReceiveMoney(float value)
     {
+        value *= CurrentStats.GoldMultiplier;
+        
         _wallet.ReceiveMoney(value);
     }
     
@@ -181,4 +192,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         
         StatsChanged?.Invoke(CurrentStats);
     }
+    
+    private void OnEnemyDeath(Enemy enemy) => EnemyWasKilled?.Invoke(enemy);
 }

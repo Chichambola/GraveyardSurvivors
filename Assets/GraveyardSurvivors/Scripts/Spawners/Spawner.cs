@@ -47,9 +47,11 @@ public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
         }
     }
 
-    protected void GetObject()
+    protected T GetObject()
     {
-        _pool.Get();
+        var @object = _pool.Get();
+
+        return @object;
     }
     
     protected virtual void ActionOnGet(T @object)

@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 7152924963427175835}
   - component: {fileID: 117811364892704532}
   - component: {fileID: 2245322540743517103}
+  - component: {fileID: -4501492033182133253}
   m_Layer: 0
   m_Name: BloodAltar
   m_TagString: Untagged
@@ -323,6 +324,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 1693426667753694178}
   _valueDiscription: 'Health percent: '
+--- !u!208 &-4501492033182133253
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4527466070629496173}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8066315922587424164
 GameObject:
   m_ObjectHideFlags: 0

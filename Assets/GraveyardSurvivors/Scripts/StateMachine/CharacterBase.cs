@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator), typeof(Rotator), typeof(Mover))]
+[RequireComponent(typeof(CapsuleCollider))]
 public abstract class CharacterBase : MonoBehaviour
 {
     [Header("Base")]
@@ -7,8 +9,9 @@ public abstract class CharacterBase : MonoBehaviour
     [SerializeField] protected Rotator Rotator;
     [SerializeField] protected Mover Mover;
     
+    protected CapsuleCollider Collider;
     protected StateMachine StateMachine;
-
+    
     protected abstract void Awake();
     
     protected abstract void Update();

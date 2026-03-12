@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,6 +9,8 @@ public class Attacker : MonoBehaviour
     [SerializeField] private Weapon _weapon;
     [SerializeField] private float _cooldown = 1.5f;
 
+    public event Action<Enemy> EnemyWasKilled;
+    
     private float _attackSpeed;
     private float _attackRadius;
     private float _critChance;
@@ -72,18 +75,24 @@ public class Attacker : MonoBehaviour
     
     private void OnEnemyDetected(IAttacker attacker)
     {
-        float damage = _weapon.Info.Damage;
-
-        float currentCritChance = _critChance + _player.CurrentStats.Luck;
-
-        if (IsEnoughChanceToCrit(currentCritChance))
+        if (attacker != null && attacker is Enemy enemy)
         {
-            damage *= _critMultipler;
-        }
-     
-        Debug.Log(damage);
+            float damage = _weapon.Info.Damage;
+
+            float currentCritChance = _critChance + _player.CurrentStats.Luck;
+
+            if (IsEnoughChanceToCrit(currentCritChance))
+            {
+                damage *= _critMultipler;
+            }
         
-        attacker.TakeDamage(damage);
+            enemy.TakeDamage(damage);
+
+            if (enemy.CurrentStats.Health <= 0)
+            {
+                EnemyWasKilled?.Invoke(enemy);
+            }
+        }
     }
 
     private bool IsEnoughChanceToCrit(float critChance)

@@ -5,13 +5,13 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour, IWeapon
 {
-    [SerializeField] protected WeaponInfo _info;
+    [SerializeField] private WeaponInfo _info;
+    [SerializeField] protected AttackStrategy AttackStrategy;
     
     public virtual event Action<IAttacker> AttackerDetected;
-    
     public WeaponInfo Info => _info;
+    public virtual bool IsAttacking { get; private set; }
 
     public virtual void Attack(float duration, float radius) {}
     public virtual void Attack(float duration) {}
-    public virtual void StopAttacking() { }
 }
