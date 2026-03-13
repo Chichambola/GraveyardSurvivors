@@ -7,24 +7,34 @@ using UnityEngine;
 
 public class Lantern : MonoBehaviour
 {
+    [Header("Light")]
     [SerializeField] private LanternLight _light;
+    [SerializeField] private float _shrinkRateIncrease = 0.05f;
+    [Header("Services")]
+    [SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private LanternDamageDealer _damageDealer;
+    [Header("Player")]
     [SerializeField] private Player _player;
 
+    private List<Enemy> _enemiesInRange;
     private float _lastRadius;
     private Coroutine _coroutine;
+    
+    public List<Enemy> CurrentEnemies => _enemiesInRange;
     
     private void OnEnable()
     {
         _player.EnemyWasKilled += OnEnemyDeath;
-        _damageDealer.DamageDealt += OnDamageDealt;
+        _enemyDetector.EnemyDetected += OnEnemyDetected;
+        _enemyDetector.EnemyLeft += OnEnemyLeft;
         _light.ThresholdReached += OnThresholdReached;
     }
 
     private void OnDisable()
     {
         _player.EnemyWasKilled -= OnEnemyDeath;
-        _damageDealer.DamageDealt -= OnDamageDealt;
+        _enemyDetector.EnemyDetected -= OnEnemyDetected;
+        _enemyDetector.EnemyLeft -= OnEnemyLeft;
         _light.ThresholdReached -= OnThresholdReached;
     }
 
@@ -36,13 +46,13 @@ public class Lantern : MonoBehaviour
         }
         else
         {
-            float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternEnergy);
+            float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternDamage);
             
             if (tempValue >= _lastRadius)
             {
                 _light.gameObject.SetActive(true);
                 
-                _light.SetRadius(tempValue);
+                _light.SetLightRadiusForAllAxis(tempValue);
             }
             else
             {
@@ -51,19 +61,51 @@ public class Lantern : MonoBehaviour
         }
     }
     
-    private void OnDamageDealt(float damagePercent)
-    {
-        float currentRadius = _light.CurrentRadius;
-
-        currentRadius = UserUtils.SubtractPercentFromNumber(currentRadius, damagePercent);
-        
-        _light.SetRadius(currentRadius);
-    }
-    
     private void OnThresholdReached()
     {
         _lastRadius = _light.CurrentRadius;
 
         _light.gameObject.SetActive(false);
+    }
+    
+    private void OnEnemyLeft(Enemy enemy)
+    {
+        enemy.CanBeReleased -= OnEnemyLeft;
+        
+        if (_enemiesInRange.Contains(enemy))
+        {
+            _enemiesInRange.Remove(enemy);  
+            
+            DecreaseRate();
+        }
+    }
+    private void DecreaseRate()
+    {
+        float currentRate = _light.ShrinkRate;
+        
+        currentRate -= _shrinkRateIncrease;
+
+        if (currentRate < 0)
+            throw new Exception("Shrinking rate can't be less than 0");
+        
+        _light.SetRate(currentRate);
+    }
+    
+    private void OnEnemyDetected(Enemy enemy)
+    {
+        enemy.CanBeReleased += OnEnemyLeft;
+        
+        _enemiesInRange.Add(enemy); 
+        
+        IncreaseRate();
+    }
+
+    private void IncreaseRate()
+    {
+        float currentRate = _light.ShrinkRate;
+        
+        currentRate += _shrinkRateIncrease;
+        
+        _light.SetRate(currentRate);
     }
 }

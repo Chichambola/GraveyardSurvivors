@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.iOS;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(SphereCollider))]
 public class LanternLight : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _lightArea;
     [SerializeField] private Light _light;
-    [SerializeField] private float _initialRadius = 3f;
+    [SerializeField] private float _radius = 3f;
     [SerializeField] private float _disableThreshold = 0.3f;
     [SerializeField] private float _shrinkRate = 0.1f;
 
@@ -17,12 +18,16 @@ public class LanternLight : MonoBehaviour
     
     private SphereCollider _collider;
     private Coroutine _coroutine;
+    private float _initialRadius;
 
     public float CurrentRadius => _collider.radius;
+    public float ShrinkRate => _shrinkRate;
     
     private void Awake()
     {
         _collider = GetComponent<SphereCollider>();
+        
+        _initialRadius = _radius;
     }
 
     private void OnEnable()
@@ -39,15 +44,20 @@ public class LanternLight : MonoBehaviour
     }
     
     public void ReceiveEnergy(float energyAmount) => _collider.radius = UserUtils.AddPercentToNumber(_collider.radius, energyAmount);
+
+    public void ResetRadius() => SetLightRadiusForAllAxis(_initialRadius);
     
-    public void SetRadius(float radius) => _collider.radius = radius;
-    
-    private void SetLightRadiusForAllAxis(float value)
+    public void SetLightRadiusForAllAxis(float value)
     {
         var particleSize = new Vector3(value, value, value);
 
         _lightArea.transform.localScale = particleSize;
         _collider.radius = value;
+    }
+
+    public void SetRate(float value)
+    {
+        _shrinkRate = value;
     }
     
     private IEnumerator ShrinkingCoroutine()

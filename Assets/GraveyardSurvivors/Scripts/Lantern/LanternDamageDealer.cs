@@ -5,11 +5,8 @@ using UnityEngine;
 
 public class LanternDamageDealer : MonoBehaviour
 {
-    [SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private float _damage = 3f;
     [SerializeField] private float _rate = 1f;
-
-    public event Action<float> DamageDealt;
     
     private List<Enemy> _enemiesInRange;
     private Coroutine _coroutine;
@@ -21,37 +18,10 @@ public class LanternDamageDealer : MonoBehaviour
 
     private void OnEnable()
     {
-        _enemyDetector.EnemyDetected += OnEnemyDetected;
-        _enemyDetector.EnemyLeft += OnEnemyLeft;
-
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
         _coroutine = StartCoroutine(DamageRoutine());
-    }
-    
-
-    private void OnDisable()
-    {
-        _enemyDetector.EnemyDetected -= OnEnemyDetected;
-        _enemyDetector.EnemyLeft -= OnEnemyLeft;
-    }
-    
-    private void OnEnemyLeft(Enemy enemy)
-    {
-        enemy.CanBeReleased -= OnEnemyLeft;
-        
-        if (_enemiesInRange.Contains(enemy))
-        {
-            _enemiesInRange.Remove(enemy);   
-        }
-    }
-
-    private void OnEnemyDetected(Enemy enemy)
-    {
-        enemy.CanBeReleased += OnEnemyLeft;
-        
-        _enemiesInRange.Add(enemy); 
     }
 
     private IEnumerator DamageRoutine()
@@ -71,8 +41,6 @@ public class LanternDamageDealer : MonoBehaviour
                     damagePercent += enemy.CurrentStats.LanternEnergy;
                 }
             }
-            
-            DamageDealt?.Invoke(damagePercent);
             
             yield return wait;
         }
