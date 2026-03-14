@@ -618,9 +618,9 @@ GameObject:
   - component: {fileID: 360078370}
   - component: {fileID: 360078373}
   - component: {fileID: 360078371}
-  - component: {fileID: 360078375}
-  - component: {fileID: 360078374}
   - component: {fileID: 360078372}
+  - component: {fileID: 360078374}
+  - component: {fileID: 360078375}
   m_Layer: 6
   m_Name: Light
   m_TagString: Untagged
@@ -686,7 +686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lightArea: {fileID: 1041548476}
   _light: {fileID: 1577614068}
-  _initialRadius: 3
+  _radius: 3
   _disableThreshold: 0.7
   _shrinkRate: 0.01
 --- !u!135 &360078373
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 360078369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 376f178f1126a03698003016d7267e6f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c970b8010eba0bf3b762e592143c0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &360078375
@@ -731,7 +731,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 360078369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c970b8010eba0bf3b762e592143c0b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 376f178f1126a03698003016d7267e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &376108313
@@ -886,7 +886,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6c9d280caf2a340949cfe6f1479a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyDetector: {fileID: 360078374}
   _damage: 2
   _rate: 1
 --- !u!1 &562525842
@@ -1670,7 +1669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3ece94a6c0e26c9a2d5038d9f5f974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detector: {fileID: 360078375}
+  _detector: {fileID: 360078374}
   _buff: {fileID: 1002513578}
   _cooldown: 1.5
 --- !u!1 &1034649750
@@ -7290,7 +7289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lightArea: {fileID: 2100930591}
   _light: {fileID: 1384223472}
-  _initialRadius: 2
+  _radius: 3
   _disableThreshold: 0.3
   _shrinkRate: 0.01
 --- !u!135 &1556472917
@@ -20051,6 +20050,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _light: {fileID: 360078372}
+  _shrinkRateIncrease: 0.03
+  _enemyDetector: {fileID: 360078375}
   _damageDealer: {fileID: 550256711}
   _player: {fileID: 2139489487}
 --- !u!1 &7542488590969296859

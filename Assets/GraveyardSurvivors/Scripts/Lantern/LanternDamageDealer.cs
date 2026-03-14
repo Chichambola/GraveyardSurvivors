@@ -24,21 +24,22 @@ public class LanternDamageDealer : MonoBehaviour
         _coroutine = StartCoroutine(DamageRoutine());
     }
 
+    public void UpdateEnemies(List<Enemy> enemies)
+    {
+        _enemiesInRange = enemies;
+    }
+    
     private IEnumerator DamageRoutine()
     {
         var wait = new WaitForSecondsRealtime(_rate);
         
         while (enabled)
         {
-            float damagePercent = 0f;
-            
             if (_enemiesInRange.Count > 0)
             {
                 foreach (var enemy in _enemiesInRange)
                 {
                     enemy.TakeDamage(_damage);
-
-                    damagePercent += enemy.CurrentStats.LanternEnergy;
                 }
             }
             

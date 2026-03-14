@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
@@ -19,9 +20,12 @@ public class Lantern : MonoBehaviour
     private List<Enemy> _enemiesInRange;
     private float _lastRadius;
     private Coroutine _coroutine;
-    
-    public List<Enemy> CurrentEnemies => _enemiesInRange;
-    
+
+    private void Awake()
+    {
+        _enemiesInRange = new List<Enemy>();
+    }
+
     private void OnEnable()
     {
         _player.EnemyWasKilled += OnEnemyDeath;
@@ -46,7 +50,7 @@ public class Lantern : MonoBehaviour
         }
         else
         {
-            float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternDamage);
+            float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternEnergy);
             
             if (tempValue >= _lastRadius)
             {
@@ -76,6 +80,8 @@ public class Lantern : MonoBehaviour
         {
             _enemiesInRange.Remove(enemy);  
             
+            _damageDealer.UpdateEnemies(_enemiesInRange.ToList());
+            
             DecreaseRate();
         }
     }
@@ -96,6 +102,8 @@ public class Lantern : MonoBehaviour
         enemy.CanBeReleased += OnEnemyLeft;
         
         _enemiesInRange.Add(enemy); 
+        
+        _damageDealer.UpdateEnemies(_enemiesInRange.ToList());
         
         IncreaseRate();
     }

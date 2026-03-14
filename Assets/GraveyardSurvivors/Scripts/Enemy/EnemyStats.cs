@@ -8,7 +8,6 @@ public class EnemyStats : IStat
 {
     public float Health;
     public float Armor;
-    public float LanternDamage;
     public float MovementSpeed;
     public float AttackSpeed;
     public float MoneyForKill;
@@ -27,6 +26,5 @@ public class EnemyStats : IStat
         MoneyForKill = stats.MoneyForKill;
         XpForKill = stats.XpForKill;
         LanternEnergy = stats.LanternEnergy;
-        LanternDamage = stats.LanternDamage;
     }
 }
