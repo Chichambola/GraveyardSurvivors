@@ -26,6 +26,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
+    [SerializeField] private LanternDamageDealer _lanternDamageDealer;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
@@ -62,6 +63,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         _collisionDetector.EnemyDetected += TakeDamage;
         _regenerator.HealthRegenerated += OnHeal;
         _attacker.EnemyWasKilled += OnEnemyDeath;
+        _lanternDamageDealer.EnemyDied += OnEnemyDeath;
         
         _attacker.StartAttacking();
     }
@@ -73,6 +75,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         _collisionDetector.EnemyDetected -= TakeDamage;
         _regenerator.HealthRegenerated -= OnHeal;
         _attacker.EnemyWasKilled -= OnEnemyDeath;
+        _lanternDamageDealer.EnemyDied -= OnEnemyDeath;
     }
 
     private void Start()

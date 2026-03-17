@@ -12,13 +12,13 @@ public class Lantern : MonoBehaviour
     [SerializeField] private LanternLight _light;
     [SerializeField] private float _shrinkRateIncrease = 0.05f;
     [Header("Services")]
-    [SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private LanternDamageDealer _damageDealer;
     [Header("Player")]
     [SerializeField] private Player _player;
 
     private List<Enemy> _enemiesInRange;
     private float _lastRadius;
+    private float _targetValue = 0;
     private Coroutine _coroutine;
 
     private void Awake()
@@ -29,21 +29,26 @@ public class Lantern : MonoBehaviour
     private void OnEnable()
     {
         _player.EnemyWasKilled += OnEnemyDeath;
-        _enemyDetector.EnemyDetected += OnEnemyDetected;
-        _enemyDetector.EnemyLeft += OnEnemyLeft;
         _light.ThresholdReached += OnThresholdReached;
+        _damageDealer.EnemyDetected += OnEnemyDetected;
+        _damageDealer.EnemyLeft += OnEnemyLeft;
+        _light.GainedEnergy += OnEnergyGained;
     }
-
+    
     private void OnDisable()
     {
         _player.EnemyWasKilled -= OnEnemyDeath;
-        _enemyDetector.EnemyDetected -= OnEnemyDetected;
-        _enemyDetector.EnemyLeft -= OnEnemyLeft;
+        _damageDealer.EnemyDetected -= OnEnemyDetected;
+        _damageDealer.EnemyLeft -= OnEnemyLeft;
         _light.ThresholdReached -= OnThresholdReached;
+        _light.GainedEnergy -= OnEnergyGained;
     }
 
     private void OnEnemyDeath(Enemy enemy)
     {
+        if(enemy == null)
+            throw new Exception("Enemy cannot be null!");
+        
         if (_light.gameObject.activeSelf)
         {
             _light.ReceiveEnergy(enemy.CurrentStats.LanternEnergy);
@@ -51,17 +56,12 @@ public class Lantern : MonoBehaviour
         else
         {
             float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternEnergy);
-            
-            if (tempValue >= _lastRadius)
-            {
-                _light.gameObject.SetActive(true);
+
+            _light.gameObject.SetActive(true);
                 
-                _light.SetLightRadiusForAllAxis(tempValue);
-            }
-            else
-            {
-                _lastRadius = tempValue;
-            }
+            _light.SetLightRadiusForAllAxis(tempValue);
+                
+            _light.StartRadiusRoutine(_targetValue);
         }
     }
     
@@ -72,19 +72,11 @@ public class Lantern : MonoBehaviour
         _light.gameObject.SetActive(false);
     }
     
-    private void OnEnemyLeft(Enemy enemy)
+    private void OnEnemyLeft()
     {
-        enemy.CanBeReleased -= OnEnemyLeft;
-        
-        if (_enemiesInRange.Contains(enemy))
-        {
-            _enemiesInRange.Remove(enemy);  
-            
-            _damageDealer.UpdateEnemies(_enemiesInRange.ToList());
-            
-            DecreaseRate();
-        }
+        DecreaseRate();
     }
+    
     private void DecreaseRate()
     {
         float currentRate = _light.ShrinkRate;
@@ -97,14 +89,8 @@ public class Lantern : MonoBehaviour
         _light.SetRate(currentRate);
     }
     
-    private void OnEnemyDetected(Enemy enemy)
+    private void OnEnemyDetected()
     {
-        enemy.CanBeReleased += OnEnemyLeft;
-        
-        _enemiesInRange.Add(enemy); 
-        
-        _damageDealer.UpdateEnemies(_enemiesInRange.ToList());
-        
         IncreaseRate();
     }
 
@@ -116,4 +102,6 @@ public class Lantern : MonoBehaviour
         
         _light.SetRate(currentRate);
     }
+    
+    private void OnEnergyGained() => _light.StartRadiusRoutine(_targetValue);
 }

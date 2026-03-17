@@ -19,4 +19,4 @@ MonoBehaviour:
     AttackSpeed: 0
     MoneyForKill: 6
     XpForKill: 3
-    LanternEnergy: 3
+    LanternEnergy: 50

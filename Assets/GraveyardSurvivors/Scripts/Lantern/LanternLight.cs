@@ -15,10 +15,13 @@ public class LanternLight : MonoBehaviour
     [SerializeField] private float _shrinkRate = 0.1f;
 
     public event Action ThresholdReached;
+    public event Action GainedEnergy;
     
     private SphereCollider _collider;
     private Coroutine _coroutine;
     private float _initialRadius;
+    private float _energyMultiplier = 5f;
+    private bool _isGainingEnergy;
 
     public float CurrentRadius => _collider.radius;
     public float ShrinkRate => _shrinkRate;
@@ -32,10 +35,7 @@ public class LanternLight : MonoBehaviour
 
     private void OnEnable()
     {
-        if(_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(ShrinkingCoroutine());
+        StartRadiusRoutine(0);
     }
 
     private void Start()
@@ -43,9 +43,14 @@ public class LanternLight : MonoBehaviour
         SetLightRadiusForAllAxis(_initialRadius);
     }
     
-    public void ReceiveEnergy(float energyAmount) => _collider.radius = UserUtils.AddPercentToNumber(_collider.radius, energyAmount);
+    public void ReceiveEnergy(float energyAmount)
+    {
+        float value = UserUtils.AddPercentToNumber(_collider.radius, energyAmount);
 
-    public void ResetRadius() => SetLightRadiusForAllAxis(_initialRadius);
+        _isGainingEnergy = true;
+        
+        StartRadiusRoutine(value);
+    }
     
     public void SetLightRadiusForAllAxis(float value)
     {
@@ -55,23 +60,27 @@ public class LanternLight : MonoBehaviour
         _collider.radius = value;
     }
 
-    public void SetRate(float value)
-    {
-        _shrinkRate = value;
-    }
+    public void ResetRadius() => StartRadiusRoutine(_initialRadius);
     
-    private IEnumerator ShrinkingCoroutine()
+    public void SetRate(float value) => _shrinkRate = value;
+
+    public void StartRadiusRoutine(float targetValue)
     {
-        float finalValue = 0;
-        
+        if (gameObject.activeSelf)
+        {
+            if (_coroutine != null)
+                StopCoroutine(_coroutine);
+
+            _coroutine = StartCoroutine(ChangingRadiusRoutine(targetValue));
+        }
+    }
+
+    private IEnumerator ChangingRadiusRoutine(float targetValue)
+    {
         while (enabled)
         {
-            _collider.radius = DecreaseValue(_collider.radius, finalValue);
-
-            _light.range = DecreaseValue(_light.range, finalValue);
+            ChangeRadius(targetValue);   
             
-            SetLightRadiusForAllAxis(_collider.radius);
-
             if (_collider.radius <= _disableThreshold)
             {
                 ThresholdReached?.Invoke();
@@ -81,9 +90,34 @@ public class LanternLight : MonoBehaviour
         }
     }
 
-    private float DecreaseValue(float currentValue, float finalValue)
+    private void ChangeRadius(float targetValue)
     {
-        float value = Mathf.Lerp(currentValue, finalValue, _shrinkRate * Time.deltaTime);
+        _collider.radius = LerpToValue(_collider.radius, targetValue);
+
+        _light.range = LerpToValue(_light.range, targetValue);
+            
+        SetLightRadiusForAllAxis(_collider.radius);
+    }
+    
+    private float LerpToValue(float currentValue, float finalValue)
+    {
+        float value;
+        
+        if (_isGainingEnergy)
+        {
+            value = Mathf.Lerp(currentValue, finalValue, Time.fixedDeltaTime * _energyMultiplier);
+            
+            if (Mathf.Approximately(_collider.radius, finalValue))
+            {
+                _isGainingEnergy = false;
+                
+                GainedEnergy?.Invoke();
+            }
+        }
+        else
+        {
+            value = Mathf.Lerp(currentValue, finalValue, _shrinkRate * Time.fixedDeltaTime);
+        }
 
         return value;
     }
