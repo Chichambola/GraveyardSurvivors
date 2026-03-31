@@ -5,20 +5,21 @@ using UnityEngine;
 
 public class BloodAltarHandler : InteractableHandler
 {
-    [SerializeField] private BloodAltarSpawner _spawner;
-
     private void OnEnable()
     {
-        _spawner.AltarWasChosen += OnAltarChosen;
+        InteractableSpawner.InteractableWasChosen += OnAltarChosen;
     }
 
     private void OnDisable()
     {
-        _spawner.AltarWasChosen -= OnAltarChosen;
+        InteractableSpawner.InteractableWasChosen -= OnAltarChosen;
     }
 
-    private void OnAltarChosen(BloodAltar altar)
+    private void OnAltarChosen(Interactable interactable)
     {
+        if (interactable is BloodAltar altar == false)
+            throw new Exception();
+        
         float necessaryHealth = GetAmountOfNecessaryHealth(Player.MaxHealth, altar);
 
         if (Player.CurrentHealth <= necessaryHealth)
@@ -28,6 +29,8 @@ public class BloodAltarHandler : InteractableHandler
             return;
         }
 
+        altar.StartCountdown();
+        
         altar.IncreaseInteractionAmount();
 
         float moneyAmount = Mathf.Round(necessaryHealth / 2);

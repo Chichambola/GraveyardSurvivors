@@ -1,59 +1,51 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Profiling;
 using UnityEngine;
 
-public class ChanceAltarHandler : ChanceHandlerBase
+public class ChanceAltarHandler : ItemInteractable
 {
-    [SerializeField] private ChanceAltarSpawner _chanceAltarSpawner;
-
     private void OnEnable()
     {
-        _chanceAltarSpawner.AltarWasChosen += OnChanceAltarChosen;
+        InteractableSpawner.InteractableWasChosen += OnChanceAltarChosen;
     }
 
     private void OnDisable()
     {
-        _chanceAltarSpawner.AltarWasChosen -= OnChanceAltarChosen;
+        InteractableSpawner.InteractableWasChosen -= OnChanceAltarChosen;
     }
-    
+
     private void Start()
     {
-        if(Cost <= 0)
-            throw new Exception("Cost must be greater than 0.");
-        
-        SetObjectsValue();
+        InteractableSpawner.SetValueForObjects(Cost);
     }
 
-    protected override void SetObjectsValue()
+    private void OnChanceAltarChosen(Interactable interactable)
     {
-        foreach (var altar in _chanceAltarSpawner.SpawnedObjects)
-        {
-            altar.SetCost(Cost);
-        }
-    }
-
-    private void OnChanceAltarChosen(ChanceAltar altar)
-    {
-        int noneChance = altar.NoneChance;
-        int commonChance = altar.CommonChance;
-        int rareChance = altar.RareChance;
-        int legendaryChance = altar.LegendaryChance;
+        if (interactable is ChanceAltar altar == false)
+            throw new Exception();
         
-        ERarityLevel rarityLevel = RarityEvaluator.GetRarityLevel(noneChance, commonChance, rareChance, legendaryChance);
-
         if (Player.MoneyAmount <= altar.CurrentCost)
         {
             Debug.Log($"Not enough money");
             
             return;
         }
+        
+        ERarityLevel rarityLevel = GetRarityLevel(altar, altar.NoneChance);
 
         Player.ReduceMoneyAmount(altar.CurrentCost);
+        
         altar.StartCountdown();
         
-        Debug.Log(rarityLevel);
-        
+        CanDrop(rarityLevel, altar);
+            
+        altar.SetValue(IncreaseCost(altar.CurrentCost));
+    }
+
+    private void CanDrop(ERarityLevel rarityLevel, ChanceAltar altar)
+    {
         if (rarityLevel == ERarityLevel.None)
         {
             Debug.Log("Nothing to drop");   
@@ -64,8 +56,5 @@ public class ChanceAltarHandler : ChanceHandlerBase
             
             ItemsHandler.SpawnRandomItem(altar.transform.position, rarityLevel);   
         }
-        
-        CalculateCost();
-        altar.SetCost(Cost);
     }
 }

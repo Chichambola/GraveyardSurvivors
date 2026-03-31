@@ -8,7 +8,7 @@ public class MeleeAttackStrategy : AttackStrategy
 {
     [SerializeField] private AttackArea _area;
     
-    public override event Action<List<IAttacker>> AttackerDetected;
+    public override event Action<IAttacker> AttackerDetected;
 
     public override void Execute(float radius = 0f)
     {
@@ -16,7 +16,10 @@ public class MeleeAttackStrategy : AttackStrategy
         
         if (_area.TryGetAttackers(out List<IAttacker> detectedAttackers))
         {
-            AttackerDetected?.Invoke(detectedAttackers);
+            foreach (var attacker in detectedAttackers)
+            {
+                AttackerDetected?.Invoke(attacker);   
+            }
         }
     }
 }

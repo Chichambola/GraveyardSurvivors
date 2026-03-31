@@ -13,8 +13,6 @@ public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
 
     private ObjectPool<T> _pool;
     protected readonly List<T> ActiveObjects = new();
-    
-    public List<T> SpawnedObjects => ActiveObjects;
 
     private void Awake()
     {

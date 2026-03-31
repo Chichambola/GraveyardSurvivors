@@ -29,12 +29,9 @@ public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
         var systemMain = _particleSystem.main;
 
         systemMain.duration = duration;
-        
-        _particleSystem.Play();
     }
 
-    public void SetPosition(Vector3 position)
-    {
-        _particleSystem.transform.position = position;
-    }
+    public void SetPosition(Vector3 position) => _particleSystem.transform.position = position;
+    
+    public void StartPlaying() => _particleSystem.Play();
 }

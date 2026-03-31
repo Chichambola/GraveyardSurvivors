@@ -5,6 +5,6 @@ using UnityEngine;
 
 public interface IAttackStrategy
 {
+    public event Action<IAttacker> AttackerDetected;
     void Execute(float radius);
-    public event Action<List<IAttacker>> AttackerDetected; 
 }

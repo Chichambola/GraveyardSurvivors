@@ -3,16 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BloodAltar : Interactable, IPoolable<BloodAltar>
+public class BloodAltar : CooldownInteractable
 {
     [SerializeField] private List<float> _damagePercent;
     
     private Dictionary<int,float> _damagePercentDict;
     private int _maxInteractionsAmount;
-    private int _currentInteractionsAmount = 0;
-    
-    public event Action<BloodAltar> CanBeReleased;
-    public event Action<BloodAltar> WasChosen;
+    private int _currentInteractionsAmount;
 
     private void OnEnable()
     {
@@ -37,24 +34,11 @@ public class BloodAltar : Interactable, IPoolable<BloodAltar>
         SetValue(_damagePercentDict[_currentInteractionsAmount]);
     }
 
-    public void ResetCharacteristics()
+    public override void ResetCharacteristics()
     {
         _maxInteractionsAmount = 0;
         _currentInteractionsAmount = 0;
         IsAvailable = true;
-    }
-
-    public void Release()
-    {
-        CanBeReleased?.Invoke(this);
-    }
-
-    public override void ProcessInteraction()
-    {
-        if(IsAvailable == false)
-            return;
-        
-        WasChosen?.Invoke(this);
     }
     
     public float GetDamagePercent()

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Apple.ReplayKit;
 using UnityEngine.Rendering;
 
-public class EnemySpawner : Spawner<Enemy>
+public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>
 {
     [SerializeField] private CoinSpawner _coinSpawner;
     [SerializeField] private Transform[] _points;
@@ -48,6 +48,7 @@ public class EnemySpawner : Spawner<Enemy>
         _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
         
         enemy.CanBeReleased -= Release;
+        EnemyWasReleased?.Invoke(enemy);
         
         enemy.ResetCharacteristics();
         

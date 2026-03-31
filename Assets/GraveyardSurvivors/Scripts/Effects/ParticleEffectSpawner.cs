@@ -23,6 +23,8 @@ public class ParticleEffectSpawner : Spawner<ParticleEffect>
         ActiveObjects.Add(effect);
         
         base.ActionOnGet(effect);
+        
+        effect.StartPlaying();
     }
 
     protected override void ActionOnRelease(ParticleEffect effect)

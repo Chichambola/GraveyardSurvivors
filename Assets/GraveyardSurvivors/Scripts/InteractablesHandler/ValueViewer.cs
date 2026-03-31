@@ -25,6 +25,6 @@ public class ValueViewer : MonoBehaviour
     {
         _value = value;
         
-        _text.text = _valueDiscription + _value;
+        _text.text = $"{_valueDiscription} {_value}";
     }
 }

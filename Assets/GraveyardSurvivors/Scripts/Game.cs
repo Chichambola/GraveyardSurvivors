@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Profiling;
 using UnityEngine;
 
 public class Game : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private Darkness _darkness;
     [SerializeField] private List<InteractableHandler> _interactables;
 
     private void Update()
@@ -25,5 +27,7 @@ public class Game : MonoBehaviour
                 handler.Init(_player);
             }
         }
+        
+        _darkness.Init(_player);
     }
 }

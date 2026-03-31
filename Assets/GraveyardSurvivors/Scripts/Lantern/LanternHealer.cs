@@ -37,7 +37,7 @@ public class LanternHealer : MonoBehaviour
         _coroutine = StartCoroutine(HealingCoroutine());
     }
 
-    private void StopHealing()
+    private void StopHealing(IBuffable buffable)
     {
         foreach (IBuff buff in _tempBuffs)
         {
@@ -47,6 +47,9 @@ public class LanternHealer : MonoBehaviour
         _tempBuffs.Clear();
         
         StopCoroutine(_coroutine);
+
+        if (buffable == _buffable)
+            _buffable = null;
     }
     
     private IEnumerator HealingCoroutine()

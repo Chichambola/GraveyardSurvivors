@@ -3,82 +3,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChanceAltar : ChanceInteractable<ChanceAltar>, IPoolable<ChanceAltar>
+public class ChanceAltar : CooldownInteractable, IChanceInteractable
 {
-    [Header("Altar specific fields")]
-    [SerializeField] private int _maxInteractionsAmount = 2;
-    [SerializeField] private float _countdownTime = 1.5f;
+    [Header("Weights")]
+    [SerializeField] protected int CommonChanceWeight;
+    [SerializeField] protected int RareChanceWeight;
+    [SerializeField] protected int LegendaryChanceWeight;
     [SerializeField] private int _noneChance = 40;
-
-    public override event Action<ChanceAltar> WasChosen;
-    public event Action<ChanceAltar> CanBeReleased;
+    
+    public override event Action<Interactable> WasChosen;
     
     private float _currentCost;
-    private int _currentInteractionsAmount;
     private Coroutine _coroutine;
     
     public float CurrentCost => _currentCost;
     public int NoneChance => _noneChance;
+    public int CommonChance => CommonChanceWeight;
+    public int RareChance => RareChanceWeight;
+    public int LegendaryChance => LegendaryChanceWeight;
     
     public override void ProcessInteraction()
     {
-        if (IsAvailable == false || _currentInteractionsAmount == _maxInteractionsAmount)
+        if (IsAvailable == false || CurrentInteractionsAmount == MaxInteractionsAmount)
             return;
         
         HideValue();
         
         WasChosen?.Invoke(this);
     }
-
-    public void StartCountdown()
-    {
-        if(_coroutine != null)
-            StopCoroutine(_coroutine);    
-        
-        ChangeOutlineVisibility(false);
-
-        StartCoroutine(CooldownRoutine());
-    }
     
-    public void ResetCharacteristics()
+    public override void ResetCharacteristics()
     {
         IsAvailable = true;
-        _currentInteractionsAmount = 0;
+        CurrentInteractionsAmount = 0;
     }
 
-    public void SetCost(float value)
+    public override void SetValue(float value)
     {
         _currentCost = value;
         
-        ValueViewer.SetValue(_currentCost);
-    }
-    
-    public void Release()
-    {
-        CanBeReleased?.Invoke(this);
+        base.SetValue(value);
     }
 
     public void IncreaseInteractionsAmount()
     {
-        _currentInteractionsAmount++;
-    }
-    
-    private IEnumerator CooldownRoutine()
-    {
-        IsAvailable = false;
-        
-        float timePassed = 0;
-        
-        while (timePassed < _countdownTime)
-        {
-            timePassed += Time.deltaTime;
-            
-            yield return null;
-        }
-
-        if (_currentInteractionsAmount != _maxInteractionsAmount)
-            IsAvailable = true;
-
-        yield return null;
+        CurrentInteractionsAmount++;
     }
 }

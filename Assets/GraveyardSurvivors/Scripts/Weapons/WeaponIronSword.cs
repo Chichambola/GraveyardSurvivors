@@ -13,15 +13,16 @@ public class WeaponIronSword : Weapon
     [SerializeField] private float _effectChance;
 
     private Coroutine _coroutine;
+    private float _lastDuration;
     private float _waitTime = 0.1f;
-    
+
     public override event Action<IAttacker> AttackerDetected;
-    
+
     private void OnEnable()
     {
         AttackStrategy.AttackerDetected += OnAttackerDetected;
         
-        if(_coroutine != null)
+        if (_coroutine != null)
             StopCoroutine(_coroutine);
 
         _coroutine = StartCoroutine(VisibilityRoutine());
@@ -34,40 +35,35 @@ public class WeaponIronSword : Weapon
 
     public override void Attack(float duration, float radius)
     {
-        SetParticleSystemDuration(duration);
-        
+        if (!Mathf.Approximately(duration, _lastDuration))
+        {
+            SetParticleSystemDuration(duration);
+        }
+
         AttackStrategy.Execute(radius);
-    }
-
-    private bool CanEffectProc()
-    {
-        float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
-
-        return _effectChance >= randomNumber;
     }
 
     private void SetParticleSystemDuration(float duration)
     {
         _attackParticles.Stop();
-        
+
         if (_attackParticles.isPlaying)
-            return;   
-        
+            return;
+
         var slashMain = _attackParticles.main;
 
         slashMain.duration = duration;
-        
+
+        _lastDuration = duration;
+
         _attackParticles.Play();
     }
-    
-    private void OnAttackerDetected(List<IAttacker> attackers)
+
+    private void OnAttackerDetected(IAttacker attacker)
     {
-        foreach (var attacker in attackers)
+        if (attacker is Enemy _)
         {
-            if (attacker is Enemy _)
-            {
-                ProcessAttacker(attacker);
-            }
+            ProcessAttacker(attacker);
         }
     }
 
@@ -84,6 +80,13 @@ public class WeaponIronSword : Weapon
         }
     }
 
+    private bool CanEffectProc()
+    {
+        float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
+
+        return _effectChance >= randomNumber;
+    }
+
     private IEnumerator VisibilityRoutine()
     {
         var wait = new WaitForSecondsRealtime(_waitTime);
@@ -91,7 +94,7 @@ public class WeaponIronSword : Weapon
         while (enabled)
         {
             yield return wait;
-            
+
             _area.SetVisibility(_attackParticles.particleCount > 0);
         }
     }

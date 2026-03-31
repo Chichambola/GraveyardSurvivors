@@ -12,14 +12,14 @@ public static class UserUtils
 
     public static float AddPercentToNumber(float originalNumber, float percent)
     {
-        float finalNumber = originalNumber * (1 + percent / s_HighestPercent);
+        float finalNumber = (originalNumber * (1 + percent / s_HighestPercent));
 
         return finalNumber;
     }
 
     public static float SubtractPercentFromNumber(float originalNumber, float percent)
     {
-        float finalNumber = originalNumber * (1 - percent / s_HighestPercent);
+        float finalNumber = (originalNumber * (1 - percent / s_HighestPercent));
 
         return finalNumber;
     }

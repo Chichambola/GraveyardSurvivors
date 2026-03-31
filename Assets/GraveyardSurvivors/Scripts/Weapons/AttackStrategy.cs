@@ -5,7 +5,6 @@ using UnityEngine;
 
 public abstract class AttackStrategy : MonoBehaviour, IAttackStrategy
 {
+    public abstract event Action<IAttacker> AttackerDetected;
     public abstract void Execute(float radius = 0f);
-
-    public abstract event Action<List<IAttacker>> AttackerDetected;
 }

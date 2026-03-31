@@ -3,23 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Outline))]
-public abstract class Interactable: MonoBehaviour, IInteractable
+public abstract class Interactable: MonoBehaviour, IInteractable, IPoolable<Interactable>
 {
     [Header("Interactables specific fields")]
     [SerializeField] protected Outline Outline;
     [SerializeField] protected ValueViewer ValueViewer;
     
+    public virtual event Action<Interactable> CanBeReleased;
+    public virtual event Action<Interactable> WasChosen;
+    
     protected bool IsAvailable = true;
-    protected bool IsShowingValue = false;
+    protected bool IsShowingValue;
     
     public bool IsCurrentlyShowingValue => IsShowingValue;
     public bool IsCurrentlyAvailable => IsAvailable;
-    
-    private void Awake()
-    {
-        Outline = GetComponent<Outline>();
-    }
+    public float Value { get; private set; }
 
     public void ChangeOutlineVisibility(bool value)
     {
@@ -38,10 +36,30 @@ public abstract class Interactable: MonoBehaviour, IInteractable
         IsShowingValue = false;
     }
 
-    public void SetValue(float value)
+    public virtual void SetValue(float value)
     {
+        Value = value;
+        
         ValueViewer.SetValue(value);
     }
-    
-    public abstract void ProcessInteraction();
+
+    public virtual void ProcessInteraction()
+    {
+        if (IsAvailable == false)
+            return;
+        
+        HideValue();
+        
+        WasChosen?.Invoke(this);
+    }
+
+    public virtual void Release()
+    {
+        CanBeReleased?.Invoke(this);
+    }
+
+    public virtual void ResetCharacteristics()
+    {
+        
+    }
 }

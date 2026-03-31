@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InteractableHandler : MonoBehaviour, IInteractableHandler
 {
+    [SerializeField] protected InteractableSpawner InteractableSpawner;
+    
     protected IPlayerStats Player; 
     
     public void Init(IPlayerStats player)

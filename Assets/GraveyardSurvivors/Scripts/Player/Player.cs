@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
-public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
+public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightCarrier
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
@@ -27,15 +27,22 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private LanternDamageDealer _lanternDamageDealer;
+    [SerializeField] private LanternLight _light;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
-    public event Action<Enemy> EnemyWasKilled;
+
+    private int _lanternsCount;
+    private bool _isInLantern;
     
     public CharacterStats CurrentStats { get; private set; }
     
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth => CurrentStats.Health;
+    public LanternLight Light => _light;
+    public bool IsLightActive => _light.IsActive;
+    public int LanternsCount => _lanternsCount;
+
     public float MaxHealth { get; private set; }
 
     protected override void Awake()
@@ -62,8 +69,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         _pickUpsDetector.CoinDetected += ReceiveMoney;
         _collisionDetector.EnemyDetected += TakeDamage;
         _regenerator.HealthRegenerated += OnHeal;
-        _attacker.EnemyWasKilled += OnEnemyDeath;
-        _lanternDamageDealer.EnemyDied += OnEnemyDeath;
         
         _attacker.StartAttacking();
     }
@@ -74,12 +79,12 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         _pickUpsDetector.CoinDetected -= ReceiveMoney;
         _collisionDetector.EnemyDetected -= TakeDamage;
         _regenerator.HealthRegenerated -= OnHeal;
-        _attacker.EnemyWasKilled -= OnEnemyDeath;
-        _lanternDamageDealer.EnemyDied -= OnEnemyDeath;
     }
 
     private void Start()
     {
+        _light.Init();
+        
         StatsChanged?.Invoke(CurrentStats);
     }
 
@@ -130,11 +135,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         
         StatsChanged?.Invoke(CurrentStats);
     }
-
-    public void ApplyEffect(IEffect<IAttacker> effectFactory)
-    {
-        throw new NotImplementedException();
-    }
+    
+    public void ApplyEffect(IEffect<IAttacker> effectFactory) { }
 
     public void AddBuff(IBuff buff)
     {
@@ -196,5 +198,13 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats
         StatsChanged?.Invoke(CurrentStats);
     }
     
-    private void OnEnemyDeath(Enemy enemy) => EnemyWasKilled?.Invoke(enemy);
+    public void IncreaseLanternCount() => _lanternsCount++;
+    
+    public void DecreaseLanternCount()
+    {
+        _lanternsCount--;
+
+        if (_lanternsCount < 0)
+            throw new Exception($"Lanterns count can not be less than 0. Current count: {_lanternsCount}");
+    }
 }

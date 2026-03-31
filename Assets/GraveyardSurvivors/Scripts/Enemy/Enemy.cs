@@ -52,18 +52,20 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         StateMachine.FixedUpdate();
     }
 
+    private void OnEnable()
+    {
+        _collider.enabled = true;
+    }
+
     public void ResetCharacteristics()
     {
         _player = null;
-        _collider.enabled = true;
     }
 
     public void Release() => CanBeReleased?.Invoke(this);
 
     public void TakeDamage(float damage)
     {
-        Debug.Log(damage);
-        
         damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
 
         CurrentStats.Health -= damage;

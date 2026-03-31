@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Lantern : MonoBehaviour
 {
@@ -13,43 +14,109 @@ public class Lantern : MonoBehaviour
     [SerializeField] private float _shrinkRateIncrease = 0.05f;
     [Header("Services")]
     [SerializeField] private LanternDamageDealer _damageDealer;
-    [Header("Player")]
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerDetector _playerDetector;
 
-    private List<Enemy> _enemiesInRange;
     private float _lastRadius;
-    private float _targetValue = 0;
+    private float _defaultValue = 0f;
+    private float _currentShrinkRate;
     private Coroutine _coroutine;
-
-    private void Awake()
-    {
-        _enemiesInRange = new List<Enemy>();
-    }
 
     private void OnEnable()
     {
-        _player.EnemyWasKilled += OnEnemyDeath;
-        _light.ThresholdReached += OnThresholdReached;
         _damageDealer.EnemyDetected += OnEnemyDetected;
         _damageDealer.EnemyLeft += OnEnemyLeft;
+        _damageDealer.EnemyDied += OnEnemyDeath;
+        _light.ThresholdReached += OnThresholdReached;
         _light.GainedEnergy += OnEnergyGained;
+        _playerDetector.PlayerDetected += OnPlayerDetected;
+        _playerDetector.PlayerLeft += OnPlayerLeft;
     }
-    
+
     private void OnDisable()
     {
-        _player.EnemyWasKilled -= OnEnemyDeath;
         _damageDealer.EnemyDetected -= OnEnemyDetected;
         _damageDealer.EnemyLeft -= OnEnemyLeft;
+        _damageDealer.EnemyDied -= OnEnemyDeath;
         _light.ThresholdReached -= OnThresholdReached;
         _light.GainedEnergy -= OnEnergyGained;
+        _playerDetector.PlayerDetected -= OnPlayerDetected;
+        _playerDetector.PlayerLeft -= OnPlayerLeft;
+    }
+
+    private void Start()
+    {
+        _light.Init();
+    }
+
+    public void StopShrinking() => _light.SetRate(_defaultValue);
+
+    public void StopLight() => _light.ChangeState(false);
+
+    public void StartExpanding(float targetValue)
+    {
+        _light.SetGainingEnergyState(true);
+
+        _light.StartRadiusRoutine(targetValue);
+    }
+
+    public void StartShrinking(float shrinkRate)
+    {
+        _light.SetGainingEnergyState(false);
+
+        _light.SetRate(shrinkRate);
+
+        _light.StartRadiusRoutine(_defaultValue);
+    }
+
+    private void OnPlayerDetected(ILightCarrier carrier)
+    {
+        if (carrier == null)
+            throw new Exception();
+
+        carrier.IncreaseLanternCount();
+        
+        LanternLight carrierLight = carrier.Light;
+
+        if (carrier.LanternsCount < 0)
+        {
+            carrierLight.GainedEnergy += OnEnergyGained;
+            carrierLight.ThresholdReached += OnThresholdReached;
+        }
+        
+        carrierLight.ResetRadius();
+
+        carrierLight.SetRate(_defaultValue);
+    }
+
+    private void OnPlayerLeft(ILightCarrier carrier)
+    {
+        if (carrier == null)
+            throw new Exception();
+
+        carrier.DecreaseLanternCount();
+
+        if (carrier.LanternsCount > 0)
+            return;
+
+        LanternLight carrierLight = carrier.Light;
+
+        carrierLight.StartRadiusRoutine(_defaultValue);
+
+        carrierLight.ResetRate();
+
+        if (carrierLight.IsGainingEnergy)
+            carrierLight.SetGainingEnergyState(false);
+
+        carrierLight.GainedEnergy -= OnEnergyGained;
+        carrierLight.ThresholdReached -= OnThresholdReached;
     }
 
     private void OnEnemyDeath(Enemy enemy)
     {
-        if(enemy == null)
+        if (enemy == null)
             throw new Exception("Enemy cannot be null!");
-        
-        if (_light.gameObject.activeSelf)
+
+        if (_light.CurrentRadius > _defaultValue)
         {
             _light.ReceiveEnergy(enemy.CurrentStats.LanternEnergy);
         }
@@ -57,38 +124,31 @@ public class Lantern : MonoBehaviour
         {
             float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternEnergy);
 
-            _light.gameObject.SetActive(true);
-                
+            Debug.Log($"Temp value {tempValue}");
+
             _light.SetLightRadiusForAllAxis(tempValue);
-                
-            _light.StartRadiusRoutine(_targetValue);
+
+            _light.ChangeState(true);
         }
     }
-    
-    private void OnThresholdReached()
-    {
-        _lastRadius = _light.CurrentRadius;
 
-        _light.gameObject.SetActive(false);
-    }
-    
     private void OnEnemyLeft()
     {
         DecreaseRate();
     }
-    
+
     private void DecreaseRate()
     {
         float currentRate = _light.ShrinkRate;
-        
+
         currentRate -= _shrinkRateIncrease;
 
         if (currentRate < 0)
-            throw new Exception("Shrinking rate can't be less than 0");
-        
+            currentRate = 0;
+
         _light.SetRate(currentRate);
     }
-    
+
     private void OnEnemyDetected()
     {
         IncreaseRate();
@@ -97,11 +157,22 @@ public class Lantern : MonoBehaviour
     private void IncreaseRate()
     {
         float currentRate = _light.ShrinkRate;
-        
+
         currentRate += _shrinkRateIncrease;
-        
+
         _light.SetRate(currentRate);
     }
-    
-    private void OnEnergyGained() => _light.StartRadiusRoutine(_targetValue);
+
+    private void OnEnergyGained(LanternLight lanternLight)
+    {
+        if (lanternLight == null)
+            throw new Exception("Light can not be null");
+
+        lanternLight.ChangeState(true);
+    }
+
+    private void OnThresholdReached(LanternLight lanternLight)
+    {
+        _lastRadius = lanternLight.CurrentRadius;
+    }
 }

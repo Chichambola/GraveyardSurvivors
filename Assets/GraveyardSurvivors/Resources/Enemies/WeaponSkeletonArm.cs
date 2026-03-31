@@ -26,8 +26,8 @@ public class WeaponSkeletonArm : Weapon
     {
         _isAttacking = true;
         _duration = duration;
-        
-        if(_coroutine != null)
+
+        if (_coroutine != null)
             StopCoroutine(_coroutine);
 
         _coroutine = StartCoroutine(AttackingRoutine());
@@ -40,24 +40,21 @@ public class WeaponSkeletonArm : Weapon
         while (enabled)
         {
             yield return wait;
-            
+
             AttackStrategy.Execute();
-            
+
             _isAttacking = false;
         }
     }
-    
-    private void OnAttackerDetected(List<IAttacker> attackers)
+
+    private void OnAttackerDetected(IAttacker attacker)
     {
-        if (attackers == null)
-            return;
+        if (attacker == null)
+            throw new Exception();
         
-        foreach (var attacker in attackers)
+        if (attacker is Player player)
         {
-            if (attacker is Player player)
-            {
-                player.TakeDamage(Info.Damage);
-            }
+            player.TakeDamage(Info.Damage);
         }
     }
 }

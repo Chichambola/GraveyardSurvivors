@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerDetector : Detector
 {
     public event Action<Player> PlayerDetected;
-    public event Action PlayerLeft;
+    public event Action<Player> PlayerLeft;
     
     public bool IsPlayerNear { get; private set; }
 
@@ -22,9 +22,9 @@ public class PlayerDetector : Detector
 
     protected override void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Player _))
+        if (other.TryGetComponent(out Player player))
         {
-            PlayerLeft?.Invoke();
+            PlayerLeft?.Invoke(player);
 
             IsPlayerNear = false;
         }

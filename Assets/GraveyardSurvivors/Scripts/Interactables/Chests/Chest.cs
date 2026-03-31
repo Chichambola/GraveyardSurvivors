@@ -6,28 +6,25 @@ using TreeEditor;
 using UnityEditor;
 using UnityEngine;
 
-public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
+public class Chest : Interactable, IChanceInteractable
 {
     public const string IsOpened = nameof(IsOpened);
     
     [Header("Animator values")]
     [SerializeField] private int _countdownTime = 3;
     [SerializeField] private Animator _animator;
+    [Header("Weights")]
+    [SerializeField] protected int CommonChanceWeight;
+    [SerializeField] protected int RareChanceWeight;
+    [SerializeField] protected int LegendaryChanceWeight;
     
-    public event Action<Chest> CanBeReleased;
-    public override event Action<Chest> WasChosen;
+    public override event Action<Interactable> CanBeReleased;
 
     private Coroutine _coroutine;
 
-    public override void ProcessInteraction()
-    {
-        if (!IsAvailable) 
-            return;
-        
-        HideValue();
-        
-        WasChosen?.Invoke(this);
-    }
+    public int CommonChance => CommonChanceWeight;
+    public int RareChance => RareChanceWeight;
+    public int LegendaryChance => LegendaryChanceWeight;
 
     public void Open()
     {
@@ -38,7 +35,7 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
         ChangeOutlineVisibility(false);
     }
 
-    public void Release()
+    public override void Release()
     {
         if(_coroutine != null)
             StopCoroutine(_coroutine);
@@ -46,7 +43,7 @@ public class Chest : ChanceInteractable<Chest>, IPoolable<Chest>
         StartCoroutine(ReleaseCountdown());
     }
 
-    public void ResetCharacteristics()
+    public override void ResetCharacteristics()
     {
         IsAvailable = true;
     }

@@ -5,36 +5,32 @@ using System.Security.Cryptography;
 
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class ChestHandler : ChanceHandlerBase
+public class ChestHandler : ItemInteractable
 {
-    [SerializeField] private ChestSpawner _chestSpawner;
-
-    private void Start()
-    {
-        if(Cost <= 0)
-            throw new Exception("Cost must be greater than 0.");
-        
-        SetObjectsValue();
-    }
-    
     private void OnEnable()
     {
-        _chestSpawner.ChestWasChosen += OnChestChosen;
+        InteractableSpawner.InteractableWasChosen += OnChestChosen;
     }
 
     private void OnDisable()
     {
-        _chestSpawner.ChestWasChosen -= OnChestChosen;
+        InteractableSpawner.InteractableWasChosen -= OnChestChosen;
     }
 
-    private void OnChestChosen(Chest chest)
+    private void Start()
     {
-        if (chest == null)
+        InteractableSpawner.SetValueForObjects(Cost);
+    }
+
+    private void OnChestChosen(Interactable interactable)
+    {
+        if (interactable is Chest chest == false)
             throw new Exception(nameof(chest));
         
-        if (Player.MoneyAmount <= CurrentCost)
+        if (Player.MoneyAmount <= Cost)
         {
             Debug.Log("Not enough money");
         }
@@ -42,25 +38,15 @@ public class ChestHandler : ChanceHandlerBase
         {
             chest.Open();
             
-            Player.ReduceMoneyAmount(CurrentCost);
-            
-            int commonChance = chest.CommonChance;
-            int rareChance = chest.RareChance;
-            int legendaryChance = chest.LegendaryChance;
+            Player.ReduceMoneyAmount(Cost);
         
-            ERarityLevel rarityLevel = RarityEvaluator.GetRarityLevel(commonChance, rareChance, legendaryChance);
+            ERarityLevel rarityLevel = GetRarityLevel(chest);
             
             ItemsHandler.SpawnRandomItem(chest.transform.position, rarityLevel);
             
-            CalculateCost();
+            IncreaseCost();
         }
-    }
-
-    protected override void SetObjectsValue()
-    {
-        foreach (var chest in _chestSpawner.SpawnedObjects)
-        {
-            chest.SetValue(Cost);
-        }
+        
+        InteractableSpawner.SetValueForObjects(Cost);
     }
 }
