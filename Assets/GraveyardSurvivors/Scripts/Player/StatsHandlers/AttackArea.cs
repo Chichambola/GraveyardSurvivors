@@ -16,7 +16,6 @@ public class AttackArea : MonoBehaviour
     private void Awake()
     {
         _collider = GetComponent<BoxCollider>();
-        _collider.enabled = false;
         _hitColliders = new Collider[_numberOfCollider];
     }
 

@@ -241,7 +241,7 @@ MonoBehaviour:
   _bleedingEffect:
   - _effects:
     - rid: 7044103890979258460
-  _effectChance: 100
+  _effectChance: 15
   references:
     version: 2
     RefIds:

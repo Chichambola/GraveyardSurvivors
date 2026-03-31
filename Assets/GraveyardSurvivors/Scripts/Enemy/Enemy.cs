@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
     [SerializeField] private PlayerDetector _playerDetector;
@@ -19,10 +19,12 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public event Action<Enemy> CanBeReleased;
 
     private Player _player;
+    private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
     private List<IEffect<IAttacker>> _currentEffects;
 
     public EnemyStats CurrentStats { get; private set; }
+    public Rigidbody Rigidbody => _rigidbody;
     public float Damage => _weapon.Info.Damage;
 
     public void Init(Player player)
@@ -33,6 +35,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     protected override void Awake()
     {
         _collider = GetComponent<CapsuleCollider>();
+        _rigidbody = GetComponent<Rigidbody>();
         _currentEffects = new List<IEffect<IAttacker>>();
 
         CurrentStats = _info.GetStats();

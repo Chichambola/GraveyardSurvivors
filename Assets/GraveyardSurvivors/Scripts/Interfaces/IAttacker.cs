@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IAttacker
 {
+    public Rigidbody Rigidbody { get; }
     void TakeDamage(float damage);
     void ApplyEffect(IEffect<IAttacker> effectFactory);
 }

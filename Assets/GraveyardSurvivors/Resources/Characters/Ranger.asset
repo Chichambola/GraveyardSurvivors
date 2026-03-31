@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: Ranger
   m_EditorClassIdentifier: 
   _characterStats:
-    Health: 0
-    HealthRegeneration: 0
-    Armor: 0
-    MovementSpeed: 0
+    Health: 80
+    HealthRegeneration: 0.8
+    Armor: 5
+    MovementSpeed: 20
     AttackSpeed: 0
-    AttackRadius: 0
-    PickUpRadius: 0
+    AttackRadius: 10
+    PickUpRadius: 10
     BlockChance: 0
-    CritChance: 0
-    CritMultiplier: 0
-    XpMultiplier: 0
-    GoldMultiplier: 0
-    EvasionChance: 0
-    Luck: 0
+    CritChance: 15
+    CritMultiplier: 3
+    XpMultiplier: 1
+    GoldMultiplier: 1.2
+    EvasionChance: 10
+    Luck: 10

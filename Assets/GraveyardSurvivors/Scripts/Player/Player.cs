@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
@@ -34,9 +35,10 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
 
     private int _lanternsCount;
     private bool _isInLantern;
+    private Rigidbody _rigidbody;
     
     public CharacterStats CurrentStats { get; private set; }
-    
+    public Rigidbody Rigidbody => _rigidbody;
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth => CurrentStats.Health;
     public LanternLight Light => _light;
@@ -51,6 +53,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
         Rotator = GetComponent<Rotator>();
         Mover = GetComponent<Mover>();
         Collider = GetComponent<CapsuleCollider>();
+        _rigidbody = GetComponent<Rigidbody>();
         _interactionHandler = GetComponent<InteractionHandler>();
         _inputReader = GetComponent<InputReader>();
 
