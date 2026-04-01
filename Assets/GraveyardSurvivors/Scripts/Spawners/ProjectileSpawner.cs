@@ -6,9 +6,9 @@ public class ProjectileSpawner : Spawner<Projectile>
 {
     [SerializeField] private Transform _gunPoint;
     
-    private IAttacker _currentTarget;
+    private Transform _currentTarget;
     
-    public void Spawn(IAttacker target)
+    public void Spawn(Transform target)
     {
         _currentTarget = target;
 

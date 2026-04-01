@@ -12,9 +12,9 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     public event Action<Projectile> CanBeReleased;
     
     private Coroutine _coroutine;
-    private IAttacker _currentTarget;
+    private Transform _currentTarget;
 
-    public void StartMoving(IAttacker target)
+    public void StartMoving(Transform target)
     {
         _currentTarget = target ?? throw new Exception();
         
@@ -28,9 +28,13 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     {
         while (enabled)
         {
-            _mover.Move(_currentTarget.Rigidbody.position, _speedMultiplier);
+            _mover.Move(_currentTarget, _speedMultiplier);
+
+            Vector3 distance = _currentTarget.position - transform.position;
+
+            Vector3 direction = new Vector3(distance.x, 0f, distance.z).normalized;
             
-            _rotator.Rotate(_currentTarget.Rigidbody.po);
+            _rotator.Rotate(direction);
             
             yield return null;
         }

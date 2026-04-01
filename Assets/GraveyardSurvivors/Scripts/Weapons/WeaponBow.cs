@@ -28,7 +28,7 @@ public class WeaponBow : Weapon
         {
             _arrowSpawner.SetDamage(Info.Damage);
         
-            _arrowSpawner.Spawn(enemy);   
+            _arrowSpawner.Spawn(enemy.transform);   
         }
     }
 }
