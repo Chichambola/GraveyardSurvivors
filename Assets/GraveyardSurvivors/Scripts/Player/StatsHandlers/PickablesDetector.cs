@@ -38,9 +38,9 @@ public class PickablesDetector : MonoBehaviour
                 BuffDetected?.Invoke(buff);
             }
 
-            if (pickable is Coin)
+            if (pickable is Coin coin)
             {
-                CoinDetected?.Invoke(1);
+                CoinDetected?.Invoke(coin.Value);
             }
 
             pickable.Release();

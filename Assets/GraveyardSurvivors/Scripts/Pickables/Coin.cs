@@ -6,19 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
 {
+    [Header("Points")]
     [SerializeField] private Transform _aPoint;
     [SerializeField] private Transform _bPoint;
     [SerializeField] private Transform _cPoint;
     [SerializeField] private QuadraticCurvePoints _points;
     [SerializeField] private Thrower _thrower;
+    [Header("Value")]
+    [SerializeField] private int _value = 1;
     
     public event Action<Coin> CanBeReleased;
     
     private Vector3 _initialForwardRotation;
 
     public Transform Transform => transform;
-    
     public QuadraticCurvePoints Points => _points;
+    public int Value => _value;
 
     private void Awake()
     {

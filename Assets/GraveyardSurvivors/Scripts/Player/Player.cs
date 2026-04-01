@@ -126,6 +126,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     public void ReceiveMoney(float value)
     {
         value *= CurrentStats.GoldMultiplier;
+
+        value = Mathf.Round(value);
         
         _wallet.ReceiveMoney(value);
     }

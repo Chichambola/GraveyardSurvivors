@@ -96,7 +96,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleMovement()
     {
-        Mover.MoveTowardsTarget(_player.transform, CurrentStats.MovementSpeed);
+        Mover.Move(_player.transform, CurrentStats.MovementSpeed);
 
         Vector3 direction = UserUtils.GetDirection(_player.transform.position, transform.position);
 

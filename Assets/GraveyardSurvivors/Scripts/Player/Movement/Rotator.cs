@@ -6,11 +6,18 @@ using UnityEngine;
 public class Rotator : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
-    
+
     public void Rotate(Vector3 direction)
     {
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, _speed * Time.deltaTime);
+    }
+    
+    public void Rotate(Transform target)
+    {
+        Quaternion lookRotation = Quaternion.LookRotation(target.position - transform.position);
+
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, _speed * Time.deltaTime);
     }
 }

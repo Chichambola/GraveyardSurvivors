@@ -16,7 +16,7 @@ public class Mover : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void MoveTowardsTarget(Transform target, float speedMultiplier)
+    public void Move(Transform target, float speedMultiplier)
     {
         float currentSpeed = UserUtils.AddPercentToNumber(_speed, speedMultiplier);
         

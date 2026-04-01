@@ -6,19 +6,17 @@ using UnityEngine;
 public class Projectile : MonoBehaviour, IPoolable<Projectile>
 {
     [SerializeField] private Mover _mover;
+    [SerializeField] private Rotator _rotator;
     [SerializeField] private float _speedMultiplier;
 
     public event Action<Projectile> CanBeReleased;
     
     private Coroutine _coroutine;
-    private Transform _currentTarget;
+    private IAttacker _currentTarget;
 
-    public void StartMoving(Transform target)
+    public void StartMoving(IAttacker target)
     {
-        if (target == null)
-            throw new Exception();
-
-        _currentTarget = target;
+        _currentTarget = target ?? throw new Exception();
         
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -30,7 +28,9 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     {
         while (enabled)
         {
-            _mover.MoveTowardsTarget(_currentTarget, _speedMultiplier);
+            _mover.Move(_currentTarget.Rigidbody.position, _speedMultiplier);
+            
+            _rotator.Rotate(_currentTarget.Rigidbody.po);
             
             yield return null;
         }
