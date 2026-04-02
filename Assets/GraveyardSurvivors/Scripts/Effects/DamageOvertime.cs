@@ -73,5 +73,9 @@ public struct DamageOvertime : IEffect<IAttacker>
         {
             _currentEffect.SetPosition(target.transform.position);   
         }
+        else
+        {
+            throw new Exception($"{target} can not be null");
+        }
     }
 }

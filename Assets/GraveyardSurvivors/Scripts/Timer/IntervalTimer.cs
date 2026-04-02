@@ -12,7 +12,7 @@ public class IntervalTimer : Timer
 
     public event Action IntervalReached;
 
-    public IntervalTimer(float totalTime, float intervalSeconds) : base(totalTime)
+    public IntervalTimer(float totalTime, float intervalSeconds = 1f) : base(totalTime)
     {
         _interval = intervalSeconds;
         _nextInterval = totalTime - _interval;

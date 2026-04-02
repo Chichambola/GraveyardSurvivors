@@ -6,16 +6,67 @@ using UnityEngine;
 [Serializable]
 public class MovementSpeedEffect : IEffect<IAttacker>
 {
+    public float Duration;
     public float SpeedPercent;
     public bool IsSlowing;
+    public ParticleEffectSpawner Effect;
     
+    private IAttacker _currentTarget;
+    private IntervalTimer _timer;
+    private ParticleEffect _currentEffect;
+
     public event Action<IEffect<IAttacker>> EffectCompleted;
     
     public void Apply(IAttacker attacker)
     {
-        attacker.ChangeSpeed(SpeedPercent, IsSlowing);
-        EffectCompleted?.Invoke(this);
+        _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
+
+        _currentEffect = Effect.Spawn();
+        
+        SetEffectPosition();
+        
+        _timer = new IntervalTimer(Duration);
+        _timer.TimerStopped += OnTimerStopped;
+        _timer.TimerStarted += OnTimerStarted;
     }
 
-    public void Cancel() { }
+    public void Cancel()
+    {
+        _timer?.Stop();
+        CleanUp();
+    }
+
+    private void CleanUp()
+    {
+        EffectCompleted?.Invoke(this);
+        _timer.TimerStopped -= OnTimerStopped;
+        _timer.TimerStarted -= OnTimerStarted;
+
+        _currentEffect.Release();
+        
+        _timer = null;
+        _currentTarget = null;
+        _currentEffect = null;
+    }
+    
+    private void OnTimerStopped() => CleanUp();
+    
+    private void OnTimerStarted()
+    {
+        _currentTarget.ChangeSpeed(SpeedPercent, IsSlowing);
+    }
+    
+    private void SetEffectPosition()
+    {
+        var target = _currentTarget as MonoBehaviour;
+
+        if (target != null)
+        {
+            _currentEffect.SetPosition(target.transform.position);   
+        }
+        else
+        {
+            throw new Exception($"{target} can not be null");
+        }
+    }
 }

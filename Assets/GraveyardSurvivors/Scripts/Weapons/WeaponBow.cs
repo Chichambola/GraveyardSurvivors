@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponBow : Weapon
 {
     [SerializeField] private ProjectileSpawner _arrowSpawner;
+    [SerializeField] private Effect[] _ivyEffect;
 
     private void OnEnable()
     {

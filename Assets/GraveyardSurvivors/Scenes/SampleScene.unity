@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -409,6 +409,19 @@ MonoBehaviour:
   AttackStrategy: {fileID: 111349042}
   _info: {fileID: 11400000, guid: 5bf44b189b2a7844d9c778b04b85b291, type: 2}
   _arrowSpawner: {fileID: 247115541}
+  _ivyEffect:
+  - _effects:
+    - rid: 5909440751640510469
+  references:
+    version: 2
+    RefIds:
+    - rid: 5909440751640510469
+      type: {class: MovementSpeedEffectFactory, ns: , asm: Assembly-CSharp}
+      data:
+        _duration: 0
+        _speedPercent: 0
+        _isSlowing: 0
+        _movementEffect: {fileID: 0}
 --- !u!114 &111349042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1604,6 +1617,53 @@ MonoBehaviour:
   _enemyDetector: {fileID: 1433704764}
   _damage: 2
   _rate: 1
+--- !u!1 &557341881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 557341882}
+  - component: {fileID: 557341883}
+  m_Layer: 0
+  m_Name: IvtParticleSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &557341882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557341881}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 950662055}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &557341883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557341881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e801a991a650c8bab8a1f6f8d01db47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectPrefab: {fileID: 0}
+  PoolCapacity: 0
+  MaxPoolCapacity: 5
 --- !u!1 &680112783
 GameObject:
   m_ObjectHideFlags: 0
@@ -7033,6 +7093,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1878131956}
+  - {fileID: 557341882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &954981385
@@ -12796,8 +12857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b377165e09d8bae5a2e9592d7928a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _light: {fileID: 360078372}
   _shrinkRateIncrease: 0.001
+  _light: {fileID: 360078372}
   _damageDealer: {fileID: 550256711}
   _playerDetector: {fileID: 1433704765}
 --- !u!114 &1433704764
@@ -13063,7 +13124,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: -1.1105557e-28, z: 6.64e-43, w: -8.562401e-27}
+  m_BoundingSphereOverride: {x: 1.1e-44, y: 0, z: 9.1835e-41, w: 4.500301e-39}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
