@@ -10,8 +10,8 @@ using UnityEngine.Serialization;
 public class Lantern : MonoBehaviour
 {
     [Header("Light")]
-    [SerializeField] private LanternLight _light;
     [SerializeField] private float _shrinkRateIncrease = 0.05f;
+    [SerializeField] private LanternLight _light;
     [Header("Services")]
     [SerializeField] private LanternDamageDealer _damageDealer;
     [SerializeField] private PlayerDetector _playerDetector;

@@ -83,7 +83,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
             Die();
         }
     }
-
+    
     public void ApplyEffect(IEffect<IAttacker> effect)
     {
         effect.EffectCompleted += RemoveEffect;
@@ -91,10 +91,16 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         effect.Apply(this);
     }
 
-    private void RemoveEffect(IEffect<IAttacker> effect)
+    public void ChangeSpeed(float speedPercent, bool isSlowing)
     {
-        effect.EffectCompleted -= RemoveEffect;
-        _currentEffects.Remove(effect);
+        if (isSlowing)
+        {
+            CurrentStats.MovementSpeed = UserUtils.SubtractPercentFromNumber(CurrentStats.MovementSpeed, speedPercent);
+        }
+        else
+        {
+            CurrentStats.MovementSpeed = UserUtils.AddPercentToNumber(CurrentStats.MovementSpeed, speedPercent);
+        }
     }
 
     public override void HandleMovement()
@@ -153,5 +159,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
                 effect.Cancel();
             }
         }
+    }
+    
+    private void RemoveEffect(IEffect<IAttacker> effect)
+    {
+        effect.EffectCompleted -= RemoveEffect;
+        _currentEffects.Remove(effect);
     }
 }

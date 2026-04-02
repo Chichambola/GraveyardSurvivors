@@ -132,6 +132,18 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
         _wallet.ReceiveMoney(value);
     }
     
+    public void ChangeSpeed(float speedPercent, bool isSlowing)
+    {
+        if (isSlowing)
+        {
+            CurrentStats.MovementSpeed = UserUtils.SubtractPercentFromNumber(CurrentStats.MovementSpeed, speedPercent);
+        }
+        else
+        {
+            CurrentStats.MovementSpeed = UserUtils.AddPercentToNumber(CurrentStats.MovementSpeed, speedPercent);
+        }
+    }
+    
     public void TakeDamage(float damage)
     {
         damage = DetermineDamageAmount(damage);
