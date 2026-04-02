@@ -6,11 +6,10 @@ using UnityEngine;
 
 public class WeaponSkeletonArm : Weapon
 {
-    private bool _isAttacking;
     private Coroutine _coroutine;
     private float _duration;
 
-    public override bool IsAttacking => _isAttacking;
+    public override bool IsAttacking { get; protected set; }
 
     private void OnEnable()
     {
@@ -20,11 +19,13 @@ public class WeaponSkeletonArm : Weapon
     private void OnDisable()
     {
         AttackStrategy.AttackerDetected -= OnAttackerDetected;
+        
+        IsAttacking = false;
     }
 
     public override void Attack(float duration)
     {
-        _isAttacking = true;
+        IsAttacking = true;
         _duration = duration;
 
         if (_coroutine != null)
@@ -43,7 +44,7 @@ public class WeaponSkeletonArm : Weapon
 
             AttackStrategy.Execute();
 
-            _isAttacking = false;
+            IsAttacking = false;
         }
     }
 

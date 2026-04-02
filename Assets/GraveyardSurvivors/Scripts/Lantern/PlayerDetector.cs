@@ -29,4 +29,9 @@ public class PlayerDetector : Detector
             IsPlayerNear = false;
         }
     }
+
+    private void OnDisable()
+    {
+        IsPlayerNear = false;
+    }
 }

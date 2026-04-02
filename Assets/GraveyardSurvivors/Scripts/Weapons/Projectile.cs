@@ -11,12 +11,14 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
 
     public event Action<Projectile> CanBeReleased;
     
+    protected IAttacker CurrentTarget;
+    protected float Damage;
     private Coroutine _coroutine;
-    private Transform _currentTarget;
 
-    public void StartMoving(Transform target)
+    public void StartMoving()
     {
-        _currentTarget = target ?? throw new Exception();
+        if (CurrentTarget == null)
+            throw new Exception("Target is null");
         
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -28,9 +30,14 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     {
         while (enabled)
         {
-            _mover.Move(_currentTarget, _speedMultiplier);
+            if (CurrentTarget.Rigidbody.gameObject.activeSelf == false)
+            {
+                Release();
+            }
+            
+            _mover.Move(CurrentTarget.Rigidbody.transform, _speedMultiplier);
 
-            Vector3 distance = _currentTarget.position - transform.position;
+            Vector3 distance = CurrentTarget.Rigidbody.transform.position - transform.position;
 
             Vector3 direction = new Vector3(distance.x, 0f, distance.z).normalized;
             
@@ -42,14 +49,24 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     
     public void ResetCharacteristics()
     {
-        _currentTarget = null;
+        CurrentTarget = null;
 
         if (_coroutine != null)
             StopCoroutine(_coroutine);
     }
 
-    public virtual void Release()
+    public void Release()
     {
         CanBeReleased?.Invoke(this);
+    }
+
+    public void SetDamage(float damage)
+    {
+        Damage = damage;
+    }
+    
+    public void SetTarget(IAttacker attacker)
+    {
+        CurrentTarget = attacker ?? throw new Exception();
     }
 }

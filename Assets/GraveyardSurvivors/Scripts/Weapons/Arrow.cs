@@ -2,12 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Exception = System.Exception;
 
 public class Arrow : Projectile
 {
     [SerializeField] private EnemyDetector _enemyDetector;
-    
-    private float _damage;
 
     private void OnEnable()
     {
@@ -18,30 +17,19 @@ public class Arrow : Projectile
     {
         _enemyDetector.EnemyDetected -= OnEnemyDetected;
     }
-
-    public void SetDamage(float damage)
-    {
-        _damage = damage;
-    }
-    
-    public override void Release()
-    {
-        _damage = 0;
-        
-        base.Release();
-    }
     
     private void OnEnemyDetected(Enemy enemy)
     {
-        if (_damage > 0)
+        if (enemy == (Enemy)CurrentTarget)
         {
-            enemy.TakeDamage(_damage);
+            if (Damage < 0)
+            {
+                throw new Exception("Damage can not be less than 0");
+            }
             
-            Release();
+            enemy.TakeDamage(Damage);
         }
-        else if (_damage <= 0)
-        {
-            throw new Exception();   
-        }
+        
+        Release();
     }
 }

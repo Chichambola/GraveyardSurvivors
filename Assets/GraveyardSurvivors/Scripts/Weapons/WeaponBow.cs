@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WeaponBow : Weapon
 {
-    [SerializeField] private ArrowSpawner _arrowSpawner;
+    [SerializeField] private ProjectileSpawner _arrowSpawner;
 
     private void OnEnable()
     {
@@ -26,9 +26,7 @@ public class WeaponBow : Weapon
     {
         if (attacker is Enemy enemy)
         {
-            _arrowSpawner.SetDamage(Info.Damage);
-        
-            _arrowSpawner.Spawn(enemy.transform);   
+            _arrowSpawner.Spawn(enemy, Info.Damage);   
         }
     }
 }

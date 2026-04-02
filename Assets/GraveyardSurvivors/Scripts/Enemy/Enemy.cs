@@ -22,6 +22,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
     private List<IEffect<IAttacker>> _currentEffects;
+    private float _initialHealth;
 
     public EnemyStats CurrentStats { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
@@ -39,10 +40,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _currentEffects = new List<IEffect<IAttacker>>();
 
         CurrentStats = _info.GetStats();
-
-        InitializeStateMachine();
         
-        _health.text = $"{CurrentStats.Health}";
+        _initialHealth = CurrentStats.Health;
     }
 
     protected override void Update()
@@ -58,11 +57,15 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private void OnEnable()
     {
         _collider.enabled = true;
+        
+        InitializeStateMachine();
+        
+        _health.text = $"{_initialHealth}";
     }
 
     public void ResetCharacteristics()
     {
-        _player = null;
+        CurrentStats.Health = _initialHealth;
     }
 
     public void Release() => CanBeReleased?.Invoke(this);

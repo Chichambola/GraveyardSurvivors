@@ -23,7 +23,7 @@ public class RangeAttackStrategy : AttackStrategy
                 {
                     AttackerDetected?.Invoke(attacker);
                 }
-
+                
                 return;
             }
         }

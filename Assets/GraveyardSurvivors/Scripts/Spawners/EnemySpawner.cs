@@ -14,7 +14,15 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>
     public event Action<Enemy> EnemyWasReleased;
     
     private Vector3 _spawnPoint;
-    
+
+    private void Update()
+    {
+        if (ActiveObjects.Count <= 0)
+        {
+            Spawn();
+        }
+    }
+
     private void OnEnable()
     {
         Spawn();

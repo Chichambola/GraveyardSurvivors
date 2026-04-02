@@ -10,7 +10,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     
     public virtual event Action<IAttacker> AttackerDetected;
     public WeaponInfo Info => _info;
-    public virtual bool IsAttacking { get; private set; }
+    public virtual bool IsAttacking { get; protected set; }
 
     public virtual void Attack(float duration, float radius) {}
     public virtual void Attack(float duration) {}

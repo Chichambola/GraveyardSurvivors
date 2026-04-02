@@ -6,29 +6,41 @@ public class ProjectileSpawner : Spawner<Projectile>
 {
     [SerializeField] private Transform _gunPoint;
     
-    private Transform _currentTarget;
+    private IAttacker _currentTarget;
+    private float _damage;
     
-    public void Spawn(Transform target)
+    public void Spawn(IAttacker target, float damage)
     {
         _currentTarget = target;
+        _damage = damage;
 
         GetObject();
     }
     
     protected override void ActionOnGet(Projectile projectile)
     {
-        projectile.transform.position = _gunPoint.transform.position;
+        ActiveObjects.Add(projectile);
         
-        projectile.CanBeReleased += ActionOnRelease;
+        projectile.transform.position = _gunPoint.transform.position;
+        projectile.gameObject.transform.parent = null;
+        
+        projectile.CanBeReleased += Release;
+        
+        projectile.SetTarget(_currentTarget);
+        projectile.SetDamage(_damage);
         
         base.ActionOnGet(projectile);
         
-        projectile.StartMoving(_currentTarget);
+        projectile.StartMoving();
     }
 
     protected override void ActionOnRelease(Projectile projectile)
     {
-        projectile.CanBeReleased -= ActionOnRelease;
+        ActiveObjects.Remove(projectile);
+        
+        projectile.gameObject.transform.parent = transform;
+        
+        projectile.CanBeReleased -= Release;
         
         base.ActionOnRelease(projectile);
     }

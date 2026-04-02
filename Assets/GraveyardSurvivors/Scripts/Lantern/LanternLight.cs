@@ -48,7 +48,7 @@ public class LanternLight : MonoBehaviour
     public void ReceiveEnergy(float energyAmount)
     {
         float value = UserUtils.AddPercentToNumber(_collider.radius, energyAmount);
-
+        
         SetGainingEnergyState(true);
 
         StartRadiusRoutine(value);
@@ -66,7 +66,7 @@ public class LanternLight : MonoBehaviour
     {
         SetGainingEnergyState(true);
         
-        StartRadiusRoutine(_initialRadius);
+        StartRadiusRoutine(_radius);
     }
 
     public void SetRate(float value) => _shrinkRate = value;
@@ -105,8 +105,13 @@ public class LanternLight : MonoBehaviour
 
     private IEnumerator ChangingRadiusRoutine(float targetValue)
     {
-        while (enabled)
+        while (enabled) 
         {
+            if (targetValue > _radius)
+            {
+                targetValue = _radius;
+            }
+            
             _collider.radius = LerpToValue(_collider.radius, targetValue);
 
             _light.range = LerpToValue(_light.range, targetValue);
@@ -137,7 +142,7 @@ public class LanternLight : MonoBehaviour
                 GainedEnergy?.Invoke(this);
             }
             
-            value = Mathf.MoveTowards(currentValue, finalValue, Time.fixedDeltaTime * _energyMultiplier);
+            value = Mathf.MoveTowards(currentValue, finalValue, Time.fixedDeltaTime);
 
             return value;
         }
