@@ -5,19 +5,31 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour, IPoolable<Projectile>
 {
+    [SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private Mover _mover;
     [SerializeField] private Rotator _rotator;
     [SerializeField] private float _speedMultiplier;
 
     public event Action<Projectile> CanBeReleased;
     
-    protected IAttacker CurrentTarget;
-    protected float Damage;
+    private IAttacker _currentTarget;
     private Coroutine _coroutine;
 
+    public IAttacker CurrentTarget => _currentTarget;
+    
+    private void OnEnable()
+    {
+        _enemyDetector.EnemyDetected += OnEnemyDetected;
+    }
+
+    private void OnDisable()
+    {
+        _enemyDetector.EnemyDetected -= OnEnemyDetected;
+    }
+    
     public void StartMoving()
     {
-        if (CurrentTarget == null)
+        if (_currentTarget == null)
             throw new Exception("Target is null");
         
         if (_coroutine != null)
@@ -30,14 +42,14 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     {
         while (enabled)
         {
-            if (CurrentTarget.Rigidbody.gameObject.activeSelf == false)
+            if (_currentTarget.Rigidbody.gameObject.activeSelf == false)
             {
                 Release();
             }
             
-            _mover.Move(CurrentTarget.Rigidbody.transform, _speedMultiplier);
+            _mover.Move(_currentTarget.Rigidbody.transform, _speedMultiplier);
 
-            Vector3 distance = CurrentTarget.Rigidbody.transform.position - transform.position;
+            Vector3 distance = _currentTarget.Rigidbody.transform.position - transform.position;
 
             Vector3 direction = new Vector3(distance.x, 0f, distance.z).normalized;
             
@@ -49,7 +61,7 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     
     public void ResetCharacteristics()
     {
-        CurrentTarget = null;
+        _currentTarget = null;
 
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -59,14 +71,17 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     {
         CanBeReleased?.Invoke(this);
     }
-
-    public void SetDamage(float damage)
-    {
-        Damage = damage;
-    }
     
     public void SetTarget(IAttacker attacker)
     {
-        CurrentTarget = attacker ?? throw new Exception();
+        _currentTarget = attacker ?? throw new Exception();
+    }
+    
+    private void OnEnemyDetected(Enemy enemy)
+    {
+        if (enemy == (Enemy)_currentTarget)
+        {
+            Release();
+        }
     }
 }

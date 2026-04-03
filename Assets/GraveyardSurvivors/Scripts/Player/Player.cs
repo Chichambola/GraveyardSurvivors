@@ -143,7 +143,17 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
             CurrentStats.MovementSpeed = UserUtils.AddPercentToNumber(CurrentStats.MovementSpeed, speedPercent);
         }
     }
-    
+
+    public void ResetSpeed()
+    {
+        
+    }
+
+    public bool HasEffect(IEffect<IAttacker> effect)
+    {
+        throw new NotImplementedException();
+    }
+
     public void TakeDamage(float damage)
     {
         damage = DetermineDamageAmount(damage);

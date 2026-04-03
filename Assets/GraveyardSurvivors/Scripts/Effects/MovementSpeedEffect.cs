@@ -11,16 +11,17 @@ public class MovementSpeedEffect : IEffect<IAttacker>
     public bool IsSlowing;
     public ParticleEffectSpawner Effect;
     
-    private IAttacker _currentTarget;
-    private IntervalTimer _timer;
-    private ParticleEffect _currentEffect;
-
     public event Action<IEffect<IAttacker>> EffectCompleted;
+    
+    private IAttacker _currentTarget;
+    private ParticleEffect _currentEffect;
+    private IntervalTimer _timer;
+    private float _previousSpeedPercent;
     
     public void Apply(IAttacker attacker)
     {
         _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
-
+        
         _currentEffect = Effect.Spawn();
         
         SetEffectPosition();
@@ -28,6 +29,7 @@ public class MovementSpeedEffect : IEffect<IAttacker>
         _timer = new IntervalTimer(Duration);
         _timer.TimerStopped += OnTimerStopped;
         _timer.TimerStarted += OnTimerStarted;
+        _timer.Start();
     }
 
     public void Cancel()
@@ -41,8 +43,12 @@ public class MovementSpeedEffect : IEffect<IAttacker>
         EffectCompleted?.Invoke(this);
         _timer.TimerStopped -= OnTimerStopped;
         _timer.TimerStarted -= OnTimerStarted;
-
+     
         _currentEffect.Release();
+        
+        bool isCurrentlySlowing = !IsSlowing;
+        
+        _currentTarget.ChangeSpeed(_previousSpeedPercent, isCurrentlySlowing);
         
         _timer = null;
         _currentTarget = null;
@@ -53,6 +59,8 @@ public class MovementSpeedEffect : IEffect<IAttacker>
     
     private void OnTimerStarted()
     {
+        _previousSpeedPercent = SpeedPercent;
+        
         _currentTarget.ChangeSpeed(SpeedPercent, IsSlowing);
     }
     

@@ -23,6 +23,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private CapsuleCollider _collider;
     private List<IEffect<IAttacker>> _currentEffects;
     private float _initialHealth;
+    private float _initialSpeed;
 
     public EnemyStats CurrentStats { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
@@ -38,10 +39,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _collider = GetComponent<CapsuleCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _currentEffects = new List<IEffect<IAttacker>>();
-
-        CurrentStats = _info.GetStats();
-        
-        _initialHealth = CurrentStats.Health;
     }
 
     protected override void Update()
@@ -56,6 +53,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     private void OnEnable()
     {
+        CurrentStats = _info.GetStats();
+        
+        _initialHealth = CurrentStats.Health;
+        _initialSpeed = Mover.Speed;
+        
         _collider.enabled = true;
         
         InitializeStateMachine();
@@ -66,6 +68,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public void ResetCharacteristics()
     {
         CurrentStats.Health = _initialHealth;
+        Mover.SetSpeed(_initialSpeed);
     }
 
     public void Release() => CanBeReleased?.Invoke(this);
@@ -91,16 +94,48 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         effect.Apply(this);
     }
 
+    public bool HasEffect(IEffect<IAttacker> effect)
+    {
+        if (_currentEffects.Count > 0)
+        {
+            for (int i = _currentEffects.Count - 1; i >= 0; i--)
+            {
+                if (_currentEffects[i] == effect)
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
     public void ChangeSpeed(float speedPercent, bool isSlowing)
     {
+        float speed;
+        
         if (isSlowing)
         {
-            CurrentStats.MovementSpeed = UserUtils.SubtractPercentFromNumber(CurrentStats.MovementSpeed, speedPercent);
+            speed = UserUtils.SubtractPercentFromNumber(Mover.Speed, speedPercent);
         }
         else
         {
-            CurrentStats.MovementSpeed = UserUtils.AddPercentToNumber(CurrentStats.MovementSpeed, speedPercent);
+            speed = UserUtils.AddPercentToNumber(Mover.Speed, speedPercent);
         }
+        
+        if (speed < 0)
+        {
+            speed = 0;
+        }
+        
+        Debug.Log(speed);
+        
+        Mover.SetSpeed(speed);
+    }
+
+    public void ResetSpeed()
+    {
+        Mover.SetSpeed(_initialSpeed);
     }
 
     public override void HandleMovement()
@@ -119,13 +154,13 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public void Die()
     {
+        RemoveAllEffects();
+        
         CurrentStats.Health = 0;
         
         _collider.enabled = false;
 
         _health.text = $"{CurrentStats.Health}";
-        
-        RemoveAllEffects();
     }
     
     private void InitializeStateMachine()
@@ -137,7 +172,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         var attackState = new EnemyAttackState(this, Animator);
         var dieState = new DieState(this, Animator);
 
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => _player != null));
+        DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0));
         DefineAtTransition(runState, attackState, new FuncPredicate(() => _playerDetector.IsPlayerNear));
         DefineAtTransition(attackState, runState,
             new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking));

@@ -110,6 +110,8 @@ public class LanternLight : MonoBehaviour
             if (targetValue > _radius)
             {
                 targetValue = _radius;
+                
+                SetGainingEnergyState(false);
             }
             
             _collider.radius = LerpToValue(_collider.radius, targetValue);

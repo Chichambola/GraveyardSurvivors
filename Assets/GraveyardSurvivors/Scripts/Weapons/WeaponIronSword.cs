@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class WeaponIronSword : Weapon
+public class WeaponIronSword : WeaponWithAbility
 {
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _attackParticles;
@@ -65,26 +65,6 @@ public class WeaponIronSword : Weapon
         {
             ProcessAttacker(attacker);
         }
-    }
-
-    private void ProcessAttacker(IAttacker attacker)
-    {
-        AttackerDetected?.Invoke(attacker);
-
-        if (CanEffectProc())
-        {
-            foreach (var effect in _bleedingEffect)
-            {
-                effect.Execute(attacker);
-            }
-        }
-    }
-
-    private bool CanEffectProc()
-    {
-        float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
-
-        return _effectChance >= randomNumber;
     }
 
     private IEnumerator VisibilityRoutine()

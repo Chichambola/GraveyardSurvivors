@@ -8,4 +8,5 @@ public interface IAttacker
     void TakeDamage(float damage);
     void ApplyEffect(IEffect<IAttacker> effectFactory);
     void ChangeSpeed(float speedPercent, bool isSlowing);
+    void ResetSpeed();
 }

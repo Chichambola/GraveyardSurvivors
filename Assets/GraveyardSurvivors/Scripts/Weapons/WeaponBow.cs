@@ -3,19 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponBow : Weapon
+public class WeaponBow : WeaponWithAbility
 {
     [SerializeField] private ProjectileSpawner _arrowSpawner;
-    [SerializeField] private Effect[] _ivyEffect;
-
+    
     private void OnEnable()
     {
         AttackStrategy.AttackerDetected += OnAttackerDetected;
+        _arrowSpawner.ProjectileReleased += ProcessAttacker;
     }
 
     private void OnDisable()
     {
         AttackStrategy.AttackerDetected -= OnAttackerDetected;
+        _arrowSpawner.ProjectileReleased -= ProcessAttacker;
     }
 
     public override void Attack(float duration, float radius)
@@ -27,7 +28,7 @@ public class WeaponBow : Weapon
     {
         if (attacker is Enemy enemy)
         {
-            _arrowSpawner.Spawn(enemy, Info.Damage);   
+            _arrowSpawner.Spawn(enemy);  
         }
     }
 }

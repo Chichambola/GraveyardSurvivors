@@ -10,6 +10,8 @@ public class Mover : MonoBehaviour
     
     private Rigidbody _rigidbody;
     private Coroutine _coroutine;
+
+    public float Speed => _speed;
     
     private void Awake()
     {
@@ -32,5 +34,10 @@ public class Mover : MonoBehaviour
         Vector3 nextPosition = _rigidbody.position + direction * (Time.deltaTime * currentSpeed);
         
         _rigidbody.MovePosition(nextPosition);
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
     }
 }

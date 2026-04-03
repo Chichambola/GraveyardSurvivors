@@ -1,18 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProjectileSpawner : Spawner<Projectile>
 {
     [SerializeField] private Transform _gunPoint;
     
-    private IAttacker _currentTarget;
-    private float _damage;
+    public event Action<IAttacker> ProjectileReleased;
     
-    public void Spawn(IAttacker target, float damage)
+    private IAttacker _currentTarget;
+    
+    public void Spawn(IAttacker target)
     {
         _currentTarget = target;
-        _damage = damage;
 
         GetObject();
     }
@@ -27,7 +29,6 @@ public class ProjectileSpawner : Spawner<Projectile>
         projectile.CanBeReleased += Release;
         
         projectile.SetTarget(_currentTarget);
-        projectile.SetDamage(_damage);
         
         base.ActionOnGet(projectile);
         
@@ -36,11 +37,15 @@ public class ProjectileSpawner : Spawner<Projectile>
 
     protected override void ActionOnRelease(Projectile projectile)
     {
-        ActiveObjects.Remove(projectile);
+        ProjectileReleased?.Invoke(projectile.CurrentTarget);
         
         projectile.gameObject.transform.parent = transform;
         
+        projectile.ResetCharacteristics();
+        
         projectile.CanBeReleased -= Release;
+        
+        ActiveObjects.Remove(projectile);
         
         base.ActionOnRelease(projectile);
     }

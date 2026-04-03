@@ -1,0 +1,34 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
+
+public class WeaponWithAbility : Weapon
+{
+    [SerializeField] private Effect[] _effects;
+    [SerializeField] private int _effectChance;
+    
+    public override event Action<IAttacker> AttackerDetected;
+    
+    protected void ProcessAttacker(IAttacker attacker)
+    {
+        AttackerDetected?.Invoke(attacker);
+
+        if (CanEffectProc())
+        {
+            foreach (var effect in _effects)
+            {
+                effect.Execute(attacker);
+            }
+        }
+    }
+
+    private bool CanEffectProc()
+    {
+        float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
+
+        return _effectChance >= randomNumber;
+    }
+}
