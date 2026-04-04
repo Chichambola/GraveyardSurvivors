@@ -14,6 +14,9 @@ public class WeaponWithAbility : Weapon
     
     protected void ProcessAttacker(IAttacker attacker)
     {
+        if (attacker == null)
+            return;
+        
         AttackerDetected?.Invoke(attacker);
 
         if (CanEffectProc())

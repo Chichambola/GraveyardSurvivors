@@ -66,7 +66,7 @@ public class LightAltar : Interactable
             
         _lantern.StartExpanding(_radius);
     }
-
+    
     private IEnumerator WaitCoroutine()
     {
         var wait = new WaitForSecondsRealtime(_timeBeforeShrinking);

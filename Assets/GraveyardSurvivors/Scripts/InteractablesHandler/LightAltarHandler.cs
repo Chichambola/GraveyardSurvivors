@@ -20,7 +20,7 @@ public class LightAltarHandler : CostInteractableHandler
     {
         InteractableSpawner.SetValueForObjects(Cost);
     }
-
+    
     private void OnLightAltarChosen(Interactable interactable)
     {
         if (interactable is LightAltar altar == false)

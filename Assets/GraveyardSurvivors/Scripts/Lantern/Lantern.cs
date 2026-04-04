@@ -7,7 +7,7 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Lantern : MonoBehaviour
+public class Lantern : MonoBehaviour, ILantern
 {
     [Header("Light")]
     [SerializeField] private float _shrinkRateIncrease = 0.05f;
@@ -15,7 +15,7 @@ public class Lantern : MonoBehaviour
     [Header("Services")]
     [SerializeField] private LanternDamageDealer _damageDealer;
     [SerializeField] private PlayerDetector _playerDetector;
-
+    
     private float _lastRadius;
     private float _defaultValue = 0f;
     private float _currentShrinkRate;
@@ -25,7 +25,7 @@ public class Lantern : MonoBehaviour
     {
         _damageDealer.EnemyDetected += OnEnemyDetected;
         _damageDealer.EnemyLeft += OnEnemyLeft;
-        _damageDealer.EnemyDied += OnEnemyDeath;
+        _damageDealer.EnemyDied += ProcessEnemyDeath;
         _light.ThresholdReached += OnThresholdReached;
         _light.GainedEnergy += OnEnergyGained;
         _playerDetector.PlayerDetected += OnPlayerDetected;
@@ -36,7 +36,7 @@ public class Lantern : MonoBehaviour
     {
         _damageDealer.EnemyDetected -= OnEnemyDetected;
         _damageDealer.EnemyLeft -= OnEnemyLeft;
-        _damageDealer.EnemyDied -= OnEnemyDeath;
+        _damageDealer.EnemyDied -= ProcessEnemyDeath;
         _light.ThresholdReached -= OnThresholdReached;
         _light.GainedEnergy -= OnEnergyGained;
         _playerDetector.PlayerDetected -= OnPlayerDetected;
@@ -67,7 +67,26 @@ public class Lantern : MonoBehaviour
 
         _light.StartRadiusRoutine(_defaultValue);
     }
+    
+    public void ProcessEnemyDeath(Enemy enemy)
+    {
+        if (enemy == null)
+            throw new Exception("Enemy cannot be null!");
 
+        if (_light.CurrentRadius > _defaultValue)
+        {
+            _light.ReceiveEnergy(enemy.CurrentStats.LanternEnergy);
+        }
+        else
+        {
+            float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternEnergy);
+
+            _light.SetLightRadiusForAllAxis(tempValue);
+
+            _light.ChangeState(true);
+        }
+    }
+    
     private void OnPlayerDetected(ILightCarrier carrier)
     {
         if (carrier == null)
@@ -109,27 +128,6 @@ public class Lantern : MonoBehaviour
 
         carrierLight.GainedEnergy -= OnEnergyGained;
         carrierLight.ThresholdReached -= OnThresholdReached;
-    }
-
-    private void OnEnemyDeath(Enemy enemy)
-    {
-        if (enemy == null)
-            throw new Exception("Enemy cannot be null!");
-
-        if (_light.CurrentRadius > _defaultValue)
-        {
-            _light.ReceiveEnergy(enemy.CurrentStats.LanternEnergy);
-        }
-        else
-        {
-            float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternEnergy);
-
-            Debug.Log($"Temp value {tempValue}");
-
-            _light.SetLightRadiusForAllAxis(tempValue);
-
-            _light.ChangeState(true);
-        }
     }
 
     private void OnEnemyLeft()

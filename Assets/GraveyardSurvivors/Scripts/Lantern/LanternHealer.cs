@@ -6,19 +6,17 @@ using UnityEngine;
 public class LanternHealer : MonoBehaviour
 {
     [SerializeField] private PlayerDetector _detector;
-    [SerializeField] private LanternHealBuff _buff;
+    [SerializeField] private float _buffAmount = 1.5f;
     [SerializeField] private float _cooldown = 1.5f;
     
-    private IBuffable _buffable;
-    private float _initialHealthRegeneration;
+    private float _healthRegenerationAmount;
+    private Player _player;
     private Coroutine _coroutine;
-    private List<IBuff> _tempBuffs;
-
+    
     private void OnEnable()
     {
         _detector.PlayerDetected += StartHealing;
         _detector.PlayerLeft += StopHealing;
-        _tempBuffs = new List<IBuff>();
     }
 
     private void OnDisable()
@@ -27,9 +25,9 @@ public class LanternHealer : MonoBehaviour
         _detector.PlayerLeft -= StopHealing;
     }
 
-    private void StartHealing(IBuffable buffable)
+    private void StartHealing(Player player)
     {
-        _buffable = buffable;
+        _player = player;
         
         if(_coroutine != null)
             StopCoroutine(_coroutine);
@@ -37,19 +35,22 @@ public class LanternHealer : MonoBehaviour
         _coroutine = StartCoroutine(HealingCoroutine());
     }
 
-    private void StopHealing(IBuffable buffable)
+    private void StopHealing(Player player)
     {
-        foreach (IBuff buff in _tempBuffs)
-        {
-            _buffable.RemoveBuff(buff);
-        }
-        
-        _tempBuffs.Clear();
+        _player.CurrentStats.HealthRegeneration -= _healthRegenerationAmount;
+
+        _healthRegenerationAmount = 0;
         
         StopCoroutine(_coroutine);
 
-        if (buffable == _buffable)
-            _buffable = null;
+        if (_player == player)
+        {
+            _player = null;
+        }
+        else
+        {
+            throw new Exception();
+        }
     }
     
     private IEnumerator HealingCoroutine()
@@ -58,8 +59,9 @@ public class LanternHealer : MonoBehaviour
 
         while (enabled)
         {
-            _tempBuffs.Add(_buff);
-            _buffable.AddBuff(_buff);
+            _healthRegenerationAmount += _buffAmount;
+
+            _player.CurrentStats.HealthRegeneration += _buffAmount;
             
             yield return wait;
         }

@@ -8,6 +8,8 @@ public class InteractableSpawner : Spawner<Interactable>
     [SerializeField] private Transform _point;
 
     public event Action<Interactable> InteractableWasChosen;
+
+    public List<Interactable> Interactables => ActiveObjects;
     
     private void OnEnable()
     {

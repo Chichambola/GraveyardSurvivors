@@ -91,6 +91,8 @@ public class LanternLight : MonoBehaviour
         if (isShrinking)
         {
             StartRadiusRoutine(_defaultValue);
+            
+            SetGainingEnergyState(false);
         }
         else
         {
@@ -105,30 +107,42 @@ public class LanternLight : MonoBehaviour
 
     private IEnumerator ChangingRadiusRoutine(float targetValue)
     {
+        targetValue = ClampRadiusToThreshold(targetValue);
+        
         while (enabled) 
         {
-            if (targetValue > _radius)
-            {
-                targetValue = _radius;
-                
-                SetGainingEnergyState(false);
-            }
-            
-            _collider.radius = LerpToValue(_collider.radius, targetValue);
+            ChangeRadius(targetValue);
 
-            _light.range = LerpToValue(_light.range, targetValue);
-
-            SetLightRadiusForAllAxis(_collider.radius);
-            
             if (_collider.radius <= _disableThreshold && _isGainingEnergy == false)
             {
-                ChangeState(false);
-                
                 ThresholdReached?.Invoke(this);
+                
+                ChangeState(false);
             }
             
             yield return null;
         }
+    }
+
+    private void ChangeRadius(float targetValue)
+    {
+        _collider.radius = LerpToValue(_collider.radius, targetValue);
+
+        _light.range = LerpToValue(_light.range, targetValue);
+
+        SetLightRadiusForAllAxis(_collider.radius);
+    }
+
+    private float ClampRadiusToThreshold(float targetValue)
+    {
+        if (targetValue > _radius)
+        {
+            targetValue = _defaultValue;
+            
+            SetGainingEnergyState(false);
+        }
+
+        return targetValue;
     }
 
     private float LerpToValue(float currentValue, float finalValue)

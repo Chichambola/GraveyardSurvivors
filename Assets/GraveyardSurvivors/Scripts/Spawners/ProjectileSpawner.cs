@@ -37,16 +37,16 @@ public class ProjectileSpawner : Spawner<Projectile>
 
     protected override void ActionOnRelease(Projectile projectile)
     {
-        ProjectileReleased?.Invoke(projectile.CurrentTarget);
-        
         projectile.gameObject.transform.parent = transform;
-        
-        projectile.ResetCharacteristics();
         
         projectile.CanBeReleased -= Release;
         
         ActiveObjects.Remove(projectile);
         
         base.ActionOnRelease(projectile);
+        
+        ProjectileReleased?.Invoke(projectile.CurrentTarget);
+        
+        projectile.ResetCharacteristics();
     }
 }

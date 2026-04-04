@@ -160,7 +160,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
 
         CurrentStats.Health -= damage;
         
-        StatsChanged?.Invoke(CurrentStats);
+        _statsViewer.UpdateStats(CurrentStats);
     }
     
     public void ApplyEffect(IEffect<IAttacker> effectFactory) { }
@@ -196,8 +196,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     {
         if (_evader.CanEvade(CurrentStats.EvasionChance, CurrentStats.Luck))
         {
-            Debug.Log("Evaded");
-
             return 0;
         }
         
@@ -222,7 +220,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
             CurrentStats.Health = MaxHealth;
         }
         
-        StatsChanged?.Invoke(CurrentStats);
+        _statsViewer.UpdateStats(CurrentStats);
     }
     
     public void IncreaseLanternCount() => _lanternsCount++;
