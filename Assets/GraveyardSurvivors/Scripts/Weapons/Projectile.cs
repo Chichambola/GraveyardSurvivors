@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     
     private IAttacker _currentTarget;
     private Coroutine _coroutine;
+    private Coroutine _checkingEnemyRoutine;
 
     public IAttacker CurrentTarget => _currentTarget;
     
@@ -26,7 +27,7 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     {
         _enemyDetector.EnemyDetected -= OnEnemyDetected;
     }
-    
+
     public void StartMoving()
     {
         if (_currentTarget == null)
@@ -34,26 +35,42 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
         
         if (_coroutine != null)
             StopCoroutine(_coroutine);
+        
+        if(_checkingEnemyRoutine != null)
+            StopCoroutine(_checkingEnemyRoutine);
 
         _coroutine = StartCoroutine(MovingRoutine());
+        _checkingEnemyRoutine = StartCoroutine(CheckingTargetRoutine());
     }
 
     private IEnumerator MovingRoutine()
     {
+        var target = _currentTarget as MonoBehaviour;
+        
         while (enabled)
         {
-            if (_currentTarget.Rigidbody.gameObject.activeSelf == false)
-            {
-                Release();
-            }
-            
-            _mover.Move(_currentTarget.Rigidbody.transform, _speedMultiplier);
+            _mover.Move(target.transform, _speedMultiplier);
 
-            Vector3 distance = _currentTarget.Rigidbody.transform.position - transform.position;
+            Vector3 distance = target.transform.position - transform.position;
 
             Vector3 direction = new Vector3(distance.x, 0f, distance.z).normalized;
             
             _rotator.Rotate(direction);
+            
+            yield return null;
+        }
+    }
+
+    private IEnumerator CheckingTargetRoutine()
+    {
+        var target = _currentTarget as MonoBehaviour;
+        
+        while (enabled)
+        {
+            if (target.isActiveAndEnabled == false)
+            {
+                Release();
+            }
             
             yield return null;
         }

@@ -93,49 +93,17 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _currentEffects.Add(effect);
         effect.Apply(this);
     }
-
-    public bool HasEffect(IEffect<IAttacker> effect)
-    {
-        if (_currentEffects.Count > 0)
-        {
-            for (int i = _currentEffects.Count - 1; i >= 0; i--)
-            {
-                if (_currentEffects[i] == effect)
-                {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
-    }
     
-    public void ChangeSpeed(float speedPercent, bool isSlowing)
+    public void ChangeSpeed(float speedValue, bool isSlowing)
     {
-        float speed;
-        
         if (isSlowing)
         {
-            speed = UserUtils.SubtractPercentFromNumber(Mover.Speed, speedPercent);
+            CurrentStats.MovementSpeed -= speedValue;
         }
         else
         {
-            speed = UserUtils.AddPercentToNumber(Mover.Speed, speedPercent);
+            CurrentStats.MovementSpeed += speedValue;
         }
-        
-        if (speed < 0)
-        {
-            speed = 0;
-        }
-        
-        Debug.Log(speed);
-        
-        Mover.SetSpeed(speed);
-    }
-
-    public void ResetSpeed()
-    {
-        Mover.SetSpeed(_initialSpeed);
     }
 
     public override void HandleMovement()
@@ -157,8 +125,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         RemoveAllEffects();
         
         CurrentStats.Health = 0;
-        
-        _collider.enabled = false;
 
         _health.text = $"{CurrentStats.Health}";
     }

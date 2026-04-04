@@ -32,9 +32,12 @@ public class Thrower : MonoBehaviour
         while (initialSampleTime <= finishValue)
         {        
             initialSampleTime += Time.deltaTime * _speed;
-            
-            throwable.Transform.position = _curve.Evaluate(initialSampleTime);
-            throwable.Transform.forward = _curve.Evaluate(initialSampleTime + _rotationSpeed) - throwable.Transform.position;
+
+            if (throwable.Transform.position.sqrMagnitude > .01f && throwable.Transform.forward.sqrMagnitude > .01f)
+            {
+                throwable.Transform.position = _curve.Evaluate(initialSampleTime);
+                throwable.Transform.forward = _curve.Evaluate(initialSampleTime + _rotationSpeed) - throwable.Transform.position;
+            }
             
             yield return null;
         }

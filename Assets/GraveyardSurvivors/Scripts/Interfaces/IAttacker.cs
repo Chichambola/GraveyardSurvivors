@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,5 +9,4 @@ public interface IAttacker
     void TakeDamage(float damage);
     void ApplyEffect(IEffect<IAttacker> effectFactory);
     void ChangeSpeed(float speedPercent, bool isSlowing);
-    void ResetSpeed();
 }
