@@ -408,12 +408,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackStrategy: {fileID: 111349042}
   _info: {fileID: 11400000, guid: 5bf44b189b2a7844d9c778b04b85b291, type: 2}
-  _effects: []
+  _effects:
+  - _effects:
+    - rid: 5909440864032915460
   _effectChance: 100
   _arrowSpawner: {fileID: 247115541}
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5909440864032915460
+      type: {class: MovementSpeedEffectFactory, ns: , asm: Assembly-CSharp}
+      data:
+        _duration: 1
+        _speedPercent: 5
+        _isSlowing: 1
+        _movementEffect: {fileID: 557341883}
 --- !u!114 &111349042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13907,9 +13916,6 @@ MonoBehaviour:
   _coinSpawner: {fileID: 376108314}
   _points:
   - {fileID: 1133705595}
-  - {fileID: 13276562}
-  - {fileID: 191488480}
-  - {fileID: 1844571355}
   _player: {fileID: 366209448}
 --- !u!1 &2138666183
 GameObject:
