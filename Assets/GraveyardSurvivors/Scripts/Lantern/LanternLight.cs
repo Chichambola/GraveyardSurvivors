@@ -21,9 +21,9 @@ public class LanternLight : MonoBehaviour
     private Coroutine _coroutine;
     private float _initialRadius;
     private float _energyMultiplier = 1.5f;
+    private float _initialRate;
     private int _defaultValue = 0;
     private bool _isGainingEnergy;
-    private float _initialRate;
 
     public float CurrentRadius => _collider.radius;
     public float ShrinkRate => _shrinkRate;
@@ -54,6 +54,11 @@ public class LanternLight : MonoBehaviour
         StartRadiusRoutine(value);
     }
 
+    public void SetRadius(float threshold)
+    {
+        _radius = threshold;
+    }
+    
     public void SetLightRadiusForAllAxis(float value)
     {
         var particleSize = new Vector3(value, value, value);

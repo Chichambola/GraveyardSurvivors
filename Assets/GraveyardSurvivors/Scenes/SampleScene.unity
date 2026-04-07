@@ -408,20 +408,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackStrategy: {fileID: 111349042}
   _info: {fileID: 11400000, guid: 5bf44b189b2a7844d9c778b04b85b291, type: 2}
+  _effects: []
+  _effectChance: 100
   _arrowSpawner: {fileID: 247115541}
-  _ivyEffect:
-  - _effects:
-    - rid: 5909440751640510469
   references:
     version: 2
-    RefIds:
-    - rid: 5909440751640510469
-      type: {class: MovementSpeedEffectFactory, ns: , asm: Assembly-CSharp}
-      data:
-        _duration: 0
-        _speedPercent: 0
-        _isSlowing: 0
-        _movementEffect: {fileID: 0}
+    RefIds: []
 --- !u!114 &111349042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,7 +1274,7 @@ Transform:
   m_GameObject: {fileID: 386456280}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 20.88, z: -20.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1661,7 +1653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e801a991a650c8bab8a1f6f8d01db47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectPrefab: {fileID: 0}
+  _objectPrefab: {fileID: 3027385545821991, guid: 20fe3bbaabe1873c18d7a22ec5e43d3b, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
 --- !u!1 &680112783
@@ -2083,6 +2075,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 366209448}
   _darkness: {fileID: 531874429}
+  _lantern: {fileID: 1433704763}
+  _lightAltarHandler: {fileID: 0}
+  _enemySpawnerHandler: {fileID: 2050020223}
   _interactables:
   - {fileID: 1140258358}
   - {fileID: 1806162021}
@@ -7376,7 +7371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detector: {fileID: 1433704765}
-  _buff: {fileID: 1002513578}
+  _buffAmount: 1.5
   _cooldown: 1.5
 --- !u!1 &1034649750
 GameObject:
@@ -13496,7 +13491,7 @@ Transform:
   m_GameObject: {fileID: 1857605854}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.91, y: -0.37, z: 0}
+  m_LocalPosition: {x: -11.34, y: -20.87, z: 18.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15975,6 +15970,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 816859689}
   - {fileID: 963194228}
   - {fileID: 814374079}
   - {fileID: 1034649752}
@@ -15985,7 +15981,6 @@ SceneRoots:
   - {fileID: 2093416581}
   - {fileID: 1585072360}
   - {fileID: 1594052569}
-  - {fileID: 816859689}
   - {fileID: 5953317575738629119}
   - {fileID: 2050020222}
   - {fileID: 376108315}

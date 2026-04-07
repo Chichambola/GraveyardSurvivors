@@ -69,9 +69,8 @@ MonoBehaviour:
   _maxInteractionsAmount: 3
   _timeBeforeShrinking: 5
   _lantern: {fileID: 1692802740171217853}
-  _radius: 0
   _radiusMultiplier: 2
-  _shrinkRate: 0.05
+  _shrinkRate: 0.4
 --- !u!54 &565072860269253723
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -645,7 +644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detector: {fileID: 6160452685908758418}
-  _buff: {fileID: 1256075826920275999}
+  _buffAmount: 1.5
   _cooldown: 1.5
 --- !u!114 &1256075826920275999
 MonoBehaviour:
@@ -5627,8 +5626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b377165e09d8bae5a2e9592d7928a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _light: {fileID: 1050723065949224833}
   _shrinkRateIncrease: 0.001
+  _light: {fileID: 1050723065949224833}
   _damageDealer: {fileID: 5271832273630387498}
   _playerDetector: {fileID: 6160452685908758418}
 --- !u!135 &9142071214556032641

@@ -20,7 +20,12 @@ public class Lantern : MonoBehaviour, ILantern
     private float _defaultValue = 0f;
     private float _currentShrinkRate;
     private Coroutine _coroutine;
-
+    
+    public void Start()
+    {
+        _light.Init();    
+    }
+    
     private void OnEnable()
     {
         _damageDealer.EnemyDetected += OnEnemyDetected;
@@ -42,15 +47,12 @@ public class Lantern : MonoBehaviour, ILantern
         _playerDetector.PlayerDetected -= OnPlayerDetected;
         _playerDetector.PlayerLeft -= OnPlayerLeft;
     }
-
-    private void Start()
-    {
-        _light.Init();
-    }
-
+    
     public void StopShrinking() => _light.SetRate(_defaultValue);
 
     public void StopLight() => _light.ChangeState(false);
+    
+    public void SetRadius(float threshold) => _light.SetRadius(threshold);
 
     public void StartExpanding(float targetValue)
     {

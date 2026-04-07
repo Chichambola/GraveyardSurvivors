@@ -12,7 +12,6 @@ public class LightAltar : Interactable
     [SerializeField] private float _timeBeforeShrinking = 5f;
     [Header("Lantern")]
     [SerializeField] private Lantern _lantern;
-    [SerializeField] private float _radius;
     [SerializeField] private float _radiusMultiplier = 2f;
     [SerializeField] private float _shrinkRate = 0.2f;
     
@@ -20,10 +19,15 @@ public class LightAltar : Interactable
     
     private int _currentInteractionsAmount;
     private int _defaultValue = 0;
+    private float _radius;
     private Coroutine _coroutine;
 
     private void Start()
     {
+        float threshold = _maxInteractionsAmount * _radiusMultiplier;
+        
+        _lantern.SetRadius(threshold);
+        
         _lantern.StopLight();
     }
 
