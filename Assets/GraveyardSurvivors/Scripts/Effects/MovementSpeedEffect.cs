@@ -35,12 +35,12 @@ public class MovementSpeedEffect : IEffect<IAttacker>
     public void Cancel()
     {
         _timer?.Stop();
-        CleanUp();
     }
 
     private void CleanUp()
     {
         EffectCompleted?.Invoke(this);
+        
         _timer.TimerStopped -= OnTimerStopped;
         _timer.TimerStarted -= OnTimerStarted;
      

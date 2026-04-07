@@ -37,7 +37,6 @@ public struct DamageOvertime : IEffect<IAttacker>
     public void Cancel()
     {
         _timer?.Stop();
-        CleanUp();
     }
     
     private void OnIntervalReached()
