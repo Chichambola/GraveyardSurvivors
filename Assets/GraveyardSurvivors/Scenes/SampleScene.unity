@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -228,6 +228,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 685626322}
+  - {fileID: 1894915800}
+  - {fileID: 378766583}
   m_Father: {fileID: 1140258359}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &94142644
@@ -245,7 +247,10 @@ MonoBehaviour:
   _objectPrefab: {fileID: 389328422361486788, guid: 264bd5b3894ef1c4f9e51804357abe0e, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
-  _point: {fileID: 685626322}
+  _points:
+  - {fileID: 685626322}
+  - {fileID: 1894915800}
+  - {fileID: 378766583}
 --- !u!1 &97403465
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,9 +424,9 @@ MonoBehaviour:
     - rid: 5909440864032915460
       type: {class: MovementSpeedEffectFactory, ns: , asm: Assembly-CSharp}
       data:
-        _duration: 1
+        _duration: 5
         _speedPercent: 5
-        _isSlowing: 1
+        _isSlowing: 0
         _movementEffect: {fileID: 557341883}
 --- !u!114 &111349042
 MonoBehaviour:
@@ -1257,6 +1262,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26dbe54e5ca94412f9544bbf9bedf28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &378766582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 378766583}
+  m_Layer: 0
+  m_Name: GameObject (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &378766583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378766582}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.39, y: 9.38, z: -10.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 94142643}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &386456280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,7 +1780,7 @@ GameObject:
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1811,7 +1847,8 @@ MonoBehaviour:
   _objectPrefab: {fileID: 7514767359008438798, guid: e29052480226c1f4e862272d1d82f8bf, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
-  _point: {fileID: 97403466}
+  _points:
+  - {fileID: 97403466}
 --- !u!1 &796147971
 GameObject:
   m_ObjectHideFlags: 0
@@ -12937,7 +12974,8 @@ MonoBehaviour:
   _objectPrefab: {fileID: 1785589636022686039, guid: e66baaaed13329149b12d36b9a9cbab6, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
-  _point: {fileID: 1857605855}
+  _points:
+  - {fileID: 1857605855}
 --- !u!1 &1445136108
 GameObject:
   m_ObjectHideFlags: 0
@@ -13347,7 +13385,8 @@ MonoBehaviour:
   _objectPrefab: {fileID: 117811364892704532, guid: 1d7b49d2062c37280b0109ae9b6b629a, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
-  _point: {fileID: 499917003}
+  _points:
+  - {fileID: 499917003}
 --- !u!1 &1806162018
 GameObject:
   m_ObjectHideFlags: 0
@@ -13553,6 +13592,37 @@ MonoBehaviour:
   _objectPrefab: {fileID: 4709316755915958993, guid: 61cde8e5eb2df9b3ab78d0a6f5b864dc, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
+--- !u!1 &1894915799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1894915800}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1894915800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894915799}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.39, y: 9.38, z: -12.79}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 94142643}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2050020221
 GameObject:
   m_ObjectHideFlags: 0
@@ -13569,7 +13639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2050020222
 Transform:
   m_ObjectHideFlags: 0
