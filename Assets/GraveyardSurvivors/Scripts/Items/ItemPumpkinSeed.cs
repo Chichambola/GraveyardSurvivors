@@ -6,14 +6,14 @@ public class ItemPumpkinSeed : Item
 {
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.Health = CalculateBuffAmount(baseStats.Health);
+        baseStats.Health = baseStats.Health.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }
     
     public override CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.Health -= CalculateBuffAmount(baseStats.Health);
+        baseStats.Health -= baseStats.Health.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }

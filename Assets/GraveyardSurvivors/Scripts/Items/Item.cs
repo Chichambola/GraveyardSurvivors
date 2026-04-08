@@ -41,18 +41,4 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable
 
     public abstract CharacterStats ApplyBuff(CharacterStats baseStats);
     public abstract CharacterStats RemoveBuff(CharacterStats baseStats);
-
-    protected float CalculateBuffAmount(float value)
-    {
-        if (value >= HighestValue)
-            return value;
-
-        float currentPercent = UserUtils.SubtractPercentFromNumber(HighestValue, value);
-
-        float finalAvailablePercent = UserUtils.SubtractPercentFromNumber(currentPercent, IncreaseValue);
-
-        value += currentPercent - finalAvailablePercent;
-
-        return value;
-    }
 }

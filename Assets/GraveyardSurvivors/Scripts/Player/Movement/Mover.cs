@@ -35,9 +35,4 @@ public class Mover : MonoBehaviour
         
         _rigidbody.MovePosition(nextPosition);
     }
-
-    public void SetSpeed(float speed)
-    {
-        _speed = speed;
-    }
 }

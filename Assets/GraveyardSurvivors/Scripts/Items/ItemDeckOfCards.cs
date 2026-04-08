@@ -6,14 +6,14 @@ public class ItemDeckOfCards : Item
 {
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.AttackSpeed = CalculateBuffAmount(baseStats.AttackSpeed);
+        baseStats.AttackSpeed = baseStats.AttackSpeed.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }
     
     public override CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.AttackSpeed -= CalculateBuffAmount(baseStats.AttackSpeed);
+        baseStats.AttackSpeed -= baseStats.AttackSpeed.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }

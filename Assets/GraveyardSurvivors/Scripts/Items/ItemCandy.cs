@@ -6,14 +6,14 @@ public class ItemCandy : Item
 {
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.HealthRegeneration = CalculateBuffAmount(baseStats.HealthRegeneration);
+        baseStats.HealthRegeneration = baseStats.HealthRegeneration.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }
     
     public override CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.HealthRegeneration -= CalculateBuffAmount(baseStats.HealthRegeneration);
+        baseStats.HealthRegeneration -= baseStats.HealthRegeneration.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }

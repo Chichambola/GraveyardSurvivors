@@ -6,14 +6,14 @@ public class ItemHolyWater : Item
 {
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.BlockChance = CalculateBuffAmount(baseStats.BlockChance);
+        baseStats.BlockChance = baseStats.BlockChance.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }
     
     public override CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.BlockChance -= CalculateBuffAmount(baseStats.BlockChance);
+        baseStats.BlockChance -= baseStats.BlockChance.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }

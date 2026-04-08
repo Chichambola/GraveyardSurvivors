@@ -6,14 +6,14 @@ public class ItemMagnet : Item
 {
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.PickUpRadius = CalculateBuffAmount(baseStats.PickUpRadius);
+        baseStats.PickUpRadius = baseStats.PickUpRadius.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }
     
     public override CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.PickUpRadius -= CalculateBuffAmount(baseStats.PickUpRadius);
+        baseStats.PickUpRadius -= baseStats.PickUpRadius.GetClampedValue(IncreaseValue);
         
         return baseStats;
     }

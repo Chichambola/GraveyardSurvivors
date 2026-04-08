@@ -39,6 +39,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _collider = GetComponent<CapsuleCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _currentEffects = new List<IEffect<IAttacker>>();
+        
+        CurrentStats = _info.GetStats();
+        
+        _initialHealth = CurrentStats.Health;
+        _initialSpeed = CurrentStats.MovementSpeed;
     }
 
     protected override void Update()
@@ -53,11 +58,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     private void OnEnable()
     {
-        CurrentStats = _info.GetStats();
-        
-        _initialHealth = CurrentStats.Health;
-        _initialSpeed = Mover.Speed;
-        
         _collider.enabled = true;
         
         InitializeStateMachine();
@@ -68,7 +68,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public void ResetCharacteristics()
     {
         CurrentStats.Health = _initialHealth;
-        Mover.SetSpeed(_initialSpeed);
+        CurrentStats.MovementSpeed = _initialSpeed;
     }
 
     public void Release() => CanBeReleased?.Invoke(this);
@@ -98,12 +98,14 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         if (isSlowing)
         {
-            CurrentStats.MovementSpeed -= speedValue;
+            CurrentStats.MovementSpeed -= CurrentStats.MovementSpeed.GetClampedValue(speedValue);
         }
         else
         {
-            CurrentStats.MovementSpeed += speedValue;
+            CurrentStats.MovementSpeed += CurrentStats.MovementSpeed.GetClampedValue(speedValue);
         }
+        
+        Debug.Log(CurrentStats.MovementSpeed);
     }
 
     public override void HandleMovement()
@@ -138,7 +140,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         var attackState = new EnemyAttackState(this, Animator);
         var dieState = new DieState(this, Animator);
 
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0));
+        DefineAtTransition(idleState, runState, new FuncPredicate(() => CurrentStats.MovementSpeed > -100));
         DefineAtTransition(runState, attackState, new FuncPredicate(() => _playerDetector.IsPlayerNear));
         DefineAtTransition(attackState, runState,
             new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking));

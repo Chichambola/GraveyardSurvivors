@@ -46,9 +46,9 @@ public class MovementSpeedEffect : IEffect<IAttacker>
      
         _currentEffect.Release();
         
-        bool isCurrentlySlowing = !IsSlowing;
+        //bool isCurrentlySlowing = !IsSlowing;
         
-        _currentTarget.ChangeSpeed(_previousSpeedPercent, isCurrentlySlowing);
+        //_currentTarget.ChangeSpeed(_previousSpeedPercent, isCurrentlySlowing);
         
         _timer = null;
         _currentTarget = null;

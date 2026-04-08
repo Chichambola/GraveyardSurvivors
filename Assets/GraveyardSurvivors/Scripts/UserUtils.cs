@@ -30,6 +30,20 @@ public static class UserUtils
 
         return aimDirection;
     }
+
+    public static float GetClampedValue(this float originalValue, float increasePercent)
+    {
+        if (originalValue >= s_HighestPercent || originalValue <= -100)
+            return originalValue;
+
+        float currentPercent = SubtractPercentFromNumber(s_HighestPercent, originalValue);
+        
+        float finalAvailablePercent = SubtractPercentFromNumber(currentPercent, increasePercent);
+        
+        originalValue += currentPercent - finalAvailablePercent;
+        
+        return originalValue;
+    }
     
     public static float GetRandomRotation()
     {
