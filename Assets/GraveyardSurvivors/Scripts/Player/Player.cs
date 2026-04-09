@@ -44,6 +44,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     public LanternLight Light => _light;
     public bool IsLightActive => _light.IsActive;
     public int LanternsCount => _lanternsCount;
+    public float Speed => Mover.Speed;
 
     public float MaxHealth { get; private set; }
 
@@ -144,14 +145,9 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
         }
     }
 
-    public void ResetSpeed()
+    public void ChangeSpeed(float previousSpeed)
     {
-        
-    }
-
-    public bool HasEffect(IEffect<IAttacker> effect)
-    {
-        throw new NotImplementedException();
+        Mover.SetSpeed(previousSpeed);
     }
 
     public void TakeDamage(float damage)

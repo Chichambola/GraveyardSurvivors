@@ -24,10 +24,12 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private List<IEffect<IAttacker>> _currentEffects;
     private float _initialHealth;
     private float _initialSpeed;
+    private int _movementEffectCount;
 
     public EnemyStats CurrentStats { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
     public float Damage => _weapon.Info.Damage;
+    public float Speed => Mover.Speed;
 
     public void Init(Player player)
     {
@@ -89,6 +91,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     public void ApplyEffect(IEffect<IAttacker> effect)
     {
+        if (effect is IMovementEffect)
+        {
+            _movementEffectCount++;
+        }
+        
         effect.EffectCompleted += RemoveEffect;
         _currentEffects.Add(effect);
         effect.Apply(this);
@@ -96,16 +103,25 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     public void ChangeSpeed(float speedValue, bool isSlowing)
     {
+        float tempSpeed;
+        
         if (isSlowing)
         {
-            CurrentStats.MovementSpeed -= CurrentStats.MovementSpeed.GetClampedValue(speedValue);
+            tempSpeed = UserUtils.SubtractPercentFromNumber(Mover.Speed, speedValue); 
         }
         else
         {
-            CurrentStats.MovementSpeed += CurrentStats.MovementSpeed.GetClampedValue(speedValue);
+            tempSpeed = UserUtils.AddPercentToNumber(Mover.Speed, speedValue); 
         }
-        
-        Debug.Log(CurrentStats.MovementSpeed);
+
+        if (_movementEffectCount == 0)
+        {
+            Mover.ResetSpeed();
+        }
+        else
+        {
+            Mover.SetSpeed(tempSpeed);   
+        }
     }
 
     public override void HandleMovement()
@@ -127,6 +143,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         RemoveAllEffects();
         
         CurrentStats.Health = 0;
+        
+        Mover.ResetSpeed();
+            
+        _movementEffectCount = 0;
 
         _health.text = $"{CurrentStats.Health}";
     }
@@ -140,7 +160,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         var attackState = new EnemyAttackState(this, Animator);
         var dieState = new DieState(this, Animator);
 
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => CurrentStats.MovementSpeed > -100));
+        DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0));
         DefineAtTransition(runState, attackState, new FuncPredicate(() => _playerDetector.IsPlayerNear));
         DefineAtTransition(attackState, runState,
             new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking));
@@ -166,6 +186,16 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     private void RemoveEffect(IEffect<IAttacker> effect)
     {
+        if (effect is IMovementEffect)
+        {
+            _movementEffectCount--;
+            
+            if (_movementEffectCount == 0)
+            {
+                Mover.ResetSpeed();
+            }
+        }
+        
         effect.EffectCompleted -= RemoveEffect;
         _currentEffects.Remove(effect);
     }

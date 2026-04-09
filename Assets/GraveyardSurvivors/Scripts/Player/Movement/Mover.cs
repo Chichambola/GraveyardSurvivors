@@ -10,12 +10,15 @@ public class Mover : MonoBehaviour
     
     private Rigidbody _rigidbody;
     private Coroutine _coroutine;
+    private float _initialSpeed;
 
     public float Speed => _speed;
     
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+
+        _initialSpeed = _speed;
     }
 
     public void Move(Transform target, float speedMultiplier)
@@ -35,4 +38,16 @@ public class Mover : MonoBehaviour
         
         _rigidbody.MovePosition(nextPosition);
     }
+
+    public void SetSpeed(float speed)
+    {
+        if (speed < 0)
+        {
+            speed = 0;
+        }
+        
+        _speed = speed;
+    }
+
+    public void ResetSpeed() => _speed = _initialSpeed;
 }

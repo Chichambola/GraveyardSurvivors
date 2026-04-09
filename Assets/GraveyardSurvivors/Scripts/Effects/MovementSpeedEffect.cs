@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class MovementSpeedEffect : IEffect<IAttacker>
+public class MovementSpeedEffect : IEffect<IAttacker>, IMovementEffect
 {
     public float Duration;
     public float SpeedPercent;
@@ -46,9 +46,9 @@ public class MovementSpeedEffect : IEffect<IAttacker>
      
         _currentEffect.Release();
         
-        //bool isCurrentlySlowing = !IsSlowing;
+        bool isCurrentlySlowing = !IsSlowing;
         
-        //_currentTarget.ChangeSpeed(_previousSpeedPercent, isCurrentlySlowing);
+        _currentTarget.ChangeSpeed(SpeedPercent, isCurrentlySlowing);
         
         _timer = null;
         _currentTarget = null;
@@ -59,7 +59,7 @@ public class MovementSpeedEffect : IEffect<IAttacker>
     
     private void OnTimerStarted()
     {
-        _previousSpeedPercent = SpeedPercent;
+        _previousSpeedPercent = _currentTarget.Speed;
         
         _currentTarget.ChangeSpeed(SpeedPercent, IsSlowing);
     }
