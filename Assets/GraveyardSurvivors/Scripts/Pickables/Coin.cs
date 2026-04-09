@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
@@ -14,6 +16,10 @@ public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
     [SerializeField] private Thrower _thrower;
     [Header("Value")]
     [SerializeField] private int _value = 1;
+    [SerializeField] private float _timeBeforeRelease = 2f;
+    
+    private Coroutine _coroutine;
+    private Color _originalColor;
     
     public event Action<Coin> CanBeReleased;
     
@@ -31,8 +37,15 @@ public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
     private void OnEnable()
     {
         _initialForwardRotation = transform.forward;
+
+        _thrower.FinishedMoving += OnFinishedMoving;
     }
-    
+
+    private void OnDisable()
+    {
+        _thrower.FinishedMoving -= OnFinishedMoving;
+    }
+
     public void ResetCharacteristics()
     {
         transform.forward = _initialForwardRotation;
@@ -46,5 +59,25 @@ public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
     public void StartMoving()
     {
         _thrower.StartThrowing(this, _points);
+    }
+    
+    private void OnFinishedMoving()
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(ChangingOpacity());
+    }
+
+    private IEnumerator ChangingOpacity()
+    {
+        var wait = new WaitForSeconds(_timeBeforeRelease);
+        
+        while (enabled)
+        {
+            yield return wait;
+            
+            Release();
+        }
     }
 }

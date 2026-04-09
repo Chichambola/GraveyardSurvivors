@@ -44,7 +44,7 @@ public class MovementSpeedEffect : IEffect<IAttacker>, IMovementEffect
         _timer.TimerStopped -= OnTimerStopped;
         _timer.TimerStarted -= OnTimerStarted;
      
-        _currentEffect.Release();
+        _currentEffect?.Release();
         
         bool isCurrentlySlowing = !IsSlowing;
         

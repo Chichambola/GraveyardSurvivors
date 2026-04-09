@@ -17,6 +17,6 @@ MonoBehaviour:
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
-    MoneyForKill: 6
+    MoneyForKill: 1
     XpForKill: 3
     LanternEnergy: 5

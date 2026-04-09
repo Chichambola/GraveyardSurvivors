@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -416,7 +416,7 @@ MonoBehaviour:
   _effects:
   - _effects:
     - rid: 5909440864032915460
-  _effectChance: 100
+  _effectChance: 15
   _arrowSpawner: {fileID: 247115541}
   references:
     version: 2
@@ -424,8 +424,8 @@ MonoBehaviour:
     - rid: 5909440864032915460
       type: {class: MovementSpeedEffectFactory, ns: , asm: Assembly-CSharp}
       data:
-        _duration: 5
-        _speedPercent: 5
+        _duration: 2
+        _speedPercent: 15
         _isSlowing: 1
         _movementEffect: {fileID: 557341883}
 --- !u!114 &111349042
@@ -1195,8 +1195,6 @@ GameObject:
   m_Component:
   - component: {fileID: 376108315}
   - component: {fileID: 376108314}
-  - component: {fileID: 376108316}
-  - component: {fileID: 376108317}
   m_Layer: 0
   m_Name: CoinSpawner
   m_TagString: Untagged
@@ -1216,7 +1214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6fd41d3bee6bf643a8853e399af697f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectPrefab: {fileID: 1144306938053952548, guid: 6ccf0c0e9328d5c4b9d28d0c2855b2dd, type: 3}
+  _objectPrefab: {fileID: 5550019293873393314, guid: 6ccf0c0e9328d5c4b9d28d0c2855b2dd, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 30
   _spawnOffset: {x: 0, y: 0.75, z: 0}
@@ -1235,33 +1233,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &376108316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376108313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc519370bca9f5cbd867e51855f188bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _curve: {fileID: 0}
-  _rotationSpeed: 0.61
-  _speed: 1.56
---- !u!114 &376108317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376108313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26dbe54e5ca94412f9544bbf9bedf28c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &378766582
 GameObject:
   m_ObjectHideFlags: 0
@@ -13985,7 +13956,7 @@ MonoBehaviour:
   MaxPoolCapacity: 5
   _coinSpawner: {fileID: 376108314}
   _points:
-  - {fileID: 1133705595}
+  - {fileID: 1844571355}
   _player: {fileID: 366209448}
 --- !u!1 &2138666183
 GameObject:
