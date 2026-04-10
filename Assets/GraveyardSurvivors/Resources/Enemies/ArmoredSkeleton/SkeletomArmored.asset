@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f81637a88d09677faa078073897e9df8, type: 3}
-  m_Name: Skeleton
+  m_Name: SkeletomArmored
   m_EditorClassIdentifier: 
   _stats:
-    Health: 6
-    Armor: 0
-    MovementSpeed: 0
+    Health: 10
+    Armor: 15
+    MovementSpeed: -10
     AttackSpeed: 0
-    MoneyForKill: 1
-    XpForKill: 3
-    LanternEnergy: 5
+    MoneyForKill: 8
+    XpForKill: 6
+    LanternEnergy: 7

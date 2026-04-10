@@ -24,6 +24,7 @@ public class LanternLight : MonoBehaviour
     private float _initialRate;
     private int _defaultValue = 0;
     private bool _isGainingEnergy;
+    private float _initialRange;
 
     public float CurrentRadius => _collider.radius;
     public float ShrinkRate => _shrinkRate;
@@ -43,6 +44,7 @@ public class LanternLight : MonoBehaviour
     {
         _initialRadius = _radius;
         _initialRate = _shrinkRate;
+        _initialRange = _light.range;
     }
     
     public void ReceiveEnergy(float energyAmount)
@@ -70,6 +72,8 @@ public class LanternLight : MonoBehaviour
     public void ResetRadius()
     {
         SetGainingEnergyState(true);
+
+        _light.range = _initialRange;
         
         StartRadiusRoutine(_radius);
     }
