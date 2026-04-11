@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class WeaponSkeletonArm : Weapon
+public class EnemyWeapon : Weapon
 {
     private Coroutine _coroutine;
     private float _duration;

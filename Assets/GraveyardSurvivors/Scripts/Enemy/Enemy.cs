@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
+    [SerializeField] private bool _isRunning = true;
     [SerializeField] private PlayerDetector _playerDetector;
     [SerializeField] private EnemyInfo _info;
     [Header("Weapon")]
@@ -64,7 +65,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         InitializeStateMachine();
         
-        _health.text = $"{_initialHealth}";
+        _health.text = $"{_initialHealth:f1}";
     }
 
     public void ResetCharacteristics()
@@ -81,7 +82,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
         CurrentStats.Health -= damage;
 
-        _health.text = $"{CurrentStats.Health}";
+        _health.text = $"{CurrentStats.Health:f1}";
         
         if (CurrentStats.Health <= 0)
         {
@@ -159,17 +160,21 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         var idleState = new IdleState(this, Animator);
         var attackState = new EnemyAttackState(this, Animator);
         var dieState = new DieState(this, Animator);
+        var walkState = new WalkState(this, Animator);
 
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0));
-        DefineAtTransition(runState, attackState, new FuncPredicate(() => _playerDetector.IsPlayerNear));
+        DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0 && _isRunning));
+        DefineAtTransition(idleState, walkState, new FuncPredicate(() => Mover.Speed > 0 && !_isRunning));
         DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking));
+            new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking && _isRunning));
+        DefineAtTransition(attackState, walkState,
+            new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking && !_isRunning));
         DefineAnyTransition(dieState, new FuncPredicate(() => CurrentStats.Health <= 0));
+        DefineAnyTransition(attackState, new FuncPredicate(() => CurrentStats.Health >= 0 && _playerDetector.IsPlayerNear));
 
         StateMachine.SetState(idleState);
     }
 
-    private void RemoveAllEffects()
+    private void RemoveAllEffects() 
     {
         if (_currentEffects.Count > 0)
         {

@@ -146,7 +146,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4586444591600750072, guid: d3fe20d2a94a32742873b62a6f5e4f1e, type: 3}
+  - {fileID: 2100000, guid: 680a291a42e2c9440ae1706e11e30cfb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -963,8 +963,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1993858749753362742, guid: d3fe20d2a94a32742873b62a6f5e4f1e, type: 3}
-  - {fileID: -3846018093981099296, guid: d3fe20d2a94a32742873b62a6f5e4f1e, type: 3}
+  - {fileID: 2100000, guid: 95fe0c7d486b9744bab458db9d7405ad, type: 2}
+  - {fileID: 2100000, guid: 715a553bda30496439df87682bcd20ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1083,7 +1083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackStrategy: {fileID: 6398945705746586719}
-  _info: {fileID: 11400000, guid: 9714106422a482c80bc4098f9c161739, type: 2}
+  _info: {fileID: 11400000, guid: 90f4d73030b01d246bd47f307680c691, type: 2}
 --- !u!114 &6398945705746586719
 MonoBehaviour:
   m_ObjectHideFlags: 0
