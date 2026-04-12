@@ -802,10 +802,9 @@ MonoBehaviour:
   Animator: {fileID: 7745078345119053515}
   Rotator: {fileID: 1879320688110641685}
   Mover: {fileID: 2864853422003173727}
-  _isRunning: 0
-  _playerDetector: {fileID: 2280971843833779154}
+  PlayerDetector: {fileID: 2280971843833779154}
   _info: {fileID: 11400000, guid: 706419855f7f6cb45a6abb385c07e429, type: 2}
-  _weapon: {fileID: 9003346802289927355}
+  Weapon: {fileID: 9003346802289927355}
   _attackCooldown: 0.5
   _defender: {fileID: 5106020596504560185}
   _health: {fileID: 3678190649255506134}

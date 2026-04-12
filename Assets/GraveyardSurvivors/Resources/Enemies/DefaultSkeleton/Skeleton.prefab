@@ -591,9 +591,9 @@ MonoBehaviour:
   Animator: {fileID: 8807167764928869736}
   Rotator: {fileID: 5936001690060495124}
   Mover: {fileID: 8696614376307728057}
-  _playerDetector: {fileID: 529237461708126332}
+  PlayerDetector: {fileID: 529237461708126332}
   _info: {fileID: 11400000, guid: ab0b1a819130dbf0d83fb5af8bb4c1a3, type: 2}
-  _weapon: {fileID: 386484544202866058}
+  Weapon: {fileID: 386484544202866058}
   _attackCooldown: 0.5
   _defender: {fileID: 886728962877736986}
   _health: {fileID: 2307875020064126990}
@@ -747,7 +747,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 680a291a42e2c9440ae1706e11e30cfb, type: 2}
+  - {fileID: 2100000, guid: 7c8f567a82d9acf4f85a5839fda10d2a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

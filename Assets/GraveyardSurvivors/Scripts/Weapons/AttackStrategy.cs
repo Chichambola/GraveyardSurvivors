@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AttackStrategy : MonoBehaviour, IAttackStrategy
+public abstract class AttackStrategy : MonoBehaviour
 {
     public abstract event Action<IAttacker> AttackerDetected;
-    public abstract void Execute(float radius = 0f);
+    public virtual void Execute(float radius, float duration) {}
+    public virtual void Execute(float radius) {}
 }

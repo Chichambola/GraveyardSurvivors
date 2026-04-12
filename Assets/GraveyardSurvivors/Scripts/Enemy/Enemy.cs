@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
-    [SerializeField] private bool _isRunning = true;
-    [SerializeField] private PlayerDetector _playerDetector;
+    [SerializeField] protected PlayerDetector PlayerDetector;
     [SerializeField] private EnemyInfo _info;
     [Header("Weapon")]
-    [SerializeField] private Weapon _weapon;
-    [SerializeField] private float _attackCooldown = 0.5f;
+    [SerializeField] protected Weapon Weapon;
+    [SerializeField] protected float AttackCooldown = 0.5f;
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
@@ -29,7 +29,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public EnemyStats CurrentStats { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
-    public float Damage => _weapon.Info.Damage;
+    public float Damage => Weapon.Info.Damage;
     public float Speed => Mover.Speed;
 
     public void Init(Player player)
@@ -136,10 +136,30 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleAttack()
     {
-        _weapon.Attack(_attackCooldown);
+        Weapon.Attack(AttackCooldown);
     }
+    
+    protected override void InitializeStateMachine()
+    {
+        StateMachine = new StateMachine();
 
-    public void Die()
+        var idleState = new IdleState(this, Animator);
+        var dieState = new DieState(this, Animator);
+        var runState = new RunState(this, Animator);
+        var attackState = new EnemyAttackState(this, Animator);
+
+        DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0));
+        
+        DefineAtTransition(attackState, runState,
+            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !Weapon.IsAttacking));
+        
+        DefineAnyTransition(dieState, new FuncPredicate(() => CurrentStats.Health <= 0));
+        DefineAnyTransition(attackState, new FuncPredicate(() => CurrentStats.Health >= 0 && PlayerDetector.IsPlayerNear));
+
+        StateMachine.SetState(idleState);
+    }
+    
+    private void Die()
     {
         RemoveAllEffects();
         
@@ -150,28 +170,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _movementEffectCount = 0;
 
         _health.text = $"{CurrentStats.Health}";
-    }
-    
-    private void InitializeStateMachine()
-    {
-        StateMachine = new StateMachine();
-
-        var runState = new RunState(this, Animator);
-        var idleState = new IdleState(this, Animator);
-        var attackState = new EnemyAttackState(this, Animator);
-        var dieState = new DieState(this, Animator);
-        var walkState = new WalkState(this, Animator);
-
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0 && _isRunning));
-        DefineAtTransition(idleState, walkState, new FuncPredicate(() => Mover.Speed > 0 && !_isRunning));
-        DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking && _isRunning));
-        DefineAtTransition(attackState, walkState,
-            new FuncPredicate(() => !_playerDetector.IsPlayerNear && !_weapon.IsAttacking && !_isRunning));
-        DefineAnyTransition(dieState, new FuncPredicate(() => CurrentStats.Health <= 0));
-        DefineAnyTransition(attackState, new FuncPredicate(() => CurrentStats.Health >= 0 && _playerDetector.IsPlayerNear));
-
-        StateMachine.SetState(idleState);
     }
 
     private void RemoveAllEffects() 

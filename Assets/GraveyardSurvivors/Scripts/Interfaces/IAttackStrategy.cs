@@ -6,5 +6,5 @@ using UnityEngine;
 public interface IAttackStrategy
 {
     public event Action<IAttacker> AttackerDetected;
-    void Execute(float radius);
+    void Execute(float radius, float duration = 0f);
 }

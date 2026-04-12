@@ -31,4 +31,6 @@ public abstract class CharacterBase : MonoBehaviour
     {
         StateMachine.AddAnyTransition(to, condition);
     }
+
+    protected abstract void InitializeStateMachine();
 }

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyWeapon : Weapon
+public class EnemyMeleeWeapon : Weapon
 {
+    [SerializeField] private float _radiusMultiplier = 1.5f;
+    
     private Coroutine _coroutine;
     private float _duration;
 
@@ -42,7 +44,7 @@ public class EnemyWeapon : Weapon
         {
             yield return wait;
 
-            AttackStrategy.Execute();
+            AttackStrategy.Execute(_radiusMultiplier);
 
             IsAttacking = false;
         }

@@ -175,7 +175,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
         StatsChanged?.Invoke(CurrentStats);
     }
     
-    private void InitializeStateMachine()
+    protected override void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
 

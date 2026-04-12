@@ -75,7 +75,7 @@ public class WeaponIronSword : WeaponWithAbility
         {
             yield return wait;
 
-            _area.SetVisibility(_attackParticles.particleCount > 0);
+            _area.SetActive(_attackParticles.particleCount > 0);
         }
     }
 }

@@ -146,7 +146,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 680a291a42e2c9440ae1706e11e30cfb, type: 2}
+  - {fileID: 2100000, guid: 7c8f567a82d9acf4f85a5839fda10d2a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -436,9 +436,9 @@ MonoBehaviour:
   Animator: {fileID: 2682104378487237926}
   Rotator: {fileID: 6576034993086518009}
   Mover: {fileID: 9198884861547997829}
-  _playerDetector: {fileID: 9193625777057737071}
+  PlayerDetector: {fileID: 0}
   _info: {fileID: 11400000, guid: 3751f957921fe4948b6a2e681ced8caf, type: 2}
-  _weapon: {fileID: 861282645860133735}
+  Weapon: {fileID: 0}
   _attackCooldown: 0.5
   _defender: {fileID: 2601827664011398758}
   _health: {fileID: 463873145867478184}
@@ -963,8 +963,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 95fe0c7d486b9744bab458db9d7405ad, type: 2}
-  - {fileID: 2100000, guid: 715a553bda30496439df87682bcd20ae, type: 2}
+  - {fileID: 2100000, guid: 7c8f567a82d9acf4f85a5839fda10d2a, type: 2}
+  - {fileID: 2100000, guid: 7c8f567a82d9acf4f85a5839fda10d2a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

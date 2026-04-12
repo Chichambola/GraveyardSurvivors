@@ -2,21 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-[RequireComponent(typeof(BoxCollider))]
 public class AttackArea : MonoBehaviour
 {
-    [SerializeField] private int _numberOfCollider = 10;
+    [SerializeField] private int _numberOfColliders = 10;
     
     public event Action<IAttacker> EnemyDetected;
     
     private BoxCollider _collider;
     private Collider[] _hitColliders;
+    private Vector3 _initialSize;
 
     private void Awake()
     {
         _collider = GetComponent<BoxCollider>();
-        _hitColliders = new Collider[_numberOfCollider];
+        _hitColliders = new Collider[_numberOfColliders];
+        _initialSize = _collider.size;
+    }
+
+    private void OnEnable()
+    {
+        _collider.size = _initialSize;
     }
 
     private void OnValidate()
@@ -32,7 +39,7 @@ public class AttackArea : MonoBehaviour
         }
     }
 
-    public void SetVisibility(bool value)
+    public void SetActive(bool value)
     {
         _collider.enabled = value;
     }
@@ -42,11 +49,9 @@ public class AttackArea : MonoBehaviour
         var size = _collider.size;
         
         size.x = UserUtils.AddPercentToNumber(size.x, value);
-        size.y = UserUtils.AddPercentToNumber(size.x, value);
+        size.z = UserUtils.AddPercentToNumber(size.z, value);
         
-        Vector3 newSize = new Vector3(size.x, _collider.size.y, size.z);
-        
-        _collider.size = newSize;
+        _collider.size = size;
     }
     
     public bool TryGetAttackers(out List<IAttacker> attackers)
