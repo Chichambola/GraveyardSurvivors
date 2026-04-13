@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class EnemyMeleeWeapon : Weapon
 {
-    [SerializeField] private float _radiusMultiplier = 1.5f;
-    
     private Coroutine _coroutine;
     private float _duration;
 
@@ -44,7 +42,7 @@ public class EnemyMeleeWeapon : Weapon
         {
             yield return wait;
 
-            AttackStrategy.Execute(_radiusMultiplier);
+            AttackStrategy.Execute(Radius);
 
             IsAttacking = false;
         }

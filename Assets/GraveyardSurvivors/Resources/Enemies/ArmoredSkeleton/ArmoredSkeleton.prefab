@@ -436,10 +436,10 @@ MonoBehaviour:
   Animator: {fileID: 2682104378487237926}
   Rotator: {fileID: 6576034993086518009}
   Mover: {fileID: 9198884861547997829}
-  PlayerDetector: {fileID: 0}
+  PlayerDetector: {fileID: 9193625777057737071}
   _info: {fileID: 11400000, guid: 3751f957921fe4948b6a2e681ced8caf, type: 2}
-  Weapon: {fileID: 0}
-  _attackCooldown: 0.5
+  Weapon: {fileID: 861282645860133735}
+  AttackCooldown: 0.5
   _defender: {fileID: 2601827664011398758}
   _health: {fileID: 463873145867478184}
 --- !u!114 &9198884861547997829
@@ -1082,6 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485a0b08d02f05602b43eff2c3812425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Radius: 3
   AttackStrategy: {fileID: 6398945705746586719}
   _info: {fileID: 11400000, guid: 90f4d73030b01d246bd47f307680c691, type: 2}
 --- !u!114 &6398945705746586719
@@ -1096,7 +1097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374aa5eb6bbc8514e831ea0e4627a7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _area: {fileID: 669702089420118461}
+  _area: {fileID: 6567286370352077153}
 --- !u!1 &6883585963125570166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,7 +1173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1186141363934546108}
   - component: {fileID: 4414525886854284978}
-  - component: {fileID: 669702089420118461}
+  - component: {fileID: 6567286370352077153}
   m_Layer: 7
   m_Name: AttackArea
   m_TagString: Untagged
@@ -1191,7 +1192,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7448468488472628437}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1216,7 +1217,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2.7674096, z: 1.0361564}
   m_Center: {x: 0, y: 1.4742697, z: 1.1686839}
---- !u!114 &669702089420118461
+--- !u!114 &6567286370352077153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1225,10 +1226,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8380750007912235719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d0194a191355a7bdb767ef2d481a8fb, type: 3}
+  m_Script: {fileID: 11500000, guid: a07a7cced0da144369e51185d77c68e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfCollider: 10
+  NumberOfColliders: 50
 --- !u!1 &9058757534584702224
 GameObject:
   m_ObjectHideFlags: 0

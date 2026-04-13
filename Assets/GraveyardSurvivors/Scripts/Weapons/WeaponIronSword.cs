@@ -9,8 +9,6 @@ public class WeaponIronSword : WeaponWithAbility
 {
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _attackParticles;
-    [SerializeField] private Effect[] _bleedingEffect;
-    [SerializeField] private float _effectChance;
 
     private Coroutine _coroutine;
     private float _lastDuration;

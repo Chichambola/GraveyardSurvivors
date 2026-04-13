@@ -10,7 +10,7 @@ public class MeleeAttackStrategy : AttackStrategy
     
     public override event Action<IAttacker> AttackerDetected;
 
-    public override void Execute(float radius = 0f)
+    public override void Execute(float radius)
     {
         _area.SetSize(radius);
         

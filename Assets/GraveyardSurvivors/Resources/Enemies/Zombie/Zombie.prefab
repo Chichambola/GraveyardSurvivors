@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3911100963055204037}
   - component: {fileID: 3775432329839899719}
-  - component: {fileID: 7188949779106608351}
+  - component: {fileID: 1138164290024345996}
   m_Layer: 7
   m_Name: AttackArea
   m_TagString: Untagged
@@ -89,9 +89,9 @@ Transform:
   m_GameObject: {fileID: 992133043417905280}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.242}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 393618829167630708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -116,7 +116,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2.7674096, z: 1.0361564}
   m_Center: {x: 0, y: 1.4742697, z: 1.1686839}
---- !u!114 &7188949779106608351
+--- !u!114 &1138164290024345996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,10 +125,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 992133043417905280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d0194a191355a7bdb767ef2d481a8fb, type: 3}
+  m_Script: {fileID: 11500000, guid: a07a7cced0da144369e51185d77c68e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfCollider: 10
+  NumberOfColliders: 50
 --- !u!1 &1049797337740689892
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485a0b08d02f05602b43eff2c3812425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Radius: 3
   AttackStrategy: {fileID: 3653054267437700123}
   _info: {fileID: 11400000, guid: 7bbf29c81e30830479c32f1046fdf442, type: 2}
 --- !u!114 &3653054267437700123
@@ -255,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374aa5eb6bbc8514e831ea0e4627a7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _area: {fileID: 7188949779106608351}
+  _area: {fileID: 1138164290024345996}
 --- !u!1 &3896488478488402257
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +806,7 @@ MonoBehaviour:
   PlayerDetector: {fileID: 2280971843833779154}
   _info: {fileID: 11400000, guid: 706419855f7f6cb45a6abb385c07e429, type: 2}
   Weapon: {fileID: 9003346802289927355}
-  _attackCooldown: 0.5
+  AttackCooldown: 0.5
   _defender: {fileID: 5106020596504560185}
   _health: {fileID: 3678190649255506134}
 --- !u!114 &2864853422003173727

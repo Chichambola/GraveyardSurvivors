@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour, IWeapon
 {
+    [SerializeField] protected float Radius = 3f;
     [SerializeField] protected AttackStrategy AttackStrategy;
     [SerializeField] private WeaponInfo _info;
     
