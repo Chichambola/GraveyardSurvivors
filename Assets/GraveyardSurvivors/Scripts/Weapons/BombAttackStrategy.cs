@@ -10,7 +10,6 @@ using Tween = PrimeTween.Tween;
 public class BombAttackStrategy : AttackStrategy
 {
     [SerializeField] private AttackArea _attackArea;
-    [SerializeField] private Ease _ease;
     [SerializeField] private MeshRenderer _radiusSphere;
     [SerializeField] private MeshRenderer _expandingSphere;
     

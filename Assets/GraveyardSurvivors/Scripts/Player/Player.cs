@@ -192,7 +192,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     {
         if (_evader.CanEvade(CurrentStats.EvasionChance, CurrentStats.Luck))
         {
-            return 0;
+            Debug.Log("Evaded");
+
+            damage = 0;
+            
+            return damage;
         }
         
         if (_defender.CanBlock(CurrentStats.BlockChance, CurrentStats.Luck))

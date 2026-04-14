@@ -354,7 +354,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackArea: {fileID: 1822901768390856828}
   _ease: 1
-  _settings: {fileID: 11400000, guid: ea94ed91166f55e42959894a452aace5, type: 2}
   _radiusSphere: {fileID: 7734236238769476543}
   _expandingSphere: {fileID: 347151481468562367}
 --- !u!1 &3265935024146065495
@@ -972,7 +971,7 @@ MonoBehaviour:
   PlayerDetector: {fileID: 1942943560831323276}
   _info: {fileID: 11400000, guid: 9a338631b9c7662fb9b214f4996da546, type: 2}
   Weapon: {fileID: 4123999118467937462}
-  AttackCooldown: 2.6
+  AttackCooldown: 2
   _defender: {fileID: 8495916584587225802}
   _health: {fileID: 2926252959164244938}
 --- !u!114 &5529676922395853904
