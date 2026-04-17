@@ -1,46 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Vector3 = UnityEngine.Vector3;
 
 public class Thrower : MonoBehaviour
 {
-    [SerializeField] private QuadraticCurve _curve;
-    [SerializeField] private float _rotationSpeed;
-    [SerializeField] private float _speed;
+    [SerializeField] private Ease _ease;
+    [SerializeField] private float _jumpPower;
+    [SerializeField] private float _duration = 1.5f;
+    [SerializeField] private int _numberofJumps = 1;
 
     public event Action FinishedMoving;
 
     private Coroutine _coroutine;
 
-    public void StartThrowing(IThrowable throwable, QuadraticCurvePoints curvePoints)
+    public void StartMoving(Transform throwable, Vector3 endPoint)
     {
-        _curve.SetPointsPosition(curvePoints);
-
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        StartCoroutine(ThrowCoroutine(throwable));
-    }
-
-    private IEnumerator ThrowCoroutine(IThrowable throwable)
-    {
-        float initialSampleTime = 0f;
-        int finishValue = 1;
-
-        while (initialSampleTime <= finishValue)
-        {
-            initialSampleTime += Time.deltaTime * _speed;
-            
-            throwable.Transform.position = _curve.Evaluate(initialSampleTime);
-            //throwable.Transform.forward = _curve.Evaluate(initialSampleTime + _rotationSpeed) - throwable.Transform.position;
-            
-            yield return null;
-        }
-
-        FinishedMoving?.Invoke();
-
-        yield return null;
+        throwable.DOJump(endPoint, _jumpPower, _numberofJumps, _duration).SetEase(_ease).onComplete = () => FinishedMoving?.Invoke();
     }
 }

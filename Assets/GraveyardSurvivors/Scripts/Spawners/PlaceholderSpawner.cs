@@ -19,21 +19,22 @@ public class PlaceholderSpawner : Spawner<ItemPlaceholder>
     
     protected override void ActionOnGet(ItemPlaceholder placeholder)
     {
-        base.ActionOnGet(placeholder);
-        
-        placeholder.transform.parent = transform;
-        placeholder.transform.position = _spawnPosition;
+        placeholder.SetPosition(_spawnPosition);
         placeholder.CanBeReleased += Release;
-
         ActiveObjects.Add(placeholder);
         
-        placeholder.StartMoving();
+        base.ActionOnGet(placeholder);
+        
+       placeholder.StartMoving();
     }
 
     protected override void ActionOnRelease(ItemPlaceholder placeholder)
-    {
-        placeholder.CanBeReleased -= Release;
+    {        
         ItemStoppedMoving?.Invoke(placeholder.transform.position);
+        
+        placeholder.transform.parent = transform;
+        
+        placeholder.CanBeReleased -= Release;
         
         ActiveObjects.Remove(placeholder);
         

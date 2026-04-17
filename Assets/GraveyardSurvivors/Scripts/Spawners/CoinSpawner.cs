@@ -26,8 +26,6 @@ public class CoinSpawner : Spawner<Coin>
     
     protected override void ActionOnGet(Coin coin)
     {
-        base.ActionOnGet(coin);
-        
         coin.CanBeReleased += Release;
         
         float yRotation = UserUtils.GetRandomRotation();
@@ -35,6 +33,8 @@ public class CoinSpawner : Spawner<Coin>
         coin.transform.parent = transform;
         coin.transform.position = _spawnPosition;
         coin.transform.rotation = Quaternion.Euler(coin.transform.rotation.x, yRotation, coin.transform.rotation.z);
+        
+        base.ActionOnGet(coin);
         
         coin.StartMoving();
     }

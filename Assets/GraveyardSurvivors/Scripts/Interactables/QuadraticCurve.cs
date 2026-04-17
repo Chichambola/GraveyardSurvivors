@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using DG.Tweening;
 using UnityEngine;
 
 public class QuadraticCurve : MonoBehaviour
@@ -14,14 +14,15 @@ public class QuadraticCurve : MonoBehaviour
     {
         Vector3 fromAToControl = Vector3.Lerp(_aPoint, _controlPoint, time);
         Vector3 fromControlToB = Vector3.Lerp(_controlPoint, _bPoint, time);
+        Vector3 fromAtoB = Vector3.Lerp(fromAToControl, fromControlToB, time);
         
-        return Vector3.Lerp(fromAToControl, fromControlToB, time);
+        return fromAtoB;
     }
 
     public void SetPointsPosition(QuadraticCurvePoints curvePoints)
     {
-        _aPoint = curvePoints.APoint.position;
-        _bPoint = curvePoints.BPoint.position;
-        _controlPoint = curvePoints.CPoint.position;
+        _aPoint = curvePoints.APoint;
+        _bPoint = curvePoints.BPoint;
+        _controlPoint = curvePoints.CPoint;
     }
 }

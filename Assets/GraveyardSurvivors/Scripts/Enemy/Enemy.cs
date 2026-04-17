@@ -19,7 +19,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public event Action<Enemy> CanBeReleased;
 
-    private Player _player;
+    protected Player Player;
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
     private List<IEffect<IAttacker>> _currentEffects;
@@ -34,7 +34,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public void Init(Player player)
     {
-        _player = player;
+        Player = player;
     }
 
     protected override void Awake()
@@ -59,13 +59,18 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         StateMachine.FixedUpdate();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _collider.enabled = true;
         
         InitializeStateMachine();
         
         _health.text = $"{_initialHealth:f1}";
+    }
+
+    protected virtual void OnDisable()
+    {
+        
     }
 
     public void ResetCharacteristics()
@@ -127,9 +132,9 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleMovement()
     {
-        Mover.Move(_player.transform, CurrentStats.MovementSpeed);
+        Mover.Move(Player.transform, CurrentStats.MovementSpeed);
 
-        Vector3 direction = UserUtils.GetDirection(_player.transform.position, transform.position);
+        Vector3 direction = UserUtils.GetDirection(Player.transform.position, transform.position);
 
         Rotator.Rotate(direction);
     }

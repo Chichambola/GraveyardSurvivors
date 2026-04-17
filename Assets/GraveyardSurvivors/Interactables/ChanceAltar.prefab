@@ -252,7 +252,6 @@ GameObject:
   - component: {fileID: 8060998351124851371}
   - component: {fileID: 7514767359008438798}
   - component: {fileID: 831034912937131186}
-  - component: {fileID: 8151128714832802890}
   - component: {fileID: 1215712349551245528}
   m_Layer: 0
   m_Name: ChanceAltar
@@ -433,11 +432,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Outline: {fileID: 8060998351124851371}
   ValueViewer: {fileID: 831034912937131186}
+  MaxInteractionsAmount: 2
+  _countdownTime: 1.5
   CommonChanceWeight: 40
   RareChanceWeight: 20
   LegendaryChanceWeight: 5
-  _maxInteractionsAmount: 2
-  _countdownTime: 1.5
   _noneChance: 40
 --- !u!114 &831034912937131186
 MonoBehaviour:
@@ -453,18 +452,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 6726502443609083068}
   _valueDiscription: '$ '
---- !u!114 &8151128714832802890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8865451181957286708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f903b480371ef2c448c165b39f380e99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!208 &1215712349551245528
 NavMeshObstacle:
   m_ObjectHideFlags: 0
