@@ -385,7 +385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ecc4141dd173b649813cb5b46495b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 3
   AttackStrategy: {fileID: 111349042}
   _info: {fileID: 11400000, guid: 5bf44b189b2a7844d9c778b04b85b291, type: 2}
   _effects:
@@ -13011,7 +13010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b377165e09d8bae5a2e9592d7928a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shrinkRateIncrease: 0.001
+  _shrinkRateIncrease: 0.003
   _light: {fileID: 360078372}
   _damageDealer: {fileID: 550256711}
   _playerDetector: {fileID: 1433704765}
@@ -13282,7 +13281,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.1295868e-38, z: 2.9965e-41, w: 0}
+  m_BoundingSphereOverride: {x: 1.1570061e+27, y: 1.5792676e-19, z: 1.5792691e-19, w: 7.563938e+23}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
