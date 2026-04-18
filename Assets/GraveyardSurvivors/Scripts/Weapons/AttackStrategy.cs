@@ -6,6 +6,5 @@ using UnityEngine;
 public abstract class AttackStrategy : MonoBehaviour
 {
     public abstract event Action<IAttacker> AttackerDetected;
-    public virtual void Execute(float radius, float duration) {}
-    public virtual void Execute(float radius) {}
+    public virtual void Execute(float radiusMultiplier) {}
 }

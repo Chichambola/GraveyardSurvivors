@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,6 +14,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [Header("Weapon")]
     [SerializeField] protected Weapon Weapon;
     [SerializeField] protected float AttackCooldown = 0.5f;
+    [SerializeField] protected float AttackRadiusMultiplier;
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
@@ -20,6 +22,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public event Action<Enemy> CanBeReleased;
 
     protected Player Player;
+    private Coroutine _attackRoutine;
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
     private List<IEffect<IAttacker>> _currentEffects;
@@ -29,6 +32,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public EnemyStats CurrentStats { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
+    public bool IsAlive => CurrentStats.Health > 0;
+    public bool IsAttacking { get; private set; }
     public float Damage => Weapon.Info.Damage;
     public float Speed => Mover.Speed;
 
@@ -141,7 +146,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleAttack()
     {
-        Weapon.Attack(AttackCooldown);
+        if(_attackRoutine != null)
+            StopCoroutine(_attackRoutine);
+
+        _attackRoutine = StartCoroutine(AttackRoutine());
     }
     
     protected override void InitializeStateMachine()
@@ -156,7 +164,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0));
         
         DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !Weapon.IsAttacking));
+            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !IsAttacking));
         
         DefineAnyTransition(dieState, new FuncPredicate(() => CurrentStats.Health <= 0));
         DefineAnyTransition(attackState, new FuncPredicate(() => CurrentStats.Health >= 0 && PlayerDetector.IsPlayerNear));
@@ -206,5 +214,21 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         effect.EffectCompleted -= RemoveEffect;
         _currentEffects.Remove(effect);
+    }
+
+    private IEnumerator AttackRoutine()
+    {
+        IsAttacking = true;
+        
+        var wait = new WaitForSecondsRealtime(AttackCooldown);
+
+        while (enabled)
+        {
+            yield return wait;
+            
+            Weapon.Attack(AttackRadiusMultiplier);
+            
+            IsAttacking = false;
+        }
     }
 }

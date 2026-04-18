@@ -15,9 +15,9 @@ public class Bomb : Weapon
         AttackStrategy.AttackerDetected -= OnAttackerDetected;
     }
 
-    public override void Attack(float duration)
+    public override void Attack(float radiusMultiplier)
     {
-        AttackStrategy.Execute(Radius, duration);
+        AttackStrategy.Execute(radiusMultiplier);
     }
     
     private void OnAttackerDetected(IAttacker attacker)

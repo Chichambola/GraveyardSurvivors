@@ -12,8 +12,9 @@ public class RangeAttackStrategy : AttackStrategy
     public override event Action<IAttacker> AttackerDetected;
 
     private IAttacker _closestInteractable;
+    private int _count;
 
-    public override void Execute(float radius = 0)
+    public override void Execute(float radiusMultiplier)
     {
         foreach (var attackArea in _attackAreas)
         {
@@ -23,16 +24,19 @@ public class RangeAttackStrategy : AttackStrategy
                 {
                     AttackerDetected?.Invoke(attacker);
                 }
-                
-                return;
             }
+
+            if (_count != _numberOfProjectiles) continue;
+            
+            _count = 0;
+                
+            return;
         }
     }
 
     private bool TryFindClosestAttackers(AttackArea attackArea, out List<IAttacker> sortedAttackers)
     {
         sortedAttackers = new List<IAttacker>();
-
 
         if (attackArea.TryGetAttackers(out List<IAttacker> currentAttackers))
         {
@@ -59,6 +63,8 @@ public class RangeAttackStrategy : AttackStrategy
                     sortedAttackers.Add(closestAttacker);
 
                     currentAttackers.Remove(closestAttacker);
+
+                    _count++;
                 }
             }
         }

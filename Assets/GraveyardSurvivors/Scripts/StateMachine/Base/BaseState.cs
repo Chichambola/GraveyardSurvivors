@@ -15,7 +15,7 @@ public class BaseState : IState
     protected static readonly int s_Death = Animator.StringToHash("Death");
     protected static readonly int s_Walk = Animator.StringToHash("Walk");
 
-    protected const float CrossFadeDuration = 0.1f;
+    protected const float CrossFadeDuration = 0.15f;
 
     public BaseState(CharacterBase character, Animator animator)
     {

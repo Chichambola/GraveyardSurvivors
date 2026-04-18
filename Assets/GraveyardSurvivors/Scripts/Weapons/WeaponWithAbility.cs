@@ -5,13 +5,15 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class WeaponWithAbility : Weapon
+public abstract class WeaponWithAbility : Weapon
 {
     [SerializeField] private Effect[] _effects;
     [SerializeField] private int _effectChance;
     
     public override event Action<IAttacker> AttackerDetected;
-    
+
+    public abstract override void Attack(float radiusMultiplier);
+
     protected void ProcessAttacker(IAttacker attacker)
     {
         if (attacker == null)

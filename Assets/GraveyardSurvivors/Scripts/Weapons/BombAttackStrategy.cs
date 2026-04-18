@@ -11,14 +11,14 @@ using Tween = PrimeTween.Tween;
 public class BombAttackStrategy : AttackStrategy
 {
     [SerializeField] private AttackArea _attackArea;
+    [SerializeField] private ParticleEffectSpawner _particleSpawner;
     [SerializeField] private MeshRenderer _radiusSphere;
     [SerializeField] private MeshRenderer _expandingSphere;
-    [SerializeField] private ParticleEffectSpawner _particleSpawner;
+    [SerializeField] private float _duration;
+    [SerializeField] private float _radius;
     
     public override event Action<IAttacker> AttackerDetected;
     
-    private float _duration;
-    private float _radius;
     private Vector3 _targetRadius;
     private Tween _expandingTween;
 
@@ -30,14 +30,12 @@ public class BombAttackStrategy : AttackStrategy
         _expandingTween.Stop();
     }
 
-    public override void Execute(float radius, float duration)
+    public override void Execute(float radiusMultiplier)
     {
-        _attackArea.SetSize(radius);  
+        _attackArea.SetSize(_radius);  
+        _attackArea.AddMultiplier(radiusMultiplier);
         
-        _duration = duration;
-        _radius = radius;
-        
-        _targetRadius = new Vector3(radius, radius, radius);
+        _targetRadius = new Vector3(_radius, _radius, _radius);
         _radiusSphere.gameObject.transform.localScale = _targetRadius;
         
         ChangeSpheresVisibility(true);
@@ -62,6 +60,8 @@ public class BombAttackStrategy : AttackStrategy
                 AttackerDetected?.Invoke(attacker);
             }
         }
+        
+        _expandingTween.Stop();
     }
 
     private void ChangeSpheresVisibility(bool value)

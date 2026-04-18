@@ -98,6 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ed9e844e55af54bafc479b1ae417af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mask:
+    serializedVersion: 2
+    m_Bits: 255
   NumberOfColliders: 50
 --- !u!1 &874011633172149296
 GameObject:
@@ -337,7 +340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da772bfeb20ae5240ac095259920cd03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 10
   AttackStrategy: {fileID: 363536197498629207}
   _info: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
 --- !u!114 &363536197498629207
@@ -353,9 +355,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackArea: {fileID: 1822901768390856828}
+  _particleSpawner: {fileID: 7321682891276855219}
   _radiusSphere: {fileID: 7734236238769476543}
   _expandingSphere: {fileID: 347151481468562367}
-  _particleSpawner: {fileID: 7321682891276855219}
+  _duration: 2
+  _radius: 10
 --- !u!1 &3265935024146065495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,6 +1023,7 @@ MonoBehaviour:
   _info: {fileID: 11400000, guid: 9a338631b9c7662fb9b214f4996da546, type: 2}
   Weapon: {fileID: 2164316235512339837}
   AttackCooldown: 3
+  AttackRadiusMultiplier: 0
   _defender: {fileID: 8495916584587225802}
   _health: {fileID: 2926252959164244938}
 --- !u!114 &5529676922395853904

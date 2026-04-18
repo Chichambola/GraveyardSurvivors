@@ -595,6 +595,7 @@ MonoBehaviour:
   _info: {fileID: 11400000, guid: ab0b1a819130dbf0d83fb5af8bb4c1a3, type: 2}
   Weapon: {fileID: 386484544202866058}
   AttackCooldown: 0.5
+  AttackRadiusMultiplier: 0
   _defender: {fileID: 886728962877736986}
   _health: {fileID: 2307875020064126990}
 --- !u!114 &8696614376307728057
@@ -682,16 +683,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 4287946536270150599}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
+  m_Radius: 0.62
   m_Speed: 3.5
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 36
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 2.26
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -865,7 +866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485a0b08d02f05602b43eff2c3812425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 3
   AttackStrategy: {fileID: 650226042510010994}
   _info: {fileID: 11400000, guid: 9714106422a482c80bc4098f9c161739, type: 2}
 --- !u!114 &650226042510010994
@@ -1167,4 +1167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07a7cced0da144369e51185d77c68e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mask:
+    serializedVersion: 2
+    m_Bits: 8
   NumberOfColliders: 50

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
@@ -19,6 +20,9 @@ public class Thrower : MonoBehaviour
 
     public void StartMoving(Transform throwable, Vector3 endPoint)
     {
+        if (throwable is null)
+            return;
+        
         throwable.DOJump(endPoint, _jumpPower, _numberofJumps, _duration).SetEase(_ease).onComplete = () => FinishedMoving?.Invoke();
     }
 }
