@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStats:
     Health: 80
+    MaxHealth: 80
     HealthRegeneration: 0.8
     Armor: 5
     MovementSpeed: 20
     AttackSpeed: 0
     AttackRadius: 10
+    IncomingDamageMultiplier: 0
     PickUpRadius: 10
     BlockChance: 0
     CritChance: 15
