@@ -98,7 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ed9e844e55af54bafc479b1ae417af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberOfColliders: 50
+  Mask:
+    serializedVersion: 2
+    m_Bits: 255
+  NumberOfColliders: 100
 --- !u!1 &874011633172149296
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,8 +300,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5881834822696198026}
-  - component: {fileID: 4123999118467937462}
   - component: {fileID: 5380774487396859826}
+  - component: {fileID: 9097205137456547513}
   m_Layer: 7
   m_Name: Weapon
   m_TagString: Untagged
@@ -322,24 +325,9 @@ Transform:
   - {fileID: 2504709968126823442}
   - {fileID: 4969120733876127166}
   - {fileID: 3815092007713496232}
+  - {fileID: 6637933344394807357}
   m_Father: {fileID: 1506159078949066517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4123999118467937462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2792278679161937234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d459bee366a0c067864f391421ef772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Radius: 3
-  AttackStrategy: {fileID: 5380774487396859826}
-  _info: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
-  _explosionRadius: 10
 --- !u!114 &5380774487396859826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,9 +341,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackArea: {fileID: 1822901768390856828}
-  _ease: 1
+  _particleSpawner: {fileID: 703197084959226467}
   _radiusSphere: {fileID: 7734236238769476543}
   _expandingSphere: {fileID: 347151481468562367}
+  _duration: 2
+  _radius: 10
+--- !u!114 &9097205137456547513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2792278679161937234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da772bfeb20ae5240ac095259920cd03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackStrategy: {fileID: 5380774487396859826}
+  _info: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
 --- !u!1 &3265935024146065495
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,6 +891,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7104044727057896596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8550437656535658855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6637933344394807357}
+  - component: {fileID: 703197084959226467}
+  m_Layer: 7
+  m_Name: SmokeSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6637933344394807357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8550437656535658855}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5881834822696198026}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &703197084959226467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8550437656535658855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e801a991a650c8bab8a1f6f8d01db47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectPrefab: {fileID: 7480818686058042214, guid: dd4cafdb17d57a247bcb0b5cc369e126, type: 3}
+  PoolCapacity: 0
+  MaxPoolCapacity: 5
 --- !u!1 &8829684809993541676
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,8 +1021,9 @@ MonoBehaviour:
   Mover: {fileID: 5529676922395853904}
   PlayerDetector: {fileID: 1942943560831323276}
   _info: {fileID: 11400000, guid: 9a338631b9c7662fb9b214f4996da546, type: 2}
-  Weapon: {fileID: 4123999118467937462}
+  Weapon: {fileID: 9097205137456547513}
   AttackCooldown: 2
+  AttackRadiusMultiplier: 0
   _defender: {fileID: 8495916584587225802}
   _health: {fileID: 2926252959164244938}
 --- !u!114 &5529676922395853904

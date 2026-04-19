@@ -118,11 +118,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         if (isSlowing)
         {
-            tempSpeed = UserUtils.SubtractPercentFromNumber(Mover.Speed, speedValue); 
+            tempSpeed = Mover.Speed.SubtractPercentFromNumber(speedValue); 
         }
         else
         {
-            tempSpeed = UserUtils.AddPercentToNumber(Mover.Speed, speedValue); 
+            tempSpeed = Mover.Speed.AddPercentToNumber(speedValue); 
         }
 
         if (_movementEffectCount == 0)

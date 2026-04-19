@@ -35,8 +35,6 @@ public class BombAttackStrategy : AttackStrategy
         _attackArea.SetSize(_radius);  
         _attackArea.AddMultiplier(radiusMultiplier);
         
-        //55555
-        
         _targetRadius = new Vector3(_radius, _radius, _radius);
         _radiusSphere.gameObject.transform.localScale = _targetRadius;
         
