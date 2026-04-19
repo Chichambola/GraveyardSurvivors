@@ -22,9 +22,7 @@ public class MovementSpeedEffect : IEffect<IAttacker>, IMovementEffect
     {
         _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
         
-        _currentEffect = Effect.Spawn();
-        
-        SetEffectPosition();
+       // _currentEffect = Effect.Spawn();
         
         _timer = new IntervalTimer(Duration);
         _timer.TimerStopped += OnTimerStopped;
@@ -62,19 +60,5 @@ public class MovementSpeedEffect : IEffect<IAttacker>, IMovementEffect
         _previousSpeedPercent = _currentTarget.Speed;
         
         _currentTarget.ChangeSpeed(SpeedPercent, IsSlowing);
-    }
-    
-    private void SetEffectPosition()
-    {
-        var target = _currentTarget as MonoBehaviour;
-
-        if (target != null)
-        {
-            _currentEffect.SetPosition(target.transform.position);   
-        }
-        else
-        {
-            throw new Exception($"{target} can not be null");
-        }
     }
 }

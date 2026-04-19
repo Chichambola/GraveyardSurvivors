@@ -28,26 +28,29 @@ public class SphereAttackArea : AttackArea
         GetComponent<SphereCollider>().transform.localScale = new Vector3(_scaleOffset, _scaleOffset, _scaleOffset);
     }
 
-    public override void SetSize(float value, float multiplier = 0f)
+    public override void SetSize(float value)
     {
         float radius = value;
-
-        if (multiplier != 0)
-        {
-            radius = UserUtils.AddPercentToNumber(radius, multiplier);   
-        }
         
         _collider.radius = radius;
     }
 
     public override bool TryGetAttackers(out List<IAttacker> attackers)
     {
-        int hits = Physics.OverlapSphereNonAlloc(gameObject.transform.position, _collider.radius * _scaleOffset, _hitColliders);
+        int hits = Physics.OverlapSphereNonAlloc(gameObject.transform.position, _collider.radius * _scaleOffset, _hitColliders, Mask);
         
         attackers = new List<IAttacker>();
 
         bool isAnyAttackers = TryGetAttackers(ref attackers, _hitColliders, hits);
 
         return isAnyAttackers;
+    }
+
+    public override void AddMultiplier(float multiplier)
+    {
+        if (multiplier != 0)
+        {
+            _collider.radius = _collider.radius.AddPercentToNumber(multiplier);   
+        }
     }
 }

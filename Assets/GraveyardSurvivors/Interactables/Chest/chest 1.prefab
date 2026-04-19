@@ -234,7 +234,6 @@ GameObject:
   - component: {fileID: 389328422361486788}
   - component: {fileID: 9074495386139287288}
   - component: {fileID: -8920939765684463614}
-  - component: {fileID: -4650140399277152426}
   m_Layer: 0
   m_Name: chest 1
   m_TagString: Untagged
@@ -344,11 +343,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Outline: {fileID: 9074495386139287288}
   ValueViewer: {fileID: -8920939765684463614}
+  _countdownTime: 3
+  _animator: {fileID: 4237362373901554536}
   CommonChanceWeight: 100
   RareChanceWeight: 55
   LegendaryChanceWeight: 15
-  _countdownTime: 3
-  _animator: {fileID: 4237362373901554536}
 --- !u!114 &9074495386139287288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3115,18 +3114,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 7053638026720906069}
   _valueDiscription: '$ '
---- !u!114 &-4650140399277152426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3508089657252754247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f903b480371ef2c448c165b39f380e99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4474479682124367714
 GameObject:
   m_ObjectHideFlags: 0

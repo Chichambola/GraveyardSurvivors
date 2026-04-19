@@ -1,33 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class ItemPlaceholder : MonoBehaviour, IThrowable, IPoolable<ItemPlaceholder>
 {
-    [SerializeField] private Transform _aPoint;
-    [SerializeField] private Transform _bPoint;
-    [SerializeField] private Transform _cPoint;
-    [SerializeField] private QuadraticCurvePoints _points;
+    [SerializeField] private Transform _endPoint;
     [SerializeField] private Thrower _thrower;
-
-    private Vector3 _initialForwardRotation;
     
     public event Action<ItemPlaceholder> CanBeReleased;
-    public Transform Transform => transform;
-    public QuadraticCurvePoints Points => _points;
-
-    private void Awake()
-    {
-        _points.SetPositions(_aPoint, _bPoint, _cPoint);
-    }
-
+    
     private void OnEnable()
     {
-        _initialForwardRotation = transform.forward;
-        
         _thrower.FinishedMoving += Release;
     }
 
@@ -38,7 +26,7 @@ public class ItemPlaceholder : MonoBehaviour, IThrowable, IPoolable<ItemPlacehol
 
     public void ResetCharacteristics()
     {
-        transform.forward = _initialForwardRotation;
+        
     }
 
     public void Release()
@@ -48,6 +36,11 @@ public class ItemPlaceholder : MonoBehaviour, IThrowable, IPoolable<ItemPlacehol
 
     public void StartMoving()
     {
-        _thrower.StartThrowing(this, _points);
+        _thrower.StartMoving(transform, _endPoint.position);
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 }

@@ -19,9 +19,9 @@ public class WeaponBow : WeaponWithAbility
         _arrowSpawner.ProjectileReleased -= ProcessAttacker;
     }
 
-    public override void Attack(float duration, float radius)
+    public override void Attack(float radiusMultiplier)
     {
-        AttackStrategy.Execute(radius);
+        AttackStrategy.Execute(radiusMultiplier);
     }
     
     private void OnAttackerDetected(IAttacker attacker)

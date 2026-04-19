@@ -27,14 +27,6 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
         _enemyDetector.EnemyDetected -= OnEnemyDetected;
     }
 
-    private void Update()
-    {
-        if (_currentTarget != null && _currentTarget.Rigidbody.gameObject.activeSelf == false)
-        {
-            Release();
-        }
-    }
-
     public void StartMoving()
     {
         if (_currentTarget == null)
@@ -49,8 +41,11 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     private IEnumerator MovingRoutine()
     {
         var target = _currentTarget as MonoBehaviour;
+
+        if (target == null)
+            throw new Exception();
         
-        while (enabled)
+        while (_currentTarget.IsAlive)
         {
             _mover.Move(target.transform, _speedMultiplier);
 
@@ -62,6 +57,8 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
             
             yield return null;
         }
+        
+        Release();
     }
     
     public void ResetCharacteristics()
@@ -75,6 +72,9 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     public void Release()
     {
         CanBeReleased?.Invoke(this);
+
+        if (_coroutine != null) 
+            StopCoroutine(_coroutine);
     }
     
     public void SetTarget(IAttacker attacker)

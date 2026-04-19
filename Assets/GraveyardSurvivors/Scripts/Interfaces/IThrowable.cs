@@ -5,7 +5,6 @@ using UnityEngine;
 
 public interface IThrowable
 {
-    public Transform Transform { get; }
-    public QuadraticCurvePoints Points { get; }
     void StartMoving();
+    void SetPosition(Vector3 position);
 }

@@ -24,9 +24,9 @@ public struct DamageOvertime : IEffect<IAttacker>
     {
         _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
         
-        _currentEffect = Effect.Spawn(TickInterval);
+        var target = _currentTarget as MonoBehaviour;
         
-        SetEffectPosition();
+        Effect.Spawn(target.transform.position,TickInterval);
         
         _timer = new IntervalTimer(Duration, TickInterval);
         _timer.IntervalReached += OnIntervalReached;
@@ -43,7 +43,9 @@ public struct DamageOvertime : IEffect<IAttacker>
     {
         if (_currentTarget != null)
         {
-            SetEffectPosition();
+            var target = _currentTarget as MonoBehaviour;
+            
+            Effect.Spawn(target.transform.position);
 
             _currentTarget.TakeDamage(DamagePerTick);
         }
@@ -61,20 +63,5 @@ public struct DamageOvertime : IEffect<IAttacker>
         
         _timer = null;
         _currentTarget = null;
-        _currentEffect = null;
-    }
-    
-    private void SetEffectPosition()
-    {
-        var target = _currentTarget as MonoBehaviour;
-
-        if (target != null)
-        {
-            _currentEffect.SetPosition(target.transform.position);   
-        }
-        else
-        {
-            throw new Exception($"{target} can not be null");
-        }
     }
 }

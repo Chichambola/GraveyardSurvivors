@@ -10,7 +10,7 @@ public static class UserUtils
     public static readonly int s_MinRotation = 0;
     public static readonly int s_HighestRotation = 360;
 
-    public static float AddPercentToNumber(float originalNumber, float percent)
+    public static float AddPercentToNumber(this float originalNumber, float percent)
     {
         float finalNumber = (originalNumber * (1 + percent / s_HighestPercent));
 

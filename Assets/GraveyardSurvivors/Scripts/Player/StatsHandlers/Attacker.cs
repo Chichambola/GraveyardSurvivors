@@ -47,7 +47,7 @@ public class Attacker : MonoBehaviour
         
             var wait = new WaitForSeconds(currentCooldown);
             
-            _weapon.Attack(currentCooldown, _attackRadius);
+            _weapon.Attack(_attackRadius);
 
             yield return wait;
         }

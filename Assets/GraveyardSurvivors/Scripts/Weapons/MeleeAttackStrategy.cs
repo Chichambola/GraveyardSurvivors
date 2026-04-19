@@ -10,9 +10,10 @@ public class MeleeAttackStrategy : AttackStrategy
     
     public override event Action<IAttacker> AttackerDetected;
 
-    public override void Execute(float radius)
+    public override void Execute(float radiusMultiplier)
     {
-        _area.SetSize(radius);
+        _area.SetSize();
+        _area.AddMultiplier(radiusMultiplier);
         
         if (_area.TryGetAttackers(out List<IAttacker> detectedAttackers))
         {

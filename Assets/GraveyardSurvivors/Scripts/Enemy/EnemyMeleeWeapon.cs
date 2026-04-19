@@ -6,11 +6,6 @@ using UnityEngine;
 
 public class EnemyMeleeWeapon : Weapon
 {
-    private Coroutine _coroutine;
-    private float _duration;
-
-    public override bool IsAttacking { get; protected set; }
-
     private void OnEnable()
     {
         AttackStrategy.AttackerDetected += OnAttackerDetected;
@@ -19,33 +14,11 @@ public class EnemyMeleeWeapon : Weapon
     private void OnDisable()
     {
         AttackStrategy.AttackerDetected -= OnAttackerDetected;
-        
-        IsAttacking = false;
     }
 
-    public override void Attack(float duration)
+    public override void Attack(float radiusMultiplier)
     {
-        IsAttacking = true;
-        _duration = duration;
-
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(AttackingRoutine());
-    }
-
-    private IEnumerator AttackingRoutine()
-    {
-        var wait = new WaitForSecondsRealtime(_duration);
-
-        while (enabled)
-        {
-            yield return wait;
-
-            AttackStrategy.Execute(Radius);
-
-            IsAttacking = false;
-        }
+        AttackStrategy.Execute(radiusMultiplier);
     }
 
     private void OnAttackerDetected(IAttacker attacker)

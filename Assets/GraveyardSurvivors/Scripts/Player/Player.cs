@@ -39,6 +39,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     
     public CharacterStats CurrentStats { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
+    public bool IsAlive => CurrentStats.Health > 0;
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth => CurrentStats.Health;
     public LanternLight Light => _light;

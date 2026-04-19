@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBombWeapon : Weapon
+public class Bomb : Weapon
 {
-    [SerializeField] private float _explosionRadius;
-
     private void OnEnable()
     {
         AttackStrategy.AttackerDetected += OnAttackerDetected;
@@ -17,9 +15,9 @@ public class EnemyBombWeapon : Weapon
         AttackStrategy.AttackerDetected -= OnAttackerDetected;
     }
 
-    public override void Attack(float duration)
+    public override void Attack(float radiusMultiplier)
     {
-        AttackStrategy.Execute(_explosionRadius, duration);
+        AttackStrategy.Execute(radiusMultiplier);
     }
     
     private void OnAttackerDetected(IAttacker attacker)

@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public abstract class AttackArea : MonoBehaviour
 {
+    [SerializeField] protected LayerMask Mask;
     [SerializeField] protected int NumberOfColliders = 50;
     
     public event Action<IAttacker> EnemyDetected;
@@ -26,9 +28,12 @@ public abstract class AttackArea : MonoBehaviour
 
     public virtual void SetActive(bool value) { }
 
-    public abstract void SetSize(float value, float multiplier = 0f);
+    public virtual void SetSize(float value) {}
+    public virtual void SetSize() {}
 
     public abstract bool TryGetAttackers(out List<IAttacker> attackers);
+
+    public abstract void AddMultiplier(float multiplier);
     
     protected bool TryGetAttackers(ref List<IAttacker> attackers, Collider[] hitColliders, int hits)
     {
