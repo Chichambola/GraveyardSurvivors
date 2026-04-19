@@ -47,7 +47,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     public int LanternsCount => _lanternsCount;
     public float Speed => Mover.Speed;
 
-    public float MaxHealth { get; private set; }
+    public float MaxHealth => CurrentStats.MaxHealth;
 
     protected override void Awake()
     {
@@ -68,7 +68,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
             throw new Exception();
 
         CurrentStats = _baseStats.GetStats();
-        MaxHealth = CurrentStats.Health;
         
         _pickUpsDetector.BuffDetected += AddBuff;
         _pickUpsDetector.CoinDetected += ReceiveMoney;
@@ -138,11 +137,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     {
         if (isSlowing)
         {
-            CurrentStats.MovementSpeed = UserUtils.SubtractPercentFromNumber(CurrentStats.MovementSpeed, speedPercent);
+            CurrentStats.MovementSpeed = CurrentStats.MovementSpeed.SubtractPercentFromNumber(speedPercent);
         }
         else
         {
-            CurrentStats.MovementSpeed = UserUtils.AddPercentToNumber(CurrentStats.MovementSpeed, speedPercent);
+            CurrentStats.MovementSpeed = CurrentStats.MovementSpeed.AddPercentToNumber(speedPercent);
         }
     }
 
@@ -154,7 +153,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     public void TakeDamage(float damage)
     {
         damage = DetermineDamageAmount(damage);
-
+        
         CurrentStats.Health -= damage;
         
         _statsViewer.UpdateStats(CurrentStats);
@@ -206,6 +205,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
             
             damage = _defender.GetBlockedDamage(damage);
         }
+        
+        damage = damage.AddPercentToNumber(CurrentStats.IncomingDamageMultiplier);
         
         damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
         

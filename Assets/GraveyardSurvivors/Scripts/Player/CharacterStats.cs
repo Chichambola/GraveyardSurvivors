@@ -8,11 +8,13 @@ using UnityEngine;
 public class CharacterStats : IStat
 {
     public float Health;
+    public float MaxHealth;
     public float HealthRegeneration;
     public float Armor;
     public float MovementSpeed;
     public float AttackSpeed;
     public float AttackRadius;
+    public float IncomingDamageMultiplier;
     public float PickUpRadius;
     public float BlockChance;
     public float CritChance;
@@ -28,11 +30,13 @@ public class CharacterStats : IStat
             throw new Exception();
         
         Health = stats.Health;
+        MaxHealth = stats.MaxHealth;
         HealthRegeneration = stats.HealthRegeneration;
         Armor = stats.Armor;
         MovementSpeed = stats.MovementSpeed;
         AttackSpeed = stats.AttackSpeed;
         AttackRadius = stats.AttackRadius;
+        IncomingDamageMultiplier = stats.IncomingDamageMultiplier;
         PickUpRadius = stats.PickUpRadius;
         BlockChance = stats.BlockChance;
         CritChance = stats.CritChance;
@@ -41,5 +45,15 @@ public class CharacterStats : IStat
         GoldMultiplier = stats.GoldMultiplier;
         EvasionChance = stats.EvasionChance;
         Luck = stats.Luck;
+
+        if (!Mathf.Approximately(Health, MaxHealth))
+        {
+            Health = MaxHealth;
+        }
+
+        if ((!Mathf.Approximately(MaxHealth, Health)))
+        {
+            MaxHealth = Health;
+        }
     }
 }

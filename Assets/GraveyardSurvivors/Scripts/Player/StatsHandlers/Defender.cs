@@ -29,7 +29,7 @@ public class Defender : MonoBehaviour
     
     public float GetDamageAmount(float armorPercent, float damage)
     {
-        damage = UserUtils.SubtractPercentFromNumber(damage, armorPercent);
+        damage = damage.SubtractPercentFromNumber(armorPercent);
         
         return damage;
     }

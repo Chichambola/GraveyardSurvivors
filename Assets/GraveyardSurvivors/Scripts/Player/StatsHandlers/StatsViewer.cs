@@ -28,6 +28,7 @@ public class StatsViewer : MonoBehaviour
                      $"MS: {stats.MovementSpeed:f1}\n" +
                      $"Attack speed: {stats.AttackSpeed:f1}\n" +
                      $"Attack radius: {stats.AttackRadius:f1}\n" +
+                     $"Incoming damage multiplier: {stats.IncomingDamageMultiplier}\n" +
                      $"Pickup radius: {stats.PickUpRadius:f1}\n" +
                      $"Block chance: {stats.BlockChance:f1}\n" +
                      $"Evasion chance: {stats.EvasionChance:f1}\n" +

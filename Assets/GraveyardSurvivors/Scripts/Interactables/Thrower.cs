@@ -20,9 +20,6 @@ public class Thrower : MonoBehaviour
 
     public void StartMoving(Transform throwable, Vector3 endPoint)
     {
-        if (throwable is null)
-            return;
-        
         throwable.DOJump(endPoint, _jumpPower, _numberofJumps, _duration).SetEase(_ease).onComplete = () => FinishedMoving?.Invoke();
     }
 }

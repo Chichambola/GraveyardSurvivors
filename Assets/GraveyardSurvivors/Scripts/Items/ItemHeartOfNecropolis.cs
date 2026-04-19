@@ -5,13 +5,22 @@ using UnityEngine;
 
 public class ItemHeartOfNecropolis : Item
 {
+    [SerializeField] private int _damageMultiplier = 20;
+    
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        throw new InvalidImplementationException();
+        baseStats.MaxHealth += IncreaseValue;
+        
+        baseStats.IncomingDamageMultiplier = baseStats.IncomingDamageMultiplier.GetClampedValue(_damageMultiplier);
+        
+        return baseStats;
     }
     
     public override CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        throw new InvalidImplementationException();
+        baseStats.MaxHealth -= IncreaseValue;
+        baseStats.IncomingDamageMultiplier -= baseStats.IncomingDamageMultiplier.GetClampedValue(_damageMultiplier);
+        
+        return baseStats;
     }
 }
