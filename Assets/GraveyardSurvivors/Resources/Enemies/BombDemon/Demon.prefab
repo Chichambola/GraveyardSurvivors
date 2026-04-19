@@ -98,9 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ed9e844e55af54bafc479b1ae417af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mask:
-    serializedVersion: 2
-    m_Bits: 255
   NumberOfColliders: 50
 --- !u!1 &874011633172149296
 GameObject:
@@ -300,8 +297,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5881834822696198026}
-  - component: {fileID: 2164316235512339837}
-  - component: {fileID: 363536197498629207}
+  - component: {fileID: 4123999118467937462}
+  - component: {fileID: 5380774487396859826}
   m_Layer: 7
   m_Name: Weapon
   m_TagString: Untagged
@@ -325,10 +322,9 @@ Transform:
   - {fileID: 2504709968126823442}
   - {fileID: 4969120733876127166}
   - {fileID: 3815092007713496232}
-  - {fileID: 74199432297925139}
   m_Father: {fileID: 1506159078949066517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2164316235512339837
+--- !u!114 &4123999118467937462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -337,12 +333,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2792278679161937234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da772bfeb20ae5240ac095259920cd03, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d459bee366a0c067864f391421ef772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackStrategy: {fileID: 363536197498629207}
+  Radius: 3
+  AttackStrategy: {fileID: 5380774487396859826}
   _info: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
---- !u!114 &363536197498629207
+  _explosionRadius: 10
+--- !u!114 &5380774487396859826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,11 +353,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackArea: {fileID: 1822901768390856828}
-  _particleSpawner: {fileID: 7321682891276855219}
+  _ease: 1
   _radiusSphere: {fileID: 7734236238769476543}
   _expandingSphere: {fileID: 347151481468562367}
-  _duration: 2
-  _radius: 10
 --- !u!1 &3265935024146065495
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +559,7 @@ GameObject:
   - component: {fileID: 5030005872239073117}
   - component: {fileID: 7734236238769476543}
   m_Layer: 7
-  m_Name: VisibleRadius
+  m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,8 +694,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3.686223
-  m_Center: {x: 0, y: 0.36, z: 0}
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6982437050337901960
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +708,7 @@ GameObject:
   - component: {fileID: 633227650435467101}
   - component: {fileID: 347151481468562367}
   m_Layer: 7
-  m_Name: ExpandingSphere
+  m_Name: FadeSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -891,53 +887,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7104044727057896596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8633206553305972478
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 74199432297925139}
-  - component: {fileID: 7321682891276855219}
-  m_Layer: 7
-  m_Name: ParticleSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &74199432297925139
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8633206553305972478}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5881834822696198026}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7321682891276855219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8633206553305972478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e801a991a650c8bab8a1f6f8d01db47f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _objectPrefab: {fileID: 7480818686058042214, guid: dd4cafdb17d57a247bcb0b5cc369e126, type: 3}
-  PoolCapacity: 0
-  MaxPoolCapacity: 5
 --- !u!1 &8829684809993541676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,9 +970,8 @@ MonoBehaviour:
   Mover: {fileID: 5529676922395853904}
   PlayerDetector: {fileID: 1942943560831323276}
   _info: {fileID: 11400000, guid: 9a338631b9c7662fb9b214f4996da546, type: 2}
-  Weapon: {fileID: 2164316235512339837}
-  AttackCooldown: 3
-  AttackRadiusMultiplier: 0
+  Weapon: {fileID: 4123999118467937462}
+  AttackCooldown: 2
   _defender: {fileID: 8495916584587225802}
   _health: {fileID: 2926252959164244938}
 --- !u!114 &5529676922395853904
