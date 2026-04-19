@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using UnityEngine;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -10,41 +11,46 @@ using Tween = PrimeTween.Tween;
 public class BombAttackStrategy : AttackStrategy
 {
     [SerializeField] private AttackArea _attackArea;
+    [SerializeField] private ParticleEffectSpawner _particleSpawner;
     [SerializeField] private MeshRenderer _radiusSphere;
     [SerializeField] private MeshRenderer _expandingSphere;
+    [SerializeField] private float _duration;
+    [SerializeField] private float _radius;
     
     public override event Action<IAttacker> AttackerDetected;
     
-    private float _duration;
     private Vector3 _targetRadius;
     private Tween _expandingTween;
 
     private void OnDisable()
     {
-        _radiusSphere.enabled = false;
-        _expandingSphere.enabled = false;
+        ChangeSpheresVisibility(false);
         _expandingSphere.gameObject.transform.localScale = Vector3.zero;
         _radiusSphere.gameObject.transform.localScale = Vector3.zero;
         _expandingTween.Stop();
     }
 
-    public override void Execute(float radius, float duration)
+    public override void Execute(float radiusMultiplier)
     {
-        _attackArea.SetSize(radius);  
+        _attackArea.SetSize(_radius);  
+        _attackArea.AddMultiplier(radiusMultiplier);
         
-        _duration = duration;
+        //55
         
-        _targetRadius = new Vector3(radius, radius, radius);
+        _targetRadius = new Vector3(_radius, _radius, _radius);
         _radiusSphere.gameObject.transform.localScale = _targetRadius;
         
-        _radiusSphere.enabled = true;
-        _expandingSphere.enabled = true;
+        ChangeSpheresVisibility(true);
         
         _expandingTween = Tween.Scale(_expandingSphere.gameObject.transform, _targetRadius, _duration).OnComplete(LookForAttackers);
     }
 
     private void LookForAttackers()
     {
+        ChangeSpheresVisibility(false);
+        
+        _particleSpawner.Spawn(gameObject.transform.position, _radius);
+        
         List<IAttacker> attackers = new List<IAttacker>();
         
         _attackArea.TryGetAttackers(out attackers);
@@ -56,5 +62,13 @@ public class BombAttackStrategy : AttackStrategy
                 AttackerDetected?.Invoke(attacker);
             }
         }
+        
+        _expandingTween.Stop();
+    }
+
+    private void ChangeSpheresVisibility(bool value)
+    {
+        _radiusSphere.enabled = value;
+        _expandingSphere.enabled = value;
     }
 }
