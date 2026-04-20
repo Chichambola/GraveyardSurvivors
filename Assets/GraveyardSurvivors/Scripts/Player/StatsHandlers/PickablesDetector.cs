@@ -13,10 +13,13 @@ public class PickablesDetector : MonoBehaviour
     public event Action<float> CoinDetected;
     
     private SphereCollider _collider;
+    private float _initialRadius;
+    private float _currentRadiusMultiplier;
 
     private void Awake()
     {
         _collider = GetComponent<SphereCollider>();
+        _initialRadius = _collider.radius;
     }
 
     private void OnEnable()
@@ -49,7 +52,12 @@ public class PickablesDetector : MonoBehaviour
 
     private void OnStatsChanged(CharacterStats stats)
     {
-        _collider.radius = UserUtils.AddPercentToNumber(_collider.radius, stats.PickUpRadius);
+        if (!Mathf.Approximately(stats.PickUpRadius, _currentRadiusMultiplier))
+        {
+            _currentRadiusMultiplier = stats.PickUpRadius;
+        
+            _collider.radius = _initialRadius.AddPercentToNumber(stats.PickUpRadius);
+        }
     }
 }
 

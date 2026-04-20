@@ -18,6 +18,19 @@ public class InteractableSpawner : Spawner<Interactable>
         Spawn();
     }
 
+    private void Update()
+    {
+        if (ActiveObjects.Count == 0)
+        {
+            foreach (var point in _points)
+            {
+                _spawnPoint = point;
+            
+                GetObject(); 
+            }
+        }
+    }
+
     public void Spawn()
     {
         foreach (var point in _points)

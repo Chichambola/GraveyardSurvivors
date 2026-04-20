@@ -10,14 +10,14 @@ public class Defender : MonoBehaviour
 
     public bool CanBlock(float blockChance, float luck)
     {
-        blockChance += luck;
+        blockChance = blockChance.AddPercentToNumber(luck);
 
         if (blockChance >= UserUtils.s_HighestPercent)
         {
             return true;
         }
 
-        int randomPercent = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
+        float randomPercent = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
 
         return !(randomPercent > blockChance);
     }

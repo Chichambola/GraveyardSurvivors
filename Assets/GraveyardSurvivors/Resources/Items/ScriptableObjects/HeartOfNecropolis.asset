@@ -15,5 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 5d65dfd00f4701f93a13cce9175a11d4, type: 3}
   _name: Heart of necropolis
   _description: 
-  _weight: 100
-  _rarityLevel: 1
+  _weight: 15
+  _rarityLevel: 3

@@ -81,7 +81,7 @@ public class Lantern : MonoBehaviour, ILantern
         }
         else
         {
-            float tempValue = UserUtils.AddPercentToNumber(_lastRadius, enemy.CurrentStats.LanternEnergy);
+            float tempValue = _lastRadius.AddPercentToNumber(enemy.CurrentStats.LanternEnergy);
 
             _light.SetLightRadiusForAllAxis(tempValue);
 

@@ -5,10 +5,8 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    public bool IsCurrentlyShowingValue { get; }
+    public bool IsShowingValue { get; }
     public bool IsCurrentlyAvailable { get; }
-    void ChangeOutlineVisibility(bool value);
+   void SetVisibility(bool value);
     void ProcessInteraction();
-    void ShowValue();
-    void HideValue();
 }

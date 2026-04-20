@@ -138,8 +138,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public override void HandleMovement()
     {
         Mover.Move(Player.transform, CurrentStats.MovementSpeed);
-
-        Vector3 direction = UserUtils.GetDirection(Player.transform.position, transform.position);
+        
+        Vector3 direction = (Player.transform.position - transform.position).normalized;
 
         Rotator.Rotate(direction);
     }

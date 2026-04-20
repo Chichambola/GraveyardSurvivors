@@ -10,6 +10,8 @@ public class CoinSpawner : Spawner<Coin>
     [SerializeField] private Vector3 _spawnOffset;
     
     private Vector3 _spawnPosition;
+    private readonly int _minRotation = 0;
+    private readonly int _highestRotation = 360;
     
     public void Spawn(Vector3 position, float coinsAmount)
     {
@@ -28,7 +30,7 @@ public class CoinSpawner : Spawner<Coin>
     {
         coin.CanBeReleased += Release;
         
-        float yRotation = UserUtils.GetRandomRotation();
+        float yRotation = Random.Range(_minRotation, _highestRotation);
         
         coin.transform.parent = transform;
         coin.transform.position = _spawnPosition;

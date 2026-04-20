@@ -27,7 +27,7 @@ public class ChanceAltar : CooldownInteractable, IChanceInteractable
         if (IsAvailable == false || CurrentInteractionsAmount == MaxInteractionsAmount)
             return;
         
-        HideValue();
+        SetVisibility(false);
         
         WasChosen?.Invoke(this);
     }

@@ -8,6 +8,7 @@ public class CostInteractableHandler : InteractableHandler
 {
     [SerializeField] protected float Cost;
     [SerializeField] protected float IncreasePercent = 40f;
+    [SerializeField] private float _costThreshold = 1000;
 
     private float _initialCost;
 
@@ -16,14 +17,14 @@ public class CostInteractableHandler : InteractableHandler
         _initialCost = Cost;
     }
 
-    public void IncreaseCost()
+    protected void IncreaseCost()
     {
-        Cost = Mathf.Round(UserUtils.AddPercentToNumber(Cost, IncreasePercent));
+       Cost = Mathf.Round(Cost.GetClampedValue(IncreasePercent, _costThreshold));
     }
 
-    public float IncreaseCost(float cost)
+    protected float IncreaseCost(float cost)
     {
-        cost = Mathf.Round(UserUtils.AddPercentToNumber(cost, IncreasePercent));
+        cost = Mathf.Round(cost.GetClampedValue(IncreasePercent, _costThreshold));
         
         return cost;
     }

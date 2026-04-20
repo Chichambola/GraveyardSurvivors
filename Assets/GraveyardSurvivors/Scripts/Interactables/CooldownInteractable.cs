@@ -16,7 +16,7 @@ public class CooldownInteractable : Interactable
         if(_cooldownRoutine != null)
             StopCoroutine(_cooldownRoutine);    
         
-        ChangeOutlineVisibility(false);
+        SetVisibility(false);
 
         StartCoroutine(CooldownRoutine());
     }

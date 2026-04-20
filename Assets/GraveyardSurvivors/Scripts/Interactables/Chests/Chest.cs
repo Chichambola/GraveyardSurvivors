@@ -21,10 +21,34 @@ public class Chest : Interactable, IChanceInteractable
     public override event Action<Interactable> CanBeReleased;
 
     private Coroutine _coroutine;
+    private StateMachine _stateMachine;
 
     public int CommonChance => CommonChanceWeight;
     public int RareChance => RareChanceWeight;
     public int LegendaryChance => LegendaryChanceWeight;
+
+    private void Awake()
+    {
+        _stateMachine = new StateMachine();
+    }
+
+    private void OnEnable()
+    {
+        /*var runState = new RunState(this, Animator);
+        var idleState = new IdleState(this, Animator);
+        
+        DefineAtTransition(idleState, runState, new FuncPredicate(() => _inputReader.MovementDirection.magnitude > 0));
+        DefineAtTransition(runState, idleState, new FuncPredicate(() => _inputReader.MovementDirection.magnitude <= 0));
+        
+        StateMachine.SetState(idleState);*/
+    }
+
+    private void OnDisable()
+    {
+        _animator.SetBool(IsOpened, false);
+        
+        _animator.CrossFadeInFixedTime("Idle", 0);
+    }
 
     public void Open()
     {
@@ -32,7 +56,7 @@ public class Chest : Interactable, IChanceInteractable
         
         _animator.SetBool(IsOpened, true);
         
-        ChangeOutlineVisibility(false);
+        SetVisibility(false);
     }
 
     public override void Release()

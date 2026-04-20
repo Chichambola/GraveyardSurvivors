@@ -13,27 +13,17 @@ public abstract class Interactable: MonoBehaviour, IInteractable, IPoolable<Inte
     public virtual event Action<Interactable> WasChosen;
     
     protected bool IsAvailable = true;
-    protected bool IsShowingValue;
+    private bool _isShowingValue;
     
-    public bool IsCurrentlyShowingValue => IsShowingValue;
+    public bool IsShowingValue => _isShowingValue;
     public bool IsCurrentlyAvailable => IsAvailable;
     public float Value { get; private set; }
 
-    public void ChangeOutlineVisibility(bool value)
+    public void SetVisibility(bool value)
     {
         Outline.enabled = value;
-    }
-    
-    public void ShowValue()
-    {
-        ValueViewer.SetVisibility(true);
-        IsShowingValue = true;
-    }
-
-    public void HideValue()
-    {
-        ValueViewer.SetVisibility(false);
-        IsShowingValue = false;
+        ValueViewer.SetVisibility(value);
+        _isShowingValue = value;
     }
 
     public virtual void SetValue(float value)
@@ -48,18 +38,12 @@ public abstract class Interactable: MonoBehaviour, IInteractable, IPoolable<Inte
         if (IsAvailable == false)
             return;
         
-        HideValue();
+        SetVisibility(false);
         
         WasChosen?.Invoke(this);
     }
 
-    public virtual void Release()
-    {
-        CanBeReleased?.Invoke(this);
-    }
+    public virtual void Release() => CanBeReleased?.Invoke(this);
 
-    public virtual void ResetCharacteristics()
-    {
-        
-    }
+    public virtual void ResetCharacteristics() { }
 }

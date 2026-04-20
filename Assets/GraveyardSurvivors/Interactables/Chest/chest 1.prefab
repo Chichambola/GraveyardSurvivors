@@ -345,8 +345,8 @@ MonoBehaviour:
   ValueViewer: {fileID: -8920939765684463614}
   _countdownTime: 3
   _animator: {fileID: 4237362373901554536}
-  CommonChanceWeight: 100
-  RareChanceWeight: 55
+  CommonChanceWeight: 150
+  RareChanceWeight: 65
   LegendaryChanceWeight: 15
 --- !u!114 &9074495386139287288
 MonoBehaviour:

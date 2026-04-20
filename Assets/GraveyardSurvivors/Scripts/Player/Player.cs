@@ -145,11 +145,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
         }
     }
 
-    public void ChangeSpeed(float previousSpeed)
-    {
-        Mover.SetSpeed(previousSpeed);
-    }
-
     public void TakeDamage(float damage)
     {
         damage = DetermineDamageAmount(damage);

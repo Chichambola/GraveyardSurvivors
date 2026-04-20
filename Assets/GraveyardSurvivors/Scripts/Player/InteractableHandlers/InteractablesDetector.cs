@@ -83,10 +83,8 @@ public class InteractablesDetector : MonoBehaviour
         {
             foreach (var interactable in _nearbyInteractables)
             {
-                if(interactable.IsCurrentlyShowingValue)
-                    interactable.HideValue();
-                
-                interactable.ChangeOutlineVisibility(false);
+                if(interactable.IsShowingValue)
+                    interactable.SetVisibility(false);
             }
 
             _nearestInteractable = null;
@@ -97,21 +95,17 @@ public class InteractablesDetector : MonoBehaviour
             {
                 if (interactable != _nearestInteractable)
                 {
-                    if (interactable.IsCurrentlyShowingValue)
+                    if (interactable.IsShowingValue)
                     {
-                        interactable.HideValue();
+                        interactable.SetVisibility(false);
                     }
-                    
-                    interactable.ChangeOutlineVisibility(false);  
                 }
                 else if (_nearestInteractable.IsCurrentlyAvailable)
                 {
-                    if (_nearestInteractable.IsCurrentlyShowingValue == false)
+                    if (_nearestInteractable.IsShowingValue == false)
                     {
-                        _nearestInteractable.ShowValue();
+                        _nearestInteractable.SetVisibility(true);
                     }
-                    
-                    _nearestInteractable.ChangeOutlineVisibility(true);
                 }
             }
         }

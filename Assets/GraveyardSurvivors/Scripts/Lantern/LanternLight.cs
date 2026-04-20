@@ -49,7 +49,7 @@ public class LanternLight : MonoBehaviour
     
     public void ReceiveEnergy(float energyAmount)
     {
-        float value = UserUtils.AddPercentToNumber(_collider.radius, energyAmount);
+        float value = _collider.radius.AddPercentToNumber(energyAmount);
         
         SetGainingEnergyState(true);
 
