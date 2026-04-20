@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DieState : BaseState
 {
-    public DieState(CharacterBase character, Animator animator) : base(character, animator) { }
+    public DieState(CharacterBase stateHandler, Animator animator) : base(stateHandler, animator) { }
 
     public override void DoEnter()
     {

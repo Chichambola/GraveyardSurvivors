@@ -10,15 +10,13 @@ public class InteractableSpawner : Spawner<Interactable>
     private Transform _spawnPoint;
     
     public event Action<Interactable> InteractableWasChosen;
-
-    public List<Interactable> Interactables => ActiveObjects;
     
     private void OnEnable()
     {
         Spawn();
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (ActiveObjects.Count == 0)
         {
@@ -29,7 +27,7 @@ public class InteractableSpawner : Spawner<Interactable>
                 GetObject(); 
             }
         }
-    }
+    }*/
 
     public void Spawn()
     {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(Rotator), typeof(Mover))]
 [RequireComponent(typeof(CapsuleCollider))]
-public abstract class CharacterBase : MonoBehaviour
+public abstract class CharacterBase : MonoBehaviour, IStateHandler
 {
     [Header("Base")]
     [SerializeField] protected Animator Animator;

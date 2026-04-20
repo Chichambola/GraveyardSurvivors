@@ -6,7 +6,7 @@ using TreeEditor;
 using UnityEditor;
 using UnityEngine;
 
-public class Chest : Interactable, IChanceInteractable
+public class Chest : Interactable, IChanceInteractable, IStateHandler
 {
     public const string IsOpened = nameof(IsOpened);
     
@@ -34,20 +34,13 @@ public class Chest : Interactable, IChanceInteractable
 
     private void OnEnable()
     {
-        /*var runState = new RunState(this, Animator);
-        var idleState = new IdleState(this, Animator);
+        var openingState = new OpeningState(this, _animator);
+        var idleState = new IdleState(this, _animator);
         
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => _inputReader.MovementDirection.magnitude > 0));
-        DefineAtTransition(runState, idleState, new FuncPredicate(() => _inputReader.MovementDirection.magnitude <= 0));
+        _stateMachine.AddAnyTransition(openingState, new FuncPredicate(() => IsAvailable == false));
+        _stateMachine.AddAnyTransition(idleState, new FuncPredicate(() => IsAvailable));
         
-        StateMachine.SetState(idleState);*/
-    }
-
-    private void OnDisable()
-    {
-        _animator.SetBool(IsOpened, false);
-        
-        _animator.CrossFadeInFixedTime("Idle", 0);
+        _stateMachine.SetState(idleState);
     }
 
     public void Open()
@@ -55,6 +48,8 @@ public class Chest : Interactable, IChanceInteractable
         IsAvailable = false;
         
         _animator.SetBool(IsOpened, true);
+        
+        Release();
         
         SetVisibility(false);
     }
@@ -82,7 +77,7 @@ public class Chest : Interactable, IChanceInteractable
             
             yield return null;
         }
-
+        
         ResetCharacteristics();
         
         CanBeReleased?.Invoke(this);

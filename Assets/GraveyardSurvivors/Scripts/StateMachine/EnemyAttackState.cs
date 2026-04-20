@@ -8,13 +8,15 @@ using UnityEngine.Playables;
 
 public class EnemyAttackState : BaseState
 {
-    public EnemyAttackState(CharacterBase character, Animator animator) : base(character, animator) { }
+    public EnemyAttackState(IStateHandler stateHandler, Animator animator) : base(stateHandler, animator) { }
 
     public override void DoEnter()
     {
+        if (StateHandler is not Enemy character) return;
+        
         Animator.CrossFade(s_Attack, CrossFadeDuration);
         
-        Character.HandleAttack();
+        character.HandleAttack();
     }
 }
 
