@@ -1,18 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using PrimeTween;
 using TMPro;
 using TreeEditor;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Ease = PrimeTween.Ease;
+using Tween = PrimeTween.Tween;
 
-public class Chest : Interactable, IChanceInteractable, IStateHandler
+public class Chest : Interactable, IChanceInteractable
 {
-    public const string IsOpened = nameof(IsOpened);
-    
-    [Header("Animator values")]
-    [SerializeField] private int _countdownTime = 3;
-    [SerializeField] private Animator _animator;
+    [Header("Lid opening")]
+    [SerializeField] private Transform _openingPart;
+    [SerializeField] private float _openingDuration = 2f;
+    [SerializeField] private Quaternion _openingRotation;
+    [SerializeField] private Ease _openingEase;
+    [SerializeField] private float _countdownTime = 3;
     [Header("Weights")]
     [SerializeField] protected int CommonChanceWeight;
     [SerializeField] protected int RareChanceWeight;
@@ -21,7 +27,9 @@ public class Chest : Interactable, IChanceInteractable, IStateHandler
     public override event Action<Interactable> CanBeReleased;
 
     private Coroutine _coroutine;
-    private StateMachine _stateMachine;
+    private Tween _openingPartTween;
+    private TweenSettings<Vector3> _openingSettings;
+    private Quaternion _defaultRotation;
 
     public int CommonChance => CommonChanceWeight;
     public int RareChance => RareChanceWeight;
@@ -29,27 +37,30 @@ public class Chest : Interactable, IChanceInteractable, IStateHandler
 
     private void Awake()
     {
-        _stateMachine = new StateMachine();
+        _openingSettings = new TweenSettings<Vector3>(_openingRotation.eulerAngles, _openingDuration, _openingEase);
+        _defaultRotation = _openingPart.transform.localRotation;
     }
 
-    private void OnEnable()
+    private void OnValidate()
     {
-        var openingState = new OpeningState(this, _animator);
-        var idleState = new IdleState(this, _animator);
+        if (_openingDuration > _countdownTime)
+        {
+            _openingDuration = _countdownTime;
+        }
+    }
+
+    private void OnDisable()
+    {
+        _openingPart.localRotation = _defaultRotation;
         
-        _stateMachine.AddAnyTransition(openingState, new FuncPredicate(() => IsAvailable == false));
-        _stateMachine.AddAnyTransition(idleState, new FuncPredicate(() => IsAvailable));
-        
-        _stateMachine.SetState(idleState);
+        _openingPartTween.Stop();
     }
 
     public void Open()
     {
+        _openingPartTween = Tween.LocalRotation(_openingPart, _openingSettings).OnComplete(Release);
+        
         IsAvailable = false;
-        
-        _animator.SetBool(IsOpened, true);
-        
-        Release();
         
         SetVisibility(false);
     }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 50dbf162996e630469c72d1108118ee3
+guid: 468e72307ec34d6e4ba191c9ecfb8794
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,8 +16,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -33,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: base|idle
-      takeName: base|idle
-      internalID: -4795491134811544288
+      name: idle
+      takeName: lid|lid|idle
+      internalID: 8697306191789894920
       firstFrame: 0
-      lastFrame: 5
+      lastFrame: 0
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -62,10 +60,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: lid|opening
-      takeName: lid|opening
-      internalID: -5310415956722836938
-      firstFrame: 5.18
+      name: opening
+      takeName: lid|lid|opening
+      internalID: 5858392727868662619
+      firstFrame: 0
       lastFrame: 15
       wrapMode: 0
       orientationOffsetY: 0
@@ -85,14 +83,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 1
-        functionName: Release
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

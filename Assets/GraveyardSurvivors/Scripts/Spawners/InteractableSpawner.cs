@@ -16,7 +16,7 @@ public class InteractableSpawner : Spawner<Interactable>
         Spawn();
     }
 
-    /*private void Update()
+    private void Update()
     {
         if (ActiveObjects.Count == 0)
         {
@@ -27,7 +27,7 @@ public class InteractableSpawner : Spawner<Interactable>
                 GetObject(); 
             }
         }
-    }*/
+    }
 
     public void Spawn()
     {

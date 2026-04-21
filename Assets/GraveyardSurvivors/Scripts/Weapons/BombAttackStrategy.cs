@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security;
 using UnityEngine;
-using DG.Tweening;
-using DG.Tweening.Core;
-using UnityEngine.Serialization;
 using Tween = PrimeTween.Tween;
 
 public class BombAttackStrategy : AttackStrategy
