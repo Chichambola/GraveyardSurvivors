@@ -21,7 +21,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public event Action<Enemy> CanBeReleased;
 
-    protected Player Player;
+    private IPlayerStats _player;
     private Coroutine _attackRoutine;
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
@@ -39,7 +39,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public void Init(Player player)
     {
-        Player = player;
+        _player = player;
     }
 
     protected override void Awake()
@@ -137,9 +137,9 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleMovement()
     {
-        Mover.Move(Player.transform, CurrentStats.MovementSpeed);
+        Mover.Move(_player.Transform, CurrentStats.MovementSpeed);
         
-        Vector3 direction = (Player.transform.position - transform.position).normalized;
+        Vector3 direction = (_player.CurrentPosition - transform.position).normalized;
 
         Rotator.Rotate(direction);
     }

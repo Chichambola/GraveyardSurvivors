@@ -39,13 +39,16 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     
     public CharacterStats CurrentStats { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
-    public bool IsAlive => CurrentStats.Health > 0;
+    public LanternLight Light => _light;
+    public Vector3 CurrentPosition => transform.position;
+    public Transform Transform => transform;
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth => CurrentStats.Health;
-    public LanternLight Light => _light;
+    public float Speed => Mover.Speed;
+    public bool IsAlive => CurrentStats.Health > 0;
     public bool IsLightActive => _light.IsActive;
     public int LanternsCount => _lanternsCount;
-    public float Speed => Mover.Speed;
+
 
     public float MaxHealth => CurrentStats.MaxHealth;
 

@@ -11,7 +11,6 @@ public class Game : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private Darkness _darkness;
     [SerializeField] private Lantern _lantern;
-    [SerializeField] private LightAltarHandler _lightAltarHandler;
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
     [SerializeField] private List<InteractableHandler> _interactables;
 

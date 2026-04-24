@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -643,7 +643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &258041549
 Transform:
   m_ObjectHideFlags: 0
@@ -952,7 +952,7 @@ Transform:
   m_GameObject: {fileID: 360078369}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.227, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1444,7 +1444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 306250852}
-  _initialValue: 1e+20
+  _initialValue: 0
 --- !u!4 &472674647
 Transform:
   m_ObjectHideFlags: 0
@@ -1960,7 +1960,6 @@ GameObject:
   - component: {fileID: 814374078}
   - component: {fileID: 814374077}
   - component: {fileID: 814374076}
-  - component: {fileID: 814374080}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -2049,43 +2048,12 @@ Transform:
   m_GameObject: {fileID: 814374075}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.79, y: 1, z: 2}
+  m_LocalPosition: {x: -0.31, y: 0, z: -2.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &814374080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 814374075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.05666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: eaf10650f5ee4cc468fd9ddeae9f7de9, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1 &816859687
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,7 +2086,6 @@ MonoBehaviour:
   _player: {fileID: 366209448}
   _darkness: {fileID: 531874429}
   _lantern: {fileID: 1433704763}
-  _lightAltarHandler: {fileID: 0}
   _enemySpawnerHandler: {fileID: 2050020223}
   _interactables:
   - {fileID: 1140258358}
@@ -7311,8 +7278,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 3.65, y: 6.0000005, z: -12.74}
+  m_LocalRotation: {x: 0.4225392, y: 0, z: 0, w: 0.9063447}
+  m_LocalPosition: {x: 3.65, y: 6.1500006, z: -12.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7477,14 +7444,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034649750}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 3.65, y: 6.0000005, z: -12.74}
+  m_LocalRotation: {x: 0.4225392, y: 0, z: 0, w: 0.9063447}
+  m_LocalPosition: {x: 3.65, y: 6.1500006, z: -12.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1095351024}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 49.99, y: 0, z: 0}
 --- !u!1 &1041548474
 GameObject:
   m_ObjectHideFlags: 0
@@ -12547,7 +12514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 6, z: -4}
+  m_FollowOffset: {x: 0, y: 6.15, z: -3.84}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -12654,9 +12621,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractableSpawner: {fileID: 94142644}
-  Cost: 10
+  Cost: 30
   IncreasePercent: 20
-  _costThreshold: 1000
+  _costThreshold: 2000
   ItemsHandler: {fileID: 1204296356}
   _rarityEvaluator: {fileID: 1204296358}
 --- !u!4 &1140258359
@@ -12835,7 +12802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1428741548
 Transform:
   m_ObjectHideFlags: 0
@@ -13241,7 +13208,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.1570061e+27, y: 1.5792676e-19, z: 1.5792691e-19, w: 7.563938e+23}
+  m_BoundingSphereOverride: {x: 0, y: 6.977642e+22, z: 1.5777406e-19, w: 6.4108285e-10}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -13668,7 +13635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1925439054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14035,7 +14002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2123011992
 Transform:
   m_ObjectHideFlags: 0

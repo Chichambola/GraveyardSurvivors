@@ -525,7 +525,6 @@ GameObject:
   - component: {fileID: 5936001690060495124}
   - component: {fileID: 4517118454182904602}
   - component: {fileID: 1193798218759582025}
-  - component: {fileID: -1596458673044486043}
   m_Layer: 7
   m_Name: Skeleton
   m_TagString: Untagged
@@ -543,8 +542,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.818248, y: 0, z: -3.7147365}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.9, y: 0.90000004, z: 0.90000004}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4286067118317836531}
   - {fileID: 5701127996463537366}
@@ -674,28 +673,6 @@ CapsuleCollider:
   m_Height: 3.2685006
   m_Direction: 1
   m_Center: {x: 0, y: 1.1342503, z: 0}
---- !u!195 &-1596458673044486043
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4287946536270150599}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.62
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 36
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2.26
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1 &4610651947403314383
 GameObject:
   m_ObjectHideFlags: 0
