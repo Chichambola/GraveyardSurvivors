@@ -6,9 +6,9 @@ public class InteractableHandler : MonoBehaviour, IInteractableHandler
 {
     [SerializeField] protected InteractableSpawner InteractableSpawner;
     
-    protected IPlayerStats Player; 
+    protected IPlayer Player; 
     
-    public void Init(IPlayerStats player)
+    public void Init(IPlayer player)
     {
         if(player == null)
             throw new System.ArgumentNullException("player");

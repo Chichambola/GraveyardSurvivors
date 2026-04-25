@@ -21,7 +21,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public event Action<Enemy> CanBeReleased;
 
-    private IPlayerStats _player;
+    private IPlayer _player;
     private Coroutine _attackRoutine;
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;

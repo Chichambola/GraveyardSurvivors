@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class ChanceAltarHandler : ItemInteractable
 {
+    [SerializeField] private ItemsHandler _itemsHandler;
+    
     private void OnEnable()
     {
         InteractableSpawner.InteractableWasChosen += OnChanceAltarChosen;
@@ -33,13 +35,16 @@ public class ChanceAltarHandler : ItemInteractable
             return;
         }
         
-        ERarityLevel rarityLevel = GetRarityLevel(altar, altar.NoneChance);
+        RarityLevel rarityLevel = UserUtils.GetElementByWeight(altar.Weights) as RarityLevel;
+
+        if (rarityLevel == null)
+            throw new Exception(nameof(rarityLevel));
 
         Player.ReduceMoneyAmount(altar.CurrentCost);
         
         altar.StartCountdown();
         
-        CanDrop(rarityLevel, altar);
+        CanDrop(rarityLevel.Rarity, altar);
             
         altar.SetValue(IncreaseCost(altar.CurrentCost));
     }
@@ -54,7 +59,7 @@ public class ChanceAltarHandler : ItemInteractable
         {
             altar.IncreaseInteractionsAmount();
             
-            ItemsHandler.SpawnRandomItem(altar.transform.position, rarityLevel);   
+            _itemsHandler.SpawnRandomItem(altar.transform.position, rarityLevel);   
         }
     }
 }

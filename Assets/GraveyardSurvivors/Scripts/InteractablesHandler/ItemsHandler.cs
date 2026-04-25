@@ -59,41 +59,15 @@ public class ItemsHandler : MonoBehaviour
     {
         if (_itemsLists == null)
             throw new Exception();
+        
+        Item tempItem = UserUtils.GetElementByWeight(_itemsLists[rarity]);
 
-        Item tempItem = GetRandomItem(rarity);
+        if (tempItem == null)
+            throw new Exception($"{tempItem} is not a valid item");
+        
+        Debug.Log(tempItem);
         
         _itemSpawner.SetPrefab(tempItem);
         _itemSpawner.Spawn(position);
     }
-
-    private Item GetRandomItem(ERarityLevel rarity)
-    {
-        int totalWeight = 0;
-        
-        List<Item> desiredList = _itemsLists[rarity].ToList();
-        
-        if (desiredList == null || !desiredList.Any())
-            throw new Exception();
-        
-        Item selected = null;
-
-        foreach (var item in desiredList)
-        {
-            int weight = item.Info.Weight;
-            
-            if(weight <= 0)
-                continue;
-
-            int randomNumber = Random.Range(0, totalWeight + weight);
-
-            if (randomNumber >= totalWeight)
-            {
-                selected = item;
-            }
-
-            totalWeight += weight;
-        }
-
-        return selected;
-    } 
 }

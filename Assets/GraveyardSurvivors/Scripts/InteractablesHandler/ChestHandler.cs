@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 
 using UnityEditor;
@@ -8,8 +9,10 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class ChestHandler : ItemInteractable
+public class ChestHandler : CostInteractableHandler
 {
+    [SerializeField] private ItemsHandler _itemsHandler;
+    
     private void OnEnable()
     {
         InteractableSpawner.InteractableWasChosen += OnChestChosen;
@@ -40,9 +43,14 @@ public class ChestHandler : ItemInteractable
             
             Player.ReduceMoneyAmount(Cost);
         
-            ERarityLevel rarityLevel = GetRarityLevel(chest);
+            chest.IncreaseChance(Player.Luck);
             
-            ItemsHandler.SpawnRandomItem(chest.transform.position, rarityLevel);
+            RarityLevel rarityLevel = UserUtils.GetElementByWeight(chest.Weights.ToList());
+
+            if (rarityLevel == null)
+                throw new Exception(nameof(rarityLevel));
+            
+            _itemsHandler.SpawnRandomItem(chest.transform.position, rarityLevel.Rarity);
             
             IncreaseCost();
         }

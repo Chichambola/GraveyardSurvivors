@@ -5,20 +5,19 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable
+public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable, IWeightedObject
 {
     [SerializeField] private ItemInfo _info;
     [SerializeField] protected int IncreaseValue;
 
     public event Action<Item> CanBeReleased;
-
-    protected float HighestValue = UserUtils.s_HighestPercent;
+    
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
     private IBuff _buffImplementation;
-
-    public Rigidbody Rigidbody => _rigidbody;
+    
     public ItemInfo Info => _info;
+    public int Weight => _info.Weight;
     
     private void Awake()
     {

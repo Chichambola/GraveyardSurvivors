@@ -7,4 +7,5 @@ using UnityEngine;
 public interface IEnemySpawner<T> 
 {
     public event Action<T> EnemyWasReleased;
+    public int Cost { get; }
 }

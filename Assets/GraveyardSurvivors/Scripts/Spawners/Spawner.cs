@@ -4,10 +4,11 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
 {
-    [SerializeField] private T _objectPrefab;
+    [SerializeField] protected T ObjectPrefab;
     [SerializeField] protected int PoolCapacity;
     [SerializeField] protected int MaxPoolCapacity;
 
@@ -29,7 +30,7 @@ public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
 
     public void SetPrefab(T objectToSpawn)
     {
-        _objectPrefab = objectToSpawn;
+        ObjectPrefab = objectToSpawn;
     }
     
     public void ReleaseAll() 
@@ -72,6 +73,6 @@ public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
 
     private T CreateObject()
     {
-        return Instantiate(_objectPrefab);
+        return Instantiate(ObjectPrefab);
     }
 }

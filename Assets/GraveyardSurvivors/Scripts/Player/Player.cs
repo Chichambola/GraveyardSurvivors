@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
-public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightCarrier
+public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrier
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CollisionDetector _collisionDetector;
@@ -45,6 +45,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayerStats, ILightC
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth => CurrentStats.Health;
     public float Speed => Mover.Speed;
+    public float Luck => CurrentStats.Luck;
     public bool IsAlive => CurrentStats.Health > 0;
     public bool IsLightActive => _light.IsActive;
     public int LanternsCount => _lanternsCount;

@@ -6,22 +6,25 @@ using UnityEngine;
 public class ChanceAltar : CooldownInteractable, IChanceInteractable
 {
     [Header("Weights")]
-    [SerializeField] protected int CommonChanceWeight;
-    [SerializeField] protected int RareChanceWeight;
-    [SerializeField] protected int LegendaryChanceWeight;
-    [SerializeField] private int _noneChance = 40;
+    [SerializeField] private RarityLevel _common;
+    [SerializeField] private RarityLevel _rare;
+    [SerializeField] private RarityLevel _legendary;
+    [SerializeField] private RarityLevel _none;
     
     public override event Action<Interactable> WasChosen;
     
     private float _currentCost;
     private Coroutine _coroutine;
+    private List<RarityLevel> _weights;
     
     public float CurrentCost => _currentCost;
-    public int NoneChance => _noneChance;
-    public int CommonChance => CommonChanceWeight;
-    public int RareChance => RareChanceWeight;
-    public int LegendaryChance => LegendaryChanceWeight;
-    
+    public List<RarityLevel> Weights => _weights;
+
+    private void Awake()
+    {
+        _weights = new() { _none, _common, _rare, _legendary};
+    }
+
     public override void ProcessInteraction()
     {
         if (IsAvailable == false || CurrentInteractionsAmount == MaxInteractionsAmount)

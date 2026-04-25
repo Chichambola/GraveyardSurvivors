@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IInteractableHandler
 {
-    void Init(IPlayerStats player);
+    void Init(IPlayer player);
 }
