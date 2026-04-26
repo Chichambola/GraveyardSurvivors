@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Apple.ReplayKit;
 using UnityEngine.Rendering;
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
@@ -12,6 +13,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     [SerializeField] private Player _player;
     [SerializeField] private int _unitCost;
     [SerializeField] private int _weight;
+    [SerializeField] private int _numberOfEnemiesSpawnAtOnce = 1;
 
     public event Action<Enemy> EnemyWasReleased;
     
@@ -22,9 +24,9 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
     public void Spawn()
     {
-        foreach (var point in _points)
+        for (int i = 0; i < _numberOfEnemiesSpawnAtOnce; i++)
         {
-            _spawnPoint = point.position;
+            _spawnPoint = GetRandomPoint();
             
             GetObject();
         }
@@ -55,5 +57,12 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         ActiveObjects.Remove(enemy);
         
         base.ActionOnRelease(enemy);
+    }
+
+    private Vector3 GetRandomPoint()
+    {
+        int randomIndex = Random.Range(0, _points.Length);
+        
+        return _points[randomIndex].position;
     }
 }

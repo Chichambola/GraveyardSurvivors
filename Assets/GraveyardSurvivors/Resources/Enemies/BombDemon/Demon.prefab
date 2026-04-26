@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e801a991a650c8bab8a1f6f8d01db47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectPrefab: {fileID: 7480818686058042214, guid: dd4cafdb17d57a247bcb0b5cc369e126, type: 3}
+  ObjectPrefab: {fileID: 7480818686058042214, guid: dd4cafdb17d57a247bcb0b5cc369e126, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
 --- !u!1 &8829684809993541676

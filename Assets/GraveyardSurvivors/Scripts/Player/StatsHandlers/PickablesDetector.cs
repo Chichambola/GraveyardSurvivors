@@ -45,7 +45,7 @@ public class PickablesDetector : MonoBehaviour
             {
                 CoinDetected?.Invoke(coin.Value);
             }
-
+            
             pickable.Release();
         }
     }

@@ -58,7 +58,7 @@ public static class UserUtils
         
         float totalWeight = 0;
         
-        foreach (var item in items)
+        foreach (var item in items.ToList())
         {
             float weight = item.Weight;
             
@@ -76,36 +76,5 @@ public static class UserUtils
         }
         
         return weightedObject;
-
-        /*if (items == null)
-            throw new Exception(nameof(items));
-
-        float totalWeight = 0;
-
-        var weightedObjects = items.ToList();
-
-        foreach (var item in weightedObjects)
-        {
-            if (item.Weight > 0)
-                totalWeight += item.Weight;
-        }
-
-        if (totalWeight <= 0)
-            return default;
-
-        float randomValue = Random.Range(0, totalWeight);
-        float currentWeight = 0;
-
-        foreach (var item in weightedObjects)
-        {
-            if (item.Weight <= 0)
-                continue;
-
-            currentWeight += item.Weight;
-            if (randomValue < currentWeight)
-                return item;
-        }
-
-        return default;*/
     }
 }

@@ -3157,7 +3157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894e5c696c6d953debfdf9cfe20ce5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weight: 40
+  _weight: 45
   _rarity: 2
 --- !u!1 &4496713958982332227
 GameObject:
@@ -3305,7 +3305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894e5c696c6d953debfdf9cfe20ce5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weight: 15
+  _weight: 10
   _rarity: 3
 --- !u!1 &5875436904212070654
 GameObject:
