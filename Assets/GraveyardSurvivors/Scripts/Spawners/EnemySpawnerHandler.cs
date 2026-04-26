@@ -32,6 +32,7 @@ public class EnemySpawnerHandler : MonoBehaviour
             enemySpawner.EnemyWasReleased += OnEnemyRelease;
         }
         
+        
         if(_choosingRoutine != null)
             StopCoroutine(_choosingRoutine);
         
@@ -56,12 +57,16 @@ public class EnemySpawnerHandler : MonoBehaviour
         while (_isGainingPoints == false)
         {
             EnemySpawner chosenSpawner = UserUtils.GetElementByWeight(_enemySpawners);
-
+            
             if (_availablePoints > chosenSpawner.Cost)
             {
                 _availablePoints -= chosenSpawner.Cost;
                 
                 chosenSpawner.Spawn();
+            }
+            else if (_availablePoints <= chosenSpawner.Cost)
+            {
+                _isGainingPoints = true;
             }
             
             yield return null;
