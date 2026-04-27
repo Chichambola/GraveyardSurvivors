@@ -10,17 +10,20 @@ public class EnemySpawnerHandler : MonoBehaviour
 {
     [SerializeField] private EnemySpawner[] _enemySpawners;
     [SerializeField] private int _initialAvailablePoints = 30;
-    [SerializeField] private int _choosingRate = 1;
 
+    [Header("Gaining points time")] 
+    [SerializeField] private int _minTime = 15;
+    [SerializeField] private int _maxTime = 60;
+    [SerializeField] private int _maxEnemiesAmount = 30;
+    
     public event Action<Enemy> EnemyWasKilled;
     
     private Coroutine _choosingRoutine;
     private Coroutine _gainRoutine;
-    private EnemySpawner _chosenSpawner;
     private float _availablePoints;
-    private int _pointGainMultiplier = 4;
-    private bool _isGainingPoints;
     private float _debugPoints;
+    private bool _isGainingPoints;
+    private int _pointGainMultiplier = 4;
     
     private void OnEnable()
     {
@@ -31,12 +34,6 @@ public class EnemySpawnerHandler : MonoBehaviour
         {
             enemySpawner.EnemyWasReleased += OnEnemyRelease;
         }
-        
-        
-        if(_choosingRoutine != null)
-            StopCoroutine(_choosingRoutine);
-        
-        _choosingRoutine = StartCoroutine(ChoosingRoutine());
     }
 
     private void OnDisable()
@@ -45,6 +42,14 @@ public class EnemySpawnerHandler : MonoBehaviour
         {
             enemySpawner.EnemyWasReleased -= OnEnemyRelease;
         }
+    }
+
+    private void Start()
+    {
+        if(_choosingRoutine != null)
+            StopCoroutine(_choosingRoutine);
+        
+        _choosingRoutine = StartCoroutine(ChoosingRoutine());
     }
 
     private void OnEnemyRelease(Enemy enemy)
@@ -56,17 +61,31 @@ public class EnemySpawnerHandler : MonoBehaviour
     {
         while (_isGainingPoints == false)
         {
-            EnemySpawner chosenSpawner = UserUtils.GetElementByWeight(_enemySpawners);
+            int count = GetEnemySpawnersCount();
+
+            Debug.Log(count);
             
-            if (_availablePoints > chosenSpawner.Cost)
+            if (count < _maxEnemiesAmount)
             {
-                _availablePoints -= chosenSpawner.Cost;
+                EnemySpawner chosenSpawner = UserUtils.GetElementByWeight(_enemySpawners);
+            
+                if (_availablePoints > chosenSpawner.Cost)
+                {
+                    _availablePoints -= chosenSpawner.Cost;
                 
-                chosenSpawner.Spawn();
-            }
-            else if (_availablePoints <= chosenSpawner.Cost)
-            {
-                _isGainingPoints = true;
+                    chosenSpawner.Spawn();
+                }
+                else if (_availablePoints <= chosenSpawner.Cost)
+                {
+                    _isGainingPoints = true;
+
+                    int time = Random.Range(_minTime, _maxTime);
+                
+                    if (_gainRoutine != null)
+                        StopCoroutine(_gainRoutine);
+
+                    _gainRoutine = StartCoroutine(GainingPointsRoutine(time));
+                }
             }
             
             yield return null;
@@ -75,8 +94,6 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private IEnumerator GainingPointsRoutine(float time)
     {
-        _isGainingPoints = true;
-        
         float elapsedTime = 0f;
         
         while (elapsedTime < time)
@@ -87,5 +104,26 @@ public class EnemySpawnerHandler : MonoBehaviour
 
             yield return null;
         }
+
+        _isGainingPoints = false;
+        
+        if (_choosingRoutine != null)
+            StopCoroutine(_choosingRoutine);
+
+        _choosingRoutine = StartCoroutine(ChoosingRoutine());
+
+        yield return null;
+    }
+
+    private int GetEnemySpawnersCount()
+    {
+        int count = 0;
+        
+        foreach (var spawner in _enemySpawners)
+        {
+            count += spawner.Count;
+        }
+
+        return count;
     }
 }

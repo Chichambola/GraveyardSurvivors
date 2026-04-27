@@ -27,14 +27,14 @@ public class Wallet : MonoBehaviour
 
     public void ReduceMoneyAmount(float amount)
     {
-        _currentMoneyAmount -= amount;
+        _currentMoneyAmount -= Mathf.Round(amount);
         
         UpdateValue();
     }
 
     public void ReceiveMoney(float value)
     {
-        _currentMoneyAmount += value;
+        _currentMoneyAmount += Mathf.Round(value);
         
         UpdateValue();
     }

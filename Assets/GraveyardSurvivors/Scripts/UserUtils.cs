@@ -54,27 +54,35 @@ public static class UserUtils
     
     public static T GetElementByWeight<T>(IEnumerable<T> items) where T : IWeightedObject
     {
-        T weightedObject = default(T);
+        if (items == null)
+            throw new ArgumentNullException(nameof(items));
         
         float totalWeight = 0;
         
-        foreach (var item in items.ToList())
+        var weightedObjects = items.ToList();
+        
+        foreach (var item in weightedObjects)
         {
-            float weight = item.Weight;
-            
-            if(weight <= 0)
+            if (item.Weight > 0)
+                totalWeight += item.Weight;
+        }
+    
+        if (totalWeight <= 0)
+            return default(T);
+        
+        float randomValue = Random.Range(0, totalWeight);
+        float currentWeight = 0;
+        
+        foreach (var item in weightedObjects)
+        {
+            if (item.Weight <= 0)
                 continue;
             
-            float randomNumber = Random.Range(0, totalWeight + weight);
-
-            if (randomNumber >= totalWeight)
-            {
-                weightedObject = item;
-            }
-            
-            totalWeight += weight;
+            currentWeight += item.Weight;
+            if (randomValue < currentWeight)
+                return item;
         }
-        
-        return weightedObject;
+
+        return default(T);
     }
 }
