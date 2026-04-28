@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 
 public class BaseState : IState
 {
-    protected readonly IStateHandler StateHandler;
+    protected readonly CharacterBase StateHandler;
     protected readonly Animator Animator;
     
     protected static readonly int s_Run = Animator.StringToHash("Run");
@@ -18,7 +18,7 @@ public class BaseState : IState
 
     protected const float CrossFadeDuration = 0.15f;
 
-    public BaseState(IStateHandler stateHandler, Animator animator)
+    public BaseState(CharacterBase stateHandler, Animator animator)
     {
         StateHandler = stateHandler;
         Animator = animator;

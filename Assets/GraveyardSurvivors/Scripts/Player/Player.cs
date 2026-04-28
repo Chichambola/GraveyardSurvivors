@@ -53,6 +53,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
 
     public float MaxHealth => CurrentStats.MaxHealth;
 
+    public event Action<Player> CanBeReleased;
+
     protected override void Awake()
     {
         Animator = GetComponent<Animator>();
@@ -122,7 +124,17 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
             Rotator.Rotate(_inputReader.MovementDirection.normalized);
         }
     }
-    
+
+    public void ResetCharacteristics()
+    {
+        
+    }
+
+    public override void Release()
+    {
+        CanBeReleased?.Invoke(this);
+    }
+
     public void ReduceMoneyAmount(float amount)
     {
         _wallet.ReduceMoneyAmount(amount);

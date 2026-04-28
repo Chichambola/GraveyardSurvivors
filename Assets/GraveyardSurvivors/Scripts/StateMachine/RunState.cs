@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RunState : BaseState
 {
-    public RunState(IStateHandler stateHandler, Animator animator) : base(stateHandler, animator) { }
+    public RunState(CharacterBase stateHandler, Animator animator) : base(stateHandler, animator) { }
 
     public override void DoEnter()
     {
@@ -13,8 +13,6 @@ public class RunState : BaseState
 
     public override void FixedUpdate()
     {
-        if (StateHandler is not CharacterBase character) return;
-        
-        character.HandleMovement();
+        StateHandler.HandleMovement();
     }
 }

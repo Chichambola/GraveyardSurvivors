@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(Rotator), typeof(Mover))]
@@ -21,6 +22,8 @@ public abstract class CharacterBase : MonoBehaviour, IStateHandler
     public abstract void HandleMovement();
 
     public virtual void HandleAttack() { }
+
+    public abstract void Release();
 
     protected void DefineAtTransition(IState from, IState to, IPredicate condition)
     {

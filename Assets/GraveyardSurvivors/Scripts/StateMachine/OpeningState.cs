@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OpeningState : BaseState
 {
-    public OpeningState(IStateHandler stateHandler, Animator animator) : base(stateHandler, animator) { }
+    public OpeningState(CharacterBase stateHandler, Animator animator) : base(stateHandler, animator) { }
     
     public override void DoEnter()
     {

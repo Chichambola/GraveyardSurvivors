@@ -8,7 +8,7 @@ using UnityEngine.Playables;
 
 public class EnemyAttackState : BaseState
 {
-    public EnemyAttackState(IStateHandler stateHandler, Animator animator) : base(stateHandler, animator) { }
+    public EnemyAttackState(CharacterBase stateHandler, Animator animator) : base(stateHandler, animator) { }
 
     public override void DoEnter()
     {

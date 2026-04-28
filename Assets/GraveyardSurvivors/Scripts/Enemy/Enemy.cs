@@ -20,7 +20,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [SerializeField] private TextMeshProUGUI _health;
 
     public event Action<Enemy> CanBeReleased;
-
+    
     private IPlayer _player;
     private Coroutine _attackRoutine;
     private Rigidbody _rigidbody;
@@ -40,6 +40,14 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public void Init(Player player)
     {
         _player = player;
+        
+        CurrentStats.Health = _initialHealth;
+        
+        CurrentStats.MovementSpeed = _initialSpeed;
+        
+        _collider.enabled = true;
+        
+        _health.text = $"{_initialHealth:f1}";
     }
 
     protected override void Awake()
@@ -52,6 +60,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         _initialHealth = CurrentStats.Health;
         _initialSpeed = CurrentStats.MovementSpeed;
+        
+        StateMachine = new StateMachine();
     }
 
     protected override void Update()
@@ -62,29 +72,21 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     protected override void FixedUpdate()
     {
         StateMachine.FixedUpdate();
+        
+        _rigidbody.velocity = Vector3.zero;
     }
 
-    protected virtual void OnEnable()
+    private void OnEnable()
     {
-        _collider.enabled = true;
-        
         InitializeStateMachine();
-        
-        _health.text = $"{_initialHealth:f1}";
-    }
-
-    protected virtual void OnDisable()
-    {
-        
     }
 
     public void ResetCharacteristics()
     {
-        CurrentStats.Health = _initialHealth;
-        CurrentStats.MovementSpeed = _initialSpeed;
+
     }
 
-    public void Release() => CanBeReleased?.Invoke(this);
+    public override void Release() => CanBeReleased?.Invoke(this);
 
     public void TakeDamage(float damage)
     {
@@ -154,14 +156,12 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     protected override void InitializeStateMachine()
     {
-        StateMachine = new StateMachine();
-
         var idleState = new IdleState(this, Animator);
         var dieState = new DieState(this, Animator);
         var runState = new RunState(this, Animator);
         var attackState = new EnemyAttackState(this, Animator);
 
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => Mover.Speed > 0));
+        DefineAtTransition(idleState, runState, new FuncPredicate(() => IsAlive));
         
         DefineAtTransition(attackState, runState,
             new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !IsAttacking));

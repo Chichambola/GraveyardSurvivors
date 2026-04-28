@@ -212,7 +212,7 @@ MonoBehaviour:
   _endPoint: {fileID: 4706741937018459665}
   _thrower: {fileID: 8145135701270782164}
   _value: 1
-  _timeBeforeRelease: 10
+  _timeBeforeRelease: 60
 --- !u!1 &7416902752058137248
 GameObject:
   m_ObjectHideFlags: 0

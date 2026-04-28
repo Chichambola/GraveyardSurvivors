@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Apple.ReplayKit;
 using UnityEngine.Rendering;
@@ -16,6 +17,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     [SerializeField] private int _numberOfEnemiesSpawnAtOnce = 1;
 
     public event Action<Enemy> EnemyWasReleased;
+    public event Action<Enemy> EnemyWasSpawned;
     
     private Vector3 _spawnPoint;
     
@@ -42,21 +44,24 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         
         ActiveObjects.Add(enemy);
         
+        EnemyWasSpawned?.Invoke(enemy);
+        
         base.ActionOnGet(enemy);
     }
 
     protected override void ActionOnRelease(Enemy enemy)
     {
-        _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
+        enemy.ResetCharacteristics();
         
         enemy.CanBeReleased -= Release;
-        EnemyWasReleased?.Invoke(enemy);
-        
-        enemy.ResetCharacteristics();
         
         ActiveObjects.Remove(enemy);
         
         base.ActionOnRelease(enemy);
+        
+        _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
+        
+        EnemyWasReleased?.Invoke(enemy);
     }
 
     private Vector3 GetRandomPoint()

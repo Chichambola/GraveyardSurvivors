@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IdleState : BaseState
 {
-    public IdleState(IStateHandler stateHandler, Animator animator) : base(stateHandler, animator) { }
+    public IdleState(CharacterBase stateHandler, Animator animator) : base(stateHandler, animator) { }
 
     public override void DoEnter()
     {
