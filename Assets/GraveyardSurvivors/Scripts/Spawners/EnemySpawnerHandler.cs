@@ -84,14 +84,19 @@ public class EnemySpawnerHandler : MonoBehaviour
             yield return wait;
         }
         
+        StartGainingPoints();
+
+        yield return null;
+    }
+
+    private void StartGainingPoints()
+    {
         int time = Random.Range(_minTime, _maxTime);
 
         if (_gainRoutine != null)
             StopCoroutine(_gainRoutine);
 
         _gainRoutine = StartCoroutine(GainingPointsRoutine(time));
-
-        yield return null;
     }
 
     private IEnumerator GainingPointsRoutine(float time)
@@ -113,17 +118,5 @@ public class EnemySpawnerHandler : MonoBehaviour
         _choosingRoutine = StartCoroutine(ChoosingRoutine());
 
         yield return null;
-    }
-
-    private int GetEnemySpawnersCount()
-    {
-        int count = 0;
-
-        foreach (var spawner in _enemySpawners)
-        {
-            count += spawner.Count;
-        }
-
-        return count;
     }
 }

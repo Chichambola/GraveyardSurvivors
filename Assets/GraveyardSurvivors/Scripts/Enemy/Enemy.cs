@@ -174,6 +174,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     private void Die()
     {
+        _rigidbody.Sleep();
+
+        _collider.enabled = false;
+        
         RemoveAllEffects();
         
         CurrentStats.Health = 0;
