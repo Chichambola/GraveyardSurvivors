@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Apple.ReplayKit;
@@ -9,7 +10,6 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
-    [SerializeField] private CoinSpawner _coinSpawner;
     [SerializeField] private Transform[] _points;
     [SerializeField] private Player _player;
     [SerializeField] private int _unitCost;
@@ -20,6 +20,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     public event Action<Enemy> EnemyWasSpawned;
     
     private Vector3 _spawnPoint;
+    private IntervalTimer _timer;
     
     public int Cost => _unitCost;
     public int Weight => _weight;
@@ -51,15 +52,13 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
     protected override void ActionOnRelease(Enemy enemy)
     {
+        ActiveObjects.Remove(enemy);
+        
         enemy.ResetCharacteristics();
         
         enemy.CanBeReleased -= Release;
         
-        ActiveObjects.Remove(enemy);
-        
         base.ActionOnRelease(enemy);
-        
-        _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
         
         EnemyWasReleased?.Invoke(enemy);
     }

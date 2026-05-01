@@ -18,6 +18,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
+    [SerializeField] private CoinSpawner _coinSpawner;
 
     public event Action<Enemy> CanBeReleased;
     
@@ -98,6 +99,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         if (CurrentStats.Health <= 0)
         {
+            _coinSpawner.Spawn(transform.position, CurrentStats.MoneyForKill);
+            
             Die();
         }
     }
@@ -174,8 +177,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     private void Die()
     {
-        _rigidbody.Sleep();
-
         _collider.enabled = false;
         
         RemoveAllEffects();

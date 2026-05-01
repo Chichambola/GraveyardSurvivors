@@ -32,7 +32,7 @@ public class CoinSpawner : Spawner<Coin>
         
         float yRotation = Random.Range(_minRotation, _highestRotation);
         
-        coin.transform.parent = transform;
+        coin.transform.parent = null;
         coin.transform.position = _spawnPosition;
         coin.transform.rotation = Quaternion.Euler(coin.transform.rotation.x, yRotation, coin.transform.rotation.z);
         
@@ -43,6 +43,8 @@ public class CoinSpawner : Spawner<Coin>
 
     protected override void ActionOnRelease(Coin coin)
     {
+        coin.transform.parent = transform;
+        
         coin.CanBeReleased -= Release;
         
         base.ActionOnRelease(coin);

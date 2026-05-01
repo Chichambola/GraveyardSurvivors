@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
@@ -18,18 +19,24 @@ public class EnemySpawnerHandler : MonoBehaviour
     [SerializeField] private int _numberOfSpawnPerSpawner = 3;
     [SerializeField] private int _maxEnemiesAmount = 30;
 
+    [Header("Points gaining")] [SerializeField]
+    private int _pointGainPercent = 10;
+
     public event Action<Enemy> EnemyWasKilled;
 
     private Coroutine _choosingRoutine;
-    private Coroutine _gainRoutine;
+    private Coroutine _spawnRoutine;
     private List<Enemy> _currentEnemies;
+    private List<EnemySpawner> _enemiesToSpawn;
+    private IntervalTimer _timer;
     private float _availablePoints;
     private float _debugPoints;
-    private int _pointGainMultiplier = 4;
+    private bool _isChoosing;
 
     private void Awake()
     {
         _currentEnemies = new List<Enemy>();
+        _enemiesToSpawn = new List<EnemySpawner>();
     }
 
     private void OnEnable()
@@ -54,6 +61,18 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private void Start()
     {
+        if (_spawnRoutine != null)
+            StopCoroutine(_spawnRoutine);
+
+        _spawnRoutine = StartCoroutine(SpawnRoutine());
+        
+        StartChoosing();
+    }
+
+    public void StartChoosing()
+    {
+        _isChoosing = true;
+        
         if (_choosingRoutine != null)
             StopCoroutine(_choosingRoutine);
 
@@ -63,60 +82,80 @@ public class EnemySpawnerHandler : MonoBehaviour
     private void OnEnemyRelease(Enemy enemy)
     {
         _currentEnemies.Remove(enemy);
-        
+
         EnemyWasKilled?.Invoke(enemy);
+    }
+
+    private void OnIntervalReached()
+    {
+        _availablePoints = _availablePoints.AddPercentToNumber(_pointGainPercent);
+    }
+
+    private void OnTimerStopped()
+    {
+        Debug.Log("HEre");
+        
+        _timer.TimerStopped -= OnTimerStopped;
+        _timer.IntervalReached -= OnIntervalReached;
+
+        _timer?.Stop();
+        
+        StartChoosing();
+    }
+
+    private IEnumerator SpawnRoutine()
+    {
+        var wait = new WaitForSeconds(_spawnRate);
+
+        while (enabled)
+        {
+            if (_enemiesToSpawn.Count != 0)
+            {
+                var spawner = _enemiesToSpawn.First();
+
+                spawner.Spawn();
+
+                _enemiesToSpawn.Remove(spawner);
+
+                yield return wait;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
     }
 
     private IEnumerator ChoosingRoutine()
     {
-        var wait = new WaitForSeconds(_spawnRate);
-        
-        EnemySpawner chosenSpawner = UserUtils.GetElementByWeight(_enemySpawners);
-
-        while (_availablePoints > chosenSpawner.Cost && _currentEnemies.Count < _maxEnemiesAmount)
+        while (_isChoosing && _currentEnemies.Count < _maxEnemiesAmount)
         {
-            _availablePoints -= chosenSpawner.Cost;
-
-            chosenSpawner.Spawn();
-            
-            chosenSpawner = UserUtils.GetElementByWeight(_enemySpawners);
-            
-            yield return wait;
-        }
-        
-        StartGainingPoints();
-
-        yield return null;
-    }
-
-    private void StartGainingPoints()
-    {
-        int time = Random.Range(_minTime, _maxTime);
-
-        if (_gainRoutine != null)
-            StopCoroutine(_gainRoutine);
-
-        _gainRoutine = StartCoroutine(GainingPointsRoutine(time));
-    }
-
-    private IEnumerator GainingPointsRoutine(float time)
-    {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < time)
-        {
-            elapsedTime += Time.deltaTime;
-
-            _availablePoints += Time.deltaTime * _pointGainMultiplier;
+            ChooseSpawner();
 
             yield return null;
         }
+        
+        int time = Random.Range(_minTime, _maxTime);
+        
+        _timer = new IntervalTimer(time);
+        _timer.TimerStopped += OnTimerStopped;
+        _timer.IntervalReached += OnIntervalReached;
+        _timer.Start();
+    }
 
-        if (_choosingRoutine != null)
-            StopCoroutine(_choosingRoutine);
+    private void ChooseSpawner()
+    {
+        EnemySpawner chosenSpawner = UserUtils.GetElementByWeight(_enemySpawners);
 
-        _choosingRoutine = StartCoroutine(ChoosingRoutine());
+        if (_availablePoints > chosenSpawner.Cost && _currentEnemies.Count < _maxEnemiesAmount)
+        {
+            _availablePoints -= chosenSpawner.Cost;
 
-        yield return null;
+            _enemiesToSpawn.Add(chosenSpawner);
+        }
+        else
+        {
+            _isChoosing = false;
+        }
     }
 }

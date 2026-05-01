@@ -11,6 +11,8 @@ public class IntervalTimer : Timer
     private float _nextInterval;
 
     public event Action IntervalReached;
+    
+    public override bool IsFinished => CurrentTime <= 0;
 
     public IntervalTimer(float totalTime, float intervalSeconds = 1f) : base(totalTime)
     {
@@ -38,5 +40,8 @@ public class IntervalTimer : Timer
         }
     }
 
-    public override bool IsFinished => CurrentTime <= 0;
+    public void AddDuration(int duration)
+    {
+        InitialTime += duration;
+    }
 }

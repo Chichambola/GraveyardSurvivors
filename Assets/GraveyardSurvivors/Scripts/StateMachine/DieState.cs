@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class DieState : BaseState
 {
-    private float _delay = 1f;
+    private int _minDelay = 2;
+    private int _maxDelay = 5;
     private Timer _timer;
     
     public DieState(CharacterBase stateHandler, Animator animator) : base(stateHandler, animator) { }
 
     public override void DoEnter()
     {
-        _timer = new IntervalTimer(_delay);
+        int delay = Random.Range(_minDelay, _maxDelay);
+        
+        _timer = new IntervalTimer(delay);
         _timer.TimerStopped += DoExit;
         _timer.Start();
         

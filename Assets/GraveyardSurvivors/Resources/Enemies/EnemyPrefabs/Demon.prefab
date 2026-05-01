@@ -100,8 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mask:
     serializedVersion: 2
-    m_Bits: 255
-  NumberOfColliders: 100
+    m_Bits: 136
+  NumberOfColliders: 50
 --- !u!1 &874011633172149296
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,6 +634,54 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6569613780169618178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5153128541574981969}
+  - component: {fileID: 4458913814423535020}
+  m_Layer: 7
+  m_Name: CoinSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5153128541574981969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6569613780169618178}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1506159078949066517}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4458913814423535020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6569613780169618178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6fd41d3bee6bf643a8853e399af697f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectPrefab: {fileID: 5550019293873393314, guid: 6ccf0c0e9328d5c4b9d28d0c2855b2dd, type: 3}
+  PoolCapacity: 0
+  MaxPoolCapacity: 30
+  _spawnOffset: {x: 0, y: 0.75, z: 0}
 --- !u!1 &6877977002293791012
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +1027,7 @@ Transform:
   - {fileID: 5881834822696198026}
   - {fileID: 7068930569126460878}
   - {fileID: 1923393577208119394}
+  - {fileID: 5153128541574981969}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8896866391641432355
@@ -1025,6 +1074,7 @@ MonoBehaviour:
   AttackRadiusMultiplier: 0
   _defender: {fileID: 8495916584587225802}
   _health: {fileID: 2926252959164244938}
+  _coinSpawner: {fileID: 4458913814423535020}
 --- !u!114 &5529676922395853904
 MonoBehaviour:
   m_ObjectHideFlags: 0

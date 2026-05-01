@@ -220,6 +220,54 @@ Transform:
   - {fileID: 8767857200155030557}
   m_Father: {fileID: 8619858778478042082}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1707325513295093123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2645595346411140299}
+  - component: {fileID: 2037810185859417225}
+  m_Layer: 7
+  m_Name: CoinSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2645595346411140299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707325513295093123}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3609522409623139469}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2037810185859417225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707325513295093123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6fd41d3bee6bf643a8853e399af697f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectPrefab: {fileID: 5550019293873393314, guid: 6ccf0c0e9328d5c4b9d28d0c2855b2dd, type: 3}
+  PoolCapacity: 0
+  MaxPoolCapacity: 30
+  _spawnOffset: {x: 0, y: 0.75, z: 0}
 --- !u!1 &1724045696535994394
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +443,7 @@ Transform:
   - {fileID: 7501286251474773077}
   - {fileID: 2427909387439168727}
   - {fileID: 5600284322242521202}
+  - {fileID: 2645595346411140299}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2682104378487237926
@@ -441,6 +490,7 @@ MonoBehaviour:
   AttackRadiusMultiplier: 0
   _defender: {fileID: 2601827664011398758}
   _health: {fileID: 463873145867478184}
+  _coinSpawner: {fileID: 2037810185859417225}
 --- !u!114 &9198884861547997829
 MonoBehaviour:
   m_ObjectHideFlags: 0
