@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -622,7 +622,6 @@ MonoBehaviour:
   ObjectPrefab: {fileID: 2158510540606250342, guid: f2310ad01b02b2abc9fbfd753aa5ebb0, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
-  _coinSpawner: {fileID: 376108314}
   _points:
   - {fileID: 604643845}
   _player: {fileID: 366209448}
@@ -1123,54 +1122,6 @@ Transform:
   - {fileID: 1122493855}
   - {fileID: 111349040}
   - {fileID: 100205079}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &376108313
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 376108315}
-  - component: {fileID: 376108314}
-  m_Layer: 0
-  m_Name: CoinSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &376108314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376108313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6fd41d3bee6bf643a8853e399af697f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectPrefab: {fileID: 5550019293873393314, guid: 6ccf0c0e9328d5c4b9d28d0c2855b2dd, type: 3}
-  PoolCapacity: 0
-  MaxPoolCapacity: 30
-  _spawnOffset: {x: 0, y: 0.75, z: 0}
---- !u!4 &376108315
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376108313}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.386515, y: -21.978308, z: 25.284473}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &378766582
@@ -12758,7 +12709,6 @@ MonoBehaviour:
   ObjectPrefab: {fileID: 4941924877525104701, guid: 9a7e021d693bb0d4393ea5db99daa088, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
-  _coinSpawner: {fileID: 376108314}
   _points:
   - {fileID: 1682210313}
   _player: {fileID: 366209448}
@@ -13495,7 +13445,6 @@ MonoBehaviour:
   ObjectPrefab: {fileID: 4360565655115198188, guid: 82dfd2526ab9a9c41ad573242a457e46, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
-  _coinSpawner: {fileID: 376108314}
   _points:
   - {fileID: 1355553025}
   _player: {fileID: 366209448}
@@ -13577,6 +13526,7 @@ MonoBehaviour:
   _spawnRate: 0.8
   _numberOfSpawnPerSpawner: 3
   _maxEnemiesAmount: 25
+  _pointGainPercent: 25
 --- !u!1 &2053199127
 GameObject:
   m_ObjectHideFlags: 0
@@ -13887,7 +13837,6 @@ MonoBehaviour:
   ObjectPrefab: {fileID: 4653577741235025862, guid: 1a94e396e9abb004fb62a60712bbac78, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
-  _coinSpawner: {fileID: 376108314}
   _points:
   - {fileID: 1133705595}
   _player: {fileID: 366209448}
@@ -15984,4 +15933,3 @@ SceneRoots:
   - {fileID: 1594052569}
   - {fileID: 5953317575738629119}
   - {fileID: 2050020222}
-  - {fileID: 376108315}
