@@ -40,6 +40,8 @@ public class Game : MonoBehaviour
     private void OnDisable()
     {
         _enemySpawnerHandler.EnemyWasKilled -= OnEnemyDeath;
+        
+        TimerController.Clear();
     }
 
     private void OnEnemyDeath(Enemy enemy)

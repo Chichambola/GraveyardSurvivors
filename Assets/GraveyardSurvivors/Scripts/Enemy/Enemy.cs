@@ -18,9 +18,9 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
-    [SerializeField] private CoinSpawner _coinSpawner;
 
     public event Action<Enemy> CanBeReleased;
+    public event Action<Enemy> NoHealthLeft;
     
     private IPlayer _player;
     private Coroutine _attackRoutine;
@@ -99,7 +99,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         if (CurrentStats.Health <= 0)
         {
-            _coinSpawner.Spawn(transform.position, CurrentStats.MoneyForKill);
+            NoHealthLeft?.Invoke(this);
             
             Die();
         }

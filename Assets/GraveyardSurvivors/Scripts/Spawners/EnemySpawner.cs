@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
+    [SerializeField] private CoinSpawner _coinSpawner;
     [SerializeField] private Transform[] _points;
     [SerializeField] private Player _player;
     [SerializeField] private int _unitCost;
@@ -42,6 +43,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         enemy.transform.parent = transform;
         
         enemy.CanBeReleased += Release;
+        enemy.NoHealthLeft += OnNoHealthLeft;
         
         ActiveObjects.Add(enemy);
         
@@ -57,6 +59,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         enemy.ResetCharacteristics();
         
         enemy.CanBeReleased -= Release;
+        enemy.NoHealthLeft -= OnNoHealthLeft;
         
         base.ActionOnRelease(enemy);
         
@@ -68,5 +71,10 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         int randomIndex = Random.Range(0, _points.Length);
         
         return _points[randomIndex].position;
+    }
+    
+    private void OnNoHealthLeft(Enemy enemy)
+    {
+        _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
     }
 }

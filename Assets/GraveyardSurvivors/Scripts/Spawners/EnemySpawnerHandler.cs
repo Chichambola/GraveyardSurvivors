@@ -93,8 +93,6 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private void OnTimerStopped()
     {
-        Debug.Log("HEre");
-        
         _timer.TimerStopped -= OnTimerStopped;
         _timer.IntervalReached -= OnIntervalReached;
 
