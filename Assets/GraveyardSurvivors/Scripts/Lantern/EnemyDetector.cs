@@ -1,24 +1,50 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDetector : Detector
 {
-    public event Action<Enemy> EnemyDetected; 
-    public event Action<Enemy> EnemyLeft; 
+    private Dictionary<Collider, Enemy> _enemies;
     
+    public event Action<Enemy> EnemyDetected; 
+    public event Action<Enemy> EnemyLeft;
+
+    private void Awake()
+    {
+        _enemies = new Dictionary<Collider, Enemy>();
+    }
+
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Enemy enemy))
+        if (_enemies.ContainsKey(other))
         {
-            EnemyDetected?.Invoke(enemy);
+            EnemyDetected?.Invoke(_enemies[other]);
+        }
+        else
+        {
+            if (other.TryGetComponent(out Enemy enemy))
+            {
+                _enemies.Add(other, enemy);
+                
+                EnemyDetected?.Invoke(enemy);
+            }
         }
     }
 
     protected override void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Enemy enemy))
+        if (_enemies.ContainsKey(other))
         {
-            EnemyLeft?.Invoke(enemy);
+            EnemyDetected?.Invoke(_enemies[other]);
+        }
+        else
+        {
+            if (other.TryGetComponent(out Enemy enemy))
+            {
+                _enemies.Add(other, enemy);
+                
+                EnemyLeft?.Invoke(enemy);
+            }
         }
     }
 }

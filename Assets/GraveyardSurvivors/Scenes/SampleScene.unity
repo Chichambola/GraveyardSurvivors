@@ -120,52 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &53304853
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 53304854}
-  - component: {fileID: 53304855}
-  m_Layer: 3
-  m_Name: HealthRegenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &53304854
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53304853}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1122493855}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &53304855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53304853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82bc4f5586cf50f48abf2141794d5432, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 366209448}
-  _cooldown: 1
 --- !u!1 &97403465
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +286,7 @@ MonoBehaviour:
   _effects:
   - _effects:
     - rid: 5909440864032915460
-  _effectChance: 15
+  _effectChance: 100
   _arrowSpawner: {fileID: 247115541}
   references:
     version: 2
@@ -627,7 +581,7 @@ MonoBehaviour:
   - {fileID: 604643845}
   _player: {fileID: 366209448}
   _unitCost: 15
-  _weight: 20
+  _weight: 15
   _numberOfEnemiesSpawnAtOnce: 1
 --- !u!1 &258831538
 GameObject:
@@ -1098,7 +1052,7 @@ MonoBehaviour:
   _attacker: {fileID: 2053199129}
   _baseStats: {fileID: 11400000, guid: 33bece1b209fce2489a57609fc172ea9, type: 2}
   _statsViewer: {fileID: 1812729477}
-  _regenerator: {fileID: 53304855}
+  _health: {fileID: 1146992090}
   _defender: {fileID: 332754064}
   _evader: {fileID: 431239510}
   _wallet: {fileID: 472674646}
@@ -12476,7 +12430,7 @@ Transform:
   - {fileID: 1812729476}
   - {fileID: 431239509}
   - {fileID: 472674647}
-  - {fileID: 53304854}
+  - {fileID: 1146992089}
   m_Father: {fileID: 366209449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133705594
@@ -12581,6 +12535,52 @@ MonoBehaviour:
   MaxPoolCapacity: 5
   _points:
   - {fileID: 1894915800}
+--- !u!1 &1146992088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1146992089}
+  - component: {fileID: 1146992090}
+  m_Layer: 3
+  m_Name: Health
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1146992089
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146992088}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1122493855}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1146992090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146992088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69b0be855e957d2fc8e0b2dfd39b70bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 366209448}
+  _cooldown: 1
 --- !u!1 &1204296355
 GameObject:
   m_ObjectHideFlags: 0
@@ -13495,7 +13495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPrefab: {fileID: 4360565655115198188, guid: 82dfd2526ab9a9c41ad573242a457e46, type: 3}
   PoolCapacity: 0
-  MaxPoolCapacity: 5
+  MaxPoolCapacity: 15
   _coinSpawner: {fileID: 1012258921}
   _points:
   - {fileID: 1355553025}
@@ -13572,7 +13572,7 @@ MonoBehaviour:
   - {fileID: 1428741549}
   - {fileID: 1925439054}
   - {fileID: 258041550}
-  _initialAvailablePoints: 50
+  _initialAvailablePoints: 100
   _minTime: 8
   _maxTime: 20
   _spawnRate: 0.8
