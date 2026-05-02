@@ -12,6 +12,7 @@ public class BoxAttackArea : AttackArea
 
     protected override void Awake()
     {
+        base.Awake();
         _collider = GetComponent<BoxCollider>();
         _hitColliders = new Collider[NumberOfColliders];
         _initialSize = _collider.size;
@@ -49,10 +50,10 @@ public class BoxAttackArea : AttackArea
 
         int hits = Physics.OverlapBoxNonAlloc(detectAreaCenter, detectAreaHalfExtents, _hitColliders, _collider.transform.rotation, Mask);
         
-        attackers = new List<IAttacker>();
-        
-        bool isAnyAttackers = TryGetAttackers(ref attackers, _hitColliders, hits);
+        bool isAnyAttackers = TryGetAttackers(out var tempAttackers, _hitColliders, hits);
 
+        attackers = tempAttackers;
+        
         return isAnyAttackers;
     }
 

@@ -19,7 +19,12 @@ public class Bomb : Weapon
     {
         AttackStrategy.Execute(radiusMultiplier);
     }
-    
+
+    public override void StopAttacking()
+    {
+        AttackStrategy.Stop();
+    }
+
     private void OnAttackerDetected(IAttacker attacker)
     {
         attacker.TakeDamage(Info.Damage);

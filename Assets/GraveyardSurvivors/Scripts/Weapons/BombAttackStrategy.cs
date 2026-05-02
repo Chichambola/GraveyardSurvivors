@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Tween = PrimeTween.Tween;
 
@@ -16,17 +17,19 @@ public class BombAttackStrategy : AttackStrategy
     
     private Vector3 _targetRadius;
     private Tween _expandingTween;
+    private bool _isAttacking;
 
     private void OnDisable()
     {
-        ChangeSpheresVisibility(false);
-        _expandingSphere.gameObject.transform.localScale = Vector3.zero;
-        _radiusSphere.gameObject.transform.localScale = Vector3.zero;
-        _expandingTween.Stop();
+        if (_isAttacking)
+        {
+            Stop();
+        }
     }
 
     public override void Execute(float radiusMultiplier)
     {
+        _isAttacking = true;
         _attackArea.SetSize(_radius);  
         _attackArea.AddMultiplier(radiusMultiplier);
         
@@ -34,21 +37,24 @@ public class BombAttackStrategy : AttackStrategy
         _radiusSphere.gameObject.transform.localScale = _targetRadius;
         
         ChangeSpheresVisibility(true);
-        
+
         _expandingTween = Tween.Scale(_expandingSphere.gameObject.transform, _targetRadius, _duration).OnComplete(LookForAttackers);
+    }
+
+    public override void Stop()
+    {
+        _isAttacking = false;
+        ChangeSpheresVisibility(false);
+        _expandingSphere.gameObject.transform.localScale = Vector3.zero;
+        _radiusSphere.gameObject.transform.localScale = Vector3.zero;
+        _expandingTween.Stop();
     }
 
     private void LookForAttackers()
     {
-        ChangeSpheresVisibility(false);
-        
         _particleSpawner.Spawn(gameObject.transform.position, _radius);
         
-        List<IAttacker> attackers = new List<IAttacker>();
-        
-        _attackArea.TryGetAttackers(out attackers);
-
-        if (attackers != null && attackers.Count > 0)
+        if (_attackArea.TryGetAttackers(out var attackers))
         {
             foreach (var attacker in attackers)
             {
@@ -56,7 +62,7 @@ public class BombAttackStrategy : AttackStrategy
             }
         }
         
-        _expandingTween.Stop();
+        Stop();
     }
 
     private void ChangeSpheresVisibility(bool value)

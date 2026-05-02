@@ -21,7 +21,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     public event Action<Enemy> EnemyWasSpawned;
     
     private Vector3 _spawnPoint;
-    private IntervalTimer _timer;
     
     public int Cost => _unitCost;
     public int Weight => _weight;

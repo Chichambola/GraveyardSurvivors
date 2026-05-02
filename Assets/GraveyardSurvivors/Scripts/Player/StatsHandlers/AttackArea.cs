@@ -9,10 +9,15 @@ public abstract class AttackArea : MonoBehaviour
 {
     [SerializeField] protected LayerMask Mask;
     [SerializeField] protected int NumberOfColliders = 50;
+
+    private Dictionary<Collider, IAttacker> _validColliders;
     
     public event Action<IAttacker> EnemyDetected;
-    
-    protected abstract void Awake();
+
+    protected virtual void Awake()
+    {
+        _validColliders = new Dictionary<Collider, IAttacker>();
+    }
 
     protected abstract void OnEnable();
 
@@ -35,17 +40,27 @@ public abstract class AttackArea : MonoBehaviour
 
     public abstract void AddMultiplier(float multiplier);
     
-    protected bool TryGetAttackers(ref List<IAttacker> attackers, Collider[] hitColliders, int hits)
+    protected bool TryGetAttackers(out List<IAttacker> attackers, Collider[] hitColliders, int hits)
     {
+        var tempAttackers = new List<IAttacker>();
+        
         for (int i = 0; i < hits; i++)
         {
-            if (hitColliders[i].TryGetComponent(out IAttacker attacker))
+            if (_validColliders.ContainsKey(hitColliders[i]))
             {
-                attackers.Add(attacker);
+                tempAttackers.Add(_validColliders[hitColliders[i]]);
+            }
+            else
+            {
+                if (hitColliders[i].TryGetComponent(out IAttacker attacker))
+                {
+                    _validColliders.Add(hitColliders[i], attacker);
+                    tempAttackers.Add(attacker);
+                }
             }
         }
 
-        if (attackers.Count <= 0)
+        if (tempAttackers.Count <= 0)
         {
             attackers = null;
 
@@ -53,6 +68,8 @@ public abstract class AttackArea : MonoBehaviour
         }
         else
         {
+            attackers = tempAttackers;
+            
             return true;
         }
     }

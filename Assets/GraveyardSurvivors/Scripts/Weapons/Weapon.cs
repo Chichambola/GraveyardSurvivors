@@ -12,4 +12,5 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     public WeaponInfo Info => _info;
 
     public abstract void Attack(float radiusMultiplier);
+    public virtual void StopAttacking() {}
 }

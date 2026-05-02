@@ -126,11 +126,13 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private IEnumerator ChoosingRoutine()
     {
+        var wait = new WaitForSecondsRealtime(_spawnRate);
+        
         while (_isChoosing && _currentEnemies.Count < _maxEnemiesAmount)
         {
             ChooseSpawner();
 
-            yield return null;
+            yield return wait;
         }
         
         int time = Random.Range(_minTime, _maxTime);

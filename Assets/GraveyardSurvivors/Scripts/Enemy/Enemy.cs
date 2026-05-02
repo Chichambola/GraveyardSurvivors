@@ -99,8 +99,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         if (CurrentStats.Health <= 0)
         {
-            NoHealthLeft?.Invoke(this);
-            
             Die();
         }
     }
@@ -177,6 +175,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     private void Die()
     {
+        NoHealthLeft?.Invoke(this);
+            
+        Weapon.StopAttacking();
+        
         _collider.enabled = false;
         
         RemoveAllEffects();

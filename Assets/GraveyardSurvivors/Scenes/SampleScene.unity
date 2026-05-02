@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -627,7 +627,7 @@ MonoBehaviour:
   - {fileID: 604643845}
   _player: {fileID: 366209448}
   _unitCost: 15
-  _weight: 15
+  _weight: 20
   _numberOfEnemiesSpawnAtOnce: 1
 --- !u!1 &258831538
 GameObject:
@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InteractableSpawner: {fileID: 386456283}
   Cost: 10
-  IncreasePercent: 40
+  IncreasePercent: 30
   _costThreshold: 1000
 --- !u!114 &386456283
 MonoBehaviour:
@@ -1953,6 +1953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf838f1bc0556108b87934a4e7bc46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetFrameRate: 60
   _player: {fileID: 366209448}
   _darkness: {fileID: 531874429}
   _lantern: {fileID: 1433704763}
@@ -13571,7 +13572,7 @@ MonoBehaviour:
   - {fileID: 1428741549}
   - {fileID: 1925439054}
   - {fileID: 258041550}
-  _initialAvailablePoints: 30
+  _initialAvailablePoints: 50
   _minTime: 8
   _maxTime: 20
   _spawnRate: 0.8

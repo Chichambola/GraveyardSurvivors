@@ -21,9 +21,9 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
     [SerializeField] private StatsViewer _statsViewer;
-
+    
     [Header("Services")] 
-    [SerializeField] private HealthRegenerator _regenerator;
+    [SerializeField] private Health _health;
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
@@ -78,7 +78,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         _pickUpsDetector.BuffDetected += AddBuff;
         _pickUpsDetector.CoinDetected += ReceiveMoney;
         _collisionDetector.EnemyDetected += TakeDamage;
-        _regenerator.HealthRegenerated += OnHeal;
         
         _attacker.StartAttacking();
     }
@@ -88,7 +87,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         _pickUpsDetector.BuffDetected -= AddBuff;
         _pickUpsDetector.CoinDetected -= ReceiveMoney;
         _collisionDetector.EnemyDetected -= TakeDamage;
-        _regenerator.HealthRegenerated -= OnHeal;
     }
 
     private void Start()
@@ -224,7 +222,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         return damage;
     }
     
-    private void OnHeal(float value)
+    public void Heal(float value)
     {
         CurrentStats.Health += value;
 

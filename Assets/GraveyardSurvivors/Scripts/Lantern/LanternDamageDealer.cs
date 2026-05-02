@@ -9,12 +9,14 @@ public class LanternDamageDealer : MonoBehaviour
     [SerializeField] private float _damage = 3f;
     [SerializeField] private float _rate = 1f;
 
+    private int _time = 3600;
+    private IntervalTimer _timer;
+    
     public event Action EnemyDetected;
     public event Action EnemyLeft;
     public event Action<Enemy> EnemyDied;
     
     private List<Enemy> _enemiesInRange;
-    private Coroutine _coroutine;
 
     private void Awake()
     {
@@ -23,10 +25,9 @@ public class LanternDamageDealer : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(DamageRoutine());
+        _timer = new IntervalTimer(_time, _rate);
+        _timer.IntervalReached += DamageEnemies;
+        _timer.Start();
 
         _enemyDetector.EnemyDetected += OnEnemyDetected;
         _enemyDetector.EnemyLeft += OnEnemyLeft;
@@ -34,6 +35,7 @@ public class LanternDamageDealer : MonoBehaviour
 
     private void OnDisable()
     {
+        _timer.Stop();
         _enemyDetector.EnemyDetected -= OnEnemyDetected;
         _enemyDetector.EnemyLeft -= OnEnemyLeft;
     }
@@ -54,27 +56,20 @@ public class LanternDamageDealer : MonoBehaviour
 
         _enemiesInRange.Add(enemy);  
     }
-    
-    private IEnumerator DamageRoutine()
-    {
-        var wait = new WaitForSecondsRealtime(_rate);
-        
-        while (enabled)
-        {
-            if (_enemiesInRange.Count > 0)
-            {
-                for (int i = _enemiesInRange.Count - 1; i >= 0; i--)
-                {
-                    _enemiesInRange[i].TakeDamage(_damage);
 
-                    IsEnemyDead(_enemiesInRange[i]);
-                }
+    private void DamageEnemies()
+    {
+        if (_enemiesInRange.Count > 0)
+        {
+            for (int i = _enemiesInRange.Count - 1; i >= 0; i--)
+            {
+                _enemiesInRange[i].TakeDamage(_damage);
+
+                IsEnemyDead(_enemiesInRange[i]);
             }
-            
-            yield return wait;
         }
     }
-    
+
     private void IsEnemyDead(Enemy enemy)
     {
         if (enemy.CurrentStats.Health <= 0)

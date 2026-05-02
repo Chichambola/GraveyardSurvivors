@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
+    [SerializeField] private int _targetFrameRate = 60;
     [SerializeField] private Player _player;
     [SerializeField] private Darkness _darkness;
     [SerializeField] private Lantern _lantern;
@@ -21,6 +22,8 @@ public class Game : MonoBehaviour
 
     private void OnEnable()
     {
+        Application.targetFrameRate = _targetFrameRate;
+        
         _enemySpawnerHandler.EnemyWasKilled += OnEnemyDeath;
         
         if(_interactables == null) 

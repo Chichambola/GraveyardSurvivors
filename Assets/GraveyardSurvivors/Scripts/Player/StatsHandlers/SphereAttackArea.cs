@@ -12,6 +12,7 @@ public class SphereAttackArea : AttackArea
     
     protected override void Awake()
     {
+        base.Awake();
         _collider = GetComponent<SphereCollider>();
         _hitColliders = new Collider[NumberOfColliders];
         _initialRadius = _collider.radius;
@@ -38,11 +39,11 @@ public class SphereAttackArea : AttackArea
     public override bool TryGetAttackers(out List<IAttacker> attackers)
     {
         int hits = Physics.OverlapSphereNonAlloc(gameObject.transform.position, _collider.radius * _scaleOffset, _hitColliders, Mask);
+
+        bool isAnyAttackers = TryGetAttackers(out var tempAttackers, _hitColliders, hits);
+
+        attackers = tempAttackers;
         
-        attackers = new List<IAttacker>();
-
-        bool isAnyAttackers = TryGetAttackers(ref attackers, _hitColliders, hits);
-
         return isAnyAttackers;
     }
 
