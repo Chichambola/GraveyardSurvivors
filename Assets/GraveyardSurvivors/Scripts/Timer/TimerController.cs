@@ -9,7 +9,7 @@ public static class TimerController
 
     public static void RegisterTimer(Timer timer) => s_Timers.Add(timer);
     public static void DeregisterTimer(Timer timer) => s_Timers.Remove(timer);
-
+    
     public static void UpdateTimers()
     {
         if (s_Timers.Count > 0)

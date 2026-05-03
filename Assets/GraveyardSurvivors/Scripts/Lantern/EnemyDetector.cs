@@ -35,7 +35,7 @@ public class EnemyDetector : Detector
     {
         if (_enemies.ContainsKey(other))
         {
-            EnemyDetected?.Invoke(_enemies[other]);
+            EnemyLeft?.Invoke(_enemies[other]);
         }
         else
         {

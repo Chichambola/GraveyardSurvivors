@@ -27,7 +27,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
-    [SerializeField] private LanternDamageDealer _lanternDamageDealer;
     [SerializeField] private LanternLight _light;
     
     public event Action InteractionButtonPressed;

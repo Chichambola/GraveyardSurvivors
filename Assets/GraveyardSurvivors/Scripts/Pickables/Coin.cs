@@ -14,12 +14,12 @@ public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
     [SerializeField] private int _value = 1;
     [SerializeField] private float _timeBeforeRelease = 2f;
     
-    private Coroutine _coroutine;
     private Color _originalColor;
     
     public event Action<Coin> CanBeReleased;
     
     private Vector3 _initialForwardRotation;
+    private IntervalTimer _timer;
     
     public int Value => _value;
     
@@ -42,6 +42,8 @@ public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
 
     public void Release()
     {
+        _thrower.StopMoving();
+        
         CanBeReleased?.Invoke(this);
     }
 
@@ -50,28 +52,10 @@ public class Coin : MonoBehaviour, IThrowable, IPoolable<Coin>, IPickable
         _thrower.StartMoving(transform, _endPoint.position);
     }
 
-    public void SetPosition(Vector3 position)
-    {
-        transform.position = position;
-    }
-
     private void OnFinishedMoving()
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(ChangingOpacity());
-    }
-
-    private IEnumerator ChangingOpacity()
-    {
-        var wait = new WaitForSeconds(_timeBeforeRelease);
-        
-        while (enabled)
-        {
-            yield return wait;
-            
-            Release();
-        }
+        _timer = new IntervalTimer(_timeBeforeRelease);
+        _timer.TimerStopped += Release;
+        _timer.Start();
     }
 }

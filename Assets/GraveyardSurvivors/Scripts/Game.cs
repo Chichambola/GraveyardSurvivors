@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Sirenix.Serialization;
 using Unity.VisualScripting;
 using UnityEditor.Profiling;
+using PrimeTween;
 using UnityEngine;
 
 public class Game : MonoBehaviour

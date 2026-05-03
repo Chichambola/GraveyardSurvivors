@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
-using Tween = PrimeTween.Tween;
+using PrimeTween;
 
 public class BombAttackStrategy : AttackStrategy
 {

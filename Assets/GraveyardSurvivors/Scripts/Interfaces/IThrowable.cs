@@ -6,5 +6,4 @@ using UnityEngine;
 public interface IThrowable
 {
     void StartMoving();
-    void SetPosition(Vector3 position);
 }

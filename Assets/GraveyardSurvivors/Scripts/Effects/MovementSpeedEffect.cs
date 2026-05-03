@@ -22,7 +22,7 @@ public class MovementSpeedEffect : IEffect<IAttacker>, IMovementEffect
     {
         _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
         
-       // _currentEffect = Effect.Spawn();
+        _currentEffect = Effect.Spawn(_currentTarget.Rigidbody.position);
         
         _timer = new IntervalTimer(Duration);
         _timer.TimerStopped += OnTimerStopped;

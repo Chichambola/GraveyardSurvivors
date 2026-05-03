@@ -52,9 +52,12 @@ public class LanternDamageDealer : MonoBehaviour
 
     private void OnEnemyDetected(Enemy enemy)
     {
-        EnemyDetected?.Invoke();
-
-        _enemiesInRange.Add(enemy);  
+        if (_enemiesInRange.Contains(enemy) == false)
+        {
+            _enemiesInRange.Add(enemy);
+            
+            EnemyDetected?.Invoke();
+        }
     }
 
     private void DamageEnemies()

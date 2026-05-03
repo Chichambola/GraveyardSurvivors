@@ -8,13 +8,13 @@ public class ParticleEffectSpawner : Spawner<ParticleEffect>
     private float _duration;
     private float _radius;
 
-    public void Spawn(Vector3 position, float radius = 1f, float duration = 1f)
+    public ParticleEffect Spawn(Vector3 position, float radius = 1f, float duration = 1f)
     {
         _duration = duration;
         _spawnPosition = position;
         _radius = radius;
         
-        GetObject();
+        return GetObject();
     }
     
     protected override void ActionOnGet(ParticleEffect effect)

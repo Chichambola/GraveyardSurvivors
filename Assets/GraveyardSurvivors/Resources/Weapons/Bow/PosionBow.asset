@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 0}
   _name: Ivy bow
-  _damage: 2
+  _damage: 1
   _percentMultiplierPerWeapon: 4
