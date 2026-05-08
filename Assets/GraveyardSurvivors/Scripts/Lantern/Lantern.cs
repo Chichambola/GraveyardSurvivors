@@ -7,7 +7,7 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Lantern : MonoBehaviour, ILantern
+public class Lantern : MonoBehaviour
 {
     [Header("Light")]
     [SerializeField] private float _shrinkRateIncrease = 0.05f;
@@ -46,28 +46,6 @@ public class Lantern : MonoBehaviour, ILantern
         _light.GainedEnergy -= OnEnergyGained;
         _playerDetector.PlayerDetected -= OnPlayerDetected;
         _playerDetector.PlayerLeft -= OnPlayerLeft;
-    }
-    
-    public void StopShrinking() => _light.SetRate(_defaultValue);
-
-    public void StopLight() => _light.ChangeState(false);
-    
-    public void SetRadius(float threshold, float shrinkRate) => _light.SetBaseSettings(threshold, shrinkRate);
-
-    public void StartExpanding(float targetValue)
-    {
-        _light.SetGainingEnergyState(true);
-
-        _light.StartRadiusRoutine(targetValue);
-    }
-
-    public void StartShrinking(float shrinkRate)
-    {
-        _light.SetGainingEnergyState(false);
-
-        _light.SetRate(shrinkRate);
-
-        _light.StartRadiusRoutine(_defaultValue);
     }
     
     public void ProcessEnemyDeath(Enemy enemy)

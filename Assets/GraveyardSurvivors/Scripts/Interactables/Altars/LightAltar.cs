@@ -11,7 +11,7 @@ public class LightAltar : Interactable
     [SerializeField] private int _maxInteractionsAmount = 3;
     [SerializeField] private float _timeBeforeShrinking = 5f;
     [Header("Lantern")]
-    [SerializeField] private Lantern _lantern;
+    [SerializeField] private LanternLight _light;
     [SerializeField] private float _radiusMultiplier = 2f;
     [SerializeField] private float _shrinkRate = 0.2f;
     
@@ -26,9 +26,9 @@ public class LightAltar : Interactable
     {
         float threshold = _maxInteractionsAmount * _radiusMultiplier;
         
-        _lantern.SetRadius(threshold, _shrinkRate);
+        _light.SetBaseSettings(threshold, _shrinkRate);
         
-        _lantern.StopLight();
+        _light.ChangeState(false);
     }
 
     public override void ProcessInteraction()
@@ -57,11 +57,15 @@ public class LightAltar : Interactable
         }
     }
 
-    public void StopShrinking() => _lantern.StopShrinking();
+    public void StopShrinking() => _light.SetRate(_defaultValue);
 
     public void StartShrinking()
     {
-        _lantern.StartShrinking(_shrinkRate);
+        _light.SetGainingEnergyState(false);
+
+        _light.SetRate(_shrinkRate);
+
+        _light.StartRadiusRoutine(_defaultValue);
     }
 
     public void StartExpanding()
@@ -71,7 +75,9 @@ public class LightAltar : Interactable
         if (_radius <= 0)
             throw new Exception("Radius can not be lesser than 0");
             
-        _lantern.StartExpanding(_radius);
+        _light.SetGainingEnergyState(true);
+
+        _light.StartRadiusRoutine(_radius);
     }
     
     private IEnumerator WaitCoroutine()
