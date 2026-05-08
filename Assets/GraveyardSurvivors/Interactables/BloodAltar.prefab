@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 117811364892704532}
   - component: {fileID: 2245322540743517103}
   - component: {fileID: -4501492033182133253}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BloodAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,6 +306,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Outline: {fileID: 7152924963427175835}
   ValueViewer: {fileID: 2245322540743517103}
+  MaxInteractionsAmount: 2
+  _countdownTime: 1.5
   _damagePercent:
   - 50
   - 73

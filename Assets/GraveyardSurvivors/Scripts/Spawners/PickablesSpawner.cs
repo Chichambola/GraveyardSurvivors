@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CoinSpawner : Spawner<Coin>
+public class PickablesSpawner : Spawner<Pickable>
 {
     [SerializeField] private Vector3 _spawnOffset;
     
@@ -26,27 +26,27 @@ public class CoinSpawner : Spawner<Coin>
         }
     }
     
-    protected override void ActionOnGet(Coin coin)
+    protected override void ActionOnGet(Pickable pickable)
     {
-        coin.CanBeReleased += Release;
+        pickable.CanBeReleased += Release;
         
         float yRotation = Random.Range(_minRotation, _highestRotation);
         
-        coin.transform.parent = null;
-        coin.transform.position = _spawnPosition;
-        coin.transform.rotation = Quaternion.Euler(coin.transform.rotation.x, yRotation, coin.transform.rotation.z);
+        pickable.transform.parent = null;
+        pickable.transform.position = _spawnPosition;
+        pickable.transform.rotation = Quaternion.Euler(pickable.transform.rotation.x, yRotation, pickable.transform.rotation.z);
         
-        base.ActionOnGet(coin);
+        base.ActionOnGet(pickable);
         
-        coin.StartMoving();
+        pickable.StartMoving();
     }
 
-    protected override void ActionOnRelease(Coin coin)
+    protected override void ActionOnRelease(Pickable pickable)
     {
-        coin.transform.parent = transform;
+        pickable.transform.parent = transform;
         
-        coin.CanBeReleased -= Release;
+        pickable.CanBeReleased -= Release;
         
-        base.ActionOnRelease(coin);
+        base.ActionOnRelease(pickable);
     }
 }

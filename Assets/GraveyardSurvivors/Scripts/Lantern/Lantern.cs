@@ -52,7 +52,7 @@ public class Lantern : MonoBehaviour, ILantern
 
     public void StopLight() => _light.ChangeState(false);
     
-    public void SetRadius(float threshold) => _light.SetRadius(threshold);
+    public void SetRadius(float threshold, float shrinkRate) => _light.SetBaseSettings(threshold, shrinkRate);
 
     public void StartExpanding(float targetValue)
     {

@@ -1255,6 +1255,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _numberOfColliders: 10
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &3944776941964220866
 GameObject:
   m_ObjectHideFlags: 0
@@ -12079,7 +12082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e801a991a650c8bab8a1f6f8d01db47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectPrefab: {fileID: 4709316755915958993, guid: 61cde8e5eb2df9b3ab78d0a6f5b864dc, type: 3}
+  ObjectPrefab: {fileID: 0}
   PoolCapacity: 0
   MaxPoolCapacity: 5
 --- !u!1 &7351829500382899923
@@ -12524,6 +12527,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07a7cced0da144369e51185d77c68e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mask:
+    serializedVersion: 2
+    m_Bits: 0
   NumberOfColliders: 50
 --- !u!1 &8365591387072331090
 GameObject:
@@ -12709,11 +12715,10 @@ MonoBehaviour:
   _attacker: {fileID: 3576614735168740133}
   _baseStats: {fileID: 11400000, guid: 008db7118c8cbb94496d64b4d32834ea, type: 2}
   _statsViewer: {fileID: 2930424314521966787}
-  _regenerator: {fileID: 2237140961610066256}
+  _health: {fileID: 0}
   _defender: {fileID: 7579873399927403576}
   _evader: {fileID: 2904216158807907134}
   _wallet: {fileID: 8618297670006930452}
-  _lanternDamageDealer: {fileID: 4519446858130286976}
   _light: {fileID: 5418540070453717813}
 --- !u!114 &4827197996965815838
 MonoBehaviour:

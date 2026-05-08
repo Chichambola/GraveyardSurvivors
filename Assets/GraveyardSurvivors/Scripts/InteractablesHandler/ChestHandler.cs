@@ -41,7 +41,7 @@ public class ChestHandler : CostInteractableHandler
         {
             chest.Open();
             
-            Player.ReduceMoneyAmount(Cost);
+            Player.ReduceMoney(Cost);
         
             chest.IncreaseChance(Player.Luck);
             

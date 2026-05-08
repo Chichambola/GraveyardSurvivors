@@ -17,16 +17,18 @@ public struct DamageOvertime : IEffect<IAttacker>
     public event Action<IEffect<IAttacker>> EffectCompleted;
     
     private IAttacker _currentTarget;
-    private ParticleEffect _currentEffect;
+    private List<ParticleEffect> _currentEffects;
     private IntervalTimer _timer;
     
     public void Apply(IAttacker attacker)
     {
+        _currentEffects = new List<ParticleEffect>();
+        
         _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
         
-        var target = _currentTarget as MonoBehaviour;
+        var effect = Effect.Spawn(_currentTarget.Rigidbody.position,TickInterval);
         
-        Effect.Spawn(target.transform.position,TickInterval);
+        _currentEffects.Add(effect); 
         
         _timer = new IntervalTimer(Duration, TickInterval);
         _timer.IntervalReached += OnIntervalReached;
@@ -43,10 +45,10 @@ public struct DamageOvertime : IEffect<IAttacker>
     {
         if (_currentTarget != null)
         {
-            var target = _currentTarget as MonoBehaviour;
-            
-            Effect.Spawn(target.transform.position);
+            var effect = Effect.Spawn(_currentTarget.Rigidbody.position);
 
+            _currentEffects.Add(effect);
+            
             _currentTarget.TakeDamage(DamagePerTick);
         }
     }
@@ -58,10 +60,14 @@ public struct DamageOvertime : IEffect<IAttacker>
         EffectCompleted?.Invoke(this);
         _timer.IntervalReached -= OnIntervalReached;
         _timer.TimerStopped -= OnTimerStopped;
-        
-        _currentEffect.Release();
+
+        foreach (var effect in _currentEffects)
+        {
+            effect.Release();
+        }
         
         _timer = null;
         _currentTarget = null;
+        _currentEffects = null;
     }
 }

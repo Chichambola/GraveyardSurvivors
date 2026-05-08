@@ -40,7 +40,7 @@ public class ChanceAltarHandler : ItemInteractable
         if (rarityLevel == null)
             throw new Exception(nameof(rarityLevel));
 
-        Player.ReduceMoneyAmount(altar.CurrentCost);
+        Player.ReduceMoney(altar.CurrentCost);
         
         altar.StartCountdown();
         

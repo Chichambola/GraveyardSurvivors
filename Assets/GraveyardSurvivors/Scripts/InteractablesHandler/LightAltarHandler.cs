@@ -33,7 +33,7 @@ public class LightAltarHandler : CostInteractableHandler
             return;
         }
         
-        Player.ReduceMoneyAmount(altar.Value);
+        Player.ReduceMoney(altar.Value);
         
         altar.IncreaseInteractionAmount();
         

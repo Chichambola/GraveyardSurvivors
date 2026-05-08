@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1785589636022686039}
   - component: {fileID: 565072860269253723}
   - component: {fileID: 248304176100849451}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ MonoBehaviour:
   _timeBeforeShrinking: 5
   _lantern: {fileID: 1692802740171217853}
   _radiusMultiplier: 2
-  _shrinkRate: 0.05
+  _shrinkRate: 0.08
 --- !u!54 &565072860269253723
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5626,7 +5626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b377165e09d8bae5a2e9592d7928a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shrinkRateIncrease: 0.001
+  _shrinkRateIncrease: 0.005
   _light: {fileID: 1050723065949224833}
   _damageDealer: {fileID: 5271832273630387498}
   _playerDetector: {fileID: 6160452685908758418}

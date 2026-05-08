@@ -11,7 +11,7 @@ public interface IPlayer
     public float MoneyAmount { get; }
     public float CurrentHealth { get; }
     public float Luck { get; }
-    void ReduceMoneyAmount(float value);
+    void ReduceMoney(float value);
     void ReceiveMoney (float value);
     void TakeDamage(float value);
 }

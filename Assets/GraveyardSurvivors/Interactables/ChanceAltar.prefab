@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 7514767359008438798}
   - component: {fileID: 831034912937131186}
   - component: {fileID: 1215712349551245528}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ChanceAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

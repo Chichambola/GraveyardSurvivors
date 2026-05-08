@@ -1,12 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
@@ -27,6 +20,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
+    [SerializeField] private ExperienceHandler _xpHandler;
     [SerializeField] private LanternLight _light;
     
     public event Action InteractionButtonPressed;
@@ -75,7 +69,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         CurrentStats = _baseStats.GetStats();
         
         _pickUpsDetector.BuffDetected += AddBuff;
-        _pickUpsDetector.CoinDetected += ReceiveMoney;
+        _pickUpsDetector.CoinDetected += _wallet.ReceiveMoney;
+        _pickUpsDetector.CrystalDetected += _xpHandler.GainExperience;
         _collisionDetector.EnemyDetected += TakeDamage;
         
         _attacker.StartAttacking();
@@ -84,8 +79,9 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     private void OnDisable()
     {
         _pickUpsDetector.BuffDetected -= AddBuff;
-        _pickUpsDetector.CoinDetected -= ReceiveMoney;
+        _pickUpsDetector.CoinDetected -= _wallet.ReceiveMoney;
         _collisionDetector.EnemyDetected -= TakeDamage;
+        _pickUpsDetector.CrystalDetected -= _xpHandler.GainExperience;
     }
 
     private void Start()
@@ -132,19 +128,9 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         CanBeReleased?.Invoke(this);
     }
 
-    public void ReduceMoneyAmount(float amount)
-    {
-        _wallet.ReduceMoneyAmount(amount);
-    }
+    public void ReduceMoney(float value) => _wallet.ReduceMoney(value);
 
-    public void ReceiveMoney(float value)
-    {
-        value *= CurrentStats.GoldMultiplier;
-
-        value = Mathf.Round(value);
-        
-        _wallet.ReceiveMoney(value);
-    }
+    public void ReceiveMoney(float value) => _wallet.ReceiveMoney(value);
     
     public void ChangeSpeed(float speedPercent, bool isSlowing)
     {
@@ -183,6 +169,28 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         StatsChanged?.Invoke(CurrentStats);
     }
     
+    public void Heal(float value)
+    {
+        CurrentStats.Health += value;
+
+        if (CurrentStats.Health >= MaxHealth)
+        {
+            CurrentStats.Health = MaxHealth;
+        }
+        
+        _statsViewer.UpdateStats(CurrentStats);
+    }
+    
+    public void IncreaseLanternCount() => _lanternsCount++;
+    
+    public void DecreaseLanternCount()
+    {
+        _lanternsCount--;
+
+        if (_lanternsCount < 0)
+            throw new Exception($"Lanterns count can not be less than 0. Current count: {_lanternsCount}");
+    }
+    
     protected override void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
@@ -219,27 +227,5 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
         
         return damage;
-    }
-    
-    public void Heal(float value)
-    {
-        CurrentStats.Health += value;
-
-        if (CurrentStats.Health >= MaxHealth)
-        {
-            CurrentStats.Health = MaxHealth;
-        }
-        
-        _statsViewer.UpdateStats(CurrentStats);
-    }
-    
-    public void IncreaseLanternCount() => _lanternsCount++;
-    
-    public void DecreaseLanternCount()
-    {
-        _lanternsCount--;
-
-        if (_lanternsCount < 0)
-            throw new Exception($"Lanterns count can not be less than 0. Current count: {_lanternsCount}");
     }
 }

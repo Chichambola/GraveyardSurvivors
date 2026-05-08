@@ -10,7 +10,8 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
-    [SerializeField] private CoinSpawner _coinSpawner;
+    [SerializeField] private PickablesSpawner _coinSpawner;
+    [SerializeField] private PickablesSpawner _crystalSpawner;
     [SerializeField] private Transform[] _points;
     [SerializeField] private Player _player;
     [SerializeField] private int _unitCost;
@@ -75,5 +76,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     private void OnNoHealthLeft(Enemy enemy)
     {
         _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
+        _crystalSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.XpForKill);
     }
 }

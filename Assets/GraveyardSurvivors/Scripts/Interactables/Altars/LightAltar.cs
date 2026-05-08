@@ -26,7 +26,7 @@ public class LightAltar : Interactable
     {
         float threshold = _maxInteractionsAmount * _radiusMultiplier;
         
-        _lantern.SetRadius(threshold);
+        _lantern.SetRadius(threshold, _shrinkRate);
         
         _lantern.StopLight();
     }
@@ -59,7 +59,10 @@ public class LightAltar : Interactable
 
     public void StopShrinking() => _lantern.StopShrinking();
 
-    public void StartShrinking() => _lantern.StartShrinking(_shrinkRate);
+    public void StartShrinking()
+    {
+        _lantern.StartShrinking(_shrinkRate);
+    }
 
     public void StartExpanding()
     {

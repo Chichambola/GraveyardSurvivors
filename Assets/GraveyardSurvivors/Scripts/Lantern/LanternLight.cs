@@ -56,9 +56,10 @@ public class LanternLight : MonoBehaviour
         StartRadiusRoutine(value);
     }
 
-    public void SetRadius(float threshold)
+    public void SetBaseSettings(float threshold, float shrinkRate)
     {
         _radius = threshold;
+        _shrinkRate = shrinkRate;
     }
     
     public void SetLightRadiusForAllAxis(float value)
@@ -167,7 +168,7 @@ public class LanternLight : MonoBehaviour
                 GainedEnergy?.Invoke(this);
             }
             
-            value = Mathf.MoveTowards(currentValue, finalValue, Time.fixedDeltaTime);
+            value = Mathf.MoveTowards(currentValue, finalValue, Time.deltaTime);
 
             return value;
         }

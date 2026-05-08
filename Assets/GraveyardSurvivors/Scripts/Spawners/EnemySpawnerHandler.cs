@@ -16,11 +16,8 @@ public class EnemySpawnerHandler : MonoBehaviour
     [SerializeField] private int _minTime = 15;
     [SerializeField] private int _maxTime = 60;
     [SerializeField] private float _spawnRate = 0.8f;
-    [SerializeField] private int _numberOfSpawnPerSpawner = 3;
     [SerializeField] private int _maxEnemiesAmount = 30;
-
-    [Header("Points gaining")] [SerializeField]
-    private int _pointGainPercent = 10;
+    [SerializeField] private int _pointGainPercent = 10;
 
     public event Action<Enemy> EnemyWasKilled;
 

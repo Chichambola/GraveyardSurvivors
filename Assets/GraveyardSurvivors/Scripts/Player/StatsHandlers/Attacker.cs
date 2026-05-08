@@ -57,7 +57,7 @@ public class Attacker : MonoBehaviour
     {
         if (!Mathf.Approximately(currentCooldown, _cooldown))
         {
-            _cooldown = UserUtils.SubtractPercentFromNumber(_cooldown, _attackSpeed);
+            _cooldown = _cooldown.SubtractPercentFromNumber(_attackSpeed);
             
             currentCooldown = _cooldown;
         }

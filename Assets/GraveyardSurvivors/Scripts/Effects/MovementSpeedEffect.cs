@@ -16,7 +16,6 @@ public class MovementSpeedEffect : IEffect<IAttacker>, IMovementEffect
     private IAttacker _currentTarget;
     private ParticleEffect _currentEffect;
     private IntervalTimer _timer;
-    private float _previousSpeedPercent;
     
     public void Apply(IAttacker attacker)
     {
@@ -57,8 +56,6 @@ public class MovementSpeedEffect : IEffect<IAttacker>, IMovementEffect
     
     private void OnTimerStarted()
     {
-        _previousSpeedPercent = _currentTarget.Speed;
-        
         _currentTarget.ChangeSpeed(SpeedPercent, IsSlowing);
     }
 }

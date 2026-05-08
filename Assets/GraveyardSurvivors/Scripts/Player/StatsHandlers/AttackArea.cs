@@ -11,8 +11,6 @@ public abstract class AttackArea : MonoBehaviour
     [SerializeField] protected int NumberOfColliders = 50;
 
     private Dictionary<Collider, IAttacker> _validColliders;
-    
-    public event Action<IAttacker> EnemyDetected;
 
     protected virtual void Awake()
     {
@@ -23,22 +21,14 @@ public abstract class AttackArea : MonoBehaviour
 
     protected abstract void OnValidate();
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent(out IAttacker attacker))
-        {
-            EnemyDetected?.Invoke(attacker);
-        }
-    }
-
     public virtual void SetActive(bool value) { }
 
     public virtual void SetSize(float value) {}
     public virtual void SetSize() {}
 
-    public abstract bool TryGetAttackers(out List<IAttacker> attackers);
-
     public abstract void AddMultiplier(float multiplier);
+    
+    public abstract bool TryGetAttackers(out List<IAttacker> attackers);
     
     protected bool TryGetAttackers(out List<IAttacker> attackers, Collider[] hitColliders, int hits)
     {

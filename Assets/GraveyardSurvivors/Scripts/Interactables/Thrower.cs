@@ -1,15 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using PrimeTween;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class Thrower : MonoBehaviour
 {
-    [SerializeField] private Ease _ease = Ease.Linear;
     [SerializeField] private float _jumpPower;
     [SerializeField] private float _duration = 1.5f;
     [SerializeField] private int _numberofJumps = 1;
@@ -17,14 +17,31 @@ public class Thrower : MonoBehaviour
     public event Action FinishedMoving;
 
     private Sequence _throwerTween;
-
-    public void StartMoving(Transform throwable, Vector3 endPoint)
-    {
-        _throwerTween = throwable.DOJump(endPoint, _jumpPower,_numberofJumps, _duration).SetEase(_ease).OnComplete(()=>FinishedMoving?.Invoke());
-    }
+    private float _minRandomValue = -2f;
+    private float _maxRandomValue = 5f;
 
     public void StopMoving()
     {
-        _throwerTween?.Kill();
+        FinishedMoving?.Invoke();
+        
+        _throwerTween.Stop();
+    }
+    
+    public void StartMoving(Transform throwable, Vector3 endPoint, bool isRandomPosition = false)
+    {
+        endPoint = GetRandomPosition(endPoint, isRandomPosition);
+
+        _throwerTween = PrimeTweenExtension.Jump(throwable, endPoint, _duration, _jumpPower).OnComplete(StopMoving);
+    }
+
+    private Vector3 GetRandomPosition(Vector3 endPoint, bool isRandomPosition)
+    {
+        if (isRandomPosition)
+        {
+            endPoint.x += Random.Range(_minRandomValue, _maxRandomValue);
+            endPoint.z += Random.Range(_minRandomValue, _maxRandomValue);
+        }
+
+        return endPoint;
     }
 }

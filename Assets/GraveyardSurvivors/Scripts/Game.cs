@@ -16,6 +16,13 @@ public class Game : MonoBehaviour
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
     [SerializeField] private List<InteractableHandler> _interactables;
 
+    private int _primeTweenCapacity = 3000;
+
+    private void Awake()
+    {
+        PrimeTweenConfig.SetTweensCapacity(_primeTweenCapacity);
+    }
+
     private void Update()
     {
         TimerController.UpdateTimers();

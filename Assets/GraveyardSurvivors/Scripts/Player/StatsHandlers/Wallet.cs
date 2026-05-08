@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Wallet : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private float _initialValue = 50;
 
@@ -25,7 +26,7 @@ public class Wallet : MonoBehaviour
         UpdateValue();
     }
 
-    public void ReduceMoneyAmount(float amount)
+    public void ReduceMoney(float amount)
     {
         _currentMoneyAmount -= Mathf.Round(amount);
         
@@ -34,6 +35,8 @@ public class Wallet : MonoBehaviour
 
     public void ReceiveMoney(float value)
     {
+        value *= _player.CurrentStats.GoldMultiplier;
+        
         _currentMoneyAmount += Mathf.Round(value);
         
         UpdateValue();

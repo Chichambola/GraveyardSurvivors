@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 public class InteractablesDetector : MonoBehaviour
 {
     [SerializeField] private int _numberOfColliders = 10;
+    [SerializeField] private LayerMask _layerMask;
 
     private SphereCollider _collider;
     private Collider[] _hitColliders;
@@ -50,7 +51,7 @@ public class InteractablesDetector : MonoBehaviour
     
     private void FindInteractables()
     {
-        var hits = Physics.OverlapSphereNonAlloc(gameObject.transform.position, _collider.radius, _hitColliders);
+        var hits = Physics.OverlapSphereNonAlloc(gameObject.transform.position, _collider.radius, _hitColliders, _layerMask);
 
         float minDistance = float.MaxValue;
         int count = 0;

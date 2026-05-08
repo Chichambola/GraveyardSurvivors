@@ -11,16 +11,17 @@ public class PickablesDetector : MonoBehaviour
     
     public event Action<IBuff> BuffDetected;
     public event Action<float> CoinDetected;
+    public event Action<float> CrystalDetected; 
     
     private SphereCollider _collider;
-    private Dictionary<Collider, IPickable> _coins;
+    private Dictionary<Collider, IPickable> _pickables;
     private float _initialRadius;
     private float _currentRadiusMultiplier;
 
     private void Awake()
     {
         _collider = GetComponent<SphereCollider>();
-        _coins = new Dictionary<Collider, IPickable>();
+        _pickables = new Dictionary<Collider, IPickable>();
         _initialRadius = _collider.radius;
     }
 
@@ -36,17 +37,17 @@ public class PickablesDetector : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (_coins.ContainsKey(other))
+        if (_pickables.ContainsKey(other))
         {
-            DeterminePickableType(_coins[other]);
+            DeterminePickableType(_pickables[other]);
         }
         else
         {
             if (other.TryGetComponent(out IPickable pickable))
             {
-                if (pickable is Coin coin)
+                if (pickable is not Item)
                 {
-                    _coins.Add(other, coin);
+                    _pickables.Add(other, pickable);
                 }
                 
                 DeterminePickableType(pickable);
@@ -64,6 +65,11 @@ public class PickablesDetector : MonoBehaviour
         if (pickable is Coin coin)
         {
             CoinDetected?.Invoke(coin.Value);
+        }
+
+        if (pickable is Crystal crystal)
+        {
+            CrystalDetected?.Invoke(crystal.Value);
         }
         
         pickable.Release();
