@@ -286,11 +286,19 @@ MonoBehaviour:
   _effects:
   - _effects:
     - rid: 5909440864032915460
+    - rid: 3644556881758257153
   _effectChance: 15
   _arrowSpawner: {fileID: 247115541}
   references:
     version: 2
     RefIds:
+    - rid: 3644556881758257153
+      type: {class: DamageOverTimeFactory, ns: , asm: Assembly-CSharp}
+      data:
+        _duration: 2
+        _tickInterval: 1
+        _damagePerTick: 1
+        _damageEffect: {fileID: 557341883}
     - rid: 5909440864032915460
       type: {class: MovementSpeedEffectFactory, ns: , asm: Assembly-CSharp}
       data:
@@ -577,11 +585,12 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _coinSpawner: {fileID: 1012258921}
+  _crystalSpawner: {fileID: 1035285751}
   _points:
   - {fileID: 604643845}
   _player: {fileID: 366209448}
-  _unitCost: 15
-  _weight: 15
+  _unitCost: 20
+  _weight: 10
   _numberOfEnemiesSpawnAtOnce: 1
 --- !u!1 &258831538
 GameObject:
@@ -1056,6 +1065,7 @@ MonoBehaviour:
   _defender: {fileID: 332754064}
   _evader: {fileID: 431239510}
   _wallet: {fileID: 472674646}
+  _xpHandler: {fileID: 973273884}
   _light: {fileID: 2059530641}
 --- !u!4 &366209449
 Transform:
@@ -1316,8 +1326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fe0161eae0d8b49a69273f96910f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 366209448}
   _text: {fileID: 306250852}
-  _initialValue: 0
+  _initialValue: 5000
 --- !u!4 &472674647
 Transform:
   m_ObjectHideFlags: 0
@@ -1535,7 +1546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPrefab: {fileID: 3027385545821991, guid: 20fe3bbaabe1873c18d7a22ec5e43d3b, type: 3}
   PoolCapacity: 0
-  MaxPoolCapacity: 5
+  MaxPoolCapacity: 10
 --- !u!1 &604643844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,6 +1974,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _numberOfColliders: 10
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!135 &845281747
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7143,6 +7157,51 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &973273882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 973273883}
+  - component: {fileID: 973273884}
+  m_Layer: 0
+  m_Name: xphandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &973273883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973273882}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1122493855}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &973273884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973273882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142c3b5584674b1c1bd4c40f87392aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 366209448}
 --- !u!1 &1002513576
 GameObject:
   m_ObjectHideFlags: 0
@@ -7324,6 +7383,54 @@ Transform:
   - {fileID: 1095351024}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 49.99, y: 0, z: 0}
+--- !u!1 &1035285750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1035285752}
+  - component: {fileID: 1035285751}
+  m_Layer: 0
+  m_Name: crystalSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1035285751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035285750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6fd41d3bee6bf643a8853e399af697f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectPrefab: {fileID: 6115175908981016313, guid: 4e509ce883203d91eb6f397d1648bb46, type: 3}
+  PoolCapacity: 0
+  MaxPoolCapacity: 200
+  _spawnOffset: {x: 0, y: 0, z: 0}
+--- !u!4 &1035285752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035285750}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.542135, y: -10.111545, z: 4.4477882}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1041548474
 GameObject:
   m_ObjectHideFlags: 0
@@ -12430,6 +12537,7 @@ Transform:
   - {fileID: 431239509}
   - {fileID: 472674647}
   - {fileID: 1146992089}
+  - {fileID: 973273883}
   m_Father: {fileID: 366209449}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133705594
@@ -12712,6 +12820,7 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _coinSpawner: {fileID: 1012258921}
+  _crystalSpawner: {fileID: 1035285751}
   _points:
   - {fileID: 1682210313}
   _player: {fileID: 366209448}
@@ -12817,7 +12926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b377165e09d8bae5a2e9592d7928a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shrinkRateIncrease: 0.003
+  _shrinkRateIncrease: 0.004
   _light: {fileID: 360078372}
   _damageDealer: {fileID: 550256711}
   _playerDetector: {fileID: 1433704765}
@@ -13449,6 +13558,7 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 15
   _coinSpawner: {fileID: 1012258921}
+  _crystalSpawner: {fileID: 1035285751}
   _points:
   - {fileID: 1355553025}
   _player: {fileID: 366209448}
@@ -13528,7 +13638,6 @@ MonoBehaviour:
   _minTime: 8
   _maxTime: 20
   _spawnRate: 0.8
-  _numberOfSpawnPerSpawner: 3
   _maxEnemiesAmount: 25
   _pointGainPercent: 25
 --- !u!1 &2053199127
@@ -13885,6 +13994,7 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _coinSpawner: {fileID: 1012258921}
+  _crystalSpawner: {fileID: 1035285751}
   _points:
   - {fileID: 1133705595}
   _player: {fileID: 366209448}
@@ -15543,7 +15653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &6572252831595227812
 GameObject:
   m_ObjectHideFlags: 0
@@ -15981,4 +16091,5 @@ SceneRoots:
   - {fileID: 1594052569}
   - {fileID: 5953317575738629119}
   - {fileID: 1012258922}
+  - {fileID: 1035285752}
   - {fileID: 2050020222}
