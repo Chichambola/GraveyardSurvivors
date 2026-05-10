@@ -12,7 +12,7 @@ public class Game : MonoBehaviour
     [SerializeField] private int _targetFrameRate = 60;
     [SerializeField] private Player _player;
     [SerializeField] private Darkness _darkness;
-    [SerializeField] private Lantern _lantern;
+    [SerializeField] private LanternLight _lantern;
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
     [SerializeField] private List<InteractableHandler> _interactables;
 
@@ -46,6 +46,7 @@ public class Game : MonoBehaviour
         }
         
         _darkness.Init(_player);
+        _lantern.Init();
     }
 
     private void OnDisable()

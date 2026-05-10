@@ -37,19 +37,6 @@ public class LightAltarHandler : CostInteractableHandler
         
         altar.IncreaseInteractionAmount();
         
-        altar.StopShrinking();
-
-        altar.StartExpanding();
-
-        altar.WaitTimeEnded += OnTimeEnded;
-        
         altar.SetValue(IncreaseCost(altar.Value));
-    }
-
-    private void OnTimeEnded(LightAltar altar)
-    {
-        altar.WaitTimeEnded -= OnTimeEnded;
-        
-        altar.StartShrinking();
     }
 }
