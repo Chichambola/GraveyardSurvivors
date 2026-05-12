@@ -17,6 +17,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     [SerializeField] private int _unitCost;
     [SerializeField] private int _weight;
     [SerializeField] private int _numberOfEnemiesSpawnAtOnce = 1;
+    [SerializeField] private Vector3 _offsetAfterDeath = new (0, -90, 0);
 
     public event Action<Enemy> EnemyWasReleased;
     public event Action<Enemy> EnemyWasSpawned;
@@ -64,6 +65,8 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         base.ActionOnRelease(enemy);
         
         EnemyWasReleased?.Invoke(enemy);
+        
+        enemy.SetColliderCenter(_offsetAfterDeath, true);
     }
 
     private Vector3 GetRandomPoint()
@@ -77,5 +80,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     {
         _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
         _crystalSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.XpForKill);
+        enemy.SetColliderCenter(_offsetAfterDeath, false);
     }
 }

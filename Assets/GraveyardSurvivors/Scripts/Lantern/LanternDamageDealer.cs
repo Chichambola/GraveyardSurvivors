@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LanternDamageDealer : MonoBehaviour
@@ -11,10 +12,6 @@ public class LanternDamageDealer : MonoBehaviour
 
     private int _time = 3600;
     private IntervalTimer _timer;
-    
-    public event Action EnemyDetected;
-    public event Action EnemyLeft;
-    public event Action<Enemy> EnemyDied;
     
     private List<Enemy> _enemiesInRange;
 
@@ -29,34 +26,23 @@ public class LanternDamageDealer : MonoBehaviour
         _timer.IntervalReached += DamageEnemies;
         _timer.Start();
 
-        _enemyDetector.EnemyDetected += OnEnemyDetected;
         _enemyDetector.EnemyLeft += OnEnemyLeft;
+        _enemyDetector.EnemyDetected += _enemiesInRange.Add;
     }
 
     private void OnDisable()
     {
-        _timer.Stop();
-        _enemyDetector.EnemyDetected -= OnEnemyDetected;
+        _timer?.Stop();
+
         _enemyDetector.EnemyLeft -= OnEnemyLeft;
+        _enemyDetector.EnemyDetected -= _enemiesInRange.Add;
     }
 
     private void OnEnemyLeft(Enemy enemy)
     {
         if (_enemiesInRange.Contains(enemy))
         {
-            _enemiesInRange.Remove(enemy);
-            
-            EnemyLeft?.Invoke();
-        }
-    }
-
-    private void OnEnemyDetected(Enemy enemy)
-    {
-        if (_enemiesInRange.Contains(enemy) == false)
-        {
-            _enemiesInRange.Add(enemy);
-            
-            EnemyDetected?.Invoke();
+            _enemiesInRange.Remove(enemy);   
         }
     }
 
@@ -67,19 +53,7 @@ public class LanternDamageDealer : MonoBehaviour
             for (int i = _enemiesInRange.Count - 1; i >= 0; i--)
             {
                 _enemiesInRange[i].TakeDamage(_damage);
-
-                IsEnemyDead(_enemiesInRange[i]);
             }
-        }
-    }
-
-    private void IsEnemyDead(Enemy enemy)
-    {
-        if (enemy.CurrentStats.Health <= 0)
-        {
-            OnEnemyLeft(enemy);
-                        
-            EnemyDied?.Invoke(enemy);
         }
     }
 }

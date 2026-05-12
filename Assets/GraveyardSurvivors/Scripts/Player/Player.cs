@@ -31,17 +31,13 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     private Rigidbody _rigidbody;
     
     public CharacterStats CurrentStats { get; private set; }
-    public Rigidbody Rigidbody => _rigidbody;
-    public LanternLight Light => _light;
     public Vector3 CurrentPosition => transform.position;
     public Transform Transform => transform;
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth => CurrentStats.Health;
-    public float Speed => Mover.Speed;
     public float Luck => CurrentStats.Luck;
     public bool IsAlive => CurrentStats.Health > 0;
     public bool IsLightActive => _light.IsActive;
-    public int LanternsCount => _lanternsCount;
 
 
     public float MaxHealth => CurrentStats.MaxHealth;
@@ -123,6 +119,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         
     }
 
+    public Vector3 GetPosition() => _rigidbody.transform.position;
+
     public override void Release()
     {
         CanBeReleased?.Invoke(this);
@@ -180,17 +178,19 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         
         _statsViewer.UpdateStats(CurrentStats);
     }
-    
-    public void IncreaseLanternCount() => _lanternsCount++;
-    
-    public void DecreaseLanternCount()
-    {
-        _lanternsCount--;
 
-        if (_lanternsCount < 0)
-            throw new Exception($"Lanterns count can not be less than 0. Current count: {_lanternsCount}");
+    public void ResetRadius()
+    {
+        _light.ResetRadius();
+        _light.SetRate(0);
     }
-    
+
+    public void StartLight()
+    {
+        _light.StartRadiusRoutine();
+        _light.ResetRate();
+    }
+
     protected override void InitializeStateMachine()
     {
         StateMachine = new StateMachine();

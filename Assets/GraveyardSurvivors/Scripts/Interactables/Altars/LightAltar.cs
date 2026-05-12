@@ -16,21 +16,17 @@ public class LightAltar : Interactable
     
     private int _currentInteractionsAmount;
     private int _defaultValue = 0;
+    private float _radius;
     private Coroutine _coroutine;
 
-    private void Start()
+    private void OnEnable()
     {
-        _light.Init();
+        _light.GainedEnergy += StartWaiting;
     }
 
-    public override void ProcessInteraction()
+    private void OnDisable()
     {
-        base.ProcessInteraction();
-
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(WaitCoroutine());
+        _light.GainedEnergy -= StartWaiting;
     }
 
     public override void ResetCharacteristics()
@@ -42,20 +38,26 @@ public class LightAltar : Interactable
     public void IncreaseInteractionAmount()
     {
         _currentInteractionsAmount++;
-
-        float radius = _light.CurrentRadius;
-
-        radius += _radiusMultiplier;
+        
+        _radius += _radiusMultiplier;
         
         _light.SetRate(_defaultValue);
         
-        _light.StartRadiusRoutine(radius);
+        _light.StartRadiusRoutine(_radius);
         
         if (_currentInteractionsAmount == _maxInteractionsAmount)
         {
             IsAvailable = false;
         }
-    } 
+    }
+
+    private void StartWaiting()
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(WaitCoroutine());
+    }
     
     private IEnumerator WaitCoroutine()
     {
@@ -64,6 +66,8 @@ public class LightAltar : Interactable
         while (enabled)
         {
             yield return wait;
+            
+            _light.ResetRate();
             
             _light.StartRadiusRoutine();
         }

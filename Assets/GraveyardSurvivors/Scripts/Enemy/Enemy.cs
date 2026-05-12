@@ -32,11 +32,9 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private int _movementEffectCount;
 
     public EnemyStats CurrentStats { get; private set; }
-    public Rigidbody Rigidbody => _rigidbody;
-    public bool IsAlive => CurrentStats.Health > 0;
+    public bool IsAlive { get; private set; }
     public bool IsAttacking { get; private set; }
     public float Damage => Weapon.Info.Damage;
-    public float Speed => Mover.Speed;
 
     public void Init(Player player)
     {
@@ -80,11 +78,14 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private void OnEnable()
     {
         InitializeStateMachine();
+
+        IsAlive = true;
     }
 
     public void ResetCharacteristics()
     {
-
+        
+        IsAlive = true;
     }
 
     public override void Release() => CanBeReleased?.Invoke(this);
@@ -97,8 +98,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
         _health.text = $"{CurrentStats.Health:f1}";
         
-        if (CurrentStats.Health <= 0)
+        if (CurrentStats.Health <= 0 && IsAlive)
         {
+            IsAlive = false;
+            
             Die();
         }
     }
@@ -138,6 +141,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         }
     }
 
+    public Vector3 GetPosition() => _rigidbody.transform.position;
+
     public override void HandleMovement()
     {
         Mover.Move(_player.Transform, CurrentStats.MovementSpeed);
@@ -176,20 +181,18 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private void Die()
     {
         NoHealthLeft?.Invoke(this);
-            
-        Weapon.StopAttacking();
-        
-        _collider.enabled = false;
-        
-        RemoveAllEffects();
         
         CurrentStats.Health = 0;
         
-        Mover.ResetSpeed();
-            
         _movementEffectCount = 0;
 
         _health.text = $"{CurrentStats.Health}";
+        
+        Weapon.StopAttacking();
+        
+        RemoveAllEffects();
+        
+        Mover.ResetSpeed();
     }
 
     private void RemoveAllEffects() 
@@ -236,6 +239,18 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
             Weapon.Attack(AttackRadiusMultiplier);
             
             IsAttacking = false;
+        }
+    }
+
+    public void SetColliderCenter(Vector3 offsetAfterDeath, bool isResetting)
+    {
+        if (isResetting)
+        {
+            _collider.center -= offsetAfterDeath;
+        }
+        else
+        {
+            _collider.center += offsetAfterDeath;
         }
     }
 }

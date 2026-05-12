@@ -26,7 +26,9 @@ public struct DamageOvertime : IEffect<IAttacker>
         
         _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
         
-        var effect = Effect.Spawn(_currentTarget.Rigidbody.position,TickInterval);
+        var targetPosition = _currentTarget.GetPosition();
+        
+        var effect = Effect.Spawn(targetPosition,TickInterval);
         
         _currentEffects.Add(effect); 
         
@@ -45,7 +47,9 @@ public struct DamageOvertime : IEffect<IAttacker>
     {
         if (_currentTarget != null)
         {
-            var effect = Effect.Spawn(_currentTarget.Rigidbody.position);
+            var targetPosition = _currentTarget.GetPosition();
+            
+            var effect = Effect.Spawn(targetPosition);
 
             _currentEffects.Add(effect);
             

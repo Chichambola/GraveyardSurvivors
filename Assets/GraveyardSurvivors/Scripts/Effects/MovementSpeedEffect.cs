@@ -20,8 +20,10 @@ public class MovementSpeedEffect : IEffect<IAttacker>, IMovementEffect
     public void Apply(IAttacker attacker)
     {
         _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
+
+        var targetPosition = _currentTarget.GetPosition();
         
-        _currentEffect = Effect.Spawn(_currentTarget.Rigidbody.position);
+        _currentEffect = Effect.Spawn(targetPosition);
         
         _timer = new IntervalTimer(Duration);
         _timer.TimerStopped += OnTimerStopped;

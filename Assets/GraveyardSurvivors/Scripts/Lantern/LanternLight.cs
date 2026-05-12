@@ -17,8 +17,8 @@ public class LanternLight : MonoBehaviour
     [SerializeField] private float _disableThreshold = 0.3f;
     [SerializeField] private float _shrinkRate = 0.1f;
 
-    public event Action<LanternLight> GainedEnergy;
-    public event Action<LanternLight> ThresholdReached;
+    public event Action GainedEnergy;
+    public event Action ThresholdReached;
     
     private Coroutine _coroutine;
     private float _initialRadius;
@@ -111,12 +111,12 @@ public class LanternLight : MonoBehaviour
         {
             if (Mathf.Approximately(_collider.radius, finalValue))
             {
-                GainedEnergy?.Invoke(this);
+                GainedEnergy?.Invoke();
 
                 _targetRadius = _defaultValue;
             }
             
-            value = Mathf.MoveTowards(currentValue, finalValue, Time.fixedDeltaTime);
+            value = Mathf.MoveTowards(currentValue, finalValue, Time.deltaTime);
 
             return value;
         }
@@ -138,7 +138,7 @@ public class LanternLight : MonoBehaviour
 
             if (_collider.radius <= _disableThreshold && IsGainingEnergy == false)
             {
-                ThresholdReached?.Invoke(this);
+                ThresholdReached?.Invoke();
                 
                 SetLightRadius(_defaultValue);
             }

@@ -21,7 +21,7 @@ public class RateChanger : MonoBehaviour
         _enemyDetector.EnemyDetected -= IncreaseRate;
         _enemyDetector.EnemyLeft -= DecreaseRate;
     }
-    
+
     private void DecreaseRate(Enemy enemy)
     {
         if (enemy == null)
@@ -30,9 +30,6 @@ public class RateChanger : MonoBehaviour
         float currentRate = _light.ShrinkRate;
 
         currentRate -= _shrinkRateIncrease;
-
-        if (currentRate < 0)
-            throw new Exception("Rate can not be less than 0");
 
         _light.SetRate(currentRate);
     }
@@ -45,7 +42,7 @@ public class RateChanger : MonoBehaviour
         float currentRate = _light.ShrinkRate;
 
         currentRate += _shrinkRateIncrease;
-
+        
         _light.SetRate(currentRate);
     }
 }

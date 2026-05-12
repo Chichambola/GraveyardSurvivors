@@ -10,6 +10,7 @@ public class RadiusResetter : MonoBehaviour
     
     private float _defaultValue = 0;
     private float _lastRadius;
+    private ILightCarrier _carrier;
 
     private void OnEnable()
     {
@@ -25,17 +26,17 @@ public class RadiusResetter : MonoBehaviour
     
     private void OnPlayerDetected(ILightCarrier carrier)
     {
-        LanternLight carrierLight = carrier.Light;
-        
-        carrierLight.ResetRadius();
-        carrierLight.SetRate(_defaultValue);
+        if (carrier == null)
+            throw new Exception();
+
+        carrier.ResetRadius();
     }
 
     private void OnPlayerLeft(ILightCarrier carrier)
     {
-        LanternLight carrierLight = carrier.Light;
+        if (carrier == null)
+            throw new Exception();
         
-        carrierLight.StartRadiusRoutine();
-        carrierLight.ResetRate();
+        carrier.StartLight();
     }
 }
