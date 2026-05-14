@@ -1023,6 +1023,7 @@ MonoBehaviour:
   Weapon: {fileID: 9097205137456547513}
   AttackCooldown: 2
   AttackRadiusMultiplier: 0
+  _damageOnCollision: 1
   _defender: {fileID: 8495916584587225802}
   _health: {fileID: 2926252959164244938}
 --- !u!114 &5529676922395853904

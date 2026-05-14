@@ -6,7 +6,6 @@ using UnityEngine;
 public interface IPlayer
 {
     public Vector3 CurrentPosition { get; }
-    public Transform Transform { get; }
     public float MaxHealth { get; }
     public float MoneyAmount { get; }
     public float CurrentHealth { get; }

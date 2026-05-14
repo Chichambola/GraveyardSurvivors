@@ -528,6 +528,7 @@ MonoBehaviour:
   Weapon: {fileID: 386484544202866058}
   AttackCooldown: 0.5
   AttackRadiusMultiplier: 0
+  _damageOnCollision: 5
   _defender: {fileID: 886728962877736986}
   _health: {fileID: 2307875020064126990}
 --- !u!114 &8696614376307728057
@@ -542,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af51e27f34b4b2c428427995af66fb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 4
+  _speed: 3.6
 --- !u!114 &5936001690060495124
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -45,7 +45,7 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
     private void OnFinishedMoving()
     {
         _timer = new IntervalTimer(_timeBeforeRelease);
-        _timer.TimerStopped += Release;
+        _timer.Stopped += Release;
         _timer.Start();
     }
 }

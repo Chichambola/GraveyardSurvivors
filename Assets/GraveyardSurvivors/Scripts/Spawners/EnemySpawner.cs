@@ -10,28 +10,30 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
+    [SerializeField] private Player _player;
+    [Header("Loot spawners")]
     [SerializeField] private PickablesSpawner _coinSpawner;
     [SerializeField] private PickablesSpawner _crystalSpawner;
-    [SerializeField] private Transform[] _points;
-    [SerializeField] private Player _player;
+    [Header("Unit specific fields")]
     [SerializeField] private int _unitCost;
     [SerializeField] private int _weight;
     [SerializeField] private int _numberOfEnemiesSpawnAtOnce = 1;
+    [Header("Unity workaround")]
     [SerializeField] private Vector3 _offsetAfterDeath = new (0, -90, 0);
+
+    private Vector3 _spawnPoint;
 
     public event Action<Enemy> EnemyWasReleased;
     public event Action<Enemy> EnemyWasSpawned;
     
-    private Vector3 _spawnPoint;
-    
     public int Cost => _unitCost;
     public int Weight => _weight;
 
-    public void Spawn()
+    public void Spawn(Vector3 position)
     {
         for (int i = 0; i < _numberOfEnemiesSpawnAtOnce; i++)
         {
-            _spawnPoint = GetRandomPoint();
+            _spawnPoint = position;
             
             GetObject();
         }
@@ -67,13 +69,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         EnemyWasReleased?.Invoke(enemy);
         
         enemy.SetColliderCenter(_offsetAfterDeath, true);
-    }
-
-    private Vector3 GetRandomPoint()
-    {
-        int randomIndex = Random.Range(0, _points.Length);
-        
-        return _points[randomIndex].position;
     }
     
     private void OnNoHealthLeft(Enemy enemy)

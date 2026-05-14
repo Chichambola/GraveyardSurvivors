@@ -13,7 +13,7 @@ public class Rotator : MonoBehaviour
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             
-            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, _speed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, _speed * Time.fixedDeltaTime);
         }
     }
 }

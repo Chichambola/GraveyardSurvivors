@@ -16,7 +16,7 @@ public struct DamageOvertime : IEffect<IAttacker>
 
     public event Action<IEffect<IAttacker>> EffectCompleted;
     
-    private IAttacker _currentTarget;
+    private IAttacker _target;
     private List<ParticleEffect> _currentEffects;
     private IntervalTimer _timer;
     
@@ -24,9 +24,9 @@ public struct DamageOvertime : IEffect<IAttacker>
     {
         _currentEffects = new List<ParticleEffect>();
         
-        _currentTarget = attacker ?? throw new ArgumentNullException(nameof(attacker));
+        _target = attacker ?? throw new ArgumentNullException(nameof(attacker));
         
-        var targetPosition = _currentTarget.GetPosition();
+        var targetPosition = _target.CurrentPosition;
         
         var effect = Effect.Spawn(targetPosition,TickInterval);
         
@@ -34,7 +34,7 @@ public struct DamageOvertime : IEffect<IAttacker>
         
         _timer = new IntervalTimer(Duration, TickInterval);
         _timer.IntervalReached += OnIntervalReached;
-        _timer.TimerStopped += OnTimerStopped;
+        _timer.Stopped += OnTimerStopped;
         _timer.Start();
     }
 
@@ -45,15 +45,15 @@ public struct DamageOvertime : IEffect<IAttacker>
     
     private void OnIntervalReached()
     {
-        if (_currentTarget != null)
+        if (_target != null)
         {
-            var targetPosition = _currentTarget.GetPosition();
+            var targetPosition = _target.CurrentPosition;
             
             var effect = Effect.Spawn(targetPosition);
 
             _currentEffects.Add(effect);
             
-            _currentTarget.TakeDamage(DamagePerTick);
+            _target.TakeDamage(DamagePerTick);
         }
     }
 
@@ -63,7 +63,7 @@ public struct DamageOvertime : IEffect<IAttacker>
     {
         EffectCompleted?.Invoke(this);
         _timer.IntervalReached -= OnIntervalReached;
-        _timer.TimerStopped -= OnTimerStopped;
+        _timer.Stopped -= OnTimerStopped;
 
         foreach (var effect in _currentEffects)
         {
@@ -71,7 +71,7 @@ public struct DamageOvertime : IEffect<IAttacker>
         }
         
         _timer = null;
-        _currentTarget = null;
+        _target = null;
         _currentEffects = null;
     }
 }

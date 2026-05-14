@@ -10,7 +10,6 @@ public class WeaponInfo : ScriptableObject
     [SerializeField] private Sprite _sprite;
     [SerializeField] private string _name;
     [SerializeField] private float _damage;
-    [SerializeField] private float _percentMultiplierPerWeapon;
     
     public float Damage => _damage;
 }

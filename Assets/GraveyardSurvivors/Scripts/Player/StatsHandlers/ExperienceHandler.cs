@@ -5,11 +5,22 @@ using UnityEngine;
 public class ExperienceHandler : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    
+    private float _currentXp;
+    private float _targetXp;
 
-    private float _xp;
+    public void Init(float targetXp)
+    {
+        _targetXp = targetXp;
+    }
     
     public void GainExperience(float experience)
     {
-        _xp += _player.CurrentStats.XpMultiplier * experience;
+        _currentXp += _player.CurrentStats.XpMultiplier * experience;
+    }
+
+    public void UpdateTargetXp(float targetXpMultiplier)
+    {
+        
     }
 }

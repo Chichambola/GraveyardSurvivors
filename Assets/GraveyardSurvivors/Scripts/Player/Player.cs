@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
 public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrier
 {
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private CollisionDetector _collisionDetector;
+    [SerializeField] private CollisionHandler _collisionHandler;
     [SerializeField] private PickablesDetector _pickUpsDetector;
     [SerializeField] private InteractionHandler _interactionHandler;
     [SerializeField] private Attacker _attacker;
@@ -14,6 +15,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
     [SerializeField] private StatsViewer _statsViewer;
+    [SerializeField] private float _invincibilityAfterDamage = .30f;
     
     [Header("Services")] 
     [SerializeField] private Health _health;
@@ -28,7 +30,9 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
 
     private int _lanternsCount;
     private bool _isInLantern;
+    private bool _canTakeDamage;
     private Rigidbody _rigidbody;
+    private IntervalTimer _timer;
     
     public CharacterStats CurrentStats { get; private set; }
     public Vector3 CurrentPosition => transform.position;
@@ -67,7 +71,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         _pickUpsDetector.BuffDetected += AddBuff;
         _pickUpsDetector.CoinDetected += _wallet.ReceiveMoney;
         _pickUpsDetector.CrystalDetected += _xpHandler.GainExperience;
-        _collisionDetector.EnemyDetected += TakeDamage;
+        _collisionHandler.EnemyDetected += TakeDamage;
         
         _attacker.StartAttacking();
     }
@@ -76,12 +80,14 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     {
         _pickUpsDetector.BuffDetected -= AddBuff;
         _pickUpsDetector.CoinDetected -= _wallet.ReceiveMoney;
-        _collisionDetector.EnemyDetected -= TakeDamage;
+        _collisionHandler.EnemyDetected -= TakeDamage;
         _pickUpsDetector.CrystalDetected -= _xpHandler.GainExperience;
     }
 
     private void Start()
     {
+        _canTakeDamage = true;
+        
         _light.Init();
         
         StatsChanged?.Invoke(CurrentStats);
@@ -106,7 +112,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
 
     public override void HandleMovement()
     {
-        Mover.Move(_inputReader.MovementDirection.normalized, CurrentStats.MovementSpeed);
+        Mover.MoveDyDirection(_inputReader.MovementDirection.normalized, CurrentStats.MovementSpeed);
         
         if (_inputReader.MovementDirection != Vector3.zero)
         {
@@ -114,12 +120,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         }
     }
 
-    public void ResetCharacteristics()
-    {
-        
-    }
-
-    public Vector3 GetPosition() => _rigidbody.transform.position;
+    public void ResetCharacteristics() { }
 
     public override void Release()
     {
@@ -144,11 +145,27 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
 
     public void TakeDamage(float damage)
     {
-        damage = DetermineDamageAmount(damage);
+        if (!_canTakeDamage)
+            return;
         
-        CurrentStats.Health -= damage;
+        if (_evader.CanEvade(CurrentStats.EvasionChance, CurrentStats.Luck))
+        {
+            Debug.Log("Evaded");
+        }
+        else
+        {
+            damage = DetermineDamageAmount(damage);
         
-        _statsViewer.UpdateStats(CurrentStats);
+            _canTakeDamage = false;
+            
+            CurrentStats.Health -= damage;
+        
+            _statsViewer.UpdateStats(CurrentStats);
+            
+            _timer = new IntervalTimer(_invincibilityAfterDamage);
+            _timer.Stopped += OnDamageTimerStopped;
+            _timer.Start();
+        }
     }
     
     public void ApplyEffect(IEffect<IAttacker> effectFactory) { }
@@ -206,15 +223,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     
     private float DetermineDamageAmount(float damage)
     {
-        if (_evader.CanEvade(CurrentStats.EvasionChance, CurrentStats.Luck))
-        {
-            Debug.Log("Evaded");
-
-            damage = 0;
-            
-            return damage;
-        }
-        
         if (_defender.CanBlock(CurrentStats.BlockChance, CurrentStats.Luck))
         {
             Debug.Log("Blocked");
@@ -227,5 +235,14 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
         
         return damage;
+    }
+
+    private void OnDamageTimerStopped()
+    {
+        _canTakeDamage = true;
+        
+        _timer.Stopped -= OnDamageTimerStopped;
+        
+        _timer?.Stop();
     }
 }

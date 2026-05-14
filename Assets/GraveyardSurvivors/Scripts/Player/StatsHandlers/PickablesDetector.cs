@@ -33,6 +33,7 @@ public class PickablesDetector : MonoBehaviour
     private void OnDisable()
     {
         _player.StatsChanged -= OnStatsChanged;
+        _collider.radius = _initialRadius;
     }
 
     protected void OnTriggerEnter(Collider other)

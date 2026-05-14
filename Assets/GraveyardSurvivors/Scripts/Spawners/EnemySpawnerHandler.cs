@@ -9,14 +9,17 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnerHandler : MonoBehaviour
 {
+    [Header("Spawners settings")]
     [SerializeField] private EnemySpawner[] _enemySpawners;
-    [SerializeField] private int _initialAvailablePoints = 30;
-
-    [Header("Spawning values")]
+    [SerializeField] private Transform[] _spawnPoints;
+    [Header("Spawning settings")]
     [SerializeField] private int _minTime = 15;
     [SerializeField] private int _maxTime = 60;
     [SerializeField] private float _spawnRate = 0.8f;
     [SerializeField] private int _maxEnemiesAmount = 30;
+    [Header("Points settings")]
+    [SerializeField] private int _initialAvailablePoints = 30;
+    [SerializeField] private int _maxPoints = 250;
     [SerializeField] private int _pointGainPercent = 10;
 
     public event Action<Enemy> EnemyWasKilled;
@@ -27,7 +30,6 @@ public class EnemySpawnerHandler : MonoBehaviour
     private List<EnemySpawner> _enemiesToSpawn;
     private IntervalTimer _timer;
     private float _availablePoints;
-    private float _debugPoints;
     private bool _isChoosing;
 
     private void Awake()
@@ -86,11 +88,18 @@ public class EnemySpawnerHandler : MonoBehaviour
     private void OnIntervalReached()
     {
         _availablePoints = _availablePoints.AddPercentToNumber(_pointGainPercent);
+
+        if (_availablePoints > _maxPoints)
+        {
+            _availablePoints = _maxPoints;
+            
+            OnTimerStopped();
+        }
     }
 
     private void OnTimerStopped()
     {
-        _timer.TimerStopped -= OnTimerStopped;
+        _timer.Stopped -= OnTimerStopped;
         _timer.IntervalReached -= OnIntervalReached;
 
         _timer?.Stop();
@@ -108,7 +117,9 @@ public class EnemySpawnerHandler : MonoBehaviour
             {
                 var spawner = _enemiesToSpawn.First();
 
-                spawner.Spawn();
+                var point = GetRandomPoint();
+                
+                spawner.Spawn(point);
 
                 _enemiesToSpawn.Remove(spawner);
 
@@ -135,7 +146,7 @@ public class EnemySpawnerHandler : MonoBehaviour
         int time = Random.Range(_minTime, _maxTime);
         
         _timer = new IntervalTimer(time);
-        _timer.TimerStopped += OnTimerStopped;
+        _timer.Stopped += OnTimerStopped;
         _timer.IntervalReached += OnIntervalReached;
         _timer.Start();
     }
@@ -154,5 +165,12 @@ public class EnemySpawnerHandler : MonoBehaviour
         {
             _isChoosing = false;
         }
+    }
+    
+    private Vector3 GetRandomPoint()
+    {
+        int randomIndex = Random.Range(0, _spawnPoints.Length);
+        
+        return _spawnPoints[randomIndex].position;
     }
 }

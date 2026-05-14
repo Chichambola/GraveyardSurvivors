@@ -15,7 +15,7 @@ public class DieState : BaseState
         int delay = Random.Range(_minDelay, _maxDelay);
         
         _timer = new IntervalTimer(delay);
-        _timer.TimerStopped += DoExit;
+        _timer.Stopped += DoExit;
         _timer.Start();
         
         Animator.CrossFade(s_Death, CrossFadeDuration);
@@ -23,7 +23,7 @@ public class DieState : BaseState
 
     public override void DoExit()
     {
-        _timer.TimerStopped -= DoExit;
+        _timer.Stopped -= DoExit;
         _timer?.Stop();
         StateHandler.Release();
     }

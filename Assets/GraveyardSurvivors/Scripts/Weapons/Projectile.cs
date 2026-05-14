@@ -47,7 +47,7 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
         
         while (_currentTarget.IsAlive)
         {
-            _mover.Move(target.transform, _speedMultiplier);
+            _mover.MoveToPosition(target.transform.position, _speedMultiplier);
 
             Vector3 distance = target.transform.position - transform.position;
 

@@ -48,7 +48,7 @@ public class RangeAttackStrategy : AttackStrategy
 
                 foreach (var attacker in currentAttackers)
                 {
-                    var targetPosition = attacker.GetPosition();
+                    var targetPosition = attacker.CurrentPosition;
                     
                     float distance = Vector3.Distance(gameObject.transform.position, targetPosition);
 

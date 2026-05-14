@@ -8,8 +8,6 @@ public class Attacker : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private float _cooldown = 1.5f;
-
-    public event Action<Enemy> EnemyWasKilled;
     
     private float _attackSpeed;
     private float _attackRadius;
@@ -75,7 +73,7 @@ public class Attacker : MonoBehaviour
     
     private void OnEnemyDetected(IAttacker attacker)
     {
-        if (attacker != null && attacker is Enemy enemy)
+        if (attacker is Enemy enemy)
         {
             float damage = _weapon.Info.Damage;
 
@@ -87,11 +85,6 @@ public class Attacker : MonoBehaviour
             }
         
             enemy.TakeDamage(damage);
-
-            if (enemy.CurrentStats.Health <= 0)
-            {
-                EnemyWasKilled?.Invoke(enemy);
-            }
         }
     }
 

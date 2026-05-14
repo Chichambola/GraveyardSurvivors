@@ -15,8 +15,8 @@ public abstract class Timer : IDisposable
         InitialTime = value;
     }
     
-    public event Action TimerStarted; 
-    public event Action TimerStopped; 
+    public event Action Started; 
+    public event Action Stopped; 
     
     public float CurrentTime { get; protected set; }
     public bool IsRunning { get; private set; }
@@ -44,7 +44,7 @@ public abstract class Timer : IDisposable
         {
             IsRunning = true;
             TimerController.RegisterTimer(this);
-            TimerStarted?.Invoke();
+            Started?.Invoke();
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class Timer : IDisposable
         {
             IsRunning = false;
             TimerController.DeregisterTimer(this);
-            TimerStopped?.Invoke();
+            Stopped?.Invoke();
         }
     }
 

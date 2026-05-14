@@ -1,3 +1,4 @@
+using DG.Tweening;
 using PrimeTween;
 using UnityEngine;
 
@@ -18,25 +19,23 @@ public class Mover : MonoBehaviour
 
         _initialSpeed = _speed;
     }
-
-    public void Move(Transform target, float speedMultiplier)
+    
+    public void MoveDyDirection(Vector3 direction, float speedMultiplier)
     {
         float currentSpeed = _speed.AddPercentToNumber(speedMultiplier);
         
-        Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+        transform.position += direction * currentSpeed * Time.fixedDeltaTime;
+    }
+
+    public void MoveToPosition(Vector3 targetPosition, float speedMultiplier)
+    {
+        float currentSpeed = _speed.AddPercentToNumber(speedMultiplier);
+    
+        Vector3 adjustedTarget = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
         
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, currentSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, adjustedTarget, currentSpeed * Time.fixedDeltaTime);
     }
     
-    public void Move(Vector3 direction, float speedMultiplier)
-    {
-        float currentSpeed = _speed.AddPercentToNumber(speedMultiplier);
-        
-        Vector3 nextPosition = _rigidbody.position + direction;
-        
-        transform.position = Vector3.MoveTowards(transform.position, nextPosition, currentSpeed * Time.deltaTime);
-    }
-
     public void SetSpeed(float speed)
     {
         if (speed < 0)

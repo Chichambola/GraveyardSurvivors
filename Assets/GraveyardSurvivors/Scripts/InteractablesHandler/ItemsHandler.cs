@@ -65,8 +65,6 @@ public class ItemsHandler : MonoBehaviour
         if (tempItem == null)
             throw new Exception($"{tempItem} is not a valid item");
         
-        Debug.Log(tempItem);
-        
         _itemSpawner.SetPrefab(tempItem);
         _itemSpawner.Spawn(position);
     }

@@ -15,6 +15,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [SerializeField] protected Weapon Weapon;
     [SerializeField] protected float AttackCooldown = 0.5f;
     [SerializeField] protected float AttackRadiusMultiplier;
+    [SerializeField] private float _damageOnCollision = 3f;
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
@@ -35,6 +36,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public bool IsAlive { get; private set; }
     public bool IsAttacking { get; private set; }
     public float Damage => Weapon.Info.Damage;
+    public float DamageOnCollision => _damageOnCollision;
+    public Vector3 CurrentPosition => transform.position;
 
     public void Init(Player player)
     {
@@ -141,14 +144,12 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         }
     }
 
-    public Vector3 GetPosition() => _rigidbody.transform.position;
-
     public override void HandleMovement()
     {
-        Mover.Move(_player.Transform, CurrentStats.MovementSpeed);
+        Mover.MoveToPosition(_player.CurrentPosition, CurrentStats.MovementSpeed);
         
         Vector3 direction = (_player.CurrentPosition - transform.position).normalized;
-
+        
         Rotator.Rotate(direction);
     }
 
