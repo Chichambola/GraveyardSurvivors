@@ -1,26 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ExperienceHandler : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private float _experienceIncreasePercent = 155;
+    [SerializeField] private float _initialTargetXp = 50;
+    [SerializeField] private TextMeshProUGUI _text;
     
     private float _currentXp;
     private float _targetXp;
 
-    public void Init(float targetXp)
+    private void Awake()
     {
-        _targetXp = targetXp;
-    }
-    
-    public void GainExperience(float experience)
-    {
-        _currentXp += _player.CurrentStats.XpMultiplier * experience;
+        if (_initialTargetXp <= 0)
+        {
+            throw new Exception("Target experience can not be less or equal to 0");
+        }
+        
+        _targetXp = _initialTargetXp;
     }
 
-    public void UpdateTargetXp(float targetXpMultiplier)
+    private void Start()
     {
+        UpdateText();
+    }
+
+    public void GainExperience(float experience)
+    {
+        _currentXp += experience;
+
+        if (_currentXp >= _targetXp)
+        {
+            _currentXp -= _targetXp;
+
+            _targetXp = _targetXp.AddPercentToNumber(_experienceIncreasePercent);
+
+            UpdateText();
+        }
         
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        _text.text = $"XP: {_currentXp} / {_targetXp}";
     }
 }

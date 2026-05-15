@@ -9,9 +9,11 @@ public class Rotator : MonoBehaviour
 
     public void Rotate(Vector3 direction)
     {
-        if(direction.sqrMagnitude > .01f)
+        Vector3 horizontalDirection = new Vector3(direction.x, 0, direction.z);
+        
+        if(horizontalDirection.sqrMagnitude > .01f)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            Quaternion lookRotation = Quaternion.LookRotation(horizontalDirection);
             
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, _speed * Time.fixedDeltaTime);
         }

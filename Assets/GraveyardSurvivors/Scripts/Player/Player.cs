@@ -22,11 +22,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
-    [SerializeField] private ExperienceHandler _xpHandler;
     [SerializeField] private LanternLight _light;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
+    public event Action<float> GainedXp;
 
     private int _lanternsCount;
     private bool _isInLantern;
@@ -70,7 +70,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         
         _pickUpsDetector.BuffDetected += AddBuff;
         _pickUpsDetector.CoinDetected += _wallet.ReceiveMoney;
-        _pickUpsDetector.CrystalDetected += _xpHandler.GainExperience;
+        _pickUpsDetector.CrystalDetected += OnCrystalDetected;
         _collisionHandler.EnemyDetected += TakeDamage;
         
         _attacker.StartAttacking();
@@ -81,7 +81,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         _pickUpsDetector.BuffDetected -= AddBuff;
         _pickUpsDetector.CoinDetected -= _wallet.ReceiveMoney;
         _collisionHandler.EnemyDetected -= TakeDamage;
-        _pickUpsDetector.CrystalDetected -= _xpHandler.GainExperience;
+        _pickUpsDetector.CrystalDetected -= OnCrystalDetected;
     }
 
     private void Start()
@@ -245,4 +245,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         
         _timer?.Stop();
     }
+
+    private void OnCrystalDetected(float crystalValue) => GainedXp?.Invoke(crystalValue);
 }

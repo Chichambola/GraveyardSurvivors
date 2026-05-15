@@ -9,8 +9,10 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    [SerializeField] private int _targetFrameRate = 60;
+    [Header("Player and experience")]
     [SerializeField] private Player _player;
+    [SerializeField] private ExperienceHandler _experienceHandler;
+    [Header("Services")]
     [SerializeField] private Darkness _darkness;
     [SerializeField] private LanternLight _lantern;
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
@@ -30,9 +32,8 @@ public class Game : MonoBehaviour
 
     private void OnEnable()
     {
-        Application.targetFrameRate = _targetFrameRate;
-        
         _enemySpawnerHandler.EnemyWasKilled += OnEnemyDeath;
+        _player.GainedXp += OnPlayerGainedXp;
         
         if(_interactables == null) 
             throw new Exception("Interactables are null");
@@ -52,6 +53,7 @@ public class Game : MonoBehaviour
     private void OnDisable()
     {
         _enemySpawnerHandler.EnemyWasKilled -= OnEnemyDeath;
+        _player.GainedXp -= OnPlayerGainedXp;
         
         TimerController.Clear();
     }
@@ -59,5 +61,14 @@ public class Game : MonoBehaviour
     private void OnEnemyDeath(Enemy enemy)
     {
         _lantern.ProcessEnemyDeath(enemy);
+    }
+    
+    private void OnPlayerGainedXp(float value)
+    {
+        float tempXp = _player.CurrentStats.XpMultiplier * value;
+
+        tempXp = tempXp.RoundToTenths();
+        
+        _experienceHandler.GainExperience(tempXp);
     }
 }
