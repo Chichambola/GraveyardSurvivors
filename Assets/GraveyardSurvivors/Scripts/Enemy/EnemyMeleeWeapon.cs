@@ -28,7 +28,7 @@ public class EnemyMeleeWeapon : Weapon
         
         if (attacker is Player player)
         {
-            player.TakeDamage(Info.Damage);
+            player.TakeDamage(Damage);
         }
     }
 }

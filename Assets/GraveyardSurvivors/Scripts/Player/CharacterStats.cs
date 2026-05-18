@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-public class CharacterStats : IStat
+public class CharacterStats
 {
     public float Health;
     public float MaxHealth;
@@ -29,6 +30,11 @@ public class CharacterStats : IStat
         if (stats == null)
             throw new Exception();
         
+        SetStats(stats);
+    }
+    
+    private void SetStats(CharacterStats stats)
+    {
         Health = stats.Health;
         MaxHealth = stats.MaxHealth;
         HealthRegeneration = stats.HealthRegeneration;
@@ -45,7 +51,7 @@ public class CharacterStats : IStat
         GoldMultiplier = stats.GoldMultiplier;
         EvasionChance = stats.EvasionChance;
         Luck = stats.Luck;
-
+        
         if (!Mathf.Approximately(Health, MaxHealth))
         {
             Health = MaxHealth;

@@ -22,6 +22,6 @@ public class StatsViewer : MonoBehaviour
     
     public void UpdateStats(CharacterStats stats)
     {
-        _text.text = $"Health: {stats.Health:f1} \n";
+        _text.text = $"Health: {stats.Health:f1} / {stats.MaxHealth} \n";
     }
 }

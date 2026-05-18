@@ -8,9 +8,21 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     [SerializeField] protected AttackStrategy AttackStrategy;
     [SerializeField] private WeaponInfo _info;
     
+    private float _damageIncrease;
+
     public virtual event Action<IAttacker> AttackerDetected;
-    public WeaponInfo Info => _info;
+    public float Damage => _info.Damage + _damageIncrease;
 
     public abstract void Attack(float radiusMultiplier);
     public virtual void StopAttacking() {}
+
+    private void OnDisable()
+    {
+        _damageIncrease = 0;
+    }
+
+    public void IncreaseDamage(float damage)
+    {
+        _damageIncrease += damage;
+    }
 }

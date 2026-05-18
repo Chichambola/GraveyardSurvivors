@@ -11,10 +11,7 @@ public class WeaponIronSword : WeaponWithAbility
     [SerializeField] private ParticleSystem _attackParticles;
 
     private Coroutine _coroutine;
-    private float _lastDuration;
     private float _waitTime = 0.1f;
-
-    public override event Action<IAttacker> AttackerDetected;
 
     private void OnEnable()
     {
@@ -46,8 +43,6 @@ public class WeaponIronSword : WeaponWithAbility
         var slashMain = _attackParticles.main;
 
         slashMain.duration = duration;
-
-        _lastDuration = duration;
 
         _attackParticles.Play();
     }

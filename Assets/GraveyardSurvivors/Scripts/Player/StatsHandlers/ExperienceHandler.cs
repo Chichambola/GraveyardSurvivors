@@ -9,6 +9,8 @@ public class ExperienceHandler : MonoBehaviour
     [SerializeField] private float _experienceIncreasePercent = 155;
     [SerializeField] private float _initialTargetXp = 50;
     [SerializeField] private TextMeshProUGUI _text;
+
+    public event Action PlayerReachedThreshold; 
     
     private float _currentXp;
     private float _targetXp;
@@ -34,6 +36,8 @@ public class ExperienceHandler : MonoBehaviour
 
         if (_currentXp >= _targetXp)
         {
+            PlayerReachedThreshold?.Invoke();
+            
             _currentXp -= _targetXp;
 
             _targetXp = _targetXp.AddPercentToNumber(_experienceIncreasePercent);

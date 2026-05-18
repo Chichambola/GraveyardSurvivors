@@ -8,7 +8,6 @@ public class RadiusResetter : MonoBehaviour
 {
     [SerializeField] private PlayerDetector _playerDetector;
     
-    private float _defaultValue = 0;
     private float _lastRadius;
     private ILightCarrier _carrier;
 

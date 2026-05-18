@@ -24,7 +24,7 @@ public class Mover : MonoBehaviour
     {
         float currentSpeed = _speed.AddPercentToNumber(speedMultiplier);
         
-        transform.position += direction * currentSpeed * Time.fixedDeltaTime;
+        transform.position += direction * (currentSpeed * Time.fixedDeltaTime);
     }
 
     public void MoveToPosition(Vector3 targetPosition, float speedMultiplier)

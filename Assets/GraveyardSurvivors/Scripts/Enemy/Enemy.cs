@@ -35,7 +35,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAlive { get; private set; }
     public bool IsAttacking { get; private set; }
-    public float Damage => Weapon.Info.Damage;
+    public float Damage => Weapon.Damage;
     public float DamageOnCollision => _damageOnCollision;
     public Vector3 CurrentPosition => transform.position;
 

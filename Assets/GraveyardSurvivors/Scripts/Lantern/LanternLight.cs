@@ -22,7 +22,6 @@ public class LanternLight : MonoBehaviour
     
     private Coroutine _coroutine;
     private float _initialRadius;
-    private float _energyMultiplier = 1.5f;
     private float _initialRate;
     private float _lastRadius;
     private float _initialRange;
@@ -31,7 +30,6 @@ public class LanternLight : MonoBehaviour
 
     public bool IsActive => _collider.radius > _disableThreshold;
     public float ShrinkRate => _shrinkRate;
-    public float CurrentRadius => _collider.radius;
     private bool IsGainingEnergy => _targetRadius != 0;
 
     public void Init()

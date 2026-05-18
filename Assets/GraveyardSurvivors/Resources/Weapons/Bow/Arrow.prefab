@@ -4984,10 +4984,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6263200880ca0ca48af0ae1440727df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyDetector: {fileID: 1928845370352144240}
   _mover: {fileID: 6151096663406304906}
   _rotator: {fileID: -3601342103368116306}
-  _speedMultiplier: 1.86
-  _enemyDetector: {fileID: 1928845370352144240}
+  _speedMultiplier: 1.5
 --- !u!114 &6151096663406304906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5000,7 +5000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af51e27f34b4b2c428427995af66fb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
+  _speed: 2
 --- !u!114 &-3601342103368116306
 MonoBehaviour:
   m_ObjectHideFlags: 0

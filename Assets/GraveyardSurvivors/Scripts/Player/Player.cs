@@ -19,8 +19,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     
     [Header("Services")] 
     [SerializeField] private Health _health;
-    [SerializeField] private Defender _defender;
-    [SerializeField] private Evader _evader;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private LanternLight _light;
     
@@ -36,14 +34,12 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     
     public CharacterStats CurrentStats { get; private set; }
     public Vector3 CurrentPosition => transform.position;
-    public Transform Transform => transform;
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth => CurrentStats.Health;
     public float Luck => CurrentStats.Luck;
     public bool IsAlive => CurrentStats.Health > 0;
     public bool IsLightActive => _light.IsActive;
-
-
+    
     public float MaxHealth => CurrentStats.MaxHealth;
 
     public event Action<Player> CanBeReleased;
@@ -122,14 +118,13 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
 
     public void ResetCharacteristics() { }
 
-    public override void Release()
-    {
-        CanBeReleased?.Invoke(this);
-    }
-
+    public override void Release() => CanBeReleased?.Invoke(this);
+    
     public void ReduceMoney(float value) => _wallet.ReduceMoney(value);
 
     public void ReceiveMoney(float value) => _wallet.ReceiveMoney(value);
+    
+    public void IncreaseDamage(float baseDamageIncrease) => _attacker.IncreaseDamage(baseDamageIncrease);
     
     public void ChangeSpeed(float speedPercent, bool isSlowing)
     {
@@ -147,24 +142,16 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     {
         if (!_canTakeDamage)
             return;
-        
-        if (_evader.CanEvade(CurrentStats.EvasionChance, CurrentStats.Luck))
+
+        _health.TryTakeDamage(damage, out bool hasTakenDamage);
+
+        if (hasTakenDamage)
         {
-            Debug.Log("Evaded");
-        }
-        else
-        {
-            damage = DetermineDamageAmount(damage);
-        
-            _canTakeDamage = false;
-            
-            CurrentStats.Health -= damage;
-        
-            _statsViewer.UpdateStats(CurrentStats);
-            
             _timer = new IntervalTimer(_invincibilityAfterDamage);
             _timer.Stopped += OnDamageTimerStopped;
             _timer.Start();
+            _canTakeDamage = false;
+            _statsViewer.UpdateStats(CurrentStats);
         }
     }
     
@@ -220,23 +207,9 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         
         StateMachine.SetState(idleState);
     }
-    
-    private float DetermineDamageAmount(float damage)
-    {
-        if (_defender.CanBlock(CurrentStats.BlockChance, CurrentStats.Luck))
-        {
-            Debug.Log("Blocked");
-            
-            damage = _defender.GetBlockedDamage(damage);
-        }
-        
-        damage = damage.AddPercentToNumber(CurrentStats.IncomingDamageMultiplier);
-        
-        damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
-        
-        return damage;
-    }
 
+    private void OnCrystalDetected(float crystalValue) => GainedXp?.Invoke(crystalValue);
+    
     private void OnDamageTimerStopped()
     {
         _canTakeDamage = true;
@@ -245,6 +218,4 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         
         _timer?.Stop();
     }
-
-    private void OnCrystalDetected(float crystalValue) => GainedXp?.Invoke(crystalValue);
 }

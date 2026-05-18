@@ -27,6 +27,6 @@ public class Bomb : Weapon
 
     private void OnAttackerDetected(IAttacker attacker)
     {
-        attacker.TakeDamage(Info.Damage);
+        attacker.TakeDamage(Damage);
     }
 }

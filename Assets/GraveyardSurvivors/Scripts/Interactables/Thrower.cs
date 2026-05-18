@@ -31,7 +31,7 @@ public class Thrower : MonoBehaviour
     {
         endPoint = GetRandomPosition(endPoint, isRandomPosition);
 
-        _throwerTween = PrimeTweenExtension.Jump(throwable, endPoint, _duration, _jumpPower).OnComplete(StopMoving);
+        _throwerTween = PrimeTweenExtension.Jump(throwable, endPoint, _duration, _jumpPower, _numberofJumps).OnComplete(StopMoving);
     }
 
     private Vector3 GetRandomPosition(Vector3 endPoint, bool isRandomPosition)

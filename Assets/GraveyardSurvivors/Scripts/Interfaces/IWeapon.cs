@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    public WeaponInfo Info { get; }
+    public float Damage { get; }
     void Attack(float radius);
 }

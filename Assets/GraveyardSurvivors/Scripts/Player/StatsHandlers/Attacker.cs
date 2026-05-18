@@ -75,7 +75,7 @@ public class Attacker : MonoBehaviour
     {
         if (attacker is Enemy enemy)
         {
-            float damage = _weapon.Info.Damage;
+            float damage = _weapon.Damage;
 
             float currentCritChance = _critChance + _player.CurrentStats.Luck;
 
@@ -93,5 +93,10 @@ public class Attacker : MonoBehaviour
         float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
         
         return critChance >= randomNumber;
+    }
+
+    public void IncreaseDamage(float baseDamageIncrease)
+    {
+        _weapon.IncreaseDamage(baseDamageIncrease);
     }
 }
