@@ -82,7 +82,7 @@ public class PickablesDetector : MonoBehaviour
         {
             _currentRadiusMultiplier = stats.PickUpRadius;
         
-            _collider.radius = _initialRadius.AddPercentToNumber(stats.PickUpRadius);
+            _collider.radius = _collider.radius.AddPercentToNumber(stats.PickUpRadius);
         }
     }
 }

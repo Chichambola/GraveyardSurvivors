@@ -31,7 +31,7 @@ public static class UserUtils
         return finalNumber;
     }
 
-    public static float SubtractPercentFromNumber(this int originalNumber, float percent)
+    public static int SubtractPercentFromNumber(this int originalNumber, float percent)
     {
         int finalNumber = Mathf.RoundToInt(originalNumber *  (1 - percent / s_HighestPercent));
 
@@ -91,5 +91,13 @@ public static class UserUtils
         value = Mathf.Ceil(value * 2) / 2;
 
         return value;
+    }
+
+    public static Vector3 GetRandomOffsetPosition(this Vector3 position, float minValue, float maxValue)
+    {
+        position.x += Random.Range(minValue, maxValue);
+        position.z += Random.Range(minValue, maxValue);
+
+        return position;
     }
 }

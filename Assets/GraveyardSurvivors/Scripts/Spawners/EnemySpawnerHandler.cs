@@ -78,6 +78,14 @@ public class EnemySpawnerHandler : MonoBehaviour
         _choosingRoutine = StartCoroutine(ChoosingRoutine());
     }
 
+    public void UpdateStats(float percent)
+    {
+        _maxPoints = _maxPoints.AddPercentToNumber(percent);
+        _spawnRate = _spawnRate.SubtractPercentFromNumber(percent);
+        _maxEnemiesAmount = _maxEnemiesAmount.AddPercentToNumber(percent);
+        _pointGainPercent = _pointGainPercent.AddPercentToNumber(percent);
+    }
+    
     private void OnEnemyRelease(Enemy enemy)
     {
         _currentEnemies.Remove(enemy);

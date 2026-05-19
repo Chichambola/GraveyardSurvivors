@@ -17,8 +17,6 @@ public class Thrower : MonoBehaviour
     public event Action FinishedMoving;
 
     private Sequence _throwerTween;
-    private float _minRandomValue = -2f;
-    private float _maxRandomValue = 5f;
 
     public void StopMoving()
     {
@@ -27,21 +25,8 @@ public class Thrower : MonoBehaviour
         _throwerTween.Stop();
     }
     
-    public void StartMoving(Transform throwable, Vector3 endPoint, bool isRandomPosition = false)
+    public void StartMoving(Transform throwable, Vector3 endPoint)
     {
-        endPoint = GetRandomPosition(endPoint, isRandomPosition);
-
         _throwerTween = PrimeTweenExtension.Jump(throwable, endPoint, _duration, _jumpPower, _numberofJumps).OnComplete(StopMoving);
-    }
-
-    private Vector3 GetRandomPosition(Vector3 endPoint, bool isRandomPosition)
-    {
-        if (isRandomPosition)
-        {
-            endPoint.x += Random.Range(_minRandomValue, _maxRandomValue);
-            endPoint.z += Random.Range(_minRandomValue, _maxRandomValue);
-        }
-
-        return endPoint;
     }
 }

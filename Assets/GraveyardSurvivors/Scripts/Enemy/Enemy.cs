@@ -74,8 +74,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     protected override void FixedUpdate()
     {
         StateMachine.FixedUpdate();
-        
-        _rigidbody.velocity = Vector3.zero;
     }
 
     private void OnEnable()

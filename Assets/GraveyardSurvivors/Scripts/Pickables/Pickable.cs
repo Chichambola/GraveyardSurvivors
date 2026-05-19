@@ -11,6 +11,9 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
     [SerializeField] private int _value = 1;
     [SerializeField] private float _timeBeforeRelease = 2f;
     
+    private float _minRandomValue = -1f;
+    private float _maxRandomValue = 3f;
+    
     public abstract event Action<Pickable> CanBeReleased;
     
     private IntervalTimer _timer;
@@ -29,7 +32,9 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
     
     public void StartMoving()
     {
-        _thrower.StartMoving(transform, _endPoint.position, true);
+        _endPoint.position = _endPoint.position.GetRandomOffsetPosition(_minRandomValue, _maxRandomValue);
+        
+        _thrower.StartMoving(transform, _endPoint.position);
     }
 
     public virtual void ResetCharacteristics()

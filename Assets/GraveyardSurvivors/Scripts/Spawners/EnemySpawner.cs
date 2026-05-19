@@ -22,7 +22,9 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     [SerializeField] private Vector3 _offsetAfterDeath = new (0, -90, 0);
 
     private Vector3 _spawnPoint;
-
+    private float _minRandomValue = -2f;
+    private float _maxRandomValue = 4f;
+    
     public event Action<Enemy> EnemyWasReleased;
     public event Action<Enemy> EnemyWasSpawned;
     
@@ -42,7 +44,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     protected override void ActionOnGet(Enemy enemy)
     {
         enemy.Init(_player);
-        enemy.transform.position = _spawnPoint;
+        enemy.transform.position = _spawnPoint.GetRandomOffsetPosition(_minRandomValue, _maxRandomValue);
         enemy.transform.parent = transform;
         
         enemy.CanBeReleased += Release;

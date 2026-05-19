@@ -3,14 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ParticleSystem))]
 public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
 {
-    [SerializeField] private ParticleSystem _particleSystem;
+    private ParticleSystem _particleSystem;
+    private Coroutine _coroutine;
+    private float _duration;
     
     public event Action<ParticleEffect> CanBeReleased;
-    private float _duration;
-    private Coroutine _coroutine;
-    
+
+    private void Awake()
+    {
+        _particleSystem = GetComponent<ParticleSystem>();
+    }
+
     public void ResetCharacteristics()
     {
         _particleSystem.transform.position = Vector3.zero;

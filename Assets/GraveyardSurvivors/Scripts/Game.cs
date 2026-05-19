@@ -1,16 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
-using Sirenix.Serialization;
-using Unity.VisualScripting;
-using UnityEditor.Profiling;
-using UnityEngine.Rendering;
 using PrimeTween;
 using Sherbert.Framework.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Game : MonoBehaviour
 {
@@ -22,16 +15,19 @@ public class Game : MonoBehaviour
     [SerializeField] private float _healthIncrease;
     [SerializeField] private float _healthRegnerationIncrease;
     [SerializeField] private float _baseDamageIncrease;
+    [SerializeField] private SerializableDictionary<int, float> _minutesAndPercents;
     
     [Header("Services")]
     [SerializeField] private Darkness _darkness;
     [SerializeField] private LanternLight _lantern;
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
     [SerializeField] private List<InteractableHandler> _interactables;
+    
+    [Header("Timer")]
     [SerializeField] private TextMeshProUGUI _timerText;
 
     private int _primeTweenCapacity = 3000;
-    private float _elapsedTime;
+    private float _elapsedTime = 55;
 
     private void Awake()
     {
@@ -42,12 +38,9 @@ public class Game : MonoBehaviour
     {
         TimerController.UpdateTimers();
 
-        _elapsedTime += Time.deltaTime;
-        int minutes = Mathf.FloorToInt(_elapsedTime / 60);
-        int seconds = Mathf.FloorToInt(_elapsedTime % 60);
-        _timerText.text = $"{minutes:00} : {seconds:00}";
+        UpdateTimer();
     }
-
+    
     private void OnEnable()
     {
         _enemySpawnerHandler.EnemyWasKilled += OnEnemyDeath;
@@ -74,6 +67,7 @@ public class Game : MonoBehaviour
         _enemySpawnerHandler.EnemyWasKilled -= OnEnemyDeath;
         _experienceHandler.PlayerReachedThreshold -= OnPlayerReachedThreshold;
         _player.GainedXp -= OnPlayerGainedXp;
+        _elapsedTime = 0;
         
         TimerController.Clear();
     }
@@ -98,5 +92,18 @@ public class Game : MonoBehaviour
         tempXp = tempXp.RoundToTenths();
         
         _experienceHandler.GainExperience(tempXp);
+    }
+    
+    private void UpdateTimer()
+    {
+        _elapsedTime += Time.deltaTime;
+        int minutes = Mathf.FloorToInt(_elapsedTime / 60);
+        int seconds = Mathf.FloorToInt(_elapsedTime % 60);
+        _timerText.text = $"{minutes:00} : {seconds:00}";
+
+        if (_minutesAndPercents.Remove(minutes, out var percent))
+        {
+            _enemySpawnerHandler.UpdateStats(percent);
+        }
     }
 }

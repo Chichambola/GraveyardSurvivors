@@ -50,9 +50,9 @@ public class LanternDamageDealer : MonoBehaviour
     {
         if (_enemiesInRange.Count > 0)
         {
-            for (int i = _enemiesInRange.Count - 1; i >= 0; i--)
+            foreach (var enemy in _enemiesInRange)
             {
-                _enemiesInRange[i].TakeDamage(_damage);
+                enemy.TakeDamage(_damage);
             }
         }
     }

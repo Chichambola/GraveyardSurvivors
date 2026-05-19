@@ -36,14 +36,14 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     public Vector3 CurrentPosition => transform.position;
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth => CurrentStats.Health;
+    public float MaxHealth => CurrentStats.MaxHealth;
     public float Luck => CurrentStats.Luck;
     public bool IsAlive => CurrentStats.Health > 0;
     public bool IsLightActive => _light.IsActive;
     
-    public float MaxHealth => CurrentStats.MaxHealth;
 
     public event Action<Player> CanBeReleased;
-
+    
     protected override void Awake()
     {
         Animator = GetComponent<Animator>();
