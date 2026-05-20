@@ -9,8 +9,8 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
-    [SerializeField] protected PlayerDetector PlayerDetector;
     [SerializeField] private EnemyInfo _info;
+    [SerializeField] private BoxCollider _damageCollider;
     [Header("Weapon")]
     [SerializeField] protected Weapon Weapon;
     [SerializeField] protected float AttackCooldown = 0.5f;
@@ -19,6 +19,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
+    [SerializeField] protected PlayerDetector PlayerDetector;
 
     public event Action<Enemy> CanBeReleased;
     public event Action<Enemy> NoHealthLeft;
@@ -31,11 +32,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private float _initialHealth;
     private float _initialSpeed;
     private int _movementEffectCount;
+    private bool _isAttacking;
 
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAlive { get; private set; }
-    public bool IsAttacking { get; private set; }
-    public float Damage => Weapon.Damage;
+    public float CurrentHealth { get; private set; }
     public float DamageOnCollision => _damageOnCollision;
     public Vector3 CurrentPosition => transform.position;
 
@@ -43,13 +44,9 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         _player = player;
         
-        CurrentStats.Health = _initialHealth;
+        CurrentHealth = CurrentStats.MaxHealth;
         
-        CurrentStats.MovementSpeed = _initialSpeed;
-        
-        _collider.enabled = true;
-        
-        _health.text = $"{_initialHealth:f1}";
+        _health.text = $"{CurrentStats.MaxHealth:f1}";
     }
 
     protected override void Awake()
@@ -59,9 +56,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _currentEffects = new List<IEffect<IAttacker>>();
         
         CurrentStats = _info.GetStats();
-        
-        _initialHealth = CurrentStats.Health;
-        _initialSpeed = CurrentStats.MovementSpeed;
         
         StateMachine = new StateMachine();
     }
@@ -85,21 +79,29 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public void ResetCharacteristics()
     {
-        
         IsAlive = true;
     }
 
     public override void Release() => CanBeReleased?.Invoke(this);
+    
+    public void Upgrade(EnemyStats statsToUpgrade)
+    {
+        Debug.Log($"Before: {CurrentStats.MaxHealth}");
+        
+        CurrentStats = CurrentStats.GetUpgradedStats(CurrentStats, statsToUpgrade);
+        
+        Debug.Log($"After: {CurrentStats.MaxHealth}");
+    }
 
     public void TakeDamage(float damage)
     {
         damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
 
-        CurrentStats.Health -= damage;
+        CurrentHealth -= damage;
 
-        _health.text = $"{CurrentStats.Health:f1}";
+        _health.text = $"{CurrentHealth:f1}";
         
-        if (CurrentStats.Health <= 0 && IsAlive)
+        if (CurrentHealth <= 0 && IsAlive)
         {
             IsAlive = false;
             
@@ -159,6 +161,20 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _attackRoutine = StartCoroutine(AttackRoutine());
     }
     
+    public void SetColliderCenter(Vector3 offsetAfterDeath, bool isResetting)
+    {
+        if (isResetting)
+        {
+            _collider.center -= offsetAfterDeath;
+            _damageCollider.center -= offsetAfterDeath;
+        }
+        else
+        {
+            _collider.center += offsetAfterDeath;
+            _damageCollider.center += offsetAfterDeath;
+        }
+    }
+    
     protected override void InitializeStateMachine()
     {
         var idleState = new IdleState(this, Animator);
@@ -169,10 +185,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         DefineAtTransition(idleState, runState, new FuncPredicate(() => IsAlive));
         
         DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !IsAttacking));
+            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !_isAttacking));
         
-        DefineAnyTransition(dieState, new FuncPredicate(() => CurrentStats.Health <= 0));
-        DefineAnyTransition(attackState, new FuncPredicate(() => CurrentStats.Health >= 0 && PlayerDetector.IsPlayerNear));
+        DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
+        DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
 
         StateMachine.SetState(idleState);
     }
@@ -181,11 +197,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         NoHealthLeft?.Invoke(this);
         
-        CurrentStats.Health = 0;
+        CurrentHealth = 0;
         
         _movementEffectCount = 0;
 
-        _health.text = $"{CurrentStats.Health}";
+        _health.text = $"{CurrentHealth}";
         
         Weapon.StopAttacking();
         
@@ -227,7 +243,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     private IEnumerator AttackRoutine()
     {
-        IsAttacking = true;
+        _isAttacking = true;
         
         var wait = new WaitForSecondsRealtime(AttackCooldown);
 
@@ -237,19 +253,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
             
             Weapon.Attack(AttackRadiusMultiplier);
             
-            IsAttacking = false;
-        }
-    }
-
-    public void SetColliderCenter(Vector3 offsetAfterDeath, bool isResetting)
-    {
-        if (isResetting)
-        {
-            _collider.center -= offsetAfterDeath;
-        }
-        else
-        {
-            _collider.center += offsetAfterDeath;
+            _isAttacking = false;
         }
     }
 }

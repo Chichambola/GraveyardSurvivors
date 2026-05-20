@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Demon
   m_EditorClassIdentifier: 
   _stats:
-    Health: 25
+    MaxHealth: 25
     Armor: -5
     MovementSpeed: 25
     AttackSpeed: 0

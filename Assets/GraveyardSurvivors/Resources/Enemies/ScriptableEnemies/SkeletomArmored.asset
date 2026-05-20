@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SkeletomArmored
   m_EditorClassIdentifier: 
   _stats:
-    Health: 20
+    MaxHealth: 20
     Armor: 15
     MovementSpeed: -10
     AttackSpeed: 0

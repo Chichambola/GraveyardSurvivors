@@ -8,7 +8,6 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     [SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private Mover _mover;
     [SerializeField] private Rotator _rotator;
-    [SerializeField] private float _speedMultiplier;
 
     public event Action<Projectile> CanBeReleased;
     
@@ -47,7 +46,7 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
         
         while (_currentTarget.IsAlive)
         {
-            _mover.MoveToPosition(target.transform.position, _speedMultiplier);
+            _mover.MoveToPosition(target.transform.position);
 
             Vector3 distance = target.transform.position - transform.position;
 

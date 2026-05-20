@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zombie
   m_EditorClassIdentifier: 
   _stats:
-    Health: 12
+    MaxHealth: 12
     Armor: -15
     MovementSpeed: -20
     AttackSpeed: 0

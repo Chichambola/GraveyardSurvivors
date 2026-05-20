@@ -26,12 +26,15 @@ public class Game : MonoBehaviour
     [Header("Timer")]
     [SerializeField] private TextMeshProUGUI _timerText;
 
+    [SerializeField] private float _debugElapsedTime;
+
     private int _primeTweenCapacity = 3000;
-    private float _elapsedTime = 55;
+    private float _elapsedTime;
 
     private void Awake()
     {
         PrimeTweenConfig.SetTweensCapacity(_primeTweenCapacity);
+        _elapsedTime = _debugElapsedTime;
     }
 
     private void Update()
@@ -103,7 +106,7 @@ public class Game : MonoBehaviour
 
         if (_minutesAndPercents.Remove(minutes, out var percent))
         {
-            _enemySpawnerHandler.UpdateStats(percent);
+            _enemySpawnerHandler.Upgrade(percent);
         }
     }
 }

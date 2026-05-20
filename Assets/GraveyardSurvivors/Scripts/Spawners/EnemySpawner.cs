@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
     [SerializeField] private Player _player;
+    [SerializeField] private EnemyStats _statsToUpgrade;
     [Header("Loot spawners")]
     [SerializeField] private PickablesSpawner _coinSpawner;
     [SerializeField] private PickablesSpawner _crystalSpawner;
@@ -24,6 +25,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     private Vector3 _spawnPoint;
     private float _minRandomValue = -2f;
     private float _maxRandomValue = 4f;
+    private List<Enemy> _spawnedUnits;
     
     public event Action<Enemy> EnemyWasReleased;
     public event Action<Enemy> EnemyWasSpawned;
@@ -40,13 +42,25 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
             GetObject();
         }
     }
-    
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _spawnedUnits = new List<Enemy>();
+    }
+
     protected override void ActionOnGet(Enemy enemy)
     {
-        enemy.Init(_player);
-        enemy.transform.position = _spawnPoint.GetRandomOffsetPosition(_minRandomValue, _maxRandomValue);
-        enemy.transform.parent = transform;
+        if (!_spawnedUnits.Contains(enemy))
+        {
+            _spawnedUnits.Add(enemy);
+        }
         
+        enemy.Init(_player);
+        enemy.transform.parent = transform;
+        enemy.transform.position = _spawnPoint.GetRandomOffsetPosition(_minRandomValue, _maxRandomValue);
+
         enemy.CanBeReleased += Release;
         enemy.NoHealthLeft += OnNoHealthLeft;
         
@@ -72,11 +86,33 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         
         enemy.SetColliderCenter(_offsetAfterDeath, true);
     }
-    
+
+    protected override void ActionOnDestroy(Enemy enemy)
+    {
+        if (_spawnedUnits.Contains(enemy))
+        {
+            _spawnedUnits.Remove(enemy);
+        }
+        
+        base.ActionOnDestroy(enemy);
+    }
+
     private void OnNoHealthLeft(Enemy enemy)
     {
+        enemy.SetColliderCenter(_offsetAfterDeath, false);
         _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
         _crystalSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.XpForKill);
-        enemy.SetColliderCenter(_offsetAfterDeath, false);
+    }
+
+    public void Upgrade()
+    {
+        EnemyStats stats = new EnemyStats(_statsToUpgrade);
+        
+        ObjectPrefab.Upgrade(stats);
+
+        foreach (var enemy in _spawnedUnits)
+        {
+            enemy.Upgrade(stats);
+        }
     }
 }

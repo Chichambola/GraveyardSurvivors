@@ -20,14 +20,14 @@ public class Mover : MonoBehaviour
         _initialSpeed = _speed;
     }
     
-    public void MoveDyDirection(Vector3 direction, float speedMultiplier)
+    public void MoveDyDirection(Vector3 direction, float speedMultiplier = 0f)
     {
         float currentSpeed = _speed.AddPercentToNumber(speedMultiplier);
         
         transform.position += direction * (currentSpeed * Time.fixedDeltaTime);
     }
 
-    public void MoveToPosition(Vector3 targetPosition, float speedMultiplier)
+    public void MoveToPosition(Vector3 targetPosition, float speedMultiplier = 0f)
     {
         float currentSpeed = _speed.AddPercentToNumber(speedMultiplier);
     

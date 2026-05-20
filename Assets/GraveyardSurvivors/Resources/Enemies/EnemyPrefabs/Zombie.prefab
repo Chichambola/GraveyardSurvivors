@@ -448,7 +448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6800221008874116930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -686,6 +686,7 @@ GameObject:
   - component: {fileID: 1879320688110641685}
   - component: {fileID: 5052325448032058343}
   - component: {fileID: 4375096103313578800}
+  - component: {fileID: 3435866809276375313}
   m_Layer: 7
   m_Name: Zombie
   m_TagString: Untagged
@@ -750,14 +751,15 @@ MonoBehaviour:
   Animator: {fileID: 7745078345119053515}
   Rotator: {fileID: 1879320688110641685}
   Mover: {fileID: 2864853422003173727}
-  PlayerDetector: {fileID: 6375594758851993861}
   _info: {fileID: 11400000, guid: 706419855f7f6cb45a6abb385c07e429, type: 2}
+  _damageCollider: {fileID: 3435866809276375313}
   Weapon: {fileID: 9003346802289927355}
   AttackCooldown: 0.5
   AttackRadiusMultiplier: 0
   _damageOnCollision: 2
   _defender: {fileID: 5106020596504560185}
   _health: {fileID: 3678190649255506134}
+  PlayerDetector: {fileID: 6375594758851993861}
 --- !u!114 &2864853422003173727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -834,6 +836,27 @@ CapsuleCollider:
   m_Height: 2.7296906
   m_Direction: 1
   m_Center: {x: 0, y: 1.3729208, z: 0}
+--- !u!65 &3435866809276375313
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7841497988087309809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7146915, y: 3.366378, z: 1.6326349}
+  m_Center: {x: -0.078155935, y: 1.1831889, z: 0.110201575}
 --- !u!1 &8119190812028583179
 GameObject:
   m_ObjectHideFlags: 0

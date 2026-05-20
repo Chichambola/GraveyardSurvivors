@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skeleton
   m_EditorClassIdentifier: 
   _stats:
-    Health: 15
+    MaxHealth: 15
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0

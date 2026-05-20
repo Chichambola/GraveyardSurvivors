@@ -15,14 +15,14 @@ public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
     private ObjectPool<T> _pool;
     protected readonly List<T> ActiveObjects = new();
     
-    protected void Awake()
+    protected virtual void Awake()
     {
         _pool = new ObjectPool<T>
         (
             createFunc: CreateObject,
             actionOnGet: ActionOnGet,
             actionOnRelease: ActionOnRelease,
-            actionOnDestroy: @object => Destroy(@object.gameObject),
+            actionOnDestroy: ActionOnDestroy,
             collectionCheck: true,
             defaultCapacity: PoolCapacity,
             maxSize: MaxPoolCapacity);
@@ -58,6 +58,11 @@ public class Spawner<T> : MonoBehaviour where T : MonoBehaviour, IPoolable<T>
         @object.gameObject.SetActive(true);
     }
 
+    protected virtual void ActionOnDestroy(T @object)
+    {
+        Destroy(@object.gameObject);
+    }
+    
     protected void Release(T @object)
     {
         if(@object.gameObject.activeSelf)

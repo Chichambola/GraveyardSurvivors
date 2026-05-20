@@ -32,7 +32,7 @@ public class PickablesSpawner : Spawner<Pickable>
         
         float yRotation = Random.Range(_minRotation, _highestRotation);
         
-        pickable.transform.parent = null;
+        pickable.transform.parent = transform;
         pickable.transform.position = _spawnPosition;
         pickable.transform.rotation = Quaternion.Euler(pickable.transform.rotation.x, yRotation, pickable.transform.rotation.z);
         
@@ -43,8 +43,6 @@ public class PickablesSpawner : Spawner<Pickable>
 
     protected override void ActionOnRelease(Pickable pickable)
     {
-        pickable.transform.parent = transform;
-        
         pickable.CanBeReleased -= Release;
         
         base.ActionOnRelease(pickable);
