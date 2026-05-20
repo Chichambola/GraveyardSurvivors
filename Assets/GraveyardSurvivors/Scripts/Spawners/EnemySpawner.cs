@@ -3,22 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.Utilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Apple.ReplayKit;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
     [SerializeField] private Player _player;
+    [SerializeField] private EnemyInfo _enemyInfo;
     [SerializeField] private EnemyStats _statsToUpgrade;
+    
     [Header("Loot spawners")]
     [SerializeField] private PickablesSpawner _coinSpawner;
     [SerializeField] private PickablesSpawner _crystalSpawner;
+    
     [Header("Unit specific fields")]
     [SerializeField] private int _unitCost;
     [SerializeField] private int _weight;
     [SerializeField] private int _numberOfEnemiesSpawnAtOnce = 1;
+    
     [Header("Unity workaround")]
     [SerializeField] private Vector3 _offsetAfterDeath = new (0, -90, 0);
 
@@ -26,6 +32,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     private float _minRandomValue = -2f;
     private float _maxRandomValue = 4f;
     private List<Enemy> _spawnedUnits;
+    private EnemyStats _baseStats;
     
     public event Action<Enemy> EnemyWasReleased;
     public event Action<Enemy> EnemyWasSpawned;
@@ -47,6 +54,10 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     {
         base.Awake();
 
+        _baseStats = _enemyInfo.GetStats();
+
+        _statsToUpgrade = new EnemyStats(_statsToUpgrade);
+        
         _spawnedUnits = new List<Enemy>();
     }
 
@@ -57,7 +68,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
             _spawnedUnits.Add(enemy);
         }
         
-        enemy.Init(_player);
+        enemy.Init(_player, _baseStats);
         enemy.transform.parent = transform;
         enemy.transform.position = _spawnPoint.GetRandomOffsetPosition(_minRandomValue, _maxRandomValue);
 
@@ -106,13 +117,13 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
     public void Upgrade()
     {
-        EnemyStats stats = new EnemyStats(_statsToUpgrade);
+        _baseStats.SetStats(_statsToUpgrade);
         
-        ObjectPrefab.Upgrade(stats);
+        ObjectPrefab.SetStats(_baseStats);
 
         foreach (var enemy in _spawnedUnits)
         {
-            enemy.Upgrade(stats);
+            enemy.SetStats(_baseStats);
         }
     }
 }

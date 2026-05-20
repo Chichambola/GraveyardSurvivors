@@ -2582,6 +2582,15 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _player: {fileID: 366209448}
+  _enemyInfo: {fileID: 11400000, guid: 9a338631b9c7662fb9b214f4996da546, type: 2}
+  _statsToUpgrade:
+    MaxHealth: 80
+    Armor: 0
+    MovementSpeed: 0
+    AttackSpeed: 0
+    MoneyForKill: 0
+    XpForKill: 0
+    LanternEnergy: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 20
@@ -7539,6 +7548,7 @@ MonoBehaviour:
   - {fileID: 2138666185}
   - {fileID: 386456282}
   _timerText: {fileID: 722507730}
+  _debugElapsedTime: 55
 --- !u!4 &816859689
 Transform:
   m_ObjectHideFlags: 0
@@ -22244,6 +22254,15 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _player: {fileID: 366209448}
+  _enemyInfo: {fileID: 11400000, guid: 3751f957921fe4948b6a2e681ced8caf, type: 2}
+  _statsToUpgrade:
+    MaxHealth: 80
+    Armor: 0
+    MovementSpeed: 0
+    AttackSpeed: 0
+    MoneyForKill: 0
+    XpForKill: 0
+    LanternEnergy: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 7
@@ -26903,6 +26922,15 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 15
   _player: {fileID: 366209448}
+  _enemyInfo: {fileID: 11400000, guid: 706419855f7f6cb45a6abb385c07e429, type: 2}
+  _statsToUpgrade:
+    MaxHealth: 80
+    Armor: 0
+    MovementSpeed: 0
+    AttackSpeed: 0
+    MoneyForKill: 0
+    XpForKill: 0
+    LanternEnergy: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 5
@@ -28834,6 +28862,15 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _player: {fileID: 366209448}
+  _enemyInfo: {fileID: 11400000, guid: ab0b1a819130dbf0d83fb5af8bb4c1a3, type: 2}
+  _statsToUpgrade:
+    MaxHealth: 80
+    Armor: 0
+    MovementSpeed: 0
+    AttackSpeed: 0
+    MoneyForKill: 0
+    XpForKill: 0
+    LanternEnergy: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 6

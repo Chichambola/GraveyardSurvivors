@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using ColorUtility = Unity.VisualScripting.ColorUtility;
 
 [Serializable]
 public class EnemyStats
@@ -16,7 +17,7 @@ public class EnemyStats
     public float XpForKill;
     public float LanternEnergy;
 
-    private Dictionary<string, float> _stats;
+    private Dictionary<string, float> _values;
     
     public EnemyStats(EnemyStats stats)
     {
@@ -24,44 +25,16 @@ public class EnemyStats
             throw new Exception();
 
         SetStats(stats);
-
-        SetDictionary();
     }
 
-    private void SetDictionary()
+    public void SetStats(EnemyStats stats)
     {
-        _stats = new Dictionary<string, float>()
-        {
-            {nameof(MaxHealth), MaxHealth},
-            {nameof(Armor), Armor},
-            {nameof(MovementSpeed), MovementSpeed},
-            {nameof(AttackSpeed), AttackSpeed},
-            {nameof(MoneyForKill), MoneyForKill},
-            {nameof(XpForKill), XpForKill},
-            {nameof(LanternEnergy), LanternEnergy},
-        };
-    }
-
-    private void SetStats(EnemyStats stats)
-    {
-        MaxHealth = stats.MaxHealth;
-        Armor = stats.Armor;
-        MovementSpeed = stats.MovementSpeed;
-        AttackSpeed = stats.AttackSpeed;
-        MoneyForKill = stats.MoneyForKill;
-        XpForKill = stats.XpForKill;
-        LanternEnergy = stats.LanternEnergy;
-    }
-
-    public EnemyStats GetUpgradedStats(EnemyStats currentStats, EnemyStats statsToUpgrade)
-    {
-        EnemyStats stats = new EnemyStats(currentStats);
-        
-        foreach (var statsKey in statsToUpgrade._stats.Keys)
-        {
-            stats._stats[statsKey] += statsToUpgrade._stats[statsKey];
-        }
-        
-        return stats;
+        MaxHealth += stats.MaxHealth;
+        Armor += stats.Armor;
+        MovementSpeed += stats.MovementSpeed;
+        AttackSpeed += stats.AttackSpeed;
+        MoneyForKill += stats.MoneyForKill;
+        XpForKill += stats.XpForKill;
+        LanternEnergy += stats.LanternEnergy;
     }
 }

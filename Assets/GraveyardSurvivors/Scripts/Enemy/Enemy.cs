@@ -9,7 +9,6 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
-    [SerializeField] private EnemyInfo _info;
     [SerializeField] private BoxCollider _damageCollider;
     [Header("Weapon")]
     [SerializeField] protected Weapon Weapon;
@@ -40,11 +39,13 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public float DamageOnCollision => _damageOnCollision;
     public Vector3 CurrentPosition => transform.position;
 
-    public void Init(Player player)
+    public void Init(Player player, EnemyStats stats)
     {
         _player = player;
+
+        CurrentStats = stats; 
         
-        CurrentHealth = CurrentStats.MaxHealth;
+        CurrentHealth = stats.MaxHealth;
         
         _health.text = $"{CurrentStats.MaxHealth:f1}";
     }
@@ -54,8 +55,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _collider = GetComponent<CapsuleCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _currentEffects = new List<IEffect<IAttacker>>();
-        
-        CurrentStats = _info.GetStats();
         
         StateMachine = new StateMachine();
     }
@@ -84,13 +83,9 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void Release() => CanBeReleased?.Invoke(this);
     
-    public void Upgrade(EnemyStats statsToUpgrade)
+    public void SetStats(EnemyStats stats)
     {
-        Debug.Log($"Before: {CurrentStats.MaxHealth}");
-        
-        CurrentStats = CurrentStats.GetUpgradedStats(CurrentStats, statsToUpgrade);
-        
-        Debug.Log($"After: {CurrentStats.MaxHealth}");
+        CurrentStats = stats;
     }
 
     public void TakeDamage(float damage)
