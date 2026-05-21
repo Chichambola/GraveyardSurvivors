@@ -35,10 +35,10 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     public CharacterStats CurrentStats { get; private set; }
     public Vector3 CurrentPosition => transform.position;
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
-    public float CurrentHealth => CurrentStats.Health;
+    public float CurrentHealth { get; private set; }
     public float MaxHealth => CurrentStats.MaxHealth;
     public float Luck => CurrentStats.Luck;
-    public bool IsAlive => CurrentStats.Health > 0;
+    public bool IsAlive => CurrentHealth > 0;
     public bool IsLightActive => _light.IsActive;
     
 
@@ -63,6 +63,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
             throw new Exception();
 
         CurrentStats = _baseStats.GetStats();
+        
+        CurrentHealth = CurrentStats.MaxHealth;
         
         _pickUpsDetector.BuffDetected += AddBuff;
         _pickUpsDetector.CoinDetected += _wallet.ReceiveMoney;
@@ -124,7 +126,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
 
     public void ReceiveMoney(float value) => _wallet.ReceiveMoney(value);
     
-    public void IncreaseDamage(float baseDamageIncrease) => _attacker.IncreaseDamage(baseDamageIncrease);
+    public void Upgrade(CharacterStats statsToUpgrade) => CurrentStats.Upgrade(statsToUpgrade);
     
     public void ChangeSpeed(float speedPercent, bool isSlowing)
     {
@@ -142,16 +144,17 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     {
         if (!_canTakeDamage)
             return;
-
-        _health.TryTakeDamage(damage, out bool hasTakenDamage);
-
-        if (hasTakenDamage)
+        
+        if (_health.TryTakeDamage(ref damage))
         {
+            CurrentHealth -= damage;
+            
             _timer = new IntervalTimer(_invincibilityAfterDamage);
             _timer.Stopped += OnDamageTimerStopped;
             _timer.Start();
+            
             _canTakeDamage = false;
-            _statsViewer.UpdateStats(CurrentStats);
+            _health.UpdateStats();
         }
     }
     
@@ -173,14 +176,14 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     
     public void Heal(float value)
     {
-        CurrentStats.Health += value;
+        CurrentHealth += value;
 
-        if (CurrentStats.Health >= MaxHealth)
+        if (CurrentHealth >= MaxHealth)
         {
-            CurrentStats.Health = MaxHealth;
+            CurrentHealth = MaxHealth;
         }
-        
-        _statsViewer.UpdateStats(CurrentStats);
+
+        _health.UpdateStats();
     }
 
     public void ResetRadius()

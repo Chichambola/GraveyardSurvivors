@@ -13,7 +13,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     public virtual event Action<IAttacker> AttackerDetected;
     public float Damage => _info.Damage + _damageIncrease;
 
-    public abstract void Attack(float radiusMultiplier);
+    public abstract void Attack(float radiusMultiplier = 0f);
     public virtual void StopAttacking() {}
 
     private void OnDisable()

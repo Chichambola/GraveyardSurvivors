@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: Ranger
   m_EditorClassIdentifier: 
   _characterStats:
-    Health: 80
-    MaxHealth: 80
+    MaxHealth: 50
     HealthRegeneration: 0.8
     Armor: 5
-    MovementSpeed: 20
+    MovementSpeed: 10
     AttackSpeed: 0
-    AttackRadius: 10
+    AttackRadius: 0
     IncomingDamageMultiplier: 0
     PickUpRadius: 10
     BlockChance: 0

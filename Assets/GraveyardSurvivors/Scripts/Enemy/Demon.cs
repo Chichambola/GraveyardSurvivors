@@ -11,7 +11,7 @@ public class Demon : Enemy
     {
         StateMachine.SetState(_idleState);
         
-        Weapon.Attack(AttackRadiusMultiplier);
+        Weapon.Attack();
     }
 
     protected override void InitializeStateMachine()

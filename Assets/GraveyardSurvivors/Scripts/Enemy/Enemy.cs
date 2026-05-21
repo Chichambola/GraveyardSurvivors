@@ -12,8 +12,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [SerializeField] private BoxCollider _damageCollider;
     [Header("Weapon")]
     [SerializeField] protected Weapon Weapon;
-    [SerializeField] protected float AttackCooldown = 0.5f;
-    [SerializeField] protected float AttackRadiusMultiplier;
+    [SerializeField] private float _attackCooldown = 0.5f;
     [SerializeField] private float _damageOnCollision = 3f;
     [Header("Services")]
     [SerializeField] private Defender _defender;
@@ -240,13 +239,13 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         _isAttacking = true;
         
-        var wait = new WaitForSecondsRealtime(AttackCooldown);
+        var wait = new WaitForSecondsRealtime(_attackCooldown);
 
         while (enabled)
         {
             yield return wait;
             
-            Weapon.Attack(AttackRadiusMultiplier);
+            Weapon.Attack();
             
             _isAttacking = false;
         }

@@ -9,19 +9,9 @@ public class StatsViewer : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private TextMeshProUGUI _text;
-
-    private void OnEnable()
-    {
-        _player.StatsChanged += UpdateStats;
-    }
-
-    private void OnDisable()
-    {
-        _player.StatsChanged -= UpdateStats;
-    }
     
-    public void UpdateStats(CharacterStats stats)
+    public void UpdateStats(float currentHealth, float maxHealth)
     {
-        _text.text = $"Health: {stats.Health:f1} / {stats.MaxHealth} \n";
+        _text.text = $"Health: {currentHealth:f1} / {maxHealth} \n";
     }
 }

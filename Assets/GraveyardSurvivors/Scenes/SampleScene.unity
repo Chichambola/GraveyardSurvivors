@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2584,7 +2584,7 @@ MonoBehaviour:
   _player: {fileID: 366209448}
   _enemyInfo: {fileID: 11400000, guid: 9a338631b9c7662fb9b214f4996da546, type: 2}
   _statsToUpgrade:
-    MaxHealth: 80
+    MaxHealth: 5
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
@@ -4502,7 +4502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 366209448}
   _text: {fileID: 306250852}
-  _initialValue: 50000
+  _initialValue: 0
 --- !u!4 &472674647
 Transform:
   m_ObjectHideFlags: 0
@@ -5418,7 +5418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyDetector: {fileID: 360078374}
-  _damage: 2
+  _damage: 1
   _rate: 0.5
 --- !u!1 &557341881
 GameObject:
@@ -7527,10 +7527,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 366209448}
-  _experienceHandler: {fileID: 973273884}
-  _healthIncrease: 20
-  _healthRegnerationIncrease: 20
-  _baseDamageIncrease: 0.5
   _minutesAndPercents:
     keys: 0100000002000000030000000400000005000000
     values:
@@ -7565,6 +7561,7 @@ Transform:
   - {fileID: 531874430}
   - {fileID: 973273883}
   - {fileID: 1006327893}
+  - {fileID: 1009675465}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &844844963
@@ -13742,8 +13739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142c3b5584674b1c1bd4c40f87392aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _experienceIncreasePercent: 155
-  _initialTargetXp: 80
+  _experienceIncreasePercent: 75
+  _initialTargetXp: 40
   _text: {fileID: 657627956}
 --- !u!1 &979710167
 GameObject:
@@ -14108,6 +14105,68 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1009675464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1009675465}
+  - component: {fileID: 1009675466}
+  m_Layer: 0
+  m_Name: PlayerHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1009675465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009675464}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 816859689}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1009675466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009675464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6be11487e2c072da98290577ea44b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 366209448}
+  _statsToUpgrade:
+    MaxHealth: 5
+    HealthRegeneration: 0.5
+    Armor: 0
+    MovementSpeed: 1
+    AttackSpeed: 0
+    AttackRadius: 0
+    IncomingDamageMultiplier: 0
+    PickUpRadius: 0
+    BlockChance: 0
+    CritChance: 0
+    CritMultiplier: 0
+    XpMultiplier: 2
+    GoldMultiplier: 2
+    EvasionChance: 2
+    Luck: 0
+  _experienceHandler: {fileID: 973273884}
 --- !u!1 &1012258920
 GameObject:
   m_ObjectHideFlags: 0
@@ -19949,6 +20008,7 @@ MonoBehaviour:
   _cooldown: 1
   _defender: {fileID: 1146992092}
   _evader: {fileID: 1146992091}
+  _statsViewer: {fileID: 1812729477}
 --- !u!114 &1146992091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22256,7 +22316,7 @@ MonoBehaviour:
   _player: {fileID: 366209448}
   _enemyInfo: {fileID: 11400000, guid: 3751f957921fe4948b6a2e681ced8caf, type: 2}
   _statsToUpgrade:
-    MaxHealth: 80
+    MaxHealth: 5
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
@@ -26924,7 +26984,7 @@ MonoBehaviour:
   _player: {fileID: 366209448}
   _enemyInfo: {fileID: 11400000, guid: 706419855f7f6cb45a6abb385c07e429, type: 2}
   _statsToUpgrade:
-    MaxHealth: 80
+    MaxHealth: 5
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
@@ -27758,10 +27818,10 @@ MonoBehaviour:
   _minTime: 8
   _maxTime: 15
   _spawnRate: 0.7
-  _maxEnemiesAmount: 30
+  _maxEnemiesAmount: 40
   _initialAvailablePoints: 50
   _maxPoints: 300
-  _pointGainPercent: 25
+  _pointGainPercent: 30
 --- !u!1 &2053199127
 GameObject:
   m_ObjectHideFlags: 0
@@ -28864,7 +28924,7 @@ MonoBehaviour:
   _player: {fileID: 366209448}
   _enemyInfo: {fileID: 11400000, guid: ab0b1a819130dbf0d83fb5af8bb4c1a3, type: 2}
   _statsToUpgrade:
-    MaxHealth: 80
+    MaxHealth: 5
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0

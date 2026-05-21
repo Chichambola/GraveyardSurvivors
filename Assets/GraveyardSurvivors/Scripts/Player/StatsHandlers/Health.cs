@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
+    [SerializeField] private StatsViewer _statsViewer;
     
     private Coroutine _coroutine;
     
@@ -32,25 +33,24 @@ public class Health : MonoBehaviour
         }
     }
 
-    public bool TryTakeDamage(float damage, out bool hasTakenDamage)
+    public void UpdateStats()
+    {
+        _statsViewer.UpdateStats(_player.CurrentHealth, _player.CurrentStats.MaxHealth);   
+    }
+    
+    public bool TryTakeDamage(ref float damage)
     {
         if (_evader.CanEvade(_player.CurrentStats.EvasionChance, _player.CurrentStats.Luck))
         {
             Debug.Log("Evaded");
-
-            hasTakenDamage = false;
             
-            return hasTakenDamage;
+            return false;
         }
         else
         {
             damage = DetermineDamageAmount(damage);
             
-            _player.CurrentStats.Health -= damage;
-
-            hasTakenDamage = true;
-            
-            return hasTakenDamage;
+            return true;
         }
     }
     

@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Warrior
   m_EditorClassIdentifier: 
   _characterStats:
-    Health: 130
+    MaxHealth: 60
     HealthRegeneration: 2
     Armor: 20
     MovementSpeed: 0
     AttackSpeed: 0
     AttackRadius: 0
+    IncomingDamageMultiplier: 0
     PickUpRadius: 0
     BlockChance: 15
     CritChance: 10

@@ -328,7 +328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &454674819606659468
 RectTransform:
   m_ObjectHideFlags: 0
@@ -524,11 +524,9 @@ MonoBehaviour:
   Animator: {fileID: 8807167764928869736}
   Rotator: {fileID: 5936001690060495124}
   Mover: {fileID: 8696614376307728057}
-  _info: {fileID: 11400000, guid: ab0b1a819130dbf0d83fb5af8bb4c1a3, type: 2}
   _damageCollider: {fileID: 5695716624462561476}
   Weapon: {fileID: 386484544202866058}
-  AttackCooldown: 0.5
-  AttackRadiusMultiplier: 0
+  AttackCooldown: 0.4
   _damageOnCollision: 5
   _defender: {fileID: 886728962877736986}
   _health: {fileID: 2307875020064126990}

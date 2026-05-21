@@ -8,7 +8,6 @@ using UnityEngine;
 [Serializable]
 public class CharacterStats
 {
-    public float Health;
     public float MaxHealth;
     public float HealthRegeneration;
     public float Armor;
@@ -25,6 +24,8 @@ public class CharacterStats
     public float EvasionChance;
     public float Luck;
     
+    private List<float> _statsToClamp;
+    
     public CharacterStats(CharacterStats stats)
     {
         if (stats == null)
@@ -35,7 +36,6 @@ public class CharacterStats
     
     private void SetStats(CharacterStats stats)
     {
-        Health = stats.Health;
         MaxHealth = stats.MaxHealth;
         HealthRegeneration = stats.HealthRegeneration;
         Armor = stats.Armor;
@@ -51,15 +51,24 @@ public class CharacterStats
         GoldMultiplier = stats.GoldMultiplier;
         EvasionChance = stats.EvasionChance;
         Luck = stats.Luck;
-        
-        if (!Mathf.Approximately(Health, MaxHealth))
-        {
-            Health = MaxHealth;
-        }
+    }
 
-        if ((!Mathf.Approximately(MaxHealth, Health)))
-        {
-            MaxHealth = Health;
-        }
+    public void Upgrade(CharacterStats stats)
+    {
+        MaxHealth += stats.MaxHealth;
+        HealthRegeneration = HealthRegeneration.GetClampedValue(stats.HealthRegeneration);
+        Armor = Armor.GetClampedValue(stats.Armor);
+        MovementSpeed = MovementSpeed.GetClampedValue(stats.MovementSpeed);
+        AttackSpeed = AttackSpeed.GetClampedValue(stats.AttackSpeed);
+        AttackRadius = AttackRadius.GetClampedValue(stats.AttackRadius);
+        IncomingDamageMultiplier = IncomingDamageMultiplier.GetClampedValue(stats.IncomingDamageMultiplier);
+        PickUpRadius = PickUpRadius.GetClampedValue(stats.PickUpRadius);
+        BlockChance = BlockChance.GetClampedValue(stats.BlockChance);
+        CritChance = CritChance.GetClampedValue(stats.CritChance);
+        CritMultiplier = CritMultiplier.GetClampedValue(stats.CritMultiplier);
+        XpMultiplier = XpMultiplier.GetClampedValue(stats.XpMultiplier);
+        GoldMultiplier = GoldMultiplier.GetClampedValue(stats.GoldMultiplier);
+        EvasionChance = EvasionChance.GetClampedValue(stats.EvasionChance);
+        Luck = Luck.GetClampedValue(stats.Luck);
     }
 }
