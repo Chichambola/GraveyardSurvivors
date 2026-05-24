@@ -14,6 +14,7 @@ public class Attacker : MonoBehaviour
     private float _critChance;
     private float _critMultipler;
     private Coroutine _coroutine;
+    private float _damageMultiplier;
 
     private void OnEnable()
     {
@@ -67,6 +68,7 @@ public class Attacker : MonoBehaviour
     {
         _attackSpeed = stats.AttackSpeed;
         _attackRadius = stats.AttackRadius;
+        _damageMultiplier = stats.DamageAmplifier;
         _critChance = stats.CritChance;
         _critMultipler = stats.CritMultiplier;
     }
@@ -75,9 +77,9 @@ public class Attacker : MonoBehaviour
     {
         if (attacker is Enemy enemy)
         {
-            float damage = _weapon.Damage;
+            float damage = _weapon.Damage.AddPercentToNumber(_damageMultiplier);
 
-            float currentCritChance = _critChance + _player.CurrentStats.Luck;
+            float currentCritChance = _critChance.AddPercentToNumber(_player.CurrentStats.Luck);
 
             if (IsEnoughChanceToCrit(currentCritChance))
             {

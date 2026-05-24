@@ -38,7 +38,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public float DamageOnCollision => _damageOnCollision;
     public Vector3 CurrentPosition => transform.position;
 
-    public void Init(Player player, EnemyStats stats)
+    public void Init(IPlayer player, EnemyStats stats)
     {
         _player = player;
 

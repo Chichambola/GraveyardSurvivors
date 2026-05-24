@@ -6,7 +6,8 @@ using UnityEngine;
 public class WeaponBow : WeaponWithAbility
 {
     [SerializeField] private ProjectileSpawner _arrowSpawner;
-    
+    private List<IAttacker> _attackers;
+
     private void OnEnable()
     {
         AttackStrategy.AttackerDetected += OnAttackerDetected;

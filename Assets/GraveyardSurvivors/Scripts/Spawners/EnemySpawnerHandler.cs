@@ -78,6 +78,14 @@ public class EnemySpawnerHandler : MonoBehaviour
         _choosingRoutine = StartCoroutine(ChoosingRoutine());
     }
 
+    public void SetPlayer(IPlayer player)
+    {
+        foreach (var spawner in _enemySpawners)
+        {
+            spawner.SetPlayer(player);
+        }
+    }
+
     public void Upgrade(float percent)
     {
         _maxPoints = _maxPoints.AddPercentToNumber(percent);

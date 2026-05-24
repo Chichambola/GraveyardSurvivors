@@ -4,27 +4,33 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class CharacterStats
 {
+    [Header("Health and speed")]
     public float MaxHealth;
     public float HealthRegeneration;
-    public float Armor;
     public float MovementSpeed;
+    [Header("Damage")]
     public float AttackSpeed;
     public float AttackRadius;
+    public float DamageAmplifier;
     public float IncomingDamageMultiplier;
-    public float PickUpRadius;
+    [Header("Damage avoidance chances")]
     public float BlockChance;
+    public float EvasionChance;
+    public float Armor;
+    [Header("Crit")]
     public float CritChance;
     public float CritMultiplier;
+    [Header("Gold and xp multipliers")]
     public float XpMultiplier;
     public float GoldMultiplier;
-    public float EvasionChance;
+    [Header("Misc")]
+    public float PickUpRadius;
     public float Luck;
-    
-    private List<float> _statsToClamp;
     
     public CharacterStats(CharacterStats stats)
     {
@@ -42,6 +48,7 @@ public class CharacterStats
         MovementSpeed = stats.MovementSpeed;
         AttackSpeed = stats.AttackSpeed;
         AttackRadius = stats.AttackRadius;
+        DamageAmplifier = stats.DamageAmplifier;
         IncomingDamageMultiplier = stats.IncomingDamageMultiplier;
         PickUpRadius = stats.PickUpRadius;
         BlockChance = stats.BlockChance;
@@ -56,7 +63,8 @@ public class CharacterStats
     public void Upgrade(CharacterStats stats)
     {
         MaxHealth += stats.MaxHealth;
-        HealthRegeneration = HealthRegeneration.GetClampedValue(stats.HealthRegeneration);
+        HealthRegeneration += stats.HealthRegeneration;
+        DamageAmplifier += stats.DamageAmplifier; 
         Armor = Armor.GetClampedValue(stats.Armor);
         MovementSpeed = MovementSpeed.GetClampedValue(stats.MovementSpeed);
         AttackSpeed = AttackSpeed.GetClampedValue(stats.AttackSpeed);

@@ -86,7 +86,7 @@ public static class UserUtils
         return default(T);
     }
 
-    public static float RoundToTenths(this float value)
+    public static float RoundToFifths(this float value)
     {
         value = Mathf.Ceil(value * 2) / 2;
 

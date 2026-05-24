@@ -40,7 +40,7 @@ public class ExperienceHandler : MonoBehaviour
             
             _currentXp -= _targetXp;
 
-            _targetXp = _targetXp.AddPercentToNumber(_experienceIncreasePercent).RoundToTenths();
+            _targetXp = _targetXp.AddPercentToNumber(_experienceIncreasePercent).RoundToFifths();
         }
         
         UpdateText();

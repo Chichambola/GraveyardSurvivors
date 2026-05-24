@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Cinemachine;
 using PrimeTween;
 using Sherbert.Framework.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Game : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private Player _playerPrefab;
+    [SerializeField] private PlayerHandler _playerHandler;
     
     [Header("Stats for upgrade")]
     [SerializeField] private SerializableDictionary<int, float> _minutesAndPercents;
@@ -44,17 +47,20 @@ public class Game : MonoBehaviour
         
         if(_interactables == null) 
             throw new Exception("Interactables are null");
-
+        
+        Player player = _playerHandler.Spawn(_playerPrefab);
+        
+        _darkness.Init(player);
+        _lantern.Init();
+        _enemySpawnerHandler.SetPlayer(player);
+        
         foreach (var interactables in _interactables)
         {
             if (interactables.TryGetComponent(out IInteractableHandler handler))
             {
-                handler.Init(_player);
+                handler.Init(player);
             }
         }
-        
-        _darkness.Init(_player);
-        _lantern.Init();
     }
 
     private void OnDisable()

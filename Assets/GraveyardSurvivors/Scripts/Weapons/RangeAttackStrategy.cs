@@ -11,7 +11,6 @@ public class RangeAttackStrategy : AttackStrategy
 
     public override event Action<IAttacker> AttackerDetected;
 
-    private IAttacker _closestInteractable;
     private int _count;
 
     public override void Execute(float radiusMultiplier)
@@ -20,10 +19,16 @@ public class RangeAttackStrategy : AttackStrategy
         {
             if (TryFindClosestAttackers(attackArea, out List<IAttacker> sortedAttackers))
             {
+                int count = 0;
+                
                 foreach (var attacker in sortedAttackers)
                 {
+                    count++;
+                    
                     AttackerDetected?.Invoke(attacker);
                 }
+                
+                Debug.Log($"Found {count} attackers");
             }
 
             if (_count != _numberOfProjectiles) continue;
@@ -37,7 +42,7 @@ public class RangeAttackStrategy : AttackStrategy
     private bool TryFindClosestAttackers(AttackArea attackArea, out List<IAttacker> sortedAttackers)
     {
         sortedAttackers = new List<IAttacker>();
-
+        
         if (attackArea.TryGetAttackers(out List<IAttacker> currentAttackers))
         {
             for (int i = 0; i < _numberOfProjectiles; i++)

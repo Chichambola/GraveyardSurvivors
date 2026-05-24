@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c5f0ba2826352b408325e9bf9dd2420, type: 3}
-  m_Name: Warrior
+  m_Name: WarriorUpgradeStats
   m_EditorClassIdentifier: 
   _characterStats:
-    MaxHealth: 60
-    HealthRegeneration: 2
-    Armor: 20
+    MaxHealth: 5
+    HealthRegeneration: 1
     MovementSpeed: 0
     AttackSpeed: 0
     AttackRadius: 0
+    DamageAmplifier: 0
     IncomingDamageMultiplier: 0
-    PickUpRadius: 0
-    BlockChance: 15
-    CritChance: 10
-    CritMultiplier: 2
-    XpMultiplier: 1
-    GoldMultiplier: 1
+    BlockChance: 0
     EvasionChance: 0
-    Luck: 1
+    Armor: 10
+    CritChance: 0
+    CritMultiplier: 0
+    XpMultiplier: 0
+    GoldMultiplier: 0
+    PickUpRadius: 0
+    Luck: 0

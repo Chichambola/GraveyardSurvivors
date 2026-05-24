@@ -30,7 +30,7 @@ public class LanternLight : MonoBehaviour
 
     public bool IsActive => _collider.radius > _disableThreshold;
     public float ShrinkRate => _shrinkRate;
-    private bool IsGainingEnergy => _targetRadius != 0;
+    public bool IsGainingEnergy => _targetRadius != 0;
 
     public void Init()
     {
@@ -151,6 +151,6 @@ public class LanternLight : MonoBehaviour
 
         _lightArea.transform.localScale = particleSize;
         _collider.radius = value;
-        _light.range = value;
+        //_light.range = value;
     }
 }

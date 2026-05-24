@@ -127,7 +127,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     public void ReceiveMoney(float value) => _wallet.ReceiveMoney(value);
     
     public void Upgrade(CharacterStats statsToUpgrade) => CurrentStats.Upgrade(statsToUpgrade);
-    
+
     public void ChangeSpeed(float speedPercent, bool isSlowing)
     {
         if (isSlowing)

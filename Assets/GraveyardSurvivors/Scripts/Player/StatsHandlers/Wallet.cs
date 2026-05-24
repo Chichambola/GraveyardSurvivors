@@ -37,7 +37,7 @@ public class Wallet : MonoBehaviour
     {
         value *= _player.CurrentStats.GoldMultiplier;
         
-        _currentMoneyAmount += value.RoundToTenths();
+        _currentMoneyAmount += value.RoundToFifths();
         
         UpdateValue();
     }

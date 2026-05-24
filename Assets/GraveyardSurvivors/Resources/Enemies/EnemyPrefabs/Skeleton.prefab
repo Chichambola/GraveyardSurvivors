@@ -526,7 +526,7 @@ MonoBehaviour:
   Mover: {fileID: 8696614376307728057}
   _damageCollider: {fileID: 5695716624462561476}
   Weapon: {fileID: 386484544202866058}
-  AttackCooldown: 0.4
+  _attackCooldown: 0.3
   _damageOnCollision: 5
   _defender: {fileID: 886728962877736986}
   _health: {fileID: 2307875020064126990}

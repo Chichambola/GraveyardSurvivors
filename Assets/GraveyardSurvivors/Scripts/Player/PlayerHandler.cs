@@ -1,23 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
+using Sherbert.Framework.Generic;
 using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private CharacterStats _statsToUpgrade;
+    [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private SerializableDictionary<Player, PlayerInfo> _playerUpgradeStats;
     [SerializeField] private ExperienceHandler _experienceHandler;
-
-    private void Awake()
-    {
-        _statsToUpgrade = new CharacterStats(_statsToUpgrade);
-    }
+    [SerializeField] private CinemachineVirtualCamera _playerCamera;
+    
+    private Player _player;
+    private CharacterStats _statsToUpgrade;
 
     private void OnEnable()
     {
         _experienceHandler.PlayerReachedThreshold += OnPlayerReachedThreshold;
-        _player.GainedXp += OnPlayerGainedXp;
     }
 
     private void OnDisable()
@@ -25,17 +25,38 @@ public class PlayerHandler : MonoBehaviour
         _experienceHandler.PlayerReachedThreshold -= OnPlayerReachedThreshold;
         _player.GainedXp -= OnPlayerGainedXp;
     }
+
+    public Player Spawn(Player player)
+    {
+        if (player == null)
+            throw new ArgumentNullException(nameof(player));
+        
+        if (_playerUpgradeStats.TryGetValue(player, out PlayerInfo stat))
+        {
+            _statsToUpgrade = stat.GetStats();
+            
+            _player = Instantiate(player, _spawnPoint.position, _spawnPoint.rotation);
+            _player.GainedXp += OnPlayerGainedXp;
+            _playerCamera.Follow = _player.transform;
+
+            return _player;
+        }
+        else
+        {
+            throw new KeyNotFoundException($"Player {_player.name} has not been registered.");
+        }
+    }
     
     private void OnPlayerReachedThreshold()
     {
-        _player.Upgrade(_statsToUpgrade);
+       _player.Upgrade(_statsToUpgrade);
     }
     
     private void OnPlayerGainedXp(float value)
     {
         float tempXp = _player.CurrentStats.XpMultiplier * value;
 
-        tempXp = tempXp.RoundToTenths();
+        tempXp = tempXp.RoundToFifths();
         
         _experienceHandler.GainExperience(tempXp);
     }

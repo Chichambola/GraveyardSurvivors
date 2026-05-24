@@ -12,7 +12,6 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
-    [SerializeField] private Player _player;
     [SerializeField] private EnemyInfo _enemyInfo;
     [SerializeField] private EnemyStats _statsToUpgrade;
     
@@ -28,11 +27,12 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     [Header("Unity workaround")]
     [SerializeField] private Vector3 _offsetAfterDeath = new (0, -90, 0);
 
-    private Vector3 _spawnPoint;
     private float _minRandomValue = -2f;
     private float _maxRandomValue = 4f;
+    private Vector3 _spawnPoint;
     private List<Enemy> _spawnedUnits;
     private EnemyStats _baseStats;
+    private IPlayer _player;
     
     public event Action<Enemy> EnemyWasReleased;
     public event Action<Enemy> EnemyWasSpawned;
@@ -125,5 +125,10 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         {
             enemy.SetStats(_baseStats);
         }
+    }
+
+    public void SetPlayer(IPlayer player)
+    {
+        _player = player;
     }
 }
