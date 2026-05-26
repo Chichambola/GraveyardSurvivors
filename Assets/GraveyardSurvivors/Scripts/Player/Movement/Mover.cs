@@ -24,7 +24,7 @@ public class Mover : MonoBehaviour
     {
         float currentSpeed = _speed.AddPercentToNumber(speedMultiplier);
         
-        transform.position += direction * (currentSpeed * Time.fixedDeltaTime);
+        transform.position += direction * (currentSpeed * Time.deltaTime);
     }
 
     public void MoveToPosition(Vector3 targetPosition, float speedMultiplier = 0f)
@@ -33,7 +33,7 @@ public class Mover : MonoBehaviour
     
         Vector3 adjustedTarget = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
         
-        transform.position = Vector3.MoveTowards(transform.position, adjustedTarget, currentSpeed * Time.fixedDeltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, adjustedTarget, currentSpeed * Time.deltaTime);
     }
     
     public void SetSpeed(float speed)

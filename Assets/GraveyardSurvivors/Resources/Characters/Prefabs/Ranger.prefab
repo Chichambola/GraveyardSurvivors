@@ -52,7 +52,7 @@ MonoBehaviour:
   _attackAreas:
   - {fileID: 3312298661042663792}
   - {fileID: 7033920687895029393}
-  _numberOfProjectiles: 2
+  _numberOfProjectiles: 5
 --- !u!114 &640602163420855124
 MonoBehaviour:
   m_ObjectHideFlags: 0

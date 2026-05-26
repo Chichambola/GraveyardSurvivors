@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 
 public class RangeAttackStrategy : AttackStrategy
 {
@@ -19,22 +22,16 @@ public class RangeAttackStrategy : AttackStrategy
         {
             if (TryFindClosestAttackers(attackArea, out List<IAttacker> sortedAttackers))
             {
-                int count = 0;
-                
                 foreach (var attacker in sortedAttackers)
                 {
-                    count++;
-                    
                     AttackerDetected?.Invoke(attacker);
                 }
-                
-                Debug.Log($"Found {count} attackers");
             }
-
-            if (_count != _numberOfProjectiles) continue;
+            
+            if (_count < _numberOfProjectiles) continue;
             
             _count = 0;
-                
+
             return;
         }
     }
@@ -45,7 +42,7 @@ public class RangeAttackStrategy : AttackStrategy
         
         if (attackArea.TryGetAttackers(out List<IAttacker> currentAttackers))
         {
-            for (int i = 0; i < _numberOfProjectiles; i++)
+            for (int i = 0; i <= _numberOfProjectiles; i++)
             {
                 float minDistance = float.MaxValue;
 
@@ -64,7 +61,7 @@ public class RangeAttackStrategy : AttackStrategy
                         closestAttacker = attacker;
                     }
                 }
-
+                
                 if (closestAttacker != null)
                 {
                     sortedAttackers.Add(closestAttacker);

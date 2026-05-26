@@ -7,7 +7,6 @@ using UnityEngine.Serialization;
 public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrier
 {
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private CollisionHandler _collisionHandler;
     [SerializeField] private PickablesDetector _pickUpsDetector;
     [SerializeField] private InteractionHandler _interactionHandler;
     [SerializeField] private Attacker _attacker;
@@ -69,7 +68,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         _pickUpsDetector.BuffDetected += AddBuff;
         _pickUpsDetector.CoinDetected += _wallet.ReceiveMoney;
         _pickUpsDetector.CrystalDetected += OnCrystalDetected;
-        _collisionHandler.EnemyDetected += TakeDamage;
         
         _attacker.StartAttacking();
     }
@@ -78,7 +76,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     {
         _pickUpsDetector.BuffDetected -= AddBuff;
         _pickUpsDetector.CoinDetected -= _wallet.ReceiveMoney;
-        _collisionHandler.EnemyDetected -= TakeDamage;
         _pickUpsDetector.CrystalDetected -= OnCrystalDetected;
     }
 

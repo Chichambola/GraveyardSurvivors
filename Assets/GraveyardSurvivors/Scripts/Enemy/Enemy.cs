@@ -9,11 +9,10 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
-    [SerializeField] private BoxCollider _damageCollider;
+    [SerializeField] private DamageZone _damageZone;
     [Header("Weapon")]
     [SerializeField] protected Weapon Weapon;
     [SerializeField] private float _attackCooldown = 0.5f;
-    [SerializeField] private float _damageOnCollision = 3f;
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
@@ -35,7 +34,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAlive { get; private set; }
     public float CurrentHealth { get; private set; }
-    public float DamageOnCollision => _damageOnCollision;
     public Vector3 CurrentPosition => transform.position;
 
     public void Init(IPlayer player, EnemyStats stats)
@@ -160,12 +158,12 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         if (isResetting)
         {
             _collider.center -= offsetAfterDeath;
-            _damageCollider.center -= offsetAfterDeath;
+            _damageZone.gameObject.transform.position -= offsetAfterDeath;
         }
         else
         {
             _collider.center += offsetAfterDeath;
-            _damageCollider.center += offsetAfterDeath;
+            _damageZone.gameObject.transform.position += offsetAfterDeath;
         }
     }
     
