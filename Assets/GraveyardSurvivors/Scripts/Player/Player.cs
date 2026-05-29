@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
-public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrier
+public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private PickablesDetector _pickUpsDetector;
@@ -38,9 +38,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     public float MaxHealth => CurrentStats.MaxHealth;
     public float Luck => CurrentStats.Luck;
     public bool IsAlive => CurrentHealth > 0;
-    public bool IsLightActive => _light.IsActive;
     
-
     public event Action<Player> CanBeReleased;
     
     protected override void Awake()
@@ -123,7 +121,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
 
     public void ReceiveMoney(float value) => _wallet.ReceiveMoney(value);
     
-    public void Upgrade(CharacterStats statsToUpgrade) => CurrentStats.Upgrade(statsToUpgrade);
+    public void Upgrade(CharacterStats statsToUpgrade)
+    {
+        CurrentStats.Upgrade(statsToUpgrade);
+        _attacker.UpgradeWeapon();
+    }
 
     public void ChangeSpeed(float speedPercent, bool isSlowing)
     {

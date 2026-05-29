@@ -16,12 +16,19 @@ public class RangeAttackStrategy : AttackStrategy
 
     private int _count;
 
+    public override void Upgrade()
+    {
+        _numberOfProjectiles++;
+    }
+
     public override void Execute(float radiusMultiplier)
     {
         foreach (var attackArea in _attackAreas)
         {
             if (TryFindClosestAttackers(attackArea, out List<IAttacker> sortedAttackers))
             {
+                _count += sortedAttackers.Count;
+                
                 foreach (var attacker in sortedAttackers)
                 {
                     AttackerDetected?.Invoke(attacker);
@@ -42,7 +49,7 @@ public class RangeAttackStrategy : AttackStrategy
         
         if (attackArea.TryGetAttackers(out List<IAttacker> currentAttackers))
         {
-            for (int i = 0; i <= _numberOfProjectiles; i++)
+            for (int i = 0; i < _numberOfProjectiles; i++)
             {
                 float minDistance = float.MaxValue;
 
@@ -67,8 +74,6 @@ public class RangeAttackStrategy : AttackStrategy
                     sortedAttackers.Add(closestAttacker);
 
                     currentAttackers.Remove(closestAttacker);
-
-                    _count++;
                 }
             }
         }

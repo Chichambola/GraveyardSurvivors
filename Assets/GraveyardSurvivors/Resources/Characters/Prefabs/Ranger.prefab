@@ -52,7 +52,7 @@ MonoBehaviour:
   _attackAreas:
   - {fileID: 3312298661042663792}
   - {fileID: 7033920687895029393}
-  _numberOfProjectiles: 5
+  _numberOfProjectiles: 2
 --- !u!114 &640602163420855124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPrefab: {fileID: 6520385474745861833, guid: f248a92a213af5340b7412dd748c1016, type: 3}
   PoolCapacity: 0
-  MaxPoolCapacity: 5
+  MaxPoolCapacity: 10
   _gunPoint: {fileID: 2923922765912433275}
 --- !u!1 &2438624930508249613
 GameObject:
@@ -2462,7 +2462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a1a3e275308154da7e3b42b4dcdade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyDetector: {fileID: 7563978297264906886}
 --- !u!136 &2151214069804987675
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7921,7 +7920,6 @@ MonoBehaviour:
   Rotator: {fileID: 5768187198700868756}
   Mover: {fileID: 4678789845801799291}
   _inputReader: {fileID: 1658106383447107767}
-  _collisionHandler: {fileID: 4561276284283105061}
   _pickUpsDetector: {fileID: 8265656259403164217}
   _interactionHandler: {fileID: 246702825217911721}
   _attacker: {fileID: 6277263831435311590}

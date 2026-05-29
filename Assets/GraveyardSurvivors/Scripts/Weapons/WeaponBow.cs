@@ -6,8 +6,9 @@ using UnityEngine;
 public class WeaponBow : WeaponWithAbility
 {
     [SerializeField] private ProjectileSpawner _arrowSpawner;
-    private List<IAttacker> _attackers;
 
+    private int _damageUpgrade = 1;
+    
     private void OnEnable()
     {
         AttackStrategy.AttackerDetected += OnAttackerDetected;
@@ -24,7 +25,13 @@ public class WeaponBow : WeaponWithAbility
     {
         AttackStrategy.Execute(radiusMultiplier);
     }
-    
+
+    public override void Upgrade()
+    {
+        AttackStrategy.Upgrade();
+        BonusDamage += _damageUpgrade;
+    }
+
     private void OnAttackerDetected(IAttacker attacker)
     {
         if (attacker is Enemy enemy)

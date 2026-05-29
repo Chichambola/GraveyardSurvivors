@@ -97,8 +97,8 @@ public class Attacker : MonoBehaviour
         return critChance >= randomNumber;
     }
 
-    public void IncreaseDamage(float baseDamageIncrease)
+    public void UpgradeWeapons()
     {
-        _weapon.IncreaseDamage(baseDamageIncrease);
+        _weapon.Upgrade();
     }
 }

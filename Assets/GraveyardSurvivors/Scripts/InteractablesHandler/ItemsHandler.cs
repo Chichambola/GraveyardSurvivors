@@ -34,24 +34,11 @@ public class ItemsHandler : MonoBehaviour
     {
         if (_items.Count != 0)
         {
-            foreach (var item in _items)
-            {
-                if (item.Info.Rarity == ERarityLevel.Common)
-                    _commonItems.Add(item); 
-
-                if (item.Info.Rarity == ERarityLevel.Rare)
-                    _rareItems.Add(item);
-
-                if (item.Info.Rarity == ERarityLevel.Legendary)
-                    _legendaryItems.Add(item);
-            }
-
-            _itemsLists = new Dictionary<ERarityLevel, List<Item>>()
-            {
-                {ERarityLevel.Common,  _commonItems},
-                {ERarityLevel.Rare, _rareItems},
-                {ERarityLevel.Legendary, _legendaryItems}
-            };
+            SetItems();
+        }
+        else
+        {
+            throw new Exception("No items!");
         }
     }
 
@@ -67,5 +54,27 @@ public class ItemsHandler : MonoBehaviour
         
         _itemSpawner.SetPrefab(tempItem);
         _itemSpawner.Spawn(position);
+    }
+    
+    private void SetItems()
+    {
+        foreach (var item in _items)
+        {
+            if (item.Info.Rarity == ERarityLevel.Common)
+                _commonItems.Add(item); 
+
+            if (item.Info.Rarity == ERarityLevel.Rare)
+                _rareItems.Add(item);
+
+            if (item.Info.Rarity == ERarityLevel.Legendary)
+                _legendaryItems.Add(item);
+        }
+
+        _itemsLists = new Dictionary<ERarityLevel, List<Item>>()
+        {
+            {ERarityLevel.Common,  _commonItems},
+            {ERarityLevel.Rare, _rareItems},
+            {ERarityLevel.Legendary, _legendaryItems}
+        };
     }
 }

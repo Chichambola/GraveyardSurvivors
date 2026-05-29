@@ -24,6 +24,7 @@ public class Game : MonoBehaviour
     [Header("Timer")]
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private float _debugElapsedTime;
+    
 
     private int _primeTweenCapacity = 3000;
     private float _elapsedTime;
