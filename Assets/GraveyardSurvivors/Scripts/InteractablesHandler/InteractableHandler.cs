@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableHandler : MonoBehaviour, IInteractableHandler
+public abstract class InteractableHandler : MonoBehaviour, IInteractableHandler
 {
     [SerializeField] protected InteractableSpawner InteractableSpawner;
     
@@ -14,5 +14,10 @@ public class InteractableHandler : MonoBehaviour, IInteractableHandler
             throw new System.ArgumentNullException("player");
         
         Player = player;
+    }
+
+    public virtual void Spawn(Vector3 position)
+    {
+        InteractableSpawner.Spawn(position);
     }
 }

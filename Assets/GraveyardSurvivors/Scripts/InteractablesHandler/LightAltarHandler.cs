@@ -15,11 +15,6 @@ public class LightAltarHandler : CostInteractableHandler
     {
         InteractableSpawner.InteractableWasChosen -= OnLightAltarChosen;
     }
-
-    private void Start()
-    {
-        InteractableSpawner.SetValueForObjects(Cost);
-    }
     
     private void OnLightAltarChosen(Interactable interactable)
     {

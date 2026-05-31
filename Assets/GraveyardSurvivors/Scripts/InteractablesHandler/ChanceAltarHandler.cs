@@ -18,11 +18,6 @@ public class ChanceAltarHandler : ItemInteractable
         InteractableSpawner.InteractableWasChosen -= OnChanceAltarChosen;
     }
 
-    private void Start()
-    {
-        InteractableSpawner.SetValueForObjects(Cost);
-    }
-
     private void OnChanceAltarChosen(Interactable interactable)
     {
         if (interactable is ChanceAltar altar == false)

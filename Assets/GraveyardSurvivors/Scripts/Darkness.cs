@@ -20,10 +20,7 @@ public class Darkness : MonoBehaviour
         _player = player == null ? throw new Exception("Player can not be null") : player;
 
         _initialDamage = _damage;
-    }
-
-    private void OnEnable()
-    {
+        
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
@@ -36,7 +33,7 @@ public class Darkness : MonoBehaviour
         
         while (enabled)
         {
-            if (_player.IsLightActive == false)
+            if (!_player.IsLightActive)
             {
                 _player.TakeDamage(_damage);
                 

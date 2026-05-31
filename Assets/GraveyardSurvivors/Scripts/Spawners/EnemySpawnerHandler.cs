@@ -58,16 +58,6 @@ public class EnemySpawnerHandler : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        if (_spawnRoutine != null)
-            StopCoroutine(_spawnRoutine);
-
-        _spawnRoutine = StartCoroutine(SpawnRoutine());
-        
-        StartChoosing();
-    }
-
     public void StartChoosing()
     {
         _isChoosing = true;
@@ -80,10 +70,22 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     public void SetPlayer(IPlayer player)
     {
+        if (_enemySpawners.Length <= 0)
+        {
+            throw new Exception($"Length can not be less than 0");
+        }
+        
         foreach (var spawner in _enemySpawners)
         {
             spawner.SetPlayer(player);
         }
+        
+        StartChoosing();
+        
+        if (_spawnRoutine != null)
+            StopCoroutine(_spawnRoutine);
+        
+        _spawnRoutine = StartCoroutine(SpawnRoutine());
     }
 
     public void Upgrade(float percent)

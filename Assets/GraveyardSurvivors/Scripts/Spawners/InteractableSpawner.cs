@@ -5,38 +5,15 @@ using UnityEngine;
 
 public class InteractableSpawner : Spawner<Interactable>
 {
-    [SerializeField] private Transform[] _points;
-
-    private Transform _spawnPoint;
+    private Vector3 _spawnPoint;
     
     public event Action<Interactable> InteractableWasChosen;
-    
-    private void OnEnable()
-    {
-        Spawn();
-    }
 
-    private void Update()
+    public void Spawn(Vector3 position)
     {
-        if (ActiveObjects.Count == 0)
-        {
-            foreach (var point in _points)
-            {
-                _spawnPoint = point;
-            
-                GetObject(); 
-            }
-        }
-    }
+        _spawnPoint = position;
 
-    public void Spawn()
-    {
-        foreach (var point in _points)
-        {
-            _spawnPoint = point;
-            
-            GetObject(); 
-        }
+        GetObject();
     }
 
     public void SetValueForObjects(float value)
@@ -54,7 +31,7 @@ public class InteractableSpawner : Spawner<Interactable>
     {
         ActiveObjects.Add(interactable);
         
-        interactable.transform.position = _spawnPoint.position;
+        interactable.transform.position = _spawnPoint;
         interactable.transform.parent = transform;
 
         interactable.WasChosen += OnInteractableChosen;

@@ -14,7 +14,7 @@ public class BloodAltarHandler : InteractableHandler
     {
         InteractableSpawner.InteractableWasChosen -= OnAltarChosen;
     }
-
+    
     private void OnAltarChosen(Interactable interactable)
     {
         if (interactable is BloodAltar altar == false)

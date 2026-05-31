@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IInteractableHandler
 {
     void Init(IPlayer player);
+    void Spawn(Vector3 position);
 }

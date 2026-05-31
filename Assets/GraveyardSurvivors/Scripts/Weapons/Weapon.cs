@@ -8,7 +8,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     [SerializeField] protected AttackStrategy AttackStrategy;
     [SerializeField] private WeaponInfo _info;
     
-    protected int BonusDamage;
+    protected float BonusDamage;
     
     public virtual event Action<IAttacker> AttackerDetected;
     public float Damage => _info.Damage + BonusDamage;

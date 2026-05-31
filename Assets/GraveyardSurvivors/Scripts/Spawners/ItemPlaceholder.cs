@@ -12,9 +12,6 @@ public class ItemPlaceholder : MonoBehaviour, IThrowable, IPoolable<ItemPlacehol
     [SerializeField] private Transform _endPoint;
     [SerializeField] private Thrower _thrower;
     
-    private float _minRandomValue = -2f;
-    private float _maxRandomValue = 5f;
-    
     public event Action<ItemPlaceholder> CanBeReleased;
     
     private void OnEnable()

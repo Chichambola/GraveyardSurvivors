@@ -23,11 +23,6 @@ public class ChestHandler : CostInteractableHandler
         InteractableSpawner.InteractableWasChosen -= OnChestChosen;
     }
 
-    private void Start()
-    {
-        InteractableSpawner.SetValueForObjects(Cost);
-    }
-
     private void OnChestChosen(Interactable interactable)
     {
         if (interactable is Chest chest == false)

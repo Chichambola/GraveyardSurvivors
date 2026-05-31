@@ -19,7 +19,7 @@ public class Game : MonoBehaviour
     [SerializeField] private Darkness _darkness;
     [SerializeField] private LanternLight _lantern;
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
-    [SerializeField] private List<InteractableHandler> _interactables;
+    [SerializeField] private InteractablesHandler _interactablesHandler;
     
     [Header("Timer")]
     [SerializeField] private TextMeshProUGUI _timerText;
@@ -46,22 +46,14 @@ public class Game : MonoBehaviour
     {
         _enemySpawnerHandler.EnemyWasKilled += OnEnemyDeath;
         
-        if(_interactables == null) 
-            throw new Exception("Interactables are null");
-        
         Player player = _playerHandler.Spawn(_playerPrefab);
         
-        _darkness.Init(player);
-        _lantern.Init();
-        _enemySpawnerHandler.SetPlayer(player);
+        Debug.Log(player == null);
         
-        foreach (var interactables in _interactables)
-        {
-            if (interactables.TryGetComponent(out IInteractableHandler handler))
-            {
-                handler.Init(player);
-            }
-        }
+        _interactablesHandler.Init(player);
+        _enemySpawnerHandler.SetPlayer(player);
+        _lantern.Init();
+        _darkness.Init(player);
     }
 
     private void OnDisable()

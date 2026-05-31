@@ -92,6 +92,11 @@ public class Attacker : MonoBehaviour
 
     private bool IsEnoughChanceToCrit(float critChance)
     {
+        if (critChance >= UserUtils.s_HighestPercent)
+        {
+            return true;
+        }
+        
         float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
         
         return critChance >= randomNumber;

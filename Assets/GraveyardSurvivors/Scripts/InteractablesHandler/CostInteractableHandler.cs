@@ -35,4 +35,9 @@ public class CostInteractableHandler : InteractableHandler
 
         InteractableSpawner.SetValueForObjects(Cost);
     }
+
+    public void SetValueForObjects()
+    {
+        InteractableSpawner.SetValueForObjects(Cost);
+    }
 }

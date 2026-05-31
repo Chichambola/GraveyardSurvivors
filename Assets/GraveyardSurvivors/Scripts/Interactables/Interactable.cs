@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Interactable: MonoBehaviour, IInteractable, IPoolable<Interactable>
+public class Interactable: MonoBehaviour, IInteractable, IPoolable<Interactable>
 {
     [Header("Interactables specific fields")]
     [SerializeField] protected Outline Outline;

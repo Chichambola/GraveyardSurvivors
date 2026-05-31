@@ -7,7 +7,7 @@ public class WeaponBow : WeaponWithAbility
 {
     [SerializeField] private ProjectileSpawner _arrowSpawner;
 
-    private int _damageUpgrade = 1;
+    private float _damageUpgrade = 0.5f;
     
     private void OnEnable()
     {
