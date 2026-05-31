@@ -7,14 +7,14 @@ public abstract class Weapon : MonoBehaviour, IWeapon
 {
     [SerializeField] protected AttackStrategy AttackStrategy;
     [SerializeField] private WeaponInfo _info;
+    [SerializeField] private float _bonusDamagePerUpgrade = 1;
     
     protected float BonusDamage;
     
     public virtual event Action<IAttacker> AttackerDetected;
     public float Damage => _info.Damage + BonusDamage;
 
-    public abstract void Attack(float radiusMultiplier = 0f);
-    public virtual void StopAttacking() {}
+    public abstract void Attack();
 
     private void OnDisable()
     {
@@ -23,6 +23,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon
 
     public virtual void Upgrade()
     {
-        //noop
+        AttackStrategy.Upgrade();
+        BonusDamage += _bonusDamagePerUpgrade;
     }
 }

@@ -21,7 +21,7 @@ public class RangeAttackStrategy : AttackStrategy
         _numberOfProjectiles++;
     }
 
-    public override void Execute(float radiusMultiplier)
+    public override void Execute()
     {
         foreach (var attackArea in _attackAreas)
         {

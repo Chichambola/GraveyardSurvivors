@@ -28,9 +28,9 @@ public class WeaponIronSword : WeaponWithAbility
         AttackStrategy.AttackerDetected -= OnAttackerDetected;
     }
 
-    public override void Attack(float radius)
+    public override void Attack()
     {
-        AttackStrategy.Execute(radius);
+        AttackStrategy.Execute();
     }
 
     private void SetParticleSystemDuration(float duration)

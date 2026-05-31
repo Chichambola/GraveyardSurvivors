@@ -11,7 +11,7 @@ public class Demon : Enemy
     {
         StateMachine.SetState(_idleState);
         
-        Weapon.Attack();
+        base.HandleAttack();
     }
 
     protected override void InitializeStateMachine()

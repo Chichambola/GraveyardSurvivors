@@ -52,6 +52,20 @@ public static class UserUtils
         return originalValue;
     }
     
+    public static float GetClampedValueInverse(this float originalValue, float increasePercent, float minThreshold = 0f)
+    {
+        if (originalValue <= minThreshold)
+            return originalValue;
+
+        float aboveMin = originalValue - minThreshold;
+        
+        float availablePercent = (aboveMin * increasePercent) / (100f - minThreshold);
+        
+        originalValue -= availablePercent;
+
+        return originalValue;
+    }
+    
     public static T GetElementByWeight<T>(IEnumerable<T> items) where T : IWeightedObject
     {
         if (items == null)

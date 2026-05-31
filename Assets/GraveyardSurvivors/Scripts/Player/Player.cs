@@ -33,12 +33,15 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     
     public CharacterStats CurrentStats { get; private set; }
     public Vector3 CurrentPosition => transform.position;
-    public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CurrentHealth { get; private set; }
     public float MaxHealth => CurrentStats.MaxHealth;
+    public float MoneyAmount => _wallet.CurrentMoneyAmount;
+    public float CritChance => CurrentStats.CritChance;
+    public float CritMultiplier => CurrentStats.CritMultiplier;
     public float Luck => CurrentStats.Luck;
-    public bool IsAlive => CurrentHealth > 0;
+    public float Speed => CurrentStats.AttackSpeed;
     public bool IsLightActive => _light.IsActive;
+    public bool IsAlive => CurrentHealth > 0;
     
     public event Action<Player> CanBeReleased;
     
@@ -52,6 +55,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         _interactionHandler = GetComponent<InteractionHandler>();
         _inputReader = GetComponent<InputReader>();
 
+        _attacker.Init(this);
+        
         InitializeStateMachine();
     }
 

@@ -48,8 +48,6 @@ public class Game : MonoBehaviour
         
         Player player = _playerHandler.Spawn(_playerPrefab);
         
-        Debug.Log(player == null);
-        
         _interactablesHandler.Init(player);
         _enemySpawnerHandler.SetPlayer(player);
         _lantern.Init();

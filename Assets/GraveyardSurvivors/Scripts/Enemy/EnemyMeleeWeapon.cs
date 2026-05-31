@@ -16,9 +16,9 @@ public class EnemyMeleeWeapon : Weapon
         AttackStrategy.AttackerDetected -= OnAttackerDetected;
     }
 
-    public override void Attack(float radiusMultiplier)
+    public override void Attack()
     {
-        AttackStrategy.Execute(radiusMultiplier);
+        AttackStrategy.Execute();
     }
 
     private void OnAttackerDetected(IAttacker attacker)

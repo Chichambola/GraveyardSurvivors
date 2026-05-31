@@ -5,27 +5,27 @@ using Random = UnityEngine.Random;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private Player _player;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private float _cooldown = 1.5f;
     
-    private float _attackSpeed;
-    private float _attackRadius;
-    private float _critChance;
-    private float _critMultipler;
     private Coroutine _coroutine;
-    private float _damageMultiplier;
+    private IAttacker _attacker;
+    
+    public bool IsAttacking {get; private set;}
 
+    public void Init(IAttacker attacker)
+    {
+        _attacker = attacker;
+    }
+    
     private void OnEnable()
     {
-        _player.StatsChanged += OnStatsChanged;
-        _weapon.AttackerDetected += OnEnemyDetected;
+        _weapon.AttackerDetected += OnAttackerDetected;
     }
 
     private void OnDisable()
     {
-        _player.StatsChanged -= OnStatsChanged;
-        _weapon.AttackerDetected -= OnEnemyDetected;
+        _weapon.AttackerDetected -= OnAttackerDetected;
     }
 
     public void StartAttacking()
@@ -38,17 +38,22 @@ public class Attacker : MonoBehaviour
     
     private IEnumerator AttackingCoroutine()
     {
+        IsAttacking = true;
+        
         float currentCooldown = _cooldown;
         
         while (enabled)
         {
             currentCooldown = CompareCooldown(currentCooldown);
-        
-            var wait = new WaitForSeconds(currentCooldown);
             
-            _weapon.Attack(_attackRadius);
-
+            var wait = new WaitForSecondsRealtime(currentCooldown);
+            
             yield return wait;
+            
+            _weapon.Attack();
+            
+            IsAttacking = false;
+            
         }
     }
 
@@ -56,7 +61,7 @@ public class Attacker : MonoBehaviour
     {
         if (!Mathf.Approximately(currentCooldown, _cooldown))
         {
-            _cooldown = _cooldown.SubtractPercentFromNumber(_attackSpeed);
+            _cooldown = _cooldown.SubtractPercentFromNumber(_attacker.Speed);
             
             currentCooldown = _cooldown;
         }
@@ -64,30 +69,18 @@ public class Attacker : MonoBehaviour
         return currentCooldown;
     }
     
-    private void OnStatsChanged(CharacterStats stats)
+    private void OnAttackerDetected(IAttacker attacker)
     {
-        _attackSpeed = stats.AttackSpeed;
-        _attackRadius = stats.AttackRadius;
-        _damageMultiplier = stats.DamageAmplifier;
-        _critChance = stats.CritChance;
-        _critMultipler = stats.CritMultiplier;
-    }
-    
-    private void OnEnemyDetected(IAttacker attacker)
-    {
-        if (attacker is Enemy enemy)
+        float damage = _weapon.Damage;
+
+        float currentCritChance = _attacker.CritChance.AddPercentToNumber(_attacker.Luck);
+
+        if (IsEnoughChanceToCrit(currentCritChance))
         {
-            float damage = _weapon.Damage.AddPercentToNumber(_damageMultiplier);
-
-            float currentCritChance = _critChance.AddPercentToNumber(_player.CurrentStats.Luck);
-
-            if (IsEnoughChanceToCrit(currentCritChance))
-            {
-                damage *= _critMultipler;
-            }
-        
-            enemy.TakeDamage(damage);
+            damage *= _attacker.CritMultiplier;
         }
+        
+        attacker.TakeDamage(damage);
     }
 
     private bool IsEnoughChanceToCrit(float critChance)
@@ -105,5 +98,11 @@ public class Attacker : MonoBehaviour
     public void UpgradeWeapons()
     {
         _weapon.Upgrade();
+    }
+
+    public void StopAttacking()
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
     }
 }

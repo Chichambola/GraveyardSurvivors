@@ -6,8 +6,6 @@ using UnityEngine;
 public class WeaponBow : WeaponWithAbility
 {
     [SerializeField] private ProjectileSpawner _arrowSpawner;
-
-    private float _damageUpgrade = 0.5f;
     
     private void OnEnable()
     {
@@ -21,15 +19,9 @@ public class WeaponBow : WeaponWithAbility
         _arrowSpawner.ProjectileReleased -= ProcessAttacker;
     }
 
-    public override void Attack(float radiusMultiplier)
+    public override void Attack()
     {
-        AttackStrategy.Execute(radiusMultiplier);
-    }
-
-    public override void Upgrade()
-    {
-        AttackStrategy.Upgrade();
-        BonusDamage += _damageUpgrade;
+        AttackStrategy.Execute();
     }
 
     private void OnAttackerDetected(IAttacker attacker)

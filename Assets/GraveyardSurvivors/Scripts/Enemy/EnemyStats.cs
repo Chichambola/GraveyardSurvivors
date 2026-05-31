@@ -13,11 +13,12 @@ public class EnemyStats
     public float Armor;
     public float MovementSpeed;
     public float AttackSpeed;
+    public float CritChance;
+    public float CritMultiplier;
     public float MoneyForKill;
     public float XpForKill;
     public float LanternEnergy;
-
-    private Dictionary<string, float> _values;
+    public float Luck;
     
     public EnemyStats(EnemyStats stats)
     {
@@ -33,8 +34,11 @@ public class EnemyStats
         Armor += stats.Armor;
         MovementSpeed += stats.MovementSpeed;
         AttackSpeed += stats.AttackSpeed;
+        CritChance += stats.CritChance;
+        CritMultiplier += stats.CritMultiplier;
         MoneyForKill += stats.MoneyForKill;
         XpForKill += stats.XpForKill;
         LanternEnergy += stats.LanternEnergy;
+        Luck += stats.Luck;
     }
 }

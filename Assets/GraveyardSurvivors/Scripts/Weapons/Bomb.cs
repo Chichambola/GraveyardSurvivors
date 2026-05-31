@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PrimeTween;
 
 public class Bomb : Weapon
 {
@@ -14,15 +15,10 @@ public class Bomb : Weapon
     {
         AttackStrategy.AttackerDetected -= OnAttackerDetected;
     }
-
-    public override void Attack(float radiusMultiplier)
+    
+    public override void Attack()
     {
-        AttackStrategy.Execute(radiusMultiplier);
-    }
-
-    public override void StopAttacking()
-    {
-        AttackStrategy.Stop();
+        AttackStrategy.Execute();
     }
 
     private void OnAttackerDetected(IAttacker attacker)

@@ -119,11 +119,11 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     {
         _baseStats.SetStats(_statsToUpgrade);
         
-        ObjectPrefab.SetStats(_baseStats);
+        ObjectPrefab.Upgrade(_baseStats);
 
         foreach (var enemy in _spawnedUnits)
         {
-            enemy.SetStats(_baseStats);
+            enemy.Upgrade(_baseStats);
         }
     }
 

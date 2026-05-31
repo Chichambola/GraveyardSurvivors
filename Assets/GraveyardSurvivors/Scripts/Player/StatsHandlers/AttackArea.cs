@@ -50,17 +50,19 @@ public abstract class AttackArea : MonoBehaviour
             }
         }
 
-        if (tempAttackers.Count <= 0)
+        if (tempAttackers.Count > 0)
+        {
+            attackers = new List<IAttacker>();
+            
+            attackers.AddRange(tempAttackers);
+
+            return true;
+        }
+        else
         {
             attackers = null;
 
             return false;
-        }
-        else
-        {
-            attackers = tempAttackers;
-            
-            return true;
         }
     }
 }

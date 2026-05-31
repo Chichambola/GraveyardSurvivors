@@ -10,13 +10,12 @@ using UnityEngine.Serialization;
 public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
     [SerializeField] private DamageZone _damageZone;
-    [Header("Weapon")]
-    [SerializeField] protected Weapon Weapon;
-    [SerializeField] private float _attackCooldown = 0.5f;
     [Header("Services")]
+    [SerializeField] protected PlayerDetector PlayerDetector;
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
-    [SerializeField] protected PlayerDetector PlayerDetector;
+    [SerializeField] protected Attacker _attacker;
+
 
     public event Action<Enemy> CanBeReleased;
     public event Action<Enemy> NoHealthLeft;
@@ -29,10 +28,13 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private float _initialHealth;
     private float _initialSpeed;
     private int _movementEffectCount;
-    private bool _isAttacking;
 
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAlive { get; private set; }
+    public float Speed => CurrentStats.AttackSpeed;
+    public float CritChance => CurrentStats.CritChance;
+    public float CritMultiplier => CurrentStats.CritMultiplier;
+    public float Luck => CurrentStats.Luck;
     public float CurrentHealth { get; private set; }
     public Vector3 CurrentPosition => transform.position;
 
@@ -52,6 +54,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _collider = GetComponent<CapsuleCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _currentEffects = new List<IEffect<IAttacker>>();
+        
+        _attacker.Init(this);
         
         StateMachine = new StateMachine();
     }
@@ -80,9 +84,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void Release() => CanBeReleased?.Invoke(this);
     
-    public void SetStats(EnemyStats stats)
+    public void Upgrade(EnemyStats stats)
     {
         CurrentStats = stats;
+        _attacker.UpgradeWeapons();
     }
 
     public void TakeDamage(float damage)
@@ -147,10 +152,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleAttack()
     {
-        if(_attackRoutine != null)
-            StopCoroutine(_attackRoutine);
-
-        _attackRoutine = StartCoroutine(AttackRoutine());
+        _attacker.StartAttacking();
     }
     
     public void SetColliderCenter(Vector3 offsetAfterDeath, bool isResetting)
@@ -177,7 +179,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         DefineAtTransition(idleState, runState, new FuncPredicate(() => IsAlive));
         
         DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !_isAttacking));
+            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !_attacker.IsAttacking));
         
         DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
         DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
@@ -194,8 +196,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _movementEffectCount = 0;
 
         _health.text = $"{CurrentHealth}";
-        
-        Weapon.StopAttacking();
+
+        _attacker.StopAttacking();
         
         RemoveAllEffects();
         
@@ -231,21 +233,5 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         effect.EffectCompleted -= RemoveEffect;
         _currentEffects.Remove(effect);
-    }
-
-    private IEnumerator AttackRoutine()
-    {
-        _isAttacking = true;
-        
-        var wait = new WaitForSecondsRealtime(_attackCooldown);
-
-        while (enabled)
-        {
-            yield return wait;
-            
-            Weapon.Attack();
-            
-            _isAttacking = false;
-        }
     }
 }

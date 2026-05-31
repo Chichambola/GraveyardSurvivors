@@ -12,7 +12,7 @@ public abstract class WeaponWithAbility : Weapon
     
     public override event Action<IAttacker> AttackerDetected;
 
-    public abstract override void Attack(float radiusMultiplier);
+    public abstract override void Attack();
 
     protected void ProcessAttacker(IAttacker attacker)
     {
