@@ -24,7 +24,7 @@ MonoBehaviour:
     EvasionChance: 15
     Armor: 0
     CritChance: 15
-    CritMultiplier: 2.5
+    CritMultiplier: 2
     XpMultiplier: 1
     GoldMultiplier: 1.2
     PickUpRadius: 10

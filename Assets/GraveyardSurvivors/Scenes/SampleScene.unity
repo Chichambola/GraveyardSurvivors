@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2247,13 +2247,16 @@ MonoBehaviour:
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
+    CritChance: 0
+    CritMultiplier: 0
     MoneyForKill: 0
     XpForKill: 0
     LanternEnergy: 0
+    Luck: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 20
-  _weight: 10
+  _weight: 100
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
 --- !u!1 &264294664
@@ -6217,7 +6220,7 @@ MonoBehaviour:
   _enemySpawnerHandler: {fileID: 2050020223}
   _interactablesHandler: {fileID: 2099592623}
   _timerText: {fileID: 722507730}
-  _debugElapsedTime: 0
+  _debugElapsedTime: 55
 --- !u!4 &816859689
 Transform:
   m_ObjectHideFlags: 0
@@ -15804,9 +15807,12 @@ MonoBehaviour:
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
+    CritChance: 0
+    CritMultiplier: 0
     MoneyForKill: 0
     XpForKill: 0
     LanternEnergy: 0
+    Luck: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 7
@@ -20321,9 +20327,12 @@ MonoBehaviour:
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
+    CritChance: 0
+    CritMultiplier: 0
     MoneyForKill: 0
     XpForKill: 0
     LanternEnergy: 0
+    Luck: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 5
@@ -22231,9 +22240,12 @@ MonoBehaviour:
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
+    CritChance: 0
+    CritMultiplier: 0
     MoneyForKill: 0
     XpForKill: 0
     LanternEnergy: 0
+    Luck: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 6
