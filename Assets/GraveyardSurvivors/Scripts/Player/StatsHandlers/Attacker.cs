@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private Weapon _weapon;
+    [SerializeField] private Weapon[] _weapons;
     [SerializeField] private float _cooldown = 1.5f;
     
     private Coroutine _coroutine;
@@ -20,12 +21,18 @@ public class Attacker : MonoBehaviour
     
     private void OnEnable()
     {
-        _weapon.AttackerDetected += OnAttackerDetected;
+        foreach (var weapon in _weapons)
+        {
+            weapon.AttackerDetected += OnAttackerDetected;
+        }
     }
 
     private void OnDisable()
     {
-        _weapon.AttackerDetected -= OnAttackerDetected;
+        foreach (var weapon in _weapons)
+        {
+            weapon.AttackerDetected -= OnAttackerDetected;
+        }
     }
 
     public void StartAttacking()
@@ -49,11 +56,13 @@ public class Attacker : MonoBehaviour
             var wait = new WaitForSecondsRealtime(currentCooldown);
             
             yield return wait;
-            
-            _weapon.Attack();
+
+            foreach (var weapon in _weapons)
+            {
+                weapon.Attack();
+            }
             
             IsAttacking = false;
-            
         }
     }
 
@@ -69,9 +78,9 @@ public class Attacker : MonoBehaviour
         return currentCooldown;
     }
     
-    private void OnAttackerDetected(IAttacker attacker)
+    private void OnAttackerDetected(IAttacker attacker, Weapon weapon)
     {
-        float damage = _weapon.Damage;
+        float damage = weapon.Damage;
 
         float currentCritChance = _attacker.CritChance.AddPercentToNumber(_attacker.Luck);
 
@@ -97,12 +106,23 @@ public class Attacker : MonoBehaviour
 
     public void UpgradeWeapons()
     {
-        _weapon.Upgrade();
+        foreach (var weapon in _weapons)
+        {
+            weapon.Upgrade();
+        }
     }
 
     public void StopAttacking()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
+    }
+
+    public void ResetWeapons()
+    {
+        foreach (var weapon in _weapons)
+        {
+            weapon.Reset();
+        }
     }
 }

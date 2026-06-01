@@ -1237,7 +1237,8 @@ Transform:
   m_LocalPosition: {x: -118.60121, y: -13.382172, z: 7.003586}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1009675465}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &175005483
@@ -2242,8 +2243,8 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _enemyInfo: {fileID: 11400000, guid: 9a338631b9c7662fb9b214f4996da546, type: 2}
-  _statsToUpgrade:
-    MaxHealth: 5
+  _statsForUpgrade:
+    MaxHealth: 0
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
@@ -6237,7 +6238,6 @@ Transform:
   - {fileID: 531874430}
   - {fileID: 973273883}
   - {fileID: 1006327893}
-  - {fileID: 1009675465}
   - {fileID: 2099592629}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7742,13 +7742,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009675464}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 118.20919, y: 15.246981, z: -6.17334}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1884805293}
-  m_Father: {fileID: 816859689}
+  m_Father: {fileID: 150230927}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1009675466
 MonoBehaviour:
@@ -15802,8 +15802,8 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _enemyInfo: {fileID: 11400000, guid: 3751f957921fe4948b6a2e681ced8caf, type: 2}
-  _statsToUpgrade:
-    MaxHealth: 5
+  _statsForUpgrade:
+    MaxHealth: 0
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
@@ -20322,8 +20322,8 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 15
   _enemyInfo: {fileID: 11400000, guid: 706419855f7f6cb45a6abb385c07e429, type: 2}
-  _statsToUpgrade:
-    MaxHealth: 5
+  _statsForUpgrade:
+    MaxHealth: 0
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0
@@ -22235,8 +22235,8 @@ MonoBehaviour:
   PoolCapacity: 0
   MaxPoolCapacity: 5
   _enemyInfo: {fileID: 11400000, guid: ab0b1a819130dbf0d83fb5af8bb4c1a3, type: 2}
-  _statsToUpgrade:
-    MaxHealth: 5
+  _statsForUpgrade:
+    MaxHealth: 0
     Armor: 0
     MovementSpeed: 0
     AttackSpeed: 0

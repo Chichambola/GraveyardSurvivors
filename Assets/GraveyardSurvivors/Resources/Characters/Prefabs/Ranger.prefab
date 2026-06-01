@@ -67,6 +67,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackStrategy: {fileID: 4665580863145276653}
   _info: {fileID: 11400000, guid: 5bf44b189b2a7844d9c778b04b85b291, type: 2}
+  _bonusDamagePerUpgrade: 1
   _effects:
   - _effects:
     - rid: 5909440864032915460
@@ -2899,8 +2900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2203646241a39628614ec57cc33667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 930483005040703314}
-  _weapon: {fileID: 640602163420855124}
+  _weapons:
+  - {fileID: 640602163420855124}
   _cooldown: 1
 --- !u!1 &7351144744302064916
 GameObject:

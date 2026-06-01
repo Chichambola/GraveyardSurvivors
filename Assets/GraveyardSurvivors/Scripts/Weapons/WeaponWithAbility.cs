@@ -10,7 +10,7 @@ public abstract class WeaponWithAbility : Weapon
     [SerializeField] private Effect[] _effects;
     [SerializeField] private int _effectChance;
     
-    public override event Action<IAttacker> AttackerDetected;
+    public override event Action<IAttacker, Weapon> AttackerDetected;
 
     public abstract override void Attack();
 
@@ -19,7 +19,7 @@ public abstract class WeaponWithAbility : Weapon
         if (attacker == null)
             return;
         
-        AttackerDetected?.Invoke(attacker);
+        AttackerDetected?.Invoke(attacker, this);
 
         if (CanEffectProc())
         {

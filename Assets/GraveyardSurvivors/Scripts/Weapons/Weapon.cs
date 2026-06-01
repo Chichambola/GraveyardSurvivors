@@ -11,7 +11,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     
     protected float BonusDamage;
     
-    public virtual event Action<IAttacker> AttackerDetected;
+    public virtual event Action<IAttacker, Weapon> AttackerDetected;
     public float Damage => _info.Damage + BonusDamage;
 
     public abstract void Attack();
@@ -25,5 +25,10 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     {
         AttackStrategy.Upgrade();
         BonusDamage += _bonusDamagePerUpgrade;
+    }
+
+    public virtual void Reset()
+    {
+        AttackStrategy.Reset();
     }
 }

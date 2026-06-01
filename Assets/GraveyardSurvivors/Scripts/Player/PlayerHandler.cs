@@ -36,6 +36,7 @@ public class PlayerHandler : MonoBehaviour
             _statsToUpgrade = stat.GetStats();
             
             _player = Instantiate(player, _spawnPoint.position, _spawnPoint.rotation);
+            _player.transform.parent = transform;
             _player.GainedXp += OnPlayerGainedXp;
             _playerCamera.Follow = _player.transform;
 
@@ -43,7 +44,7 @@ public class PlayerHandler : MonoBehaviour
         }
         else
         {
-            throw new KeyNotFoundException($"Player {_player.name} has not been registered.");
+            throw new KeyNotFoundException($"Player {player.name} has not been registered.");
         }
     }
     

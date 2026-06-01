@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
     [SerializeField] private EnemyInfo _enemyInfo;
-    [SerializeField] private EnemyStats _statsToUpgrade;
+    [SerializeField] private EnemyStats _statsForUpgrade;
     
     [Header("Loot spawners")]
     [SerializeField] private PickablesSpawner _coinSpawner;
@@ -29,6 +29,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
     private float _minRandomValue = -2f;
     private float _maxRandomValue = 4f;
+    private int _level;
     private Vector3 _spawnPoint;
     private List<Enemy> _spawnedUnits;
     private EnemyStats _baseStats;
@@ -56,9 +57,46 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
         _baseStats = _enemyInfo.GetStats();
 
-        _statsToUpgrade = new EnemyStats(_statsToUpgrade);
+        _statsForUpgrade = new EnemyStats(_statsForUpgrade);
         
         _spawnedUnits = new List<Enemy>();
+    }
+
+    private void OnDisable()
+    {
+        _level = 0;
+        
+        foreach (var enemy in _spawnedUnits)
+        {
+            enemy.ResetCharacteristics();
+            
+            if (enemy.isActiveAndEnabled)
+            { 
+                
+                Release(enemy);
+            }
+        }
+        
+        _spawnedUnits.Clear();
+    }
+    
+    public void Upgrade()
+    {
+        ++_level;
+        
+        _baseStats.SetStats(_statsForUpgrade);
+        
+        ObjectPrefab.Upgrade(_baseStats);
+
+        foreach (var enemy in _spawnedUnits)
+        {
+            enemy.Upgrade(_baseStats);
+        }
+    }
+
+    public void SetPlayer(IPlayer player)
+    {
+        _player = player;
     }
 
     protected override void ActionOnGet(Enemy enemy)
@@ -86,8 +124,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     {
         ActiveObjects.Remove(enemy);
         
-        enemy.ResetCharacteristics();
-        
         enemy.CanBeReleased -= Release;
         enemy.NoHealthLeft -= OnNoHealthLeft;
         
@@ -113,22 +149,5 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         enemy.SetColliderCenter(_offsetAfterDeath, false);
         _coinSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.MoneyForKill);
         _crystalSpawner.Spawn(enemy.transform.position, enemy.CurrentStats.XpForKill);
-    }
-
-    public void Upgrade()
-    {
-        _baseStats.SetStats(_statsToUpgrade);
-        
-        ObjectPrefab.Upgrade(_baseStats);
-
-        foreach (var enemy in _spawnedUnits)
-        {
-            enemy.Upgrade(_baseStats);
-        }
-    }
-
-    public void SetPlayer(IPlayer player)
-    {
-        _player = player;
     }
 }

@@ -47,6 +47,8 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         CurrentHealth = stats.MaxHealth;
         
         _health.text = $"{CurrentStats.MaxHealth:f1}";
+        
+        IsAlive = true;
     }
 
     protected override void Awake()
@@ -79,7 +81,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public void ResetCharacteristics()
     {
-        IsAlive = true;
+        _attacker.ResetWeapons();
     }
 
     public override void Release() => CanBeReleased?.Invoke(this);

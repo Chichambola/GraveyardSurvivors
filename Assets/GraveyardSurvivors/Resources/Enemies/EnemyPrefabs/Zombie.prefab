@@ -385,7 +385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2203646241a39628614ec57cc33667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 9003346802289927355}
+  _weapons:
+  - {fileID: 9003346802289927355}
   _cooldown: 0.3
 --- !u!1 &3896488478488402257
 GameObject:

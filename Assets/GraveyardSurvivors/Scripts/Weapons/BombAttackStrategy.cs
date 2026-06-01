@@ -23,7 +23,6 @@ public class BombAttackStrategy : AttackStrategy
     private bool _isExpanding;
     private float _initialRadius;
     private float _initialDuration;
-    private int _level;
 
     private void Awake()
     {
@@ -39,14 +38,6 @@ public class BombAttackStrategy : AttackStrategy
         {
             Stop();
         }
-    }
-
-    private void OnApplicationQuit()
-    {
-        _duration = _initialDuration;
-        _radius = _initialRadius;
-        
-        Debug.Log(_duration);
     }
 
     public override void Execute()
@@ -66,10 +57,17 @@ public class BombAttackStrategy : AttackStrategy
 
     public override void Upgrade()
     {
-       _duration = _duration.GetClampedValueInverse(_upgradeDurationPercent);
-       
-       Debug.Log($"Duration: {_duration}\n" +
-                 $"Radius: {_radius}\n");
+        _duration = _duration.GetClampedValueInverse(_upgradeDurationPercent);
+    }
+
+    public override void Reset()
+    {
+        Debug.Log($"Before duration: {_duration}");
+        
+        _duration = _initialDuration;
+        _radius = _initialRadius;
+        
+        Debug.Log($"After duration: {_duration}");
     }
 
     private void Stop()
