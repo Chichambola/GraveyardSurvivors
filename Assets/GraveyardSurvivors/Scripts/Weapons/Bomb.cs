@@ -21,6 +21,11 @@ public class Bomb : Weapon
         AttackStrategy.Execute();
     }
 
+    public override void Reset()
+    {
+        AttackStrategy.Reset();
+    }
+
     private void OnAttackerDetected(IAttacker attacker)
     {
         attacker.TakeDamage(Damage);

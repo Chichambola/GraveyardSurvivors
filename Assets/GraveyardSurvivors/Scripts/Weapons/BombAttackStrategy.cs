@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PrimeTween;
 using UnityEditor.Experimental;
+using UnityEngine.Serialization;
 
 public class BombAttackStrategy : AttackStrategy
 {
@@ -10,8 +11,8 @@ public class BombAttackStrategy : AttackStrategy
     [SerializeField] private ParticleEffectSpawner _particleSpawner;
     [SerializeField] private MeshRenderer _radiusSphere;
     [SerializeField] private MeshRenderer _expandingSphere;
-    [SerializeField] private float _duration = 1.5f;
-    [SerializeField] private float _radius = 10f;
+    [SerializeField] private float _initialDuration = 1.5f;
+    [SerializeField] private float _initialRadius = 10f;
     [Header("Upgrade stats")]
     [SerializeField] private float _upgradeDurationPercent = 20;
     [SerializeField] private float _upgradeRadiusPercent = 15;
@@ -21,15 +22,11 @@ public class BombAttackStrategy : AttackStrategy
     private Vector3 _targetRadius;
     private Tween _expandingTween;
     private bool _isExpanding;
-    private float _initialRadius;
-    private float _initialDuration;
+    private float _currentDuration;
 
     private void Awake()
     {
-        _initialDuration = _duration;
-        _initialRadius = _radius;
-        
-        Debug.Log(_duration);
+        _currentDuration = _initialDuration;
     }
 
     private void OnDisable()
@@ -39,35 +36,32 @@ public class BombAttackStrategy : AttackStrategy
             Stop();
         }
     }
-
+    
     public override void Execute()
     {
         if (_isExpanding) return;
         
         _isExpanding = true;
-        _attackArea.SetSize(_radius);  
+        _attackArea.SetSize(_initialRadius);  
         
-        _targetRadius = new Vector3(_radius, _radius, _radius);
+        _targetRadius = new Vector3(_initialRadius, _initialRadius, _initialRadius);
         _radiusSphere.gameObject.transform.localScale = _targetRadius;
         
         ChangeSpheresVisibility(true);
         
-        _expandingTween = Tween.Scale(_expandingSphere.gameObject.transform, _targetRadius, _duration).OnComplete(LookForAttackers);
+        Debug.Log(_currentDuration);
+        
+        _expandingTween = Tween.Scale(_expandingSphere.gameObject.transform, _targetRadius, _currentDuration).OnComplete(LookForAttackers);
     }
 
     public override void Upgrade()
     {
-        _duration = _duration.GetClampedValueInverse(_upgradeDurationPercent);
+        _currentDuration = _currentDuration.GetClampedValueInverse(_upgradeDurationPercent);
     }
 
     public override void Reset()
     {
-        Debug.Log($"Before duration: {_duration}");
-        
-        _duration = _initialDuration;
-        _radius = _initialRadius;
-        
-        Debug.Log($"After duration: {_duration}");
+        _currentDuration = _initialDuration;
     }
 
     private void Stop()
@@ -81,7 +75,7 @@ public class BombAttackStrategy : AttackStrategy
     
     private void LookForAttackers()
     {
-        _particleSpawner.Spawn(gameObject.transform.position, _radius);
+        _particleSpawner.Spawn(gameObject.transform.position, _initialRadius);
         
         if (_attackArea.TryGetAttackers(out var attackers))
         {

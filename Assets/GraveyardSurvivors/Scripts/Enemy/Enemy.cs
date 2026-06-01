@@ -76,12 +76,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         InitializeStateMachine();
 
-        IsAlive = true;
     }
 
     public void ResetCharacteristics()
     {
-        _attacker.ResetWeapons();
+        _attacker.Reset();
     }
 
     public override void Release() => CanBeReleased?.Invoke(this);

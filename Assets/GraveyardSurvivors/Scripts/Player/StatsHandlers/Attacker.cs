@@ -118,7 +118,7 @@ public class Attacker : MonoBehaviour
             StopCoroutine(_coroutine);
     }
 
-    public void ResetWeapons()
+    public void Reset()
     {
         foreach (var weapon in _weapons)
         {

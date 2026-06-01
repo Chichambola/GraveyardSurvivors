@@ -29,7 +29,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
     private float _minRandomValue = -2f;
     private float _maxRandomValue = 4f;
-    private int _level;
     private Vector3 _spawnPoint;
     private List<Enemy> _spawnedUnits;
     private EnemyStats _baseStats;
@@ -64,8 +63,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
     private void OnDisable()
     {
-        _level = 0;
-        
         foreach (var enemy in _spawnedUnits)
         {
             enemy.ResetCharacteristics();
@@ -82,8 +79,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     
     public void Upgrade()
     {
-        ++_level;
-        
         _baseStats.SetStats(_statsForUpgrade);
         
         ObjectPrefab.Upgrade(_baseStats);

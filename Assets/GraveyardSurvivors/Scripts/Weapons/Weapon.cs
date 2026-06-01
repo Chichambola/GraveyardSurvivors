@@ -29,6 +29,6 @@ public abstract class Weapon : MonoBehaviour, IWeapon
 
     public virtual void Reset()
     {
-        AttackStrategy.Reset();
+        
     }
 }
