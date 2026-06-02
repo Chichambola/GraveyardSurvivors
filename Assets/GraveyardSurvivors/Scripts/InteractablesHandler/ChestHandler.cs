@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class ChestHandler : CostInteractableHandler
+public class ChestHandler : CostInteractableHandler, IInteractableHandler
 {
     [SerializeField] private ItemsHandler _itemsHandler;
     

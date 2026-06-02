@@ -49,8 +49,6 @@ public class BombAttackStrategy : AttackStrategy
         
         ChangeSpheresVisibility(true);
         
-        Debug.Log(_currentDuration);
-        
         _expandingTween = Tween.Scale(_expandingSphere.gameObject.transform, _targetRadius, _currentDuration).OnComplete(LookForAttackers);
     }
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21637,6 +21637,7 @@ GameObject:
   - component: {fileID: 2099592626}
   - component: {fileID: 2099592625}
   - component: {fileID: 2099592624}
+  - component: {fileID: 2099592630}
   m_Layer: 0
   m_Name: InteractablesHandler
   m_TagString: Untagged
@@ -21668,11 +21669,7 @@ MonoBehaviour:
   - {fileID: 2099592626}
   - {fileID: 2099592625}
   - {fileID: 2099592624}
-  _radius: 10
-  _collidersAmount: 200
-  _layerToHit:
-    serializedVersion: 2
-    m_Bits: 256
+  _placementVerifier: {fileID: 2099592630}
 --- !u!65 &2099592624
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21772,6 +21769,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 816859689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2099592630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099592622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43c5fd5bba7d24418674458a12a0fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 5
+  _collidersAmount: 100
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &2111162608
 GameObject:
   m_ObjectHideFlags: 0

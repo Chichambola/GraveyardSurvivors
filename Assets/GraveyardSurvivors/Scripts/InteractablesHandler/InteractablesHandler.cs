@@ -9,15 +9,8 @@ public class InteractablesHandler : MonoBehaviour
 {
     [SerializeField] private SerializableDictionary<InteractableHandler, int> _interactables;
     [SerializeField] private Collider[] _colliders;
-
-    [Header("Values to verify placement")] [SerializeField]
-    private float _radius;
-
-    [SerializeField] private int _collidersAmount = 50;
-    [SerializeField] private LayerMask _layerToHit;
-
-    private Collider[] _hitColliders;
-
+    [SerializeField] private PlacementVerifier _placementVerifier;
+    
     private void Awake()
     {
         if (_colliders.Length <= 0)
@@ -28,8 +21,6 @@ public class InteractablesHandler : MonoBehaviour
 
     public void Init(Player player)
     {
-        _hitColliders = new Collider[_collidersAmount];
-
         if (_interactables == null)
             throw new Exception("Interactables are null");
 
@@ -39,17 +30,27 @@ public class InteractablesHandler : MonoBehaviour
 
             for (int i = 0; i < count; i++)
             {
-                Collider spawnCollider = GetCollider();
+                bool isPlaced = false;
 
-                Vector3 position = GetPosition(spawnCollider);
-
-                interactable.Init(player);
-
-                interactable.Spawn(position);
-
-                if (interactable is CostInteractableHandler costInteractable)
+                while (!isPlaced)
                 {
-                    costInteractable.SetValueForObjects();
+                    Collider spawnCollider = GetCollider();
+
+                    Vector3 position = GetPosition(spawnCollider);
+
+                    if (_placementVerifier.IsPlacementValid(position))
+                    {
+                        isPlaced = true;
+                        
+                        interactable.Init(player);
+
+                        interactable.Spawn(position);
+                        
+                        if (interactable is CostInteractableHandler costInteractable)
+                        {
+                            costInteractable.SetValueForObjects();
+                        } 
+                    }
                 }
             }
         }

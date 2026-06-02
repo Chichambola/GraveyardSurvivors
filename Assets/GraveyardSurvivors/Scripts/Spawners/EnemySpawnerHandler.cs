@@ -12,15 +12,17 @@ public class EnemySpawnerHandler : MonoBehaviour
     [Header("Spawners settings")]
     [SerializeField] private EnemySpawner[] _enemySpawners;
     [SerializeField] private Transform[] _spawnPoints;
+    
     [Header("Spawning settings")]
     [SerializeField] private int _minTime = 15;
     [SerializeField] private int _maxTime = 60;
     [SerializeField] private float _spawnRate = 0.8f;
     [SerializeField] private int _maxEnemiesAmount = 30;
+    
     [Header("Points settings")]
     [SerializeField] private int _initialAvailablePoints = 30;
     [SerializeField] private int _maxPoints = 250;
-    [SerializeField] private int _pointGainPercent = 10;
+    [SerializeField] private float _pointGainPercent = 10;
 
     public event Action<Enemy> EnemyWasKilled;
 
@@ -58,16 +60,6 @@ public class EnemySpawnerHandler : MonoBehaviour
         }
     }
 
-    public void StartChoosing()
-    {
-        _isChoosing = true;
-        
-        if (_choosingRoutine != null)
-            StopCoroutine(_choosingRoutine);
-
-        _choosingRoutine = StartCoroutine(ChoosingRoutine());
-    }
-
     public void SetPlayer(IPlayer player)
     {
         if (_enemySpawners.Length <= 0)
@@ -90,15 +82,25 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     public void Upgrade(float percent)
     {
+        _spawnRate = _spawnRate.GetClampedValueInverse(percent);
+        _pointGainPercent = _pointGainPercent.GetClampedValue(percent);
         _maxPoints = _maxPoints.AddPercentToNumber(percent);
-        _spawnRate = _spawnRate.SubtractPercentFromNumber(percent);
         _maxEnemiesAmount = _maxEnemiesAmount.AddPercentToNumber(percent);
-        _pointGainPercent = _pointGainPercent.AddPercentToNumber(percent);
 
         foreach (var enemySpawner in _enemySpawners)
         {
             enemySpawner.Upgrade();
         }
+    }
+    
+    private void StartChoosing()
+    {
+        _isChoosing = true;
+        
+        if (_choosingRoutine != null)
+            StopCoroutine(_choosingRoutine);
+
+        _choosingRoutine = StartCoroutine(ChoosingRoutine());
     }
     
     private void OnEnemyRelease(Enemy enemy)

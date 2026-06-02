@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class LightAltarHandler : CostInteractableHandler
+public class LightAltarHandler : CostInteractableHandler, IInteractableHandler
 {
     private void OnEnable()
     {

@@ -12,7 +12,7 @@ public class Game : MonoBehaviour
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private PlayerHandler _playerHandler;
     
-    [Header("Stats for upgrade")]
+    [Header("Stats for enemy spawners")]
     [SerializeField] private SerializableDictionary<int, float> _minutesAndPercents;
     
     [Header("Services")]

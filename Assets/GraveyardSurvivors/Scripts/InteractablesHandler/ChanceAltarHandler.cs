@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Profiling;
 using UnityEngine;
 
-public class ChanceAltarHandler : ItemInteractable
+public class ChanceAltarHandler : ItemInteractable, IInteractableHandler
 {
     [SerializeField] private ItemsHandler _itemsHandler;
     

@@ -411,7 +411,7 @@ MonoBehaviour:
   _particleSpawner: {fileID: 703197084959226467}
   _radiusSphere: {fileID: 7734236238769476543}
   _expandingSphere: {fileID: 347151481468562367}
-  _initialDuration: 1.8
+  _initialDuration: 1.85
   _initialRadius: 10
   _upgradeDurationPercent: 15
   _upgradeRadiusPercent: 10
