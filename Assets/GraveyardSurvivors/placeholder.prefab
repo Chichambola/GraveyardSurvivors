@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpPower: 2.61
-  _duration: 1.7
+  _duration: 1
   _numberofJumps: 1
 --- !u!1 &6749715537882840726
 GameObject:

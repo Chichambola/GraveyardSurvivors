@@ -28,7 +28,7 @@ public class ChestHandler : CostInteractableHandler, IInteractableHandler
         if (interactable is Chest chest == false)
             throw new Exception(nameof(chest));
         
-        if (Player.MoneyAmount <= Cost)
+        if (Player.MoneyAmount < Cost)
         {
             Debug.Log("Not enough money");
         }

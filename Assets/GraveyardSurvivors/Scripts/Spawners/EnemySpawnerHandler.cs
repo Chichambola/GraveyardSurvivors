@@ -11,7 +11,8 @@ public class EnemySpawnerHandler : MonoBehaviour
 {
     [Header("Spawners settings")]
     [SerializeField] private EnemySpawner[] _enemySpawners;
-    [SerializeField] private Transform[] _spawnPoints;
+    [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;
+    [SerializeField] private PlacementVerifier _placementVerifier;
     
     [Header("Spawning settings")]
     [SerializeField] private int _minTime = 15;
@@ -29,7 +30,7 @@ public class EnemySpawnerHandler : MonoBehaviour
     private Coroutine _choosingRoutine;
     private Coroutine _spawnRoutine;
     private List<Enemy> _currentEnemies;
-    private List<EnemySpawner> _enemiesToSpawn;
+    private Queue<EnemySpawner> _enemiesToSpawn;
     private IntervalTimer _timer;
     private float _availablePoints;
     private bool _isChoosing;
@@ -37,7 +38,7 @@ public class EnemySpawnerHandler : MonoBehaviour
     private void Awake()
     {
         _currentEnemies = new List<Enemy>();
-        _enemiesToSpawn = new List<EnemySpawner>();
+        _enemiesToSpawn = new Queue<EnemySpawner>();
     }
 
     private void OnEnable()
@@ -140,14 +141,22 @@ public class EnemySpawnerHandler : MonoBehaviour
         {
             if (_enemiesToSpawn.Count != 0)
             {
-                var spawner = _enemiesToSpawn.First();
-
-                var point = GetRandomPoint();
+                bool canPlace = false;
                 
-                spawner.Spawn(point);
+                var spawner = _enemiesToSpawn.Dequeue();
 
-                _enemiesToSpawn.Remove(spawner);
+                while (!canPlace)
+                {
+                    var point = _spawnCollidersHandler.GetRandomPosition();
 
+                    if (!_placementVerifier.IsPlacementValid(point))
+                        continue;
+                    
+                    canPlace = true;
+                    
+                    spawner.Spawn(point);
+                }
+                
                 yield return wait;
             }
             else
@@ -184,18 +193,11 @@ public class EnemySpawnerHandler : MonoBehaviour
         {
             _availablePoints -= chosenSpawner.Cost;
 
-            _enemiesToSpawn.Add(chosenSpawner);
+            _enemiesToSpawn.Enqueue(chosenSpawner);
         }
         else
         {
             _isChoosing = false;
         }
-    }
-    
-    private Vector3 GetRandomPoint()
-    {
-        int randomIndex = Random.Range(0, _spawnPoints.Length);
-        
-        return _spawnPoints[randomIndex].position;
     }
 }

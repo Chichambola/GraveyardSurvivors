@@ -15,7 +15,7 @@ public class BombAttackStrategy : AttackStrategy
     [SerializeField] private float _initialRadius = 10f;
     [Header("Upgrade stats")]
     [SerializeField] private float _upgradeDurationPercent = 20;
-    [SerializeField] private float _upgradeRadiusPercent = 15;
+    [SerializeField] private float _minDurationThreshold = 1;
     
     public override event Action<IAttacker> AttackerDetected;
     
@@ -27,6 +27,19 @@ public class BombAttackStrategy : AttackStrategy
     private void Awake()
     {
         _currentDuration = _initialDuration;
+    }
+
+    private void OnValidate()
+    {
+        if (_minDurationThreshold > _initialDuration)
+        {
+            _minDurationThreshold = _initialDuration;
+        }
+
+        if (_minDurationThreshold < 0)
+        {
+            _minDurationThreshold = 0;
+        }
     }
 
     private void OnDisable()
@@ -54,7 +67,7 @@ public class BombAttackStrategy : AttackStrategy
 
     public override void Upgrade()
     {
-        _currentDuration = _currentDuration.GetClampedValueInverse(_upgradeDurationPercent);
+        _currentDuration = _currentDuration.GetClampedValueInverse(_upgradeDurationPercent, _minDurationThreshold);
     }
 
     public override void Reset()

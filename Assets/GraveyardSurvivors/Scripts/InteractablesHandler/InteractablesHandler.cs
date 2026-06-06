@@ -11,16 +11,8 @@ using Random = UnityEngine.Random;
 public class InteractablesHandler : MonoBehaviour
 {
     [SerializeField] private SerializableDictionary<InteractableHandler, int> _interactables;
-    [SerializeField] private List<Collider> _colliders;
+    [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;
     [SerializeField] private PlacementVerifier _placementVerifier;
-    
-    private void Awake()
-    {
-        if (_colliders.Count <= 0)
-        {
-            throw new Exception($"Colliders length can not be less than 0");
-        }
-    }
 
     public void Init(IPlayer player)
     {
@@ -39,11 +31,10 @@ public class InteractablesHandler : MonoBehaviour
                 
                 while (!isPlaced)
                 {
-                    Collider spawnCollider = GetCollider();
-
-                    Vector3 position = GetPosition(spawnCollider);
+                    Vector3 position = _spawnCollidersHandler.GetRandomPosition();
                     
-                    if (!_placementVerifier.IsPlacementValid(position)) continue;
+                    if (!_placementVerifier.IsPlacementValid(position)) 
+                        continue;
                     
                     isPlaced = true;
                     
@@ -60,27 +51,5 @@ public class InteractablesHandler : MonoBehaviour
         }
         
         Physics.autoSyncTransforms = false;
-    }
-
-    private Vector3 GetPosition(Collider collider)
-    {
-        float spawnAreaMinX = collider.bounds.min.x;
-        float spawnAreaMaxX = collider.bounds.max.x;
-
-        float spawnAreaMinZ = collider.bounds.min.z;
-        float spawnAreaMaxZ = collider.bounds.max.z;
-
-        float positionX = Random.Range(spawnAreaMinX, spawnAreaMaxX);
-        float positionY = collider.bounds.max.y;
-        float positionZ = Random.Range(spawnAreaMinZ, spawnAreaMaxZ);
-
-        return new Vector3(positionX, positionY, positionZ);
-    }
-
-    private Collider GetCollider()
-    {
-        int randomIndex = Random.Range(0, _colliders.Count);
-
-        return _colliders[randomIndex];
     }
 }

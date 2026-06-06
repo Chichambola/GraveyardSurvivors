@@ -67,7 +67,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackStrategy: {fileID: 4665580863145276653}
   _info: {fileID: 11400000, guid: 5bf44b189b2a7844d9c778b04b85b291, type: 2}
-  _bonusDamagePerUpgrade: 1
+  _bonusDamagePerUpgrade: 0.5
   _effects:
   - _effects:
     - rid: 5909440864032915460
@@ -88,7 +88,7 @@ MonoBehaviour:
       type: {class: MovementSpeedEffectFactory, ns: , asm: Assembly-CSharp}
       data:
         _duration: 2
-        _speedPercent: 15
+        _speedPercent: 10
         _isSlowing: 1
         _movementEffect: {fileID: 584956263628018242}
 --- !u!1 &125877352624210281
@@ -2764,7 +2764,7 @@ MonoBehaviour:
   _collider: {fileID: 5170166388784743591}
   _radius: 2.5
   _disableThreshold: 0.75
-  _shrinkRate: 0.005
+  _shrinkRate: 0.008
 --- !u!114 &1601001508329279439
 MonoBehaviour:
   m_ObjectHideFlags: 0

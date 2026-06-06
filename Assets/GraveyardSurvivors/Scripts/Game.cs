@@ -34,7 +34,6 @@ public class Game : MonoBehaviour
     {
         PrimeTweenConfig.SetTweensCapacity(_primeTweenCapacity);
         _elapsedTime = _debugElapsedTime;
-        Time.timeScale = 0.1f;
     }
 
     private void Update()
