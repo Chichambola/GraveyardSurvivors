@@ -28,11 +28,13 @@ public class Game : MonoBehaviour
 
     private int _primeTweenCapacity = 3000;
     private float _elapsedTime;
+    private IPlayer _player;
 
     private void Awake()
     {
         PrimeTweenConfig.SetTweensCapacity(_primeTweenCapacity);
         _elapsedTime = _debugElapsedTime;
+        Time.timeScale = 0.1f;
     }
 
     private void Update()
@@ -46,12 +48,12 @@ public class Game : MonoBehaviour
     {
         _enemySpawnerHandler.EnemyWasKilled += OnEnemyDeath;
         
-        Player player = _playerHandler.Spawn(_playerPrefab);
+        _player = _playerHandler.Spawn(_playerPrefab);
         
-        _interactablesHandler.Init(player);
-        _enemySpawnerHandler.SetPlayer(player);
+        _enemySpawnerHandler.SetPlayer(_player);
+        _interactablesHandler.Init(_player);
         _lantern.Init();
-        _darkness.Init(player);
+        _darkness.Init(_player);
     }
 
     private void OnDisable()

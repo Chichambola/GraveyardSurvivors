@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3422451256706761892}
   - component: {fileID: 3507696913982922921}
   - component: {fileID: 7053638026720906069}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5726698415968955286}
   - component: {fileID: 7537431508648420764}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Common
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1498985443041734870}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RariryLevels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3123,7 +3123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5914799872764496266}
   - component: {fileID: 2326688314528123041}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3171,7 +3171,7 @@ GameObject:
   - component: {fileID: 5197956647177593079}
   - component: {fileID: 4676503497245869568}
   - component: {fileID: 1016226797615232207}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3271,7 +3271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3203694853160250693}
   - component: {fileID: 6036891985296122347}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Legendary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3318,7 +3318,7 @@ GameObject:
   - component: {fileID: 7300144634245634859}
   - component: {fileID: 96907127277352008}
   - component: {fileID: 75939290396151421}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3402,7 +3402,7 @@ GameObject:
   - component: {fileID: 3527111957467104931}
   - component: {fileID: 3240579578671009384}
   - component: {fileID: 6615820105463272402}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: lid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3485,7 +3485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3537760325375313317}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

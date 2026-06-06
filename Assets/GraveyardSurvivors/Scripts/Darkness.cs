@@ -11,13 +11,13 @@ public class Darkness : MonoBehaviour
     [SerializeField] private float _rate = 1.5f;
 
     private float _initialDamage;
-    private Player _player;
+    private IPlayer _player;
     private Coroutine _coroutine;
     private bool _isPlayerInDarkness;
     
-    public void Init(Player player)
+    public void Init(IPlayer player)
     {
-        _player = player == null ? throw new Exception("Player can not be null") : player;
+        _player = player ?? throw new Exception("Player can not be null");
 
         _initialDamage = _damage;
         

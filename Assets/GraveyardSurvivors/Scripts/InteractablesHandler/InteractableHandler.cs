@@ -6,8 +6,8 @@ public abstract class InteractableHandler : MonoBehaviour
 {
     [SerializeField] protected InteractableSpawner InteractableSpawner;
     
-    protected IPlayer Player; 
-    
+    protected IPlayer Player;
+
     public void Init(IPlayer player)
     {
         if(player == null)
@@ -16,7 +16,7 @@ public abstract class InteractableHandler : MonoBehaviour
         Player = player;
     }
 
-    public virtual void Spawn(Vector3 position)
+    public void Spawn(Vector3 position)
     {
         InteractableSpawner.Spawn(position);
     }

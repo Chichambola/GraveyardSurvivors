@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 3097627720877759882}
   - component: {fileID: 4659574473657268531}
   - component: {fileID: 1693426667753694178}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &3097627720877759882
 RectTransform:
@@ -156,7 +156,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7407924589237418781
 Transform:
@@ -354,12 +354,12 @@ GameObject:
   - component: {fileID: 2058090296857273272}
   - component: {fileID: 5717910598623310918}
   - component: {fileID: 7673787954420186472}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!224 &8338396301736006403
 RectTransform:

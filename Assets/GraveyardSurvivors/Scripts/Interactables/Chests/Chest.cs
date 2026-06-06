@@ -8,9 +8,11 @@ using TreeEditor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 using Ease = PrimeTween.Ease;
 using Tween = PrimeTween.Tween;
 
+[RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
 public class Chest : Interactable, IChanceInteractable
 {
     [Header("Lid opening")]
@@ -31,11 +33,16 @@ public class Chest : Interactable, IChanceInteractable
     private TweenSettings<Vector3> _openingSettings;
     private Quaternion _defaultRotation;
     private List<RarityLevel> _weights;
-    
+    private Rigidbody _rigidbody;
+    private BoxCollider _collider;
+
     public List<RarityLevel> Weights => _weights;
 
     private void Awake()
     {
+        _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<BoxCollider>();
+        
         _weights = new() { _common, _rare, _legendary};
         
         _openingSettings = new TweenSettings<Vector3>(_openingRotation.eulerAngles, _openingDuration, _openingEase);
