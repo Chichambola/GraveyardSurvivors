@@ -528,7 +528,7 @@ MonoBehaviour:
   PlayerDetector: {fileID: 1603803209121266957}
   _defender: {fileID: 886728962877736986}
   _health: {fileID: 2307875020064126990}
-  _attacker: {fileID: 1826352045843937261}
+  Attacker: {fileID: 1826352045843937261}
 --- !u!114 &8696614376307728057
 MonoBehaviour:
   m_ObjectHideFlags: 0

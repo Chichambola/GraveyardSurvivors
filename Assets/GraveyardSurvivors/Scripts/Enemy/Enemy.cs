@@ -14,7 +14,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [SerializeField] protected PlayerDetector PlayerDetector;
     [SerializeField] private Defender _defender;
     [SerializeField] private TextMeshProUGUI _health;
-    [SerializeField] protected Attacker _attacker;
+    [SerializeField] protected Attacker Attacker;
 
 
     public event Action<Enemy> CanBeReleased;
@@ -57,7 +57,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _rigidbody = GetComponent<Rigidbody>();
         _currentEffects = new List<IEffect<IAttacker>>();
         
-        _attacker.Init(this);
+        Attacker.Init(this);
         
         StateMachine = new StateMachine();
     }
@@ -80,7 +80,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public void ResetCharacteristics()
     {
-        _attacker.Reset();
+        Attacker.Reset();
     }
 
     public override void Release() => CanBeReleased?.Invoke(this);
@@ -88,7 +88,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public void Upgrade(EnemyStats stats)
     {
         CurrentStats = stats;
-        _attacker.UpgradeWeapons();
+        Attacker.UpgradeWeapons();
     }
 
     public void TakeDamage(float damage)
@@ -153,7 +153,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleAttack()
     {
-        _attacker.StartAttacking();
+        Attacker.StartAttacking();
     }
     
     public void SetColliderCenter(Vector3 offsetAfterDeath, bool isResetting)
@@ -180,7 +180,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         DefineAtTransition(idleState, runState, new FuncPredicate(() => IsAlive));
         
         DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !_attacker.IsAttacking));
+            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !Attacker.IsAttacking));
         
         DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
         DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
@@ -198,7 +198,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
         _health.text = $"{CurrentHealth}";
 
-        _attacker.StopAttacking();
+        Attacker.StopAttacking();
         
         RemoveAllEffects();
         

@@ -43,6 +43,20 @@ public class Attacker : MonoBehaviour
         _coroutine = StartCoroutine(AttackingCoroutine());
     }
     
+    public void StopAttacking()
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+    }
+
+    public void Reset()
+    {
+        foreach (var weapon in _weapons)
+        {
+            weapon.Reset();
+        }
+    }
+    
     private IEnumerator AttackingCoroutine()
     {
         IsAttacking = true;
@@ -109,20 +123,6 @@ public class Attacker : MonoBehaviour
         foreach (var weapon in _weapons)
         {
             weapon.Upgrade();
-        }
-    }
-
-    public void StopAttacking()
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-    }
-
-    public void Reset()
-    {
-        foreach (var weapon in _weapons)
-        {
-            weapon.Reset();
         }
     }
 }

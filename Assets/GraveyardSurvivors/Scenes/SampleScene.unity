@@ -2164,7 +2164,7 @@ MonoBehaviour:
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 20
-  _weight: 25
+  _weight: 100
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
 --- !u!1 &264294664
@@ -19801,7 +19801,7 @@ MonoBehaviour:
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 5
-  _weight: 125
+  _weight: 50
   _numberOfEnemiesSpawnAtOnce: 2
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
 --- !u!4 &1925439055

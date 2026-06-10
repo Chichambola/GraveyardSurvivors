@@ -430,6 +430,9 @@ MonoBehaviour:
   AttackStrategy: {fileID: 5380774487396859826}
   _info: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
   _bonusDamagePerUpgrade: 5
+  _weaponBearer:
+    _underlyingValue: {fileID: 2158510540606250342}
+  _damageAfterExplosion: 99999
 --- !u!1 &3265935024146065495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,7 +1144,7 @@ MonoBehaviour:
   PlayerDetector: {fileID: 1942943560831323276}
   _defender: {fileID: 8495916584587225802}
   _health: {fileID: 2926252959164244938}
-  _attacker: {fileID: 7044234061262613936}
+  Attacker: {fileID: 7044234061262613936}
 --- !u!114 &5529676922395853904
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,7 +18,8 @@ public class BombAttackStrategy : AttackStrategy
     [SerializeField] private float _minDurationThreshold = 1;
     
     public override event Action<IAttacker> AttackerDetected;
-    
+    public override event Action AttackExecuted;
+
     private Vector3 _targetRadius;
     private Tween _expandingTween;
     private bool _isExpanding;
@@ -97,6 +98,8 @@ public class BombAttackStrategy : AttackStrategy
         }
         
         Stop();
+        
+        AttackExecuted?.Invoke();
     }
 
     private void ChangeSpheresVisibility(bool value)
