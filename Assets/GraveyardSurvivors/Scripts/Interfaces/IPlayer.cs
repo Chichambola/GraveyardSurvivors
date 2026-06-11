@@ -14,4 +14,7 @@ public interface IPlayer
     void ReduceMoney(float value);
     void ReceiveMoney (float value);
     void TakeDamage(float value);
+    void Heal(float value);
+    void ResetRadius();
+    void StartLight();
 }

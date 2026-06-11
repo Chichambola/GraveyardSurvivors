@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.iOS;
 using UnityEngine.Serialization;
 
-public class LanternLight : MonoBehaviour
+public class LanternLight : MonoBehaviour, ILantern
 {
     [Header("Visuals and collider")]
     [SerializeField] private ParticleSystem _lightArea;
@@ -31,6 +31,7 @@ public class LanternLight : MonoBehaviour
     public bool IsActive => _collider.radius > _disableThreshold;
     public float ShrinkRate => _shrinkRate;
     public bool IsGainingEnergy => _targetRadius != 0;
+    public Vector3 CurrentPosition => transform.position;
 
     public void Init()
     {

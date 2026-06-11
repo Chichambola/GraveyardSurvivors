@@ -5,6 +5,5 @@ using UnityEngine;
 
 public interface ILightCarrier
 {
-    void ResetRadius();
-    void StartLight();
+
 }

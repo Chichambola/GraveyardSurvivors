@@ -3,25 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(SphereCollider))]
 public class PickablesDetector : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private ItemDisplayer _itemDisplayer;
     
     public event Action<IBuff> BuffDetected;
     public event Action<float> CoinDetected;
     public event Action<float> CrystalDetected; 
     
     private SphereCollider _collider;
-    private Dictionary<Collider, IPickable> _pickables;
     private float _initialRadius;
     private float _currentRadiusMultiplier;
 
     private void Awake()
     {
         _collider = GetComponent<SphereCollider>();
-        _pickables = new Dictionary<Collider, IPickable>();
         _initialRadius = _collider.radius;
     }
 
@@ -38,21 +38,9 @@ public class PickablesDetector : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (_pickables.ContainsKey(other))
+        if (other.TryGetComponent(out IPickable pickable))
         {
-            DeterminePickableType(_pickables[other]);
-        }
-        else
-        {
-            if (other.TryGetComponent(out IPickable pickable))
-            {
-                if (pickable is not Item)
-                {
-                    _pickables.Add(other, pickable);
-                }
-                
-                DeterminePickableType(pickable);
-            }
+            DeterminePickableType(pickable);
         }
     }
 
@@ -61,6 +49,11 @@ public class PickablesDetector : MonoBehaviour
         if (pickable is IBuff buff)
         {
             BuffDetected?.Invoke(buff);
+
+            if (buff is Item item)
+            {
+                _itemDisplayer.Enqueue(item);
+            }
         }
 
         if (pickable is Coin coin)

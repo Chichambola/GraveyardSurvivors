@@ -18,6 +18,7 @@ public class Game : MonoBehaviour
     [Header("Services")]
     [SerializeField] private Darkness _darkness;
     [SerializeField] private LanternLight _lantern;
+    [SerializeField] private LightPointer _lanternPointer;
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
     [SerializeField] private InteractablesHandler _interactablesHandler;
     
@@ -51,8 +52,9 @@ public class Game : MonoBehaviour
         
         _enemySpawnerHandler.SetPlayer(_player);
         _interactablesHandler.Init(_player);
-        _lantern.Init();
+        _lanternPointer.Init(_player, _lantern);
         _darkness.Init(_player);
+        _lantern.Init();
     }
 
     private void OnDisable()

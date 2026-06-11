@@ -2,15 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LanternHealer : MonoBehaviour
 {
     [SerializeField] private PlayerDetector _detector;
-    [SerializeField] private float _buffAmount = 1.5f;
+    [SerializeField] private float _healAmount = 1f;
     [SerializeField] private float _cooldown = 1.5f;
     
-    private float _healthRegenerationAmount;
-    private Player _player;
+    private IPlayer _player;
     private Coroutine _coroutine;
     
     private void OnEnable()
@@ -25,7 +25,7 @@ public class LanternHealer : MonoBehaviour
         _detector.PlayerLeft -= StopHealing;
     }
 
-    private void StartHealing(Player player)
+    private void StartHealing(IPlayer player)
     {
         _player = player;
         
@@ -35,22 +35,10 @@ public class LanternHealer : MonoBehaviour
         _coroutine = StartCoroutine(HealingCoroutine());
     }
 
-    private void StopHealing(Player player)
+    private void StopHealing()
     {
-        _player.CurrentStats.HealthRegeneration -= _healthRegenerationAmount;
-
-        _healthRegenerationAmount = 0;
-        
-        StopCoroutine(_coroutine);
-
-        if (_player == player)
-        {
-            _player = null;
-        }
-        else
-        {
-            throw new Exception();
-        }
+        if(_coroutine != null)
+            StopCoroutine(_coroutine);
     }
     
     private IEnumerator HealingCoroutine()
@@ -59,9 +47,7 @@ public class LanternHealer : MonoBehaviour
 
         while (enabled)
         {
-            _healthRegenerationAmount += _buffAmount;
-
-            _player.CurrentStats.HealthRegeneration += _buffAmount;
+            _player.Heal(_healAmount);
             
             yield return wait;
         }

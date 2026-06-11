@@ -9,7 +9,7 @@ public class RadiusResetter : MonoBehaviour
     [SerializeField] private PlayerDetector _playerDetector;
     
     private float _lastRadius;
-    private ILightCarrier _carrier;
+    private IPlayer _player;
 
     private void OnEnable()
     {
@@ -23,19 +23,17 @@ public class RadiusResetter : MonoBehaviour
         _playerDetector.PlayerLeft -= OnPlayerLeft;
     }
     
-    private void OnPlayerDetected(ILightCarrier carrier)
+    private void OnPlayerDetected(IPlayer player)
     {
-        if (carrier == null)
-            throw new Exception();
+        _player = player ?? throw new Exception();
 
-        carrier.ResetRadius();
+        _player.ResetRadius();
     }
 
-    private void OnPlayerLeft(ILightCarrier carrier)
+    private void OnPlayerLeft()
     {
-        if (carrier == null)
-            throw new Exception();
-        
-        carrier.StartLight();
+        _player.StartLight();
+
+        _player = null;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
-public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrier
+public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private PickablesDetector _pickUpsDetector;

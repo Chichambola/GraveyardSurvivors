@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class PlayerDetector : Detector
 {
-    public event Action<Player> PlayerDetected;
-    public event Action<Player> PlayerLeft;
+    public event Action<IPlayer> PlayerDetected;
+    public event Action PlayerLeft;
     
     public bool IsPlayerNear { get; private set; }
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
+        if (other.TryGetComponent(out IPlayer player))
         {
             PlayerDetected?.Invoke(player);
 
@@ -22,9 +22,9 @@ public class PlayerDetector : Detector
 
     protected override void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
+        if (other.TryGetComponent(out IPlayer _))
         {
-            PlayerLeft?.Invoke(player);
+            PlayerLeft?.Invoke();
 
             IsPlayerNear = false;
         }

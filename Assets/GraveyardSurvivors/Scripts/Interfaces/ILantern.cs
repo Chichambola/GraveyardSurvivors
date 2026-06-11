@@ -4,8 +4,5 @@ using UnityEngine;
 
 public interface ILantern
 {
-    void StopShrinking();
-    void StartShrinking(float rate);
-    void StartExpanding(float radius);
-    void StopLight();
+    public Vector3 CurrentPosition { get; }
 }

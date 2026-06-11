@@ -42,11 +42,12 @@ public abstract class AttackArea : MonoBehaviour
             }
             else
             {
-                if (hitColliders[i].TryGetComponent(out IAttacker attacker))
-                {
-                    _validColliders.Add(hitColliders[i], attacker);
-                    tempAttackers.Add(attacker);
-                }
+                if (!hitColliders[i].TryGetComponent(out IAttacker attacker))
+                    continue;
+                
+                _validColliders.Add(hitColliders[i], attacker);
+                
+                tempAttackers.Add(attacker);
             }
         }
 
