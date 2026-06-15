@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterStats:
     MaxHealth: 3
-    HealthRegeneration: 0
-    MovementSpeed: 5
+    HealthRegeneration: 0.1
+    MovementSpeed: 3
     AttackSpeed: 0
     AttackRadius: 0
     DamageAmplifier: 0
     IncomingDamageMultiplier: 0
-    BlockChance: 0
+    BlockChance: 1
     EvasionChance: 0
     Armor: 0
     CritChance: 0
     CritMultiplier: 0
-    XpMultiplier: 0
-    GoldMultiplier: 0
-    PickUpRadius: 0
+    XpMultiplier: 1
+    GoldMultiplier: 1
+    PickUpRadius: 1
     Luck: 0

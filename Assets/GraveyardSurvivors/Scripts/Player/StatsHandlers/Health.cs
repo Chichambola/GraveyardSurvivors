@@ -56,16 +56,12 @@ public class Health : MonoBehaviour
     
     private float DetermineDamageAmount(float damage)
     {
-        if (_defender.CanBlock(_player.CurrentStats.BlockChance, _player.CurrentStats.Luck))
+        if (_defender.TryBlockDamage(_player.CurrentStats.BlockChance, _player.CurrentStats.Luck, ref damage))
         {
             Debug.Log("Blocked");
-            
-            damage = _defender.GetBlockedDamage(damage);
         }
         
         damage = damage.AddPercentToNumber(_player.CurrentStats.IncomingDamageMultiplier);
-        
-        damage = _defender.GetDamageAmount(_player.CurrentStats.Armor, damage);
         
         return damage;
     }

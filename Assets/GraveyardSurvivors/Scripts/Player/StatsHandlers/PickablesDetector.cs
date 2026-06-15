@@ -9,7 +9,6 @@ using UnityEngine.Serialization;
 public class PickablesDetector : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private ItemDisplayer _itemDisplayer;
     
     public event Action<IBuff> BuffDetected;
     public event Action<float> CoinDetected;
@@ -18,6 +17,7 @@ public class PickablesDetector : MonoBehaviour
     private SphereCollider _collider;
     private float _initialRadius;
     private float _currentRadiusMultiplier;
+    private float _previousRadiusMultiplier;
 
     private void Awake()
     {
@@ -49,11 +49,6 @@ public class PickablesDetector : MonoBehaviour
         if (pickable is IBuff buff)
         {
             BuffDetected?.Invoke(buff);
-
-            if (buff is Item item)
-            {
-                _itemDisplayer.Enqueue(item);
-            }
         }
 
         if (pickable is Coin coin)
@@ -71,12 +66,12 @@ public class PickablesDetector : MonoBehaviour
 
     private void OnStatsChanged(CharacterStats stats)
     {
-        if (!Mathf.Approximately(stats.PickUpRadius, _currentRadiusMultiplier))
-        {
-            _currentRadiusMultiplier = stats.PickUpRadius;
+        if (Mathf.Approximately(stats.PickUpRadius, _currentRadiusMultiplier))
+            return;
         
-            _collider.radius = _collider.radius.AddPercentToNumber(stats.PickUpRadius);
-        }
+        _currentRadiusMultiplier = stats.PickUpRadius;
+        
+        _collider.radius = _initialRadius.AddPercentToNumber(_currentRadiusMultiplier);
     }
 }
 

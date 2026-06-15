@@ -21,6 +21,7 @@ public class Game : MonoBehaviour
     [SerializeField] private LightPointer _lanternPointer;
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
     [SerializeField] private InteractablesHandler _interactablesHandler;
+    [SerializeField] private ItemDisplayer _itemDisplayer;
     
     [Header("Timer")]
     [SerializeField] private TextMeshProUGUI _timerText;
@@ -49,6 +50,8 @@ public class Game : MonoBehaviour
         _enemySpawnerHandler.EnemyWasKilled += OnEnemyDeath;
         
         _player = _playerHandler.Spawn(_playerPrefab);
+
+        _player.PickedItem += OnItemPickedUp;
         
         _enemySpawnerHandler.SetPlayer(_player);
         _interactablesHandler.Init(_player);
@@ -60,6 +63,8 @@ public class Game : MonoBehaviour
     private void OnDisable()
     {
         _enemySpawnerHandler.EnemyWasKilled -= OnEnemyDeath;
+        _player.PickedItem -= OnItemPickedUp;
+
         _elapsedTime = 0;
         
         TimerController.Clear();
@@ -82,5 +87,10 @@ public class Game : MonoBehaviour
         {
             _enemySpawnerHandler.Upgrade(percent);
         }
+    }
+    
+    private void OnItemPickedUp(Item item)
+    {
+        _itemDisplayer.Enqueue(item);
     }
 }

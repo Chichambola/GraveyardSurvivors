@@ -414,7 +414,7 @@ MonoBehaviour:
   _initialDuration: 1.85
   _initialRadius: 10
   _upgradeDurationPercent: 15
-  _minDurationThreshold: 0.85
+  _minDurationThreshold: 0.7
 --- !u!114 &9097205137456547513
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
     public event Action<float> GainedXp;
+    public event Action<Item> PickedItem;
 
     private int _lanternsCount;
     private bool _isInLantern;
@@ -131,6 +132,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     {
         CurrentStats.Upgrade(statsToUpgrade);
         _attacker.UpgradeWeapons();
+        StatsChanged?.Invoke(CurrentStats);
     }
 
     public void ChangeSpeed(float speedPercent, bool isSlowing)
@@ -170,6 +172,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         CurrentStats = buff.ApplyBuff(CurrentStats);
         
         StatsChanged?.Invoke(CurrentStats);
+
+        if (buff is Item item)
+        {
+            PickedItem?.Invoke(item);
+        }
     }
 
     public void RemoveBuff(IBuff buff)
