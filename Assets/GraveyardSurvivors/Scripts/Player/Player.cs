@@ -70,7 +70,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         
         CurrentHealth = CurrentStats.MaxHealth;
         
-        _pickUpsDetector.BuffDetected += AddBuff;
+        _pickUpsDetector.BuffDetected += OnBuffPickedUp;
         _pickUpsDetector.CoinDetected += _wallet.ReceiveMoney;
         _pickUpsDetector.CrystalDetected += OnCrystalDetected;
         
@@ -79,7 +79,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     private void OnDisable()
     {
-        _pickUpsDetector.BuffDetected -= AddBuff;
+        _pickUpsDetector.BuffDetected -= OnBuffPickedUp;
         _pickUpsDetector.CoinDetected -= _wallet.ReceiveMoney;
         _pickUpsDetector.CrystalDetected -= OnCrystalDetected;
     }
@@ -176,11 +176,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         CurrentStats = buff.ApplyBuff(CurrentStats);
         
         StatsChanged?.Invoke(CurrentStats);
-
-        if (buff is Item item)
-        {
-            PickedItem?.Invoke(item);
-        }
     }
 
     public void RemoveBuff(IBuff buff)
@@ -236,5 +231,15 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         _timer.Stopped -= OnDamageTimerStopped;
         
         _timer?.Stop();
+    }
+    
+    private void OnBuffPickedUp(IBuff buff)
+    {
+        AddBuff(buff);
+        
+        if (buff is Item item)
+        {
+            PickedItem?.Invoke(item);
+        }
     }
 }

@@ -69,20 +69,11 @@ public class UpgradeWindow : MonoBehaviour
         
         Tween.Alpha(_canvasGroup, _tweenSettings);
     }
-
-    public void Move(float offset, float opacityChangeTime)
-    {
-        _tweenSettings.settings.duration = opacityChangeTime;
-        _tweenSettings.endValue = offset;
-        
-        Tween.UIAnchoredPositionY(_rectTransform, _tweenSettings);
-    }
     
     public void ResetSettings()
     {
         _canvasGroup.interactable = false;
         _canvasGroup.alpha = 0;
-        _rectTransform.anchoredPosition = _initialPosition;
     }
 
     private void OnButtonClick()

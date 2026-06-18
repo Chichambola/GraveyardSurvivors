@@ -68,7 +68,7 @@ public class Attacker : MonoBehaviour
         {
             currentCooldown = CompareCooldown(currentCooldown);
             
-            var wait = new WaitForSecondsRealtime(currentCooldown);
+            var wait = new WaitForSeconds(currentCooldown);
             
             yield return wait;
 

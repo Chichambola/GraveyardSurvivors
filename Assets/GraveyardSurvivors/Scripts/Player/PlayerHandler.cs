@@ -52,8 +52,8 @@ public class PlayerHandler : MonoBehaviour
     
     private void OnPlayerReachedThreshold()
     {
-       _player.Upgrade(_statsToUpgrade);
        _upgradesDisplayer.ShowUpgrades();
+       _player.Upgrade(_statsToUpgrade);
     }
     
     private void OnPlayerGainedXp(float value)

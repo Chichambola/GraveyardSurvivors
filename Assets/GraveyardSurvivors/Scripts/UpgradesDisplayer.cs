@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using Unity.Android.Gradle;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradesDisplayer : MonoBehaviour
 {
     [Header("Upgrade windows and settings")]
     [SerializeField] private UpgradeWindow[] _upgradeWindows;
-    [SerializeField] private float _yOffset;
     [SerializeField] private float _changeOpacityTime = 0.5f;
     [Header("")]
     [SerializeField] private ItemsHandler _itemsHandler;
@@ -33,7 +33,6 @@ public class UpgradesDisplayer : MonoBehaviour
             
             upgradeWindow.ChangeOpacity(_fullVisibility, _changeOpacityTime);
             
-            upgradeWindow.Move(_yOffset, _changeOpacityTime);
 
             upgradeWindow.UpgradeSelected += OnUpgradeSelected;
         }
@@ -44,6 +43,7 @@ public class UpgradesDisplayer : MonoBehaviour
         foreach (var upgradeWindow in _upgradeWindows)
         {
             upgradeWindow.UpgradeSelected -= OnUpgradeSelected;
+            upgradeWindow.ResetSettings();
         }
         
         Time.timeScale = _normalTimeSpeed;
