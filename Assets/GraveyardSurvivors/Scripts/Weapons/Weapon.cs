@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour, IWeapon
+public abstract class Weapon : MonoBehaviour, IWeapon, IItem
 {
     [SerializeField] protected AttackStrategy AttackStrategy;
     [SerializeField] private WeaponInfo _info;
@@ -12,7 +12,11 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     protected float BonusDamage;
     
     public virtual event Action<IAttacker, Weapon> AttackerDetected;
+    
+    public Sprite Sprite => _info.Sprite;
     public float Damage => _info.Damage + BonusDamage;
+    public string Name => _info.Name;
+    public string Description => _info.Description;
 
     public abstract void Attack();
 

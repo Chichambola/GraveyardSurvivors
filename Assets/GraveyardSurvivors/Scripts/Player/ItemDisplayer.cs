@@ -57,8 +57,8 @@ public class ItemDisplayer : MonoBehaviour
 
     private IEnumerator ShowRoutine()
     {
-        var waitForOpacity = new WaitForSecondsRealtime(_timeForOpacityChanging);
-        var waitBetweenItems  = new WaitForSecondsRealtime(_timeBetweenItems);
+        var waitForOpacity = new WaitForSeconds(_timeForOpacityChanging);
+        var waitBetweenItems  = new WaitForSeconds(_timeBetweenItems);
         
         while (enabled)
         {

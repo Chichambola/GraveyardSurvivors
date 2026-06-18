@@ -37,7 +37,7 @@ public class HealthRegenerator : MonoBehaviour
 
     private IEnumerator Healing()
     {
-        var wait = new WaitForSecondsRealtime(_cooldown);
+        var wait = new WaitForSeconds(_cooldown);
 
         while (enabled)
         {

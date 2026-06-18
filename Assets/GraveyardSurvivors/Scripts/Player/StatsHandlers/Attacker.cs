@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private Weapon[] _weapons;
+    [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private float _cooldown = 1.5f;
     
     private Coroutine _coroutine;
@@ -123,6 +124,14 @@ public class Attacker : MonoBehaviour
         foreach (var weapon in _weapons)
         {
             weapon.Upgrade();
+        }
+    }
+
+    public void AddWeapon(IWeapon item)
+    {
+        if (item is Weapon weapon)
+        {
+            _weapons.Add(weapon);
         }
     }
 }

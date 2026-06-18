@@ -40,7 +40,7 @@ public class ChestHandler : CostInteractableHandler, IInteractableHandler
         
             chest.IncreaseChance(Player.Luck);
             
-            RarityLevel rarityLevel = UserUtils.GetElementByWeight(chest.Weights.ToList());
+            RarityLevel rarityLevel = UserUtils.GetElementByWeight(chest.Weights);
 
             if (rarityLevel == null)
                 throw new Exception(nameof(rarityLevel));

@@ -19,6 +19,7 @@ public class PlayerHandler : MonoBehaviour
     private void OnEnable()
     {
         _experienceHandler.PlayerReachedThreshold += OnPlayerReachedThreshold;
+        _upgradesDisplayer.UpgradeSelected += OnUpgradeSelected;
     }
 
     private void OnDisable()
@@ -62,5 +63,18 @@ public class PlayerHandler : MonoBehaviour
         tempXp = tempXp.RoundToFifths();
         
         _experienceHandler.GainExperience(tempXp);
+    }
+    
+    private void OnUpgradeSelected(IItem item)
+    {
+        if (item is IBuff buff)
+        {
+            _player.AddBuff(buff);
+        }
+
+        if (item is IWeapon weapon)
+        {
+            _player.AddWeapon(weapon);
+        }
     }
 }

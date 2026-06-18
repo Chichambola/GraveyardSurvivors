@@ -164,6 +164,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         }
     }
     
+    public void AddWeapon(IWeapon weapon)
+    {
+        _attacker.AddWeapon(weapon);
+    }
+    
     public void ApplyEffect(IEffect<IAttacker> effectFactory) { }
 
     public void AddBuff(IBuff buff)
