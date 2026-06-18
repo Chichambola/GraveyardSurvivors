@@ -48,7 +48,7 @@ public class UpgradeWindow : MonoBehaviour
         Tween.UIAnchoredPositionY(_rectTransform, offset, opacityChangeTime, _easing);
     }
     
-    public void Reset()
+    public void ResetSettings()
     {
         _canvasGroup.interactable = false;
         _canvasGroup.alpha = 0;
