@@ -15,7 +15,9 @@ public class BombAttackStrategy : AttackStrategy
     [SerializeField] private float _initialRadius = 10f;
     [Header("Upgrade stats")]
     [SerializeField] private float _upgradeDurationPercent = 20;
-    [SerializeField] private float _minDurationThreshold = 1;
+    [SerializeField] private float _minDurationThreshold = 1f;
+    [SerializeField] private float _upgradeRadiusPercent = 20f;
+    [SerializeField] private float _maxRadiusThreshold = 15f;
     
     public override event Action<IAttacker> AttackerDetected;
     public override event Action AttackExecuted;
@@ -24,10 +26,12 @@ public class BombAttackStrategy : AttackStrategy
     private Tween _expandingTween;
     private bool _isExpanding;
     private float _currentDuration;
+    private float _currentRadius;
 
     private void Awake()
     {
         _currentDuration = _initialDuration;
+        _currentRadius = _initialRadius;
     }
 
     private void OnValidate()
@@ -40,6 +44,21 @@ public class BombAttackStrategy : AttackStrategy
         if (_minDurationThreshold < 0)
         {
             _minDurationThreshold = 0;
+        }
+
+        if (_initialRadius < 0)
+        {
+            _initialRadius = 0;
+        }
+
+        if (_initialRadius > _maxRadiusThreshold)
+        {
+            _initialRadius = _maxRadiusThreshold;
+        }
+
+        if (_maxRadiusThreshold <= _initialRadius)
+        {
+            _maxRadiusThreshold = _initialRadius + 1;
         }
     }
 
@@ -56,9 +75,9 @@ public class BombAttackStrategy : AttackStrategy
         if (_isExpanding) return;
         
         _isExpanding = true;
-        _attackArea.SetSize(_initialRadius);  
+        _attackArea.SetSize(_currentRadius);  
         
-        _targetRadius = new Vector3(_initialRadius, _initialRadius, _initialRadius);
+        _targetRadius = new Vector3(_currentRadius, _currentRadius, _currentRadius);
         _radiusSphere.gameObject.transform.localScale = _targetRadius;
         
         ChangeSpheresVisibility(true);
@@ -68,7 +87,11 @@ public class BombAttackStrategy : AttackStrategy
 
     public override void Upgrade()
     {
-        _currentDuration = _currentDuration.GetClampedValueInverse(_upgradeDurationPercent, _minDurationThreshold);
+        float tempDurationPercent = _currentDuration.GetClampedValueInverse(_upgradeDurationPercent, _minDurationThreshold);
+        float tempRadiusPercent = _currentRadius.GetClampedValue(_upgradeRadiusPercent, _maxRadiusThreshold);
+
+        _currentDuration = _currentDuration.AddPercentToNumber(tempDurationPercent);
+        _currentRadius = _currentRadius.AddPercentToNumber(tempRadiusPercent);
     }
 
     public override void Reset()

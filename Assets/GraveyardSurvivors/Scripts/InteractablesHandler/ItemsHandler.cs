@@ -30,18 +30,6 @@ public class ItemsHandler : MonoBehaviour
         SetItemsList();
     }
 
-    private void SetItemsList()
-    {
-        if (_items.Count != 0)
-        {
-            SetItems();
-        }
-        else
-        {
-            throw new Exception("No items!");
-        }
-    }
-
     public void SpawnRandomItem(Vector3 position, ERarityLevel rarity)
     {
         if (_itemsLists == null)
@@ -55,18 +43,29 @@ public class ItemsHandler : MonoBehaviour
         _itemSpawner.SetPrefab(tempItem);
         _itemSpawner.Spawn(position);
     }
+
+    public IItem GetRandomItem()
+    {
+        int randomKeyIndex = Random.Range(0, _itemsLists.Keys.Count);
+        
+        var items = _itemsLists.ElementAt(randomKeyIndex).Value;
+
+        int randomIndex = Random.Range(0, items.Count);
+
+        return items[randomIndex];
+    }
     
     private void SetItems()
     {
         foreach (var item in _items)
         {
-            if (item.Info.Rarity == ERarityLevel.Common)
+            if (item.Rarity == ERarityLevel.Common)
                 _commonItems.Add(item); 
 
-            if (item.Info.Rarity == ERarityLevel.Rare)
+            if (item.Rarity == ERarityLevel.Rare)
                 _rareItems.Add(item);
 
-            if (item.Info.Rarity == ERarityLevel.Legendary)
+            if (item.Rarity == ERarityLevel.Legendary)
                 _legendaryItems.Add(item);
         }
 
@@ -76,5 +75,17 @@ public class ItemsHandler : MonoBehaviour
             {ERarityLevel.Rare, _rareItems},
             {ERarityLevel.Legendary, _legendaryItems}
         };
+    }
+    
+    private void SetItemsList()
+    {
+        if (_items.Count != 0)
+        {
+            SetItems();
+        }
+        else
+        {
+            throw new Exception("No items!");
+        }
     }
 }

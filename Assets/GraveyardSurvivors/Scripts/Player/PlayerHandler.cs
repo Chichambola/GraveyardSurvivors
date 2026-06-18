@@ -11,6 +11,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] private SerializableDictionary<Player, PlayerInfo> _playerUpgradeStats;
     [SerializeField] private ExperienceHandler _experienceHandler;
     [SerializeField] private CinemachineVirtualCamera _playerCamera;
+    [SerializeField] private UpgradesDisplayer _upgradesDisplayer;
     
     private Player _player;
     private CharacterStats _statsToUpgrade;
@@ -51,6 +52,7 @@ public class PlayerHandler : MonoBehaviour
     private void OnPlayerReachedThreshold()
     {
        _player.Upgrade(_statsToUpgrade);
+       _upgradesDisplayer.ShowUpgrades();
     }
     
     private void OnPlayerGainedXp(float value)

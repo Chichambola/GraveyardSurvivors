@@ -131,7 +131,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     public void Upgrade(CharacterStats statsToUpgrade)
     {
         CurrentStats.Upgrade(statsToUpgrade);
-        _attacker.UpgradeWeapons();
         StatsChanged?.Invoke(CurrentStats);
     }
 

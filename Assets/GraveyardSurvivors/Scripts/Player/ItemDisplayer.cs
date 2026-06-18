@@ -13,18 +13,15 @@ public class ItemDisplayer : MonoBehaviour
     [SerializeField] private float _timeForOpacityChanging;
     [SerializeField] private float _timeBetweenItems;
     [SerializeField] private float _targetOpacityValue;
-    [SerializeField] private Ease _easing;
-    [SerializeField] private Image _image;
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private UpgradeWindow _upgradeWindow;
     
-    private Queue<Item> _itemsToShow;
+    private Queue<IItem> _itemsToShow;
     private Coroutine _coroutine;
     private float _defaultOpacity = 0;
 
     private void Awake()
     {
-        _itemsToShow = new Queue<Item>();
+        _itemsToShow = new Queue<IItem>();
     }
 
     private void OnValidate()
@@ -72,29 +69,20 @@ public class ItemDisplayer : MonoBehaviour
                 continue;
             }
             
-            Item item = _itemsToShow.Dequeue();
+            IItem item = _itemsToShow.Dequeue();
 
-            SetItem(item);
+            _upgradeWindow.SetWindow(item);
 
-            ChangeOpacity(_targetOpacityValue);
+            _upgradeWindow.ChangeOpacity(_targetOpacityValue, _timeForOpacityChanging);
             
             yield return waitForOpacity;
             yield return waitBetweenItems;
 
-            ChangeOpacity(_defaultOpacity);
+            _upgradeWindow.ChangeOpacity(_defaultOpacity, _timeForOpacityChanging);
 
             yield return waitForOpacity;
         }
         
         yield return null;
     }
-
-    private void SetItem(Item item)
-    {
-        _image.overrideSprite = item.Info.Sprite;
-            
-        _text.text = item.Info.Description;
-    }
-
-    private void ChangeOpacity(float targetValue) => Tween.Alpha(_canvasGroup, targetValue, _timeForOpacityChanging, _easing);
 }

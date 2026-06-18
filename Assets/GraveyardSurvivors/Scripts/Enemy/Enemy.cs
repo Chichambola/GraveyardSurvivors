@@ -75,7 +75,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private void OnEnable()
     {
         InitializeStateMachine();
-
     }
 
     public void ResetCharacteristics()
