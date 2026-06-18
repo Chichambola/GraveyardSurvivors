@@ -22282,7 +22282,6 @@ MonoBehaviour:
   - {fileID: 727829533}
   - {fileID: 1774565667}
   - {fileID: 806497108}
-  _yOffset: 0
   _changeOpacityTime: 0.5
   _itemsHandler: {fileID: 1204296356}
 --- !u!4 &1975721311
