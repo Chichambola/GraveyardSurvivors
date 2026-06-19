@@ -5,13 +5,17 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private float _cooldown;
+    [SerializeField] private float _healCooldown;
+    [SerializeField] private float _invincibilityAfterDamage = .30f;
     [Header("Services")]
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private StatsViewer _statsViewer;
     
     private Coroutine _coroutine;
+    private IntervalTimer _timer;
+    
+    public bool CanTakeDamage { get; private set; }
     
     private void OnEnable()
     {
@@ -23,19 +27,16 @@ public class Health : MonoBehaviour
 
     private IEnumerator Healing()
     {
-        var wait = new WaitForSeconds(_cooldown);
+        var wait = new WaitForSeconds(_healCooldown);
 
         while (enabled)
         {
             yield return wait;
             
             _player.Heal(_player.CurrentStats.HealthRegeneration);
+            
+            UpdateStats();
         }
-    }
-
-    public void UpdateStats()
-    {
-        _statsViewer.UpdateStats(_player.CurrentHealth, _player.CurrentStats.MaxHealth);   
     }
     
     public bool TryTakeDamage(ref float damage)
@@ -49,6 +50,13 @@ public class Health : MonoBehaviour
         else
         {
             damage = DetermineDamageAmount(damage);
+            
+            _timer = new IntervalTimer(_invincibilityAfterDamage);
+            _timer.Stopped += OnDamageTimerStopped;
+            _timer.Start();
+            
+            CanTakeDamage = false;
+            UpdateStats();
             
             return true;
         }
@@ -64,5 +72,19 @@ public class Health : MonoBehaviour
         damage = damage.AddPercentToNumber(_player.CurrentStats.IncomingDamageMultiplier);
         
         return damage;
+    }
+    
+    private void UpdateStats()
+    {
+        _statsViewer.UpdateStats(_player.CurrentHealth, _player.CurrentStats.MaxHealth);   
+    }
+    
+    private void OnDamageTimerStopped()
+    {
+        CanTakeDamage = true;
+        
+        _timer.Stopped -= OnDamageTimerStopped;
+        
+        _timer?.Stop();
     }
 }

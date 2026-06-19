@@ -87,7 +87,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public void Upgrade(EnemyStats stats)
     {
         CurrentStats = stats;
-        Attacker.UpgradeWeapons();
+        Attacker.UpgradeWeapon();
     }
 
     public void TakeDamage(float damage)

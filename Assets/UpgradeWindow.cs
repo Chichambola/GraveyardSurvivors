@@ -25,6 +25,8 @@ public class UpgradeWindow : MonoBehaviour
     private TweenSettings<float> _tweenSettings;
     private Button _button;
     private IItem _item;
+    
+    public bool IsOccupied { get; private set; }
 
     private void Awake()
     {
@@ -52,10 +54,12 @@ public class UpgradeWindow : MonoBehaviour
 
     public void SetWindow(IItem item)
     {
+        IsOccupied = true;
+        
         _item = item;
         _image.overrideSprite = item.Sprite;
         _name.text = item.Name;
-        _desciption.text = item.Description;
+        _desciption.text = item.CurrentDescription;
     }
 
     public void ChangeOpacity(float targetOpacity, float opacityChangeTime)
@@ -80,6 +84,8 @@ public class UpgradeWindow : MonoBehaviour
     {
         if (_item == null)
             throw new NullReferenceException("You must assign an item to UpgradeWindow.");
+        
+        IsOccupied = false;
         
         UpgradeSelected?.Invoke(_item);
     }

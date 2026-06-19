@@ -5054,13 +5054,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3292e156be0547419c608bca8b32562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackStrategy: {fileID: 502460077594037009}
   _info: {fileID: 11400000, guid: b78e988233cbc9f7d934f9cee49f24f0, type: 2}
   _bonusDamagePerUpgrade: 1
   _effects:
   - _effects:
     - rid: 5909440996258086917
   _effectChance: 15
+  _attackStrategy: {fileID: 502460077594037009}
   _area: {fileID: 6899689260534660976}
   _attackParticles: {fileID: 1859997674124492629}
   references:

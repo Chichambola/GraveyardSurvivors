@@ -7,15 +7,18 @@ using Random = UnityEngine.Random;
 
 public class WeaponIronSword : WeaponWithAbility
 {
+    [SerializeField] private MeleeAttackStrategy _attackStrategy;
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _attackParticles;
 
     private Coroutine _coroutine;
     private float _waitTime = 0.1f;
+    
+    public override string UpgradeDescription { get; protected set; }
 
     private void OnEnable()
     {
-        AttackStrategy.AttackerDetected += OnAttackerDetected;
+        _attackStrategy.AttackerDetected += OnAttackerDetected;
         
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -25,12 +28,19 @@ public class WeaponIronSword : WeaponWithAbility
 
     private void OnDisable()
     {
-        AttackStrategy.AttackerDetected -= OnAttackerDetected;
+        _attackStrategy.AttackerDetected -= OnAttackerDetected;
     }
-
+    
     public override void Attack()
     {
-        AttackStrategy.Execute();
+        _attackStrategy.Execute();
+    }
+
+    public override void Upgrade()
+    {
+        _attackStrategy.Upgrade();
+        
+        base.Upgrade();
     }
 
     private void SetParticleSystemDuration(float duration)

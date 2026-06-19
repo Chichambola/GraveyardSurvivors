@@ -6,5 +6,5 @@ public interface IItem
 {
     public Sprite Sprite { get; }
     public string Name { get; }
-    public string Description { get; }
+    public string CurrentDescription { get; }
 }

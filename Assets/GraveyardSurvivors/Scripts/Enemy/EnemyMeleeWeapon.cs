@@ -6,21 +6,25 @@ using UnityEngine;
 
 public class EnemyMeleeWeapon : Weapon
 {
+    [SerializeField] private MeleeAttackStrategy _attackStrategy;
+    
+    public override string UpgradeDescription { get; protected set; }
+    
     private void OnEnable()
     {
-        AttackStrategy.AttackerDetected += OnAttackerDetected;
+        _attackStrategy.AttackerDetected += OnAttackerDetected;
     }
 
     private void OnDisable()
     {
-        AttackStrategy.AttackerDetected -= OnAttackerDetected;
+        _attackStrategy.AttackerDetected -= OnAttackerDetected;
     }
-
+    
     public override void Attack()
     {
-        AttackStrategy.Execute();
+        _attackStrategy.Execute();
     }
-
+    
     private void OnAttackerDetected(IAttacker attacker)
     {
         if (attacker == null)

@@ -324,9 +324,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485a0b08d02f05602b43eff2c3812425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackStrategy: {fileID: 3653054267437700123}
   _info: {fileID: 11400000, guid: 7bbf29c81e30830479c32f1046fdf442, type: 2}
   _bonusDamagePerUpgrade: 1
+  _attackStrategy: {fileID: 3653054267437700123}
 --- !u!114 &3653054267437700123
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour, IWeapon, IItem
 {
-    [SerializeField] protected AttackStrategy AttackStrategy;
     [SerializeField] private WeaponInfo _info;
     [SerializeField] private float _bonusDamagePerUpgrade = 1;
     
@@ -16,7 +15,10 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
     public Sprite Sprite => _info.Sprite;
     public float Damage => _info.Damage + BonusDamage;
     public string Name => _info.Name;
-    public string Description => _info.Description;
+    public string BaseDescription => _info.BaseDescription;
+    public abstract string UpgradeDescription { get; protected set; }
+    public string CurrentDescription { get; private set; }
+
 
     public abstract void Attack();
 
@@ -27,12 +29,16 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
 
     public virtual void Upgrade()
     {
-        AttackStrategy.Upgrade();
         BonusDamage += _bonusDamagePerUpgrade;
     }
 
     public virtual void Reset()
     {
         
+    }
+
+    public void SetDescription(string description)
+    {
+        CurrentDescription = description;
     }
 }

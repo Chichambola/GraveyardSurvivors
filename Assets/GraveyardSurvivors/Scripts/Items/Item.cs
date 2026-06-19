@@ -18,7 +18,7 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable, I
 
     public Sprite Sprite => _info.Sprite;
     public string Name => _info.Name;
-    public string Description => _info.Description;
+    public string CurrentDescription => _info.Description;
     public ERarityLevel Rarity => _info.Rarity;
     public int Weight => _info.Weight;
     

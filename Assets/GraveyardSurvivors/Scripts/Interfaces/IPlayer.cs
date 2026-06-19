@@ -12,6 +12,7 @@ public interface IPlayer
     public float CurrentHealth { get; }
     public float Luck { get; }
     public bool IsLightActive { get; }
+    bool HasWeapon(Weapon weapon);
     void ReduceMoney(float value);
     void ReceiveMoney (float value);
     void TakeDamage(float value);

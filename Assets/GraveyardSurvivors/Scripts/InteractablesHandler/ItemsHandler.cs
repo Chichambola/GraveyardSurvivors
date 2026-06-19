@@ -12,6 +12,7 @@ public class ItemsHandler : MonoBehaviour
 {
     [SerializeField] private ItemSpawner _itemSpawner;
     [SerializeField] private List<Item> _items;
+    [SerializeField] private List<Weapon> _weapons;
     
     private List<Item> _commonItems;
     private List<Item> _rareItems;
@@ -44,7 +45,7 @@ public class ItemsHandler : MonoBehaviour
         _itemSpawner.Spawn(position);
     }
 
-    public IItem GetRandomItem()
+    public Item GetRandomItem()
     {
         int randomKeyIndex = Random.Range(0, _itemsLists.Keys.Count);
         
@@ -55,18 +56,37 @@ public class ItemsHandler : MonoBehaviour
         return items[randomIndex];
     }
     
+    public Weapon GetRandomWeapon()
+    {
+        int randomIndex = Random.Range(0, _weapons.Count);
+        
+        return _weapons[randomIndex];
+    }
+    
     private void SetItems()
     {
         foreach (var item in _items)
         {
             if (item.Rarity == ERarityLevel.Common)
+            {
                 _commonItems.Add(item); 
+                
+                continue;
+            }
 
             if (item.Rarity == ERarityLevel.Rare)
+            {
                 _rareItems.Add(item);
 
+                continue;
+            }
+
             if (item.Rarity == ERarityLevel.Legendary)
+            {
                 _legendaryItems.Add(item);
+
+                continue;
+            }
         }
 
         _itemsLists = new Dictionary<ERarityLevel, List<Item>>()

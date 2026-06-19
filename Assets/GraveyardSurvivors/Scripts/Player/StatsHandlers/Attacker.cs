@@ -1,17 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private List<Weapon> _weapons;
+    [SerializeField] private List<Weapon> _initialWeapons;
     [SerializeField] private float _cooldown = 1.5f;
     
     private Coroutine _coroutine;
     private IAttacker _attacker;
+    private List<Weapon> _currentWeapons;
     
     public bool IsAttacking {get; private set;}
 
@@ -19,21 +22,34 @@ public class Attacker : MonoBehaviour
     {
         _attacker = attacker;
     }
-    
+
+    private void Awake()
+    {
+        _currentWeapons = new List<Weapon>();
+        
+        _currentWeapons.AddRange(_initialWeapons);
+    }
+
     private void OnEnable()
     {
-        foreach (var weapon in _weapons)
+        foreach (var weapon in _initialWeapons)
         {
-            weapon.AttackerDetected += OnAttackerDetected;
+            var currentWeapon = Instantiate(weapon, transform.position, Quaternion.identity, transform);
+            
+            _currentWeapons.Add(currentWeapon);
+            
+            currentWeapon.AttackerDetected += OnAttackerDetected;
         }
     }
 
     private void OnDisable()
     {
-        foreach (var weapon in _weapons)
+        foreach (var weapon in _currentWeapons)
         {
             weapon.AttackerDetected -= OnAttackerDetected;
         }
+        
+        _currentWeapons.Clear();
     }
 
     public void StartAttacking()
@@ -52,11 +68,33 @@ public class Attacker : MonoBehaviour
 
     public void Reset()
     {
-        foreach (var weapon in _weapons)
+        foreach (var weapon in _currentWeapons)
         {
             weapon.Reset();
         }
     }
+    
+    public void UpgradeWeapon(Weapon weapon)
+    {
+        _currentWeapons.FirstOrDefault(w => w == weapon)?.Upgrade();
+    }
+    
+    public void UpgradeWeapon()
+    {
+        _currentWeapons.First().Upgrade();
+    }
+
+    public void AddWeapon(IWeapon item)
+    {
+        if (item is not Weapon weapon) 
+            return;
+        
+        var currentWeapon = Instantiate(weapon, transform.position, Quaternion.identity, transform);
+        
+        _currentWeapons.Add(currentWeapon);
+    }
+
+    public bool HasWeapon(Weapon weapon) => _currentWeapons.Contains(weapon);
     
     private IEnumerator AttackingCoroutine()
     {
@@ -72,7 +110,7 @@ public class Attacker : MonoBehaviour
             
             yield return wait;
 
-            foreach (var weapon in _weapons)
+            foreach (var weapon in _currentWeapons)
             {
                 weapon.Attack();
             }
@@ -117,21 +155,5 @@ public class Attacker : MonoBehaviour
         float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
         
         return critChance >= randomNumber;
-    }
-
-    public void UpgradeWeapons()
-    {
-        foreach (var weapon in _weapons)
-        {
-            weapon.Upgrade();
-        }
-    }
-
-    public void AddWeapon(IWeapon item)
-    {
-        if (item is Weapon weapon)
-        {
-            _weapons.Add(weapon);
-        }
     }
 }

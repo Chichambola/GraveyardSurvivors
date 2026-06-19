@@ -8,29 +8,39 @@ using Sirenix.Serialization;
 
 public class Bomb : Weapon
 {
+    [SerializeField] private BombAttackStrategy _attackStrategy;
     [SerializeField] private InterfaceReference<IAttacker, MonoBehaviour> _weaponBearer;
     [SerializeField] private float _damageAfterExplosion = 99999;
     
+    public override string UpgradeDescription { get; protected set; }
+    
     private void OnEnable()
     {
-        AttackStrategy.AttackerDetected += OnAttackerDetected;
-        AttackStrategy.AttackExecuted += OnAttackExecuted;
+        _attackStrategy.AttackerDetected += OnAttackerDetected;
+        _attackStrategy.AttackExecuted += OnAttackExecuted;
     }
 
     private void OnDisable()
     {
-        AttackStrategy.AttackerDetected -= OnAttackerDetected;
-        AttackStrategy.AttackExecuted -= OnAttackExecuted;
+        _attackStrategy.AttackerDetected -= OnAttackerDetected;
+        _attackStrategy.AttackExecuted -= OnAttackExecuted;
     }
     
     public override void Attack()
     {
-        AttackStrategy.Execute();
+        _attackStrategy.Execute();
+    }
+
+    public override void Upgrade()
+    {
+        _attackStrategy.Upgrade();
+        
+        base.Upgrade();
     }
 
     public override void Reset()
     {
-        AttackStrategy.Reset();
+        _attackStrategy.Reset();
     }
 
     private void OnAttackerDetected(IAttacker attacker)

@@ -6,19 +6,29 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.Serialization;
 
 public class RangeAttackStrategy : AttackStrategy
 {
     [SerializeField] private AttackArea[] _attackAreas;
-    [SerializeField] private int _numberOfProjectiles = 2;
+    [SerializeField] private int _initialProjectileAmount = 2;
+    [SerializeField] private int _projectilePerUpgrade;
 
     public override event Action<IAttacker> AttackerDetected;
 
     private int _count;
+    private int _currentProjectileAmount;
+
+    public int ProjectilePerUpgrade => _projectilePerUpgrade;
+
+    private void OnEnable()
+    {
+        _currentProjectileAmount = _initialProjectileAmount;
+    }
 
     public override void Upgrade()
     {
-        _numberOfProjectiles++;
+        _currentProjectileAmount += _projectilePerUpgrade;
     }
 
     public override void Execute()
@@ -35,7 +45,7 @@ public class RangeAttackStrategy : AttackStrategy
                 }
             }
             
-            if (_count < _numberOfProjectiles) continue;
+            if (_count < _initialProjectileAmount) continue;
             
             _count = 0;
 
@@ -49,7 +59,7 @@ public class RangeAttackStrategy : AttackStrategy
         
         if (attackArea.TryGetAttackers(out List<IAttacker> currentAttackers))
         {
-            for (int i = 0; i < _numberOfProjectiles; i++)
+            for (int i = 0; i < _initialProjectileAmount; i++)
             {
                 float minDistance = float.MaxValue;
 

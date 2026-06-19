@@ -415,6 +415,8 @@ MonoBehaviour:
   _initialRadius: 10
   _upgradeDurationPercent: 15
   _minDurationThreshold: 0.7
+  _upgradeRadiusPercent: 20
+  _maxRadiusThreshold: 15
 --- !u!114 &9097205137456547513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,9 +429,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da772bfeb20ae5240ac095259920cd03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackStrategy: {fileID: 5380774487396859826}
   _info: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
   _bonusDamagePerUpgrade: 5
+  _attackStrategy: {fileID: 5380774487396859826}
   _weaponBearer:
     _underlyingValue: {fileID: 2158510540606250342}
   _damageAfterExplosion: 99999

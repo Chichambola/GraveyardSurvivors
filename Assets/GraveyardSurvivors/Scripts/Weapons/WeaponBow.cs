@@ -5,23 +5,35 @@ using UnityEngine;
 
 public class WeaponBow : WeaponWithAbility
 {
+    [SerializeField] private RangeAttackStrategy _attackStrategy;
     [SerializeField] private ProjectileSpawner _arrowSpawner;
-    
+
+    public override string UpgradeDescription { get; protected set; }
+
     private void OnEnable()
     {
-        AttackStrategy.AttackerDetected += OnAttackerDetected;
+        _attackStrategy.AttackerDetected += OnAttackerDetected;
         _arrowSpawner.ProjectileReleased += ProcessAttacker;
+        UpgradeDescription = $"Add +{BonusDamage} damage \n" +
+                             $"Add +{_attackStrategy.ProjectilePerUpgrade} to  total projectile amount.";
     }
 
     private void OnDisable()
     {
-        AttackStrategy.AttackerDetected -= OnAttackerDetected;
+        _attackStrategy.AttackerDetected -= OnAttackerDetected;
         _arrowSpawner.ProjectileReleased -= ProcessAttacker;
     }
-
+    
     public override void Attack()
     {
-        AttackStrategy.Execute();
+        _attackStrategy.Execute();
+    }
+
+    public override void Upgrade()
+    {
+        _attackStrategy.Upgrade();
+        
+        base.Upgrade();
     }
 
     private void OnAttackerDetected(IAttacker attacker)

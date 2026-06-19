@@ -11,7 +11,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] private SerializableDictionary<Player, PlayerInfo> _playerUpgradeStats;
     [SerializeField] private ExperienceHandler _experienceHandler;
     [SerializeField] private CinemachineVirtualCamera _playerCamera;
-    [SerializeField] private UpgradesDisplayer _upgradesDisplayer;
+    [SerializeField] private UpgradesHandler _upgradesDisplayer;
     
     private Player _player;
     private CharacterStats _statsToUpgrade;
@@ -39,9 +39,12 @@ public class PlayerHandler : MonoBehaviour
             
             _player = Instantiate(player, _spawnPoint.position, _spawnPoint.rotation);
             _player.transform.parent = transform;
-            _player.GainedXp += OnPlayerGainedXp;
             _playerCamera.Follow = _player.transform;
 
+            _player.GainedXp += OnPlayerGainedXp;
+
+            _upgradesDisplayer.SetPlayer(_player);
+            
             return _player;
         }
         else
@@ -72,9 +75,16 @@ public class PlayerHandler : MonoBehaviour
             _player.AddBuff(buff);
         }
 
-        if (item is IWeapon weapon)
+        if (item is Weapon weapon)
         {
-            _player.AddWeapon(weapon);
+            if (_player.HasWeapon(weapon))
+            {
+                _player.UpgradeWeapon(weapon);
+            }
+            else
+            {
+                _player.AddWeapon(weapon);
+            }
         }
     }
 }

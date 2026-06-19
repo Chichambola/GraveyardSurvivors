@@ -1059,9 +1059,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485a0b08d02f05602b43eff2c3812425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackStrategy: {fileID: 6398945705746586719}
   _info: {fileID: 11400000, guid: 90f4d73030b01d246bd47f307680c691, type: 2}
   _bonusDamagePerUpgrade: 1
+  _attackStrategy: {fileID: 6398945705746586719}
 --- !u!114 &6398945705746586719
 MonoBehaviour:
   m_ObjectHideFlags: 0

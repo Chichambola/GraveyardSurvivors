@@ -197,7 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ecc4141dd173b649813cb5b46495b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackStrategy: {fileID: 460224436147248108}
   _info: {fileID: 11400000, guid: 5bf44b189b2a7844d9c778b04b85b291, type: 2}
   _bonusDamagePerUpgrade: 0.5
   _effects:
@@ -205,6 +204,7 @@ MonoBehaviour:
     - rid: 5909440864032915460
     - rid: 3644556881758257153
   _effectChance: 15
+  _attackStrategy: {fileID: 460224436147248108}
   _arrowSpawner: {fileID: 7555314215730688092}
   references:
     version: 2
@@ -239,6 +239,7 @@ MonoBehaviour:
   - {fileID: 7722499812302757489}
   - {fileID: 2828809385489303952}
   _numberOfProjectiles: 2
+  _projectilePerUpgrade: 1
 --- !u!1 &7360202670523053228
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     [Header("Stats")]
     [SerializeField] private PlayerInfo _baseStats;
     [SerializeField] private StatsViewer _statsViewer;
-    [SerializeField] private float _invincibilityAfterDamage = .30f;
     
     [Header("Services")] 
     [SerializeField] private Health _health;
@@ -30,7 +29,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     private bool _isInLantern;
     private bool _canTakeDamage;
     private Rigidbody _rigidbody;
-    private IntervalTimer _timer;
     
     public CharacterStats CurrentStats { get; private set; }
     public Vector3 CurrentPosition => transform.position;
@@ -148,26 +146,26 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     public void TakeDamage(float damage)
     {
-        if (!_canTakeDamage)
+        if (!_health.CanTakeDamage)
             return;
         
         if (_health.TryTakeDamage(ref damage))
         {
             CurrentHealth -= damage;
-            
-            _timer = new IntervalTimer(_invincibilityAfterDamage);
-            _timer.Stopped += OnDamageTimerStopped;
-            _timer.Start();
-            
-            _canTakeDamage = false;
-            _health.UpdateStats();
         }
     }
     
-    public void AddWeapon(IWeapon weapon)
+    public void AddWeapon(Weapon weapon)
     {
         _attacker.AddWeapon(weapon);
     }
+
+    public void UpgradeWeapon(Weapon weapon)
+    {
+        _attacker.UpgradeWeapon(weapon);
+    }
+
+    public bool HasWeapon(Weapon weapon) => _attacker.HasWeapon(weapon);
     
     public void ApplyEffect(IEffect<IAttacker> effectFactory) { }
 
@@ -193,8 +191,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         {
             CurrentHealth = MaxHealth;
         }
-
-        _health.UpdateStats();
     }
 
     public void ResetRadius()
@@ -223,15 +219,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     }
 
     private void OnCrystalDetected(float crystalValue) => GainedXp?.Invoke(crystalValue);
-    
-    private void OnDamageTimerStopped()
-    {
-        _canTakeDamage = true;
-        
-        _timer.Stopped -= OnDamageTimerStopped;
-        
-        _timer?.Stop();
-    }
     
     private void OnBuffPickedUp(IBuff buff)
     {
