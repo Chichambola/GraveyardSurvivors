@@ -9,6 +9,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
     [SerializeField] private float _bonusDamagePerUpgrade = 1;
     
     protected float BonusDamage;
+    protected float Cooldown;
     
     public virtual event Action<IAttacker, Weapon> AttackerDetected;
     
@@ -18,9 +19,12 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
     public string BaseDescription => _info.BaseDescription;
     public abstract string UpgradeDescription { get; protected set; }
     public string CurrentDescription { get; private set; }
+    public bool IsAttacking { get; protected set; }
 
-
-    public abstract void Attack();
+    public virtual void Attack()
+    {
+        
+    }
 
     private void OnDisable()
     {
@@ -40,5 +44,20 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
     public void SetDescription(string description)
     {
         CurrentDescription = description;
+    }
+
+    public void SetCooldown(float cooldown)
+    {
+        Cooldown = cooldown;
+    }
+
+    public virtual void StartAttacking()
+    {
+        
+    }
+    
+    public virtual void StopAttacking()
+    {
+        
     }
 }

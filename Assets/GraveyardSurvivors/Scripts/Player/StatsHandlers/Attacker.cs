@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Sherbert.Framework.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,126 +11,61 @@ using Random = UnityEngine.Random;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private List<Weapon> _initialWeapons;
-    [SerializeField] private float _cooldown = 1.5f;
+    [SerializeField] private SerializableDictionary<Weapon, float> _weaponsAndCooldowns;
     
     private Coroutine _coroutine;
     private IAttacker _attacker;
-    private List<Weapon> _currentWeapons;
-    
-    public bool IsAttacking {get; private set;}
 
     public void Init(IAttacker attacker)
     {
         _attacker = attacker;
     }
 
-    private void Awake()
-    {
-        _currentWeapons = new List<Weapon>();
-        
-        _currentWeapons.AddRange(_initialWeapons);
-    }
-
     private void OnEnable()
     {
-        foreach (var weapon in _initialWeapons)
+        foreach (var prefab in _weaponsAndCooldowns.Keys)
         {
-            var currentWeapon = Instantiate(weapon, transform.position, Quaternion.identity, transform);
+            var weapon = Instantiate(prefab, transform.position, Quaternion.identity, transform);
             
-            _currentWeapons.Add(currentWeapon);
+            weapon.AttackerDetected += OnAttackerDetected;
+
+            foreach (var cooldown in _weaponsAndCooldowns.Values)
+            {
+                Debug.Log($"{weapon} {cooldown}");
+                
+                weapon.SetCooldown(cooldown);
+            }
             
-            currentWeapon.AttackerDetected += OnAttackerDetected;
+            weapon.StartAttacking();
         }
     }
 
     private void OnDisable()
     {
-        foreach (var weapon in _currentWeapons)
+        foreach (var weapon in _weaponsAndCooldowns)
         {
-            weapon.AttackerDetected -= OnAttackerDetected;
-        }
-        
-        _currentWeapons.Clear();
-    }
-
-    public void StartAttacking()
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(AttackingCoroutine());
-    }
-    
-    public void StopAttacking()
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-    }
-
-    public void Reset()
-    {
-        foreach (var weapon in _currentWeapons)
-        {
-            weapon.Reset();
+            weapon.Key.AttackerDetected -= OnAttackerDetected;
         }
     }
     
     public void UpgradeWeapon(Weapon weapon)
     {
-        _currentWeapons.FirstOrDefault(w => w == weapon)?.Upgrade();
+        
     }
     
     public void UpgradeWeapon()
     {
-        _currentWeapons.First().Upgrade();
+        
     }
 
-    public void AddWeapon(IWeapon item)
+    public void AddWeapon(Weapon weapon)
     {
-        if (item is not Weapon weapon) 
-            return;
-        
-        var currentWeapon = Instantiate(weapon, transform.position, Quaternion.identity, transform);
-        
-        _currentWeapons.Add(currentWeapon);
+
     }
 
-    public bool HasWeapon(Weapon weapon) => _currentWeapons.Contains(weapon);
-    
-    private IEnumerator AttackingCoroutine()
+    public bool HasWeapon(Weapon weapon)
     {
-        IsAttacking = true;
-        
-        float currentCooldown = _cooldown;
-        
-        while (enabled)
-        {
-            currentCooldown = CompareCooldown(currentCooldown);
-            
-            var wait = new WaitForSeconds(currentCooldown);
-            
-            yield return wait;
-
-            foreach (var weapon in _currentWeapons)
-            {
-                weapon.Attack();
-            }
-            
-            IsAttacking = false;
-        }
-    }
-
-    private float CompareCooldown(float currentCooldown)
-    {
-        if (!Mathf.Approximately(currentCooldown, _cooldown))
-        {
-            _cooldown = _cooldown.SubtractPercentFromNumber(_attacker.Speed);
-            
-            currentCooldown = _cooldown;
-        }
-
-        return currentCooldown;
+        return _weaponsAndCooldowns.Contains(weapon);
     }
     
     private void OnAttackerDetected(IAttacker attacker, Weapon weapon)

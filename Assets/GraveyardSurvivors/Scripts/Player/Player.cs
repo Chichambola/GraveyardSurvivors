@@ -71,8 +71,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         _pickUpsDetector.BuffDetected += OnBuffPickedUp;
         _pickUpsDetector.CoinDetected += _wallet.ReceiveMoney;
         _pickUpsDetector.CrystalDetected += OnCrystalDetected;
-        
-        _attacker.StartAttacking();
     }
 
     private void OnDisable()

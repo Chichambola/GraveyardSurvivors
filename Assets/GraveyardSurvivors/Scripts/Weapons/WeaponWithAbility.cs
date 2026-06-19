@@ -12,8 +12,6 @@ public abstract class WeaponWithAbility : Weapon
     
     public override event Action<IAttacker, Weapon> AttackerDetected;
 
-    public abstract override void Attack();
-
     protected void ProcessAttacker(IAttacker attacker)
     {
         if (attacker == null)
