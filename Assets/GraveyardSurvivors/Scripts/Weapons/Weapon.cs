@@ -7,9 +7,9 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
 {
     [SerializeField] private WeaponInfo _info;
     [SerializeField] private float _bonusDamagePerUpgrade = 1;
+    [SerializeField] protected float Cooldown = 1f;
     
     protected float BonusDamage;
-    protected float Cooldown;
     
     public virtual event Action<IAttacker, Weapon> AttackerDetected;
     

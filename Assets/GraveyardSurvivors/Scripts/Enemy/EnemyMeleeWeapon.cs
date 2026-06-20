@@ -8,6 +8,8 @@ public class EnemyMeleeWeapon : Weapon
 {
     [SerializeField] private MeleeAttackStrategy _attackStrategy;
     
+    private Coroutine _coroutine;
+    
     public override string UpgradeDescription { get; protected set; }
     
     private void OnEnable()
@@ -22,7 +24,26 @@ public class EnemyMeleeWeapon : Weapon
     
     public override void Attack()
     {
-        _attackStrategy.Execute();
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(AttackRoutine());
+    }
+    
+    private IEnumerator AttackRoutine()
+    {
+        IsAttacking = true;
+        
+        var wait = new WaitForSeconds(Cooldown);
+        
+        while (enabled)
+        {
+            yield return wait;
+            
+            _attackStrategy.Execute();
+            
+            IsAttacking = false;
+        }
     }
     
     private void OnAttackerDetected(IAttacker attacker)

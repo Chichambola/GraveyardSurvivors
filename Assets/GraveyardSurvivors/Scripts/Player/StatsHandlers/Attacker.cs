@@ -11,61 +11,65 @@ using Random = UnityEngine.Random;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private SerializableDictionary<Weapon, float> _weaponsAndCooldowns;
+    [SerializeField] private List<Weapon> _weaponsPrefab;
     
     private Coroutine _coroutine;
     private IAttacker _attacker;
+    private List<Weapon> _currentWeapons;
 
     public void Init(IAttacker attacker)
     {
         _attacker = attacker;
     }
 
+    private void Awake()
+    {
+        _currentWeapons = new List<Weapon>();
+    }
+
+    private void OnValidate()
+    {
+        var hashSet = new HashSet<Weapon>();
+        
+        _weaponsPrefab.RemoveAll(weapon => hashSet.Add(weapon) == false);
+    }
+
     private void OnEnable()
     {
-        foreach (var prefab in _weaponsAndCooldowns.Keys)
+        foreach (var prefab in _weaponsPrefab)
         {
-            var weapon = Instantiate(prefab, transform.position, Quaternion.identity, transform);
-            
-            weapon.AttackerDetected += OnAttackerDetected;
+            var weapon = CreateWeapon(prefab);
 
-            foreach (var cooldown in _weaponsAndCooldowns.Values)
-            {
-                Debug.Log($"{weapon} {cooldown}");
-                
-                weapon.SetCooldown(cooldown);
-            }
-            
-            weapon.StartAttacking();
+            _currentWeapons.Add(weapon);
         }
     }
 
     private void OnDisable()
     {
-        foreach (var weapon in _weaponsAndCooldowns)
+        foreach (var weapon in _currentWeapons)
         {
-            weapon.Key.AttackerDetected -= OnAttackerDetected;
+            weapon.AttackerDetected -= OnAttackerDetected;
         }
     }
     
-    public void UpgradeWeapon(Weapon weapon)
+    public void UpgradeWeapon(Weapon upgrade)
     {
+        var type = upgrade.GetType();
         
-    }
-    
-    public void UpgradeWeapon()
-    {
-        
+        _currentWeapons.FirstOrDefault(w => w.GetType() == type)?.Upgrade();
     }
 
     public void AddWeapon(Weapon weapon)
     {
+        _weaponsPrefab.Add(weapon);
 
+        weapon = CreateWeapon(weapon);
+        _currentWeapons.Add(weapon);
     }
 
     public bool HasWeapon(Weapon weapon)
     {
-        return _weaponsAndCooldowns.Contains(weapon);
+        return _weaponsPrefab.Contains(weapon);
     }
     
     private void OnAttackerDetected(IAttacker attacker, Weapon weapon)
@@ -92,5 +96,15 @@ public class Attacker : MonoBehaviour
         float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
         
         return critChance >= randomNumber;
+    }
+    
+    private Weapon CreateWeapon(Weapon prefab)
+    {
+        var weapon = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+            
+        weapon.AttackerDetected += OnAttackerDetected;
+            
+        weapon.StartAttacking();
+        return weapon;
     }
 }

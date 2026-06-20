@@ -482,7 +482,7 @@ Transform:
   - {fileID: 2712662503916402228}
   - {fileID: 4286067118317836531}
   - {fileID: 5701127996463537366}
-  - {fileID: 5099930651930097803}
+  - {fileID: 2225454828371661355}
   - {fileID: 6013028791601842442}
   - {fileID: 454674819606659468}
   m_Father: {fileID: 0}
@@ -528,7 +528,7 @@ MonoBehaviour:
   PlayerDetector: {fileID: 1603803209121266957}
   _defender: {fileID: 886728962877736986}
   _health: {fileID: 2307875020064126990}
-  Attacker: {fileID: 1826352045843937261}
+  Weapon: {fileID: 386484544202866058}
 --- !u!114 &8696614376307728057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -828,7 +828,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2891207703936285936}
-  m_Father: {fileID: 5099930651930097803}
+  m_Father: {fileID: 3202798790180922837}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &386484544202866058
 MonoBehaviour:
@@ -1047,54 +1047,6 @@ Transform:
   - {fileID: 4349384155374189482}
   m_Father: {fileID: 1625666392243507802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8834762968758509843
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5099930651930097803}
-  - component: {fileID: 1826352045843937261}
-  m_Layer: 0
-  m_Name: Attacker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5099930651930097803
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8834762968758509843}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2225454828371661355}
-  m_Father: {fileID: 3202798790180922837}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1826352045843937261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8834762968758509843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2203646241a39628614ec57cc33667, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weapons:
-  - {fileID: 386484544202866058}
-  _cooldown: 0.3
 --- !u!1 &9001422309984621818
 GameObject:
   m_ObjectHideFlags: 0

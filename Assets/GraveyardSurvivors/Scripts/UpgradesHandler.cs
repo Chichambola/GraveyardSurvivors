@@ -27,6 +27,7 @@ public class UpgradesHandler : MonoBehaviour
     private float _fullOpacity = 0;
     private TweenSettings<float> _tweenSettings;
     private IPlayer _player;
+    private List<UpgradeWindow> _tempWindows;
 
     private void Awake()
     {
@@ -59,17 +60,17 @@ public class UpgradesHandler : MonoBehaviour
     
     public void ShowUpgrades()
     {
-        List<UpgradeWindow> tempWindows = _upgradeWindows.ToList();
+        _tempWindows = _upgradeWindows.ToList();
         
         Time.timeScale = _pauseTime;
         
         ChangeBackgroundOpacity(_fullVisibility);
 
-        SetWindowsWithWeapons(tempWindows);
+        SetWindowsWithWeapons(_tempWindows);
         
-        SetWindowsWithItems(tempWindows);
+        SetWindowsWithItems(_tempWindows);
 
-        foreach (var upgradeWindow in tempWindows)
+        foreach (var upgradeWindow in _tempWindows)
         {
             upgradeWindow.ChangeOpacity(_fullVisibility, _changeOpacityTime);
 
@@ -113,13 +114,15 @@ public class UpgradesHandler : MonoBehaviour
 
     private void OnUpgradeSelected(IItem item)
     {
-        ChangeBackgroundOpacity(_fullOpacity);
-
-        foreach (var upgradeWindow in _upgradeWindows)
+        Debug.Log("Selected");
+        
+        foreach (var upgradeWindow in _tempWindows)
         {
             upgradeWindow.UpgradeSelected -= OnUpgradeSelected;
             upgradeWindow.ResetSettings();
         }
+        
+        ChangeBackgroundOpacity(_fullOpacity);
 
         Time.timeScale = _normalTimeSpeed;
 

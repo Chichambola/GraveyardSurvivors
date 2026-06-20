@@ -41,7 +41,7 @@ public class UpgradeWindow : MonoBehaviour
         _tweenSettings.settings.useUnscaledTime = true;
         _tweenSettings.settings.ease = _easing;
         _canvasGroup.interactable = false;
-        _button.interactable = false;
+        _button.interactable = true;
         _initialPosition = _rectTransform.position;
         
         _button.onClick.AddListener(OnButtonClick);
@@ -66,7 +66,6 @@ public class UpgradeWindow : MonoBehaviour
     {
         _canvasGroup.interactable = true;
         _canvasGroup.blocksRaycasts = true;
-        _button.interactable = true;
 
         _tweenSettings.settings.duration = opacityChangeTime;
         _tweenSettings.endValue = targetOpacity;

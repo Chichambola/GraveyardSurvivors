@@ -21,7 +21,7 @@ public class RangeAttackStrategy : AttackStrategy
 
     public int ProjectilePerUpgrade => _projectilePerUpgrade;
 
-    private void OnEnable()
+    private void Awake()
     {
         _currentProjectileAmount = _initialProjectileAmount;
     }
@@ -45,7 +45,8 @@ public class RangeAttackStrategy : AttackStrategy
                 }
             }
             
-            if (_count < _initialProjectileAmount) continue;
+            if (_count < _currentProjectileAmount) 
+                continue;
             
             _count = 0;
 
@@ -59,7 +60,7 @@ public class RangeAttackStrategy : AttackStrategy
         
         if (attackArea.TryGetAttackers(out List<IAttacker> currentAttackers))
         {
-            for (int i = 0; i < _initialProjectileAmount; i++)
+            for (int i = 0; i < _currentProjectileAmount; i++)
             {
                 float minDistance = float.MaxValue;
 

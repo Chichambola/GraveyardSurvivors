@@ -11,8 +11,10 @@ public class WeaponIronSword : WeaponWithAbility
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _attackParticles;
 
-    private Coroutine _coroutine;
-    
+    private Coroutine _attackingRoutine;
+    private Coroutine _visibilityRoutine;
+    private float _waitTime = 0.1f;
+
     public override string UpgradeDescription { get; protected set; }
 
     private void OnEnable()
@@ -34,10 +36,14 @@ public class WeaponIronSword : WeaponWithAbility
 
     public override void StartAttacking()
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        if (_attackingRoutine != null)
+            StopCoroutine(_attackingRoutine);
 
-        _coroutine = StartCoroutine(AttackingRoutine());
+        if (_visibilityRoutine != null)
+            StopCoroutine(_visibilityRoutine);
+
+        _visibilityRoutine = StartCoroutine(VisibilityRoutine());
+        _attackingRoutine = StartCoroutine(AttackingRoutine());
     }
     
     private void SetParticleSystemDuration(float duration)
@@ -66,7 +72,19 @@ public class WeaponIronSword : WeaponWithAbility
     {
         var wait = new WaitForSeconds(Cooldown);
         
-        SetParticleSystemDuration(Cooldown);
+        while (enabled)
+        {
+            yield return wait;
+            
+            _attackStrategy.Execute();
+            
+            SetParticleSystemDuration(Cooldown);
+        }
+    }
+
+    private IEnumerator VisibilityRoutine()
+    {
+        var wait = new WaitForSeconds(_waitTime);
         
         while (enabled)
         {
