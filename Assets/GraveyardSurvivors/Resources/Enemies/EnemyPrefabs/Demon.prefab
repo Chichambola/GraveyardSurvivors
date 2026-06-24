@@ -430,7 +430,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
-  _bonusDamagePerUpgrade: 5
+  BonusDamagePerUpgrade: 1
+  Cooldown: 1
   _attackStrategy: {fileID: 5380774487396859826}
   _weaponBearer:
     _underlyingValue: {fileID: 2158510540606250342}
@@ -1193,7 +1194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1923393577208119394
 RectTransform:
   m_ObjectHideFlags: 0

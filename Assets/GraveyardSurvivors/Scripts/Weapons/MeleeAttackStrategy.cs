@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MeleeAttackStrategy : AttackStrategy
 {
     [SerializeField] private AttackArea _area;
+    [SerializeField] private float _radiusPercentGain = 5f;
     
     public override event Action<IAttacker> AttackerDetected;
+
+    public float RadiusPercentGain => _radiusPercentGain;
 
     public override void Execute()
     {
@@ -25,6 +29,6 @@ public class MeleeAttackStrategy : AttackStrategy
 
     public override void Upgrade()
     {
-        
+        _area.AddMultiplier(_radiusPercentGain);
     }
 }

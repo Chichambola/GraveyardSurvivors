@@ -8,12 +8,14 @@ public class ExperienceHandler : MonoBehaviour
 {
     [SerializeField] private float _experienceIncreasePercent = 155;
     [SerializeField] private float _initialTargetXp = 50;
+    [SerializeField] private float _maxXp = 5000;
     [SerializeField] private TextMeshProUGUI _text;
 
     public event Action PlayerReachedThreshold; 
     
     private float _currentXp;
     private float _targetXp;
+    private float _minXp = 10;
 
     private void Awake()
     {
@@ -23,6 +25,14 @@ public class ExperienceHandler : MonoBehaviour
         }
         
         _targetXp = _initialTargetXp;
+    }
+
+    private void OnValidate()
+    {
+        if (_initialTargetXp <= _minXp)
+        {
+            _initialTargetXp = _minXp;
+        }
     }
 
     private void Start()
@@ -40,7 +50,9 @@ public class ExperienceHandler : MonoBehaviour
             
             _currentXp -= _targetXp;
 
-            _targetXp = _targetXp.AddPercentToNumber(_experienceIncreasePercent).RoundToFifths();
+            var percent = _targetXp.GetClampedValue(_experienceIncreasePercent, _maxXp);
+
+            _targetXp = _targetXp.AddPercentToNumber(percent).RoundToFifths();
         }
         
         UpdateText();

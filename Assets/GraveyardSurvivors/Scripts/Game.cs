@@ -79,8 +79,10 @@ public class Game : MonoBehaviour
     private void UpdateTimer()
     {
         _elapsedTime += Time.deltaTime;
+        
         int minutes = Mathf.FloorToInt(_elapsedTime / 60);
         int seconds = Mathf.FloorToInt(_elapsedTime % 60);
+        
         _timerText.text = $"{minutes:00} : {seconds:00}";
 
         if (_minutesAndPercents.Remove(minutes, out var percent))

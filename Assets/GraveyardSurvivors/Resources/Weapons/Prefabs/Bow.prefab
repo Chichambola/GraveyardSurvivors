@@ -198,7 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 5bf44b189b2a7844d9c778b04b85b291, type: 2}
-  _bonusDamagePerUpgrade: 0.5
+  BonusDamagePerUpgrade: 0.5
+  Cooldown: 1
   _effects:
   - _effects:
     - rid: 5909440864032915460
@@ -238,7 +239,7 @@ MonoBehaviour:
   _attackAreas:
   - {fileID: 7722499812302757489}
   - {fileID: 2828809385489303952}
-  _numberOfProjectiles: 2
+  _initialProjectileAmount: 2
   _projectilePerUpgrade: 1
 --- !u!1 &7360202670523053228
 GameObject:

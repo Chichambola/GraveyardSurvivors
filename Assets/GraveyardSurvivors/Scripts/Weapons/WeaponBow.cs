@@ -13,13 +13,16 @@ public class WeaponBow : WeaponWithAbility
     
     public override string UpgradeDescription { get; protected set; }
 
+    public override void Init()
+    {
+        UpgradeDescription = $"Add +{BonusDamagePerUpgrade} damage \n" +
+                             $"Add +{_attackStrategy.ProjectilePerUpgrade} to  total projectile amount.";
+    }
+
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;
         _arrowSpawner.ProjectileReleased += ProcessAttacker;
-        
-        UpgradeDescription = $"Add +{BonusDamage} damage \n" +
-                             $"Add +{_attackStrategy.ProjectilePerUpgrade} to  total projectile amount.";
     }
 
     private void OnDisable()

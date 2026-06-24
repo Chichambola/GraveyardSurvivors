@@ -61,15 +61,17 @@ public class Attacker : MonoBehaviour
 
     public void AddWeapon(Weapon weapon)
     {
-        _weaponsPrefab.Add(weapon);
-
         weapon = CreateWeapon(weapon);
         _currentWeapons.Add(weapon);
     }
 
     public bool HasWeapon(Weapon weapon)
     {
-        return _weaponsPrefab.Contains(weapon);
+        var type = weapon.GetType();
+
+        var tempWeapon = _currentWeapons.FirstOrDefault(w => w.GetType() == type);
+        
+        return tempWeapon != null;
     }
     
     private void OnAttackerDetected(IAttacker attacker, Weapon weapon)
@@ -100,7 +102,7 @@ public class Attacker : MonoBehaviour
     
     private Weapon CreateWeapon(Weapon prefab)
     {
-        var weapon = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+        var weapon = Instantiate(prefab, transform.position, Quaternion.LookRotation(transform.forward), transform);
             
         weapon.AttackerDetected += OnAttackerDetected;
             

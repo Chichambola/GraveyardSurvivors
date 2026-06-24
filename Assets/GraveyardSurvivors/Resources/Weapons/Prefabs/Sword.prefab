@@ -4933,7 +4933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e801a991a650c8bab8a1f6f8d01db47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectPrefab: {fileID: 0}
+  ObjectPrefab: {fileID: 4709316755915958993, guid: 61cde8e5eb2df9b3ab78d0a6f5b864dc, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 5
 --- !u!1 &6454839696008400162
@@ -4988,8 +4988,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 3.3068273, y: 0.776383, z: 1.9031606}
-  m_Center: {x: 0.001210042, y: 1.1821972, z: 1.9495885}
+  m_Size: {x: 4.212961, y: 0.7763829, z: 2.2431188}
+  m_Center: {x: 0.005505562, y: 1.1821972, z: 2.0664108}
 --- !u!114 &6899689260534660976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5004,7 +5004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   NumberOfColliders: 50
 --- !u!1 &7932287964921115171
 GameObject:
@@ -5017,6 +5017,7 @@ GameObject:
   - component: {fileID: 4946071542277691753}
   - component: {fileID: 7916467909278291421}
   - component: {fileID: 502460077594037009}
+  - component: {fileID: 4072942871525750493}
   m_Layer: 2
   m_Name: Sword
   m_TagString: Untagged
@@ -5055,7 +5056,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: b78e988233cbc9f7d934f9cee49f24f0, type: 2}
-  _bonusDamagePerUpgrade: 1
+  BonusDamagePerUpgrade: 1
+  Cooldown: 1
   _effects:
   - _effects:
     - rid: 5909440996258086917
@@ -5063,6 +5065,7 @@ MonoBehaviour:
   _attackStrategy: {fileID: 502460077594037009}
   _area: {fileID: 6899689260534660976}
   _attackParticles: {fileID: 1859997674124492629}
+  _knockBack: {fileID: 4072942871525750493}
   references:
     version: 2
     RefIds:
@@ -5086,3 +5089,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _area: {fileID: 6899689260534660976}
+  _radiusPercentGain: 5
+--- !u!114 &4072942871525750493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7932287964921115171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a44cd10ccb0b154b84b2bf26f89c523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _force: 1.8
+  _duration: 0.3
+  _knockBackPercentGain: 1.5

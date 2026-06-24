@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem.iOS;
@@ -29,6 +30,11 @@ public class ItemsHandler : MonoBehaviour
     private void OnEnable()
     {
         SetItemsList();
+
+        foreach (var weapon in _weapons)
+        {
+            weapon.Init();
+        }
     }
 
     public void SpawnRandomItem(Vector3 position, ERarityLevel rarity)
@@ -45,15 +51,11 @@ public class ItemsHandler : MonoBehaviour
         _itemSpawner.Spawn(position);
     }
 
-    public Item GetRandomItem()
+    public Item GetRandomItem(ERarityLevel rarityLevel)
     {
-        int randomKeyIndex = Random.Range(0, _itemsLists.Keys.Count);
+        Item tempItem = UserUtils.GetElementByWeight(_itemsLists[rarityLevel]);
         
-        var items = _itemsLists.ElementAt(randomKeyIndex).Value;
-
-        int randomIndex = Random.Range(0, items.Count);
-
-        return items[randomIndex];
+        return tempItem;
     }
     
     public Weapon GetRandomWeapon()

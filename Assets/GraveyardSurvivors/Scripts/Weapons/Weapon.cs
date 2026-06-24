@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class Weapon : MonoBehaviour, IWeapon, IItem
 {
     [SerializeField] private WeaponInfo _info;
-    [SerializeField] private float _bonusDamagePerUpgrade = 1;
+    [SerializeField] protected float BonusDamagePerUpgrade = 1;
     [SerializeField] protected float Cooldown = 1f;
     
     protected float BonusDamage;
@@ -21,10 +22,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
     public string CurrentDescription { get; private set; }
     public bool IsAttacking { get; protected set; }
 
-    public virtual void Attack()
-    {
-        
-    }
+    public abstract void Init();
 
     private void OnDisable()
     {
@@ -33,13 +31,10 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
 
     public virtual void Upgrade()
     {
-        BonusDamage += _bonusDamagePerUpgrade;
+        BonusDamage += BonusDamagePerUpgrade;
     }
 
-    public virtual void Reset()
-    {
-        
-    }
+    public virtual void Reset() { }
 
     public void SetDescription(string description)
     {
@@ -51,13 +46,9 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
         Cooldown = cooldown;
     }
 
-    public virtual void StartAttacking()
-    {
-        
-    }
+    public virtual void StartAttacking() { }
     
-    public virtual void StopAttacking()
-    {
-        
-    }
+    public virtual void StopAttacking() {}
+    
+    public virtual void Attack() { }
 }

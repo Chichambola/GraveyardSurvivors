@@ -22,7 +22,7 @@ MonoBehaviour:
     IncomingDamageMultiplier: 0
     BlockChance: 0
     EvasionChance: 0
-    Armor: 10
+    Armor: 0
     CritChance: 0
     CritMultiplier: 0
     XpMultiplier: 0

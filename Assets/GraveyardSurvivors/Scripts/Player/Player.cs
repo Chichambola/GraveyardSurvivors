@@ -146,11 +146,13 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     {
         if (!_health.CanTakeDamage)
             return;
+
+        if (!_health.TryTakeDamage(ref damage))
+            return;
         
-        if (_health.TryTakeDamage(ref damage))
-        {
-            CurrentHealth -= damage;
-        }
+        CurrentHealth -= damage;
+            
+        _health.UpdateStats();
     }
     
     public void AddWeapon(Weapon weapon)

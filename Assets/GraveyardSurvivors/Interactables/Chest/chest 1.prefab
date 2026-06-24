@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 9074495386139287288}
   - component: {fileID: -8920939765684463614}
   - component: {fileID: 3865159504524782402}
+  - component: {fileID: 4902803644630620306}
   m_Layer: 8
   m_Name: chest 1
   m_TagString: Untagged
@@ -322,9 +323,7 @@ MonoBehaviour:
   _openingRotation: {x: -1, y: 0, z: 0, w: -0.00000004371139}
   _openingEase: 9
   _countdownTime: 3
-  _common: {fileID: 7537431508648420764}
-  _rare: {fileID: 2326688314528123041}
-  _legendary: {fileID: 6036891985296122347}
+  _levels: {fileID: 4902803644630620306}
 --- !u!114 &9074495386139287288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3113,6 +3112,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4902803644630620306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3508089657252754247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668c8ecea899c4c4d88be35dc709aa7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _common: {fileID: 7537431508648420764}
+  _rare: {fileID: 2326688314528123041}
+  _legendary: {fileID: 6036891985296122347}
 --- !u!1 &3732294777619653526
 GameObject:
   m_ObjectHideFlags: 0

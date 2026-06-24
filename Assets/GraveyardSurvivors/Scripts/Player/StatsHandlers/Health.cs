@@ -19,6 +19,8 @@ public class Health : MonoBehaviour
     
     private void OnEnable()
     {
+        CanTakeDamage = true;
+        
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
@@ -49,32 +51,24 @@ public class Health : MonoBehaviour
         }
         else
         {
-            damage = DetermineDamageAmount(damage);
+            if (_defender.TryBlockDamage(_player.CurrentStats.BlockChance, _player.CurrentStats.Luck, ref damage))
+            {
+                Debug.Log("Blocked");
+            }
+            
+            damage = damage.AddPercentToNumber(_player.CurrentStats.IncomingDamageMultiplier);
             
             _timer = new IntervalTimer(_invincibilityAfterDamage);
             _timer.Stopped += OnDamageTimerStopped;
             _timer.Start();
             
             CanTakeDamage = false;
-            UpdateStats();
             
             return true;
         }
     }
     
-    private float DetermineDamageAmount(float damage)
-    {
-        if (_defender.TryBlockDamage(_player.CurrentStats.BlockChance, _player.CurrentStats.Luck, ref damage))
-        {
-            Debug.Log("Blocked");
-        }
-        
-        damage = damage.AddPercentToNumber(_player.CurrentStats.IncomingDamageMultiplier);
-        
-        return damage;
-    }
-    
-    private void UpdateStats()
+    public void UpdateStats()
     {
         _statsViewer.UpdateStats(_player.CurrentHealth, _player.CurrentStats.MaxHealth);   
     }

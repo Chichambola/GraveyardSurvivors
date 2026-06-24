@@ -14,6 +14,11 @@ public class Bomb : Weapon
     
     public override string UpgradeDescription { get; protected set; }
     
+    public override void Init()
+    {
+        throw new NotImplementedException();
+    }
+    
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;
@@ -41,6 +46,11 @@ public class Bomb : Weapon
     public override void Reset()
     {
         _attackStrategy.Reset();
+    }
+
+    public override void StopAttacking()
+    {
+        _attackStrategy.Stop();
     }
 
     private void OnAttackerDetected(IAttacker attacker)

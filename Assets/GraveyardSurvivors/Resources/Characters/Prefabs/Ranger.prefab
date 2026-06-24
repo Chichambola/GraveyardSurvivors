@@ -1393,7 +1393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 930483005040703314}
-  _healCooldown: 0
+  _healCooldown: 1
   _invincibilityAfterDamage: 0.3
   _defender: {fileID: 3962644393961421149}
   _evader: {fileID: 962139294001224673}
@@ -2078,7 +2078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 930483005040703314}
   _text: {fileID: 2659084682683424908}
-  _initialValue: 1000
+  _initialValue: 0
 --- !u!1 &6034251807341510317
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 0}
   _name: Zombie arm
-  _damage: 4
+  _baseDescription: 
+  _damage: 3

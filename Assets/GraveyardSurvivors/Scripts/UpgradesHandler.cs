@@ -13,25 +13,29 @@ public class UpgradesHandler : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _background;
     [Header("Upgrade windows and settings")]
-    [SerializeField] private List<UpgradeWindow> _upgradeWindows;
+    
+    [SerializeField] private List<UpgradeWindowButton> _upgradeWindows;
     [SerializeField] private float _changeOpacityTime = 0.5f;
+    
     [Header("Items handler and its values")]
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private int _amountOfWeaponsPerUpgrade = 1;
+    [SerializeField] private RarityLevelHandler _levels;
     
-    public event Action<IItem> UpgradeSelected; 
+    public event Action<Item> ItemSelected;
+    public event Action<Weapon> WeaponSelected;
     
-    private float _normalTimeSpeed = 1;
-    private float _pauseTime = 0.00001f;
     private float _fullVisibility = 1;
     private float _fullOpacity = 0;
+    private int _amountOfItemWindows;
     private TweenSettings<float> _tweenSettings;
     private IPlayer _player;
-    private List<UpgradeWindow> _tempWindows;
+    private List<int> _indexes;
 
     private void Awake()
     {
         _tweenSettings = new TweenSettings<float>();
+        _indexes = new List<int>();
     }
 
     private void OnValidate()
@@ -51,8 +55,10 @@ public class UpgradesHandler : MonoBehaviour
     {
         _tweenSettings.settings.duration = _changeOpacityTime;
         _tweenSettings.settings.useUnscaledTime = true;
-    }
 
+        _amountOfItemWindows = _upgradeWindows.Count - _amountOfWeaponsPerUpgrade;
+    }
+    
     public void SetPlayer(IPlayer player)
     {
         _player = player ?? throw new ArgumentNullException(nameof(player));
@@ -60,48 +66,47 @@ public class UpgradesHandler : MonoBehaviour
     
     public void ShowUpgrades()
     {
-        _tempWindows = _upgradeWindows.ToList();
+        _indexes.Clear();
         
-        Time.timeScale = _pauseTime;
+        _indexes = _upgradeWindows.Select(upgradeWindow => _upgradeWindows.IndexOf(upgradeWindow)).ToList();
         
         ChangeBackgroundOpacity(_fullVisibility);
-
-        SetWindowsWithWeapons(_tempWindows);
         
-        SetWindowsWithItems(_tempWindows);
+        SetWindowsWithWeapons();
+        
+        SetWindowsWithItems();
 
-        foreach (var upgradeWindow in _tempWindows)
+        foreach (var upgradeWindow in _upgradeWindows)
         {
+            upgradeWindow.SetSettings(true);
+            
             upgradeWindow.ChangeOpacity(_fullVisibility, _changeOpacityTime);
 
             upgradeWindow.UpgradeSelected += OnUpgradeSelected;
         }
     }
 
-    private void SetWindowsWithItems(List<UpgradeWindow> tempWindows)
+    private void SetWindowsWithItems()
     {
-        foreach (var upgradeWindow in tempWindows)
+        for (int i = 0; i < _amountOfItemWindows; i++)
         {
-            if (upgradeWindow.IsOccupied) 
-                continue;
+            RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
             
-            IItem item = _itemsHandler.GetRandomItem();
+            var item = _itemsHandler.GetRandomItem(level.Rarity);
             
-            upgradeWindow.SetWindow(item);
+            SetRandomWindow(item);
         }
     }
 
-    private void SetWindowsWithWeapons(List<UpgradeWindow> tempWindows)
+    private void SetWindowsWithWeapons()
     {
         for (int i = 0; i < _amountOfWeaponsPerUpgrade; i++)
         {
-            Weapon weapon = _itemsHandler.GetRandomWeapon();
+            var weapon = _itemsHandler.GetRandomWeapon();
 
             weapon.SetDescription(_player.HasWeapon(weapon) ? weapon.UpgradeDescription : weapon.BaseDescription);
-            
-            int randomIndex = Random.Range(0, tempWindows.Count);
 
-            tempWindows[randomIndex].SetWindow(weapon);
+            SetRandomWindow(weapon);
         }
     }
 
@@ -112,20 +117,41 @@ public class UpgradesHandler : MonoBehaviour
         Tween.Alpha(_background, _tweenSettings);
     }
 
-    private void OnUpgradeSelected(IItem item)
+    private void OnUpgradeSelected(IItem upgrade)
     {
         Debug.Log("Selected");
         
-        foreach (var upgradeWindow in _tempWindows)
+        foreach (var upgradeWindow in _upgradeWindows)
         {
             upgradeWindow.UpgradeSelected -= OnUpgradeSelected;
-            upgradeWindow.ResetSettings();
+            upgradeWindow.SetSettings(false);
         }
         
         ChangeBackgroundOpacity(_fullOpacity);
 
-        Time.timeScale = _normalTimeSpeed;
+        if (upgrade is Item item)
+        {
+            ItemSelected?.Invoke(item);
+            
+            return;
+        }
 
-        UpgradeSelected?.Invoke(item);
+        if (upgrade is Weapon weapon)
+        {
+            WeaponSelected?.Invoke(weapon);
+            
+            return;
+        }
+    }
+    
+    private void SetRandomWindow(IItem item)
+    {
+        int randomIndex = Random.Range(0, _indexes.Count);
+        
+        int index = _indexes[randomIndex];
+        
+        _indexes.Remove(index);
+        
+        _upgradeWindows[index].SetWindow(item);
     }
 }

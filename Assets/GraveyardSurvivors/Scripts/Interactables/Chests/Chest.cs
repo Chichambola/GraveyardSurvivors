@@ -22,9 +22,7 @@ public class Chest : Interactable, IChanceInteractable
     [SerializeField] private Ease _openingEase;
     [SerializeField] private float _countdownTime = 3;
     [Header("Weights")]
-    [SerializeField] private RarityLevel _common;
-    [SerializeField] private RarityLevel _rare;
-    [SerializeField] private RarityLevel _legendary;
+    [SerializeField] private RarityLevelHandler _levels;
     
     public override event Action<Interactable> CanBeReleased;
 
@@ -32,18 +30,15 @@ public class Chest : Interactable, IChanceInteractable
     private Tween _openingPartTween;
     private TweenSettings<Vector3> _openingSettings;
     private Quaternion _defaultRotation;
-    private List<RarityLevel> _weights;
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
 
-    public List<RarityLevel> Weights => _weights;
+    public List<RarityLevel> Weights => _levels.Weights;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<BoxCollider>();
-        
-        _weights = new() { _common, _rare, _legendary};
         
         _openingSettings = new TweenSettings<Vector3>(_openingRotation.eulerAngles, _openingDuration, _openingEase);
         _defaultRotation = _openingPart.transform.localRotation;
@@ -84,16 +79,6 @@ public class Chest : Interactable, IChanceInteractable
     public override void ResetCharacteristics()
     {
         IsAvailable = true;
-        
-        foreach (var rarityLevel in _weights)
-        {
-            rarityLevel.ResetChance();
-        }
-    }
-    
-    public void IncreaseChance(float multiplier)
-    {
-        _legendary.IncreaseWeight(multiplier);
     }
     
     private IEnumerator ReleaseCountdown()

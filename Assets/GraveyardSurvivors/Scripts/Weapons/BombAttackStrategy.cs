@@ -99,7 +99,7 @@ public class BombAttackStrategy : AttackStrategy
         _currentDuration = _initialDuration;
     }
 
-    private void Stop()
+    public void Stop()
     {
         ChangeSpheresVisibility(false);
         _isExpanding = false;
