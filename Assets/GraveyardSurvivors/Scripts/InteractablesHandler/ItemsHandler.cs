@@ -2,35 +2,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sherbert.Framework.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem.iOS;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class ItemsHandler : MonoBehaviour
 {
     [SerializeField] private ItemSpawner _itemSpawner;
-    [SerializeField] private List<Item> _items;
+    [SerializeField] private SerializableDictionary<ItemSettings, Item> _itemsPrefabs;
     [SerializeField] private List<Weapon> _weapons;
-    
-    private List<Item> _commonItems;
-    private List<Item> _rareItems;
-    private List<Item> _legendaryItems;
-    private Dictionary<ERarityLevel, List<Item>> _itemsLists;
+
+    private Dictionary<ERarityLevel, Item> _itemsToDrop;
+    private Dictionary<ERarityLevel, Item> _itemsForLevelUp;
 
     private void Awake()
     {
-        _commonItems = new List<Item>();
-        _rareItems = new List<Item>();
-        _legendaryItems = new List<Item>();
+        _itemsToDrop = new ();
+        _itemsForLevelUp = new ();
     }
 
     private void OnEnable()
     {
-        SetItemsList();
-
+        SetItems();
+        
         foreach (var weapon in _weapons)
         {
             weapon.Init();
@@ -39,10 +38,12 @@ public class ItemsHandler : MonoBehaviour
 
     public void SpawnRandomItem(Vector3 position, ERarityLevel rarity)
     {
-        if (_itemsLists == null)
+        if (_itemsPrefabs == null)
             throw new Exception();
+
+        var tempItems = _itemsToDrop.GetItemsByRarity(rarity);
         
-        Item tempItem = UserUtils.GetElementByWeight(_itemsLists[rarity]);
+        Item tempItem = UserUtils.GetElementByWeight(tempItems);
 
         if (tempItem == null)
             throw new Exception($"{tempItem} is not a valid item");
@@ -50,10 +51,12 @@ public class ItemsHandler : MonoBehaviour
         _itemSpawner.SetPrefab(tempItem);
         _itemSpawner.Spawn(position);
     }
-
+    
     public Item GetRandomItem(ERarityLevel rarityLevel)
     {
-        Item tempItem = UserUtils.GetElementByWeight(_itemsLists[rarityLevel]);
+        var tempItems = _itemsForLevelUp.GetItemsByRarity(rarityLevel);
+        
+        Item tempItem = UserUtils.GetElementByWeight(tempItems);
         
         return tempItem;
     }
@@ -67,47 +70,16 @@ public class ItemsHandler : MonoBehaviour
     
     private void SetItems()
     {
-        foreach (var item in _items)
+        foreach (var setting in _itemsPrefabs.Keys)
         {
-            if (item.Rarity == ERarityLevel.Common)
+            if (setting.WaysOfObtaining == EWaysOfObtaining.ByDropping)
             {
-                _commonItems.Add(item); 
-                
-                continue;
+                _itemsToDrop.Add(setting.Rarity, _itemsPrefabs[setting]);
             }
-
-            if (item.Rarity == ERarityLevel.Rare)
+            else
             {
-                _rareItems.Add(item);
-
-                continue;
+                _itemsForLevelUp.Add(setting.Rarity, _itemsPrefabs[setting]);
             }
-
-            if (item.Rarity == ERarityLevel.Legendary)
-            {
-                _legendaryItems.Add(item);
-
-                continue;
-            }
-        }
-
-        _itemsLists = new Dictionary<ERarityLevel, List<Item>>()
-        {
-            {ERarityLevel.Common,  _commonItems},
-            {ERarityLevel.Rare, _rareItems},
-            {ERarityLevel.Legendary, _legendaryItems}
-        };
-    }
-    
-    private void SetItemsList()
-    {
-        if (_items.Count != 0)
-        {
-            SetItems();
-        }
-        else
-        {
-            throw new Exception("No items!");
         }
     }
 }

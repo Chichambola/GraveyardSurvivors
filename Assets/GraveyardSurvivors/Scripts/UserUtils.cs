@@ -114,4 +114,12 @@ public static class UserUtils
 
         return position;
     }
+    
+    public static List<Item> GetItemsByRarity(this Dictionary<ERarityLevel, Item> dictionary, ERarityLevel rarity)
+    {
+        return dictionary
+            .Where(kvp => kvp.Key == rarity)
+            .Select(kvp => kvp.Value)
+            .ToList();
+    }
 }
