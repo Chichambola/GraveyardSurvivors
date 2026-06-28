@@ -14,22 +14,21 @@ using Random = UnityEngine.Random;
 public class ItemsHandler : MonoBehaviour
 {
     [SerializeField] private ItemSpawner _itemSpawner;
-    [SerializeField] private SerializableDictionary<ItemSettings, Item> _itemsPrefabs;
+    [SerializeField] private SerializableDictionary<Item, ERarityLevel> _itemsToDropPrefabs;
+    [SerializeField] private SerializableDictionary<Item, ERarityLevel> _itemsForLevelUpPrefabs;
     [SerializeField] private List<Weapon> _weapons;
 
-    private Dictionary<ERarityLevel, Item> _itemsToDrop;
-    private Dictionary<ERarityLevel, Item> _itemsForLevelUp;
+    private Dictionary<Item, ERarityLevel> _itemsToDrop;
+    private Dictionary<Item, ERarityLevel> _itemsForLevelUp;
 
     private void Awake()
     {
-        _itemsToDrop = new ();
-        _itemsForLevelUp = new ();
+        _itemsToDrop = _itemsToDropPrefabs.ToDictionary(item => item.Key, item => item.Value);
+        _itemsForLevelUp = _itemsForLevelUpPrefabs.ToDictionary(item => item.Key, item => item.Value);
     }
 
     private void OnEnable()
     {
-        SetItems();
-        
         foreach (var weapon in _weapons)
         {
             weapon.Init();
@@ -38,9 +37,6 @@ public class ItemsHandler : MonoBehaviour
 
     public void SpawnRandomItem(Vector3 position, ERarityLevel rarity)
     {
-        if (_itemsPrefabs == null)
-            throw new Exception();
-
         var tempItems = _itemsToDrop.GetItemsByRarity(rarity);
         
         Item tempItem = UserUtils.GetElementByWeight(tempItems);
@@ -52,7 +48,7 @@ public class ItemsHandler : MonoBehaviour
         _itemSpawner.Spawn(position);
     }
     
-    public Item GetRandomItem(ERarityLevel rarityLevel)
+    public Item GetItemForLevelUp(ERarityLevel rarityLevel)
     {
         var tempItems = _itemsForLevelUp.GetItemsByRarity(rarityLevel);
         
@@ -66,20 +62,5 @@ public class ItemsHandler : MonoBehaviour
         int randomIndex = Random.Range(0, _weapons.Count);
         
         return _weapons[randomIndex];
-    }
-    
-    private void SetItems()
-    {
-        foreach (var setting in _itemsPrefabs.Keys)
-        {
-            if (setting.WaysOfObtaining == EWaysOfObtaining.ByDropping)
-            {
-                _itemsToDrop.Add(setting.Rarity, _itemsPrefabs[setting]);
-            }
-            else
-            {
-                _itemsForLevelUp.Add(setting.Rarity, _itemsPrefabs[setting]);
-            }
-        }
     }
 }

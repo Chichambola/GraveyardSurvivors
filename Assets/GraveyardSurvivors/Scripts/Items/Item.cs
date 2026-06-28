@@ -8,18 +8,18 @@ using UnityEngine.Serialization;
 public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable, IWeightedObject, IItem
 {
     [SerializeField] private ItemInfo _info;
+    [SerializeField] private int _weight;
     [SerializeField] protected int IncreaseValue;
 
     public event Action<Item> CanBeReleased;
     
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
-    private IBuff _buffImplementation;
 
     public Sprite Sprite => _info.Sprite;
     public string Name => _info.Name;
-    public string CurrentDescription => _info.Description;
-    public int Weight => _info.Weight;
+    public abstract string CurrentDescription { get; }
+    public int Weight => _weight;
     
     private void Awake()
     {

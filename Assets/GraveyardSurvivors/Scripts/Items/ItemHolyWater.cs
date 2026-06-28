@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemHolyWater : Item
 {
+    public override string CurrentDescription => $"+{IncreaseValue}% to block chance";
+
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.BlockChance = baseStats.BlockChance.GetClampedValue(IncreaseValue);

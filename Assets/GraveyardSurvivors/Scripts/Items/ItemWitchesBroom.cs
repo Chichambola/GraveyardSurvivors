@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemWitchesBroom : Item
 {
+    public override string CurrentDescription => $"+{IncreaseValue} to movement speed";
+    
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.MovementSpeed = baseStats.MovementSpeed.GetClampedValue(IncreaseValue);

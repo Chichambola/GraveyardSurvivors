@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemPumpkinSeed : Item
 {
+    public override string CurrentDescription => $"+{IncreaseValue}% to max health";
+    
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.MaxHealth = baseStats.MaxHealth.GetClampedValue(IncreaseValue);

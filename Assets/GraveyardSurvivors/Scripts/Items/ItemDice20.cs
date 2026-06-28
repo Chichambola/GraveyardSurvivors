@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemDice20 : Item
 {
+    public override string CurrentDescription => $"+{IncreaseValue}% to luck";
+    
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.Luck = baseStats.Luck.GetClampedValue(IncreaseValue);

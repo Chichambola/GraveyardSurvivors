@@ -23,7 +23,7 @@ public class ChanceAltarHandler : ItemInteractable, IInteractableHandler
         if (interactable is ChanceAltar altar == false)
             throw new Exception();
         
-        if (Player.MoneyAmount <= altar.CurrentCost)
+        if (Player.MoneyAmount < altar.CurrentCost)
         {
             Debug.Log($"Not enough money");
             

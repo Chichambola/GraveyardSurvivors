@@ -14,6 +14,7 @@ using UnityEngine.UI;
 public class UpgradeWindow : MonoBehaviour
 {
     [SerializeField] private Ease _easing;
+    [SerializeField] private Image _background;
     [SerializeField] private Image _image;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private TextMeshProUGUI _desciption;
@@ -21,6 +22,8 @@ public class UpgradeWindow : MonoBehaviour
     protected CanvasGroup CanvasGroup;
     protected TweenSettings<float> TweenSettings;
     protected IItem Item;
+    
+    private float _backgroundAlpha = .3f;
 
     protected virtual void Awake()
     {
@@ -40,6 +43,17 @@ public class UpgradeWindow : MonoBehaviour
         _image.overrideSprite = item.Sprite;
         _name.text = item.Name;
         _desciption.text = item.CurrentDescription;
+    }
+
+    public void SetWindow(IItem item, Color color)
+    {
+        SetWindow(item);
+        
+        _background.color = color;
+        
+        var backgroundColor = _background.color;
+        backgroundColor.a = _backgroundAlpha;
+        _background.color = backgroundColor;
     }
 
     public void ChangeOpacity(float targetOpacity, float opacityChangeTime)

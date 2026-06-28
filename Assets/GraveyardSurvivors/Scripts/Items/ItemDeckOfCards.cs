@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemDeckOfCards : Item
 {
+    public override string CurrentDescription => $"+{IncreaseValue}% to attack speed";
+    
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.AttackSpeed = baseStats.AttackSpeed.GetClampedValue(IncreaseValue);

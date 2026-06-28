@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class ItemCoffinLid : Item
 {
+    public override string CurrentDescription => $"+{IncreaseValue}% to armor";
+    
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.Armor = baseStats.Armor.GetClampedValue(IncreaseValue);

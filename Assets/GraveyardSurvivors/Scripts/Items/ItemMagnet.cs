@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemMagnet : Item
 {
+    public override string CurrentDescription => $"+{IncreaseValue}% to pick up radius";
+    
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.PickUpRadius = baseStats.PickUpRadius.GetClampedValue(IncreaseValue);

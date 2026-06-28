@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemCandy : Item
 {
+    public override string CurrentDescription => $"+{IncreaseValue}% to health regeneration";
+
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.HealthRegeneration = baseStats.HealthRegeneration.GetClampedValue(IncreaseValue);

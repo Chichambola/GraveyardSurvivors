@@ -7,6 +7,8 @@ public class ItemHeartOfNecropolis : Item
 {
     [SerializeField] private int _damageMultiplier = 20;
     
+    public override string CurrentDescription => $"+{IncreaseValue}% to max health. +{_damageMultiplier}% incoming damage";
+    
     public override CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.MaxHealth += IncreaseValue;

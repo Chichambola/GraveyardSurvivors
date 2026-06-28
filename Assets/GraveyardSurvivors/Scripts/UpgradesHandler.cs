@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PrimeTween;
+using Sherbert.Framework.Generic;
 using Unity.Android.Gradle;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,8 +13,9 @@ using Random = UnityEngine.Random;
 public class UpgradesHandler : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _background;
-    [Header("Upgrade windows and settings")]
+    [SerializeField] private SerializableDictionary<ERarityLevel, Color> _rarityColors;
     
+    [Header("Upgrade windows and settings")]
     [SerializeField] private List<UpgradeWindowButton> _upgradeWindows;
     [SerializeField] private float _changeOpacityTime = 0.5f;
     
@@ -92,9 +94,9 @@ public class UpgradesHandler : MonoBehaviour
         {
             RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
             
-            var item = _itemsHandler.GetRandomItem(level.Rarity);
+            var item = _itemsHandler.GetItemForLevelUp(level.Rarity);
             
-            SetRandomWindow(item);
+            SetRandomWindow(item, _rarityColors[level.Rarity]);
         }
     }
 
@@ -106,7 +108,7 @@ public class UpgradesHandler : MonoBehaviour
 
             weapon.SetDescription(_player.HasWeapon(weapon) ? weapon.UpgradeDescription : weapon.BaseDescription);
 
-            SetRandomWindow(weapon);
+            SetRandomWindow(weapon, _rarityColors[ERarityLevel.None]);
         }
     }
 
@@ -144,7 +146,7 @@ public class UpgradesHandler : MonoBehaviour
         }
     }
     
-    private void SetRandomWindow(IItem item)
+    private void SetRandomWindow(IItem item, Color color)
     {
         int randomIndex = Random.Range(0, _indexes.Count);
         
@@ -152,6 +154,6 @@ public class UpgradesHandler : MonoBehaviour
         
         _indexes.Remove(index);
         
-        _upgradeWindows[index].SetWindow(item);
+        _upgradeWindows[index].SetWindow(item, color);
     }
 }
