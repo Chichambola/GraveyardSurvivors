@@ -103,8 +103,10 @@ public class BombAttackStrategy : AttackStrategy
     {
         ChangeSpheresVisibility(false);
         _isExpanding = false;
+        
         _expandingSphere.gameObject.transform.localScale = Vector3.zero;
         _radiusSphere.gameObject.transform.localScale = Vector3.zero;
+        
         _expandingTween.Stop();
     }
     

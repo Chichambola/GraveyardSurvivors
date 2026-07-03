@@ -19,6 +19,7 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable, I
     public Sprite Sprite => _info.Sprite;
     public string Name => _info.Name;
     public abstract string CurrentDescription { get; }
+
     public int Weight => _weight;
     
     private void Awake()

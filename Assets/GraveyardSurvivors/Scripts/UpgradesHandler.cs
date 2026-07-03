@@ -31,6 +31,7 @@ public class UpgradesHandler : MonoBehaviour
     private float _fullOpacity = 0;
     private int _amountOfItemWindows;
     private TweenSettings<float> _tweenSettings;
+    private ItemSettings _itemSettings;
     private IPlayer _player;
     private List<int> _indexes;
 
@@ -38,6 +39,7 @@ public class UpgradesHandler : MonoBehaviour
     {
         _tweenSettings = new TweenSettings<float>();
         _indexes = new List<int>();
+        _itemSettings = new ItemSettings();
     }
 
     private void OnValidate()
@@ -95,8 +97,11 @@ public class UpgradesHandler : MonoBehaviour
             RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
             
             var item = _itemsHandler.GetItemForLevelUp(level.Rarity);
+
+            _itemSettings.Rarity = level.Rarity;
+            _itemSettings.Color = _rarityColors[level.Rarity];
             
-            SetRandomWindow(item, _rarityColors[level.Rarity]);
+            SetRandomWindow(item);
         }
     }
 
@@ -108,7 +113,10 @@ public class UpgradesHandler : MonoBehaviour
 
             weapon.SetDescription(_player.HasWeapon(weapon) ? weapon.UpgradeDescription : weapon.BaseDescription);
 
-            SetRandomWindow(weapon, _rarityColors[ERarityLevel.None]);
+            _itemSettings.Color = _rarityColors[ERarityLevel.None];
+            _itemSettings.Rarity = ERarityLevel.None;
+            
+            SetRandomWindow(weapon);
         }
     }
 
@@ -121,8 +129,6 @@ public class UpgradesHandler : MonoBehaviour
 
     private void OnUpgradeSelected(IItem upgrade)
     {
-        Debug.Log("Selected");
-        
         foreach (var upgradeWindow in _upgradeWindows)
         {
             upgradeWindow.UpgradeSelected -= OnUpgradeSelected;
@@ -146,7 +152,7 @@ public class UpgradesHandler : MonoBehaviour
         }
     }
     
-    private void SetRandomWindow(IItem item, Color color)
+    private void SetRandomWindow(IItem item)
     {
         int randomIndex = Random.Range(0, _indexes.Count);
         
@@ -154,6 +160,6 @@ public class UpgradesHandler : MonoBehaviour
         
         _indexes.Remove(index);
         
-        _upgradeWindows[index].SetWindow(item, color);
+        _upgradeWindows[index].SetWindow(item, _itemSettings);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sherbert.Framework.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
@@ -24,11 +25,16 @@ public class EnemySpawnerHandler : MonoBehaviour
     [SerializeField] private int _initialAvailablePoints = 30;
     [SerializeField] private int _maxPoints = 250;
     [SerializeField] private float _pointGainPercent = 10;
+    
+    [Header("Upgrade timing settings")]
+    [SerializeField] private SerializableDictionary<int, float> _minutesAndPercents;
+    [SerializeField] private GameTimer _gameTimer;
 
     public event Action<Enemy> EnemyWasKilled;
 
     private Coroutine _choosingRoutine;
     private Coroutine _spawnRoutine;
+    private Coroutine _upgradeRoutine;
     private List<Enemy> _currentEnemies;
     private Queue<EnemySpawner> _enemiesToSpawn;
     private IntervalTimer _timer;
@@ -50,6 +56,11 @@ public class EnemySpawnerHandler : MonoBehaviour
             enemySpawner.EnemyWasReleased += OnEnemyRelease;
             enemySpawner.EnemyWasSpawned += _currentEnemies.Add;
         }
+        
+        if(_upgradeRoutine != null)
+            StopCoroutine(_upgradeRoutine);
+
+        _upgradeRoutine = StartCoroutine(UpgradingRoutine());
     }
 
     private void OnDisable()
@@ -79,19 +90,6 @@ public class EnemySpawnerHandler : MonoBehaviour
             StopCoroutine(_spawnRoutine);
         
         _spawnRoutine = StartCoroutine(SpawnRoutine());
-    }
-
-    public void Upgrade(float percent)
-    {
-        _spawnRate = _spawnRate.GetClampedValueInverse(percent);
-        _pointGainPercent = _pointGainPercent.GetClampedValue(percent);
-        _maxPoints = _maxPoints.AddPercentToNumber(percent);
-        _maxEnemiesAmount = _maxEnemiesAmount.AddPercentToNumber(percent);
-
-        foreach (var enemySpawner in _enemySpawners)
-        {
-            enemySpawner.Upgrade();
-        }
     }
     
     private void StartChoosing()
@@ -198,6 +196,32 @@ public class EnemySpawnerHandler : MonoBehaviour
         else
         {
             _isChoosing = false;
+        }
+    }
+
+    private IEnumerator UpgradingRoutine()
+    {
+        while (_minutesAndPercents.Count != 0)
+        {
+            if (_minutesAndPercents.Remove(_gameTimer.Minutes, out var percent))
+            {
+                Upgrade(percent);
+            }
+            
+            yield return null;
+        }
+    }
+    
+    private void Upgrade(float percent)
+    {
+        _spawnRate = _spawnRate.GetClampedValueInverse(percent);
+        _pointGainPercent = _pointGainPercent.GetClampedValue(percent);
+        _maxPoints = _maxPoints.AddPercentToNumber(percent);
+        _maxEnemiesAmount = _maxEnemiesAmount.AddPercentToNumber(percent);
+
+        foreach (var enemySpawner in _enemySpawners)
+        {
+            enemySpawner.Upgrade();
         }
     }
 }

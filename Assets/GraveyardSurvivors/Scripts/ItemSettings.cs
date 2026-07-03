@@ -5,6 +5,6 @@ using UnityEngine;
 
 public struct ItemSettings
 {
+    public Color Color;
     public ERarityLevel Rarity;
-    public EWaysOfObtaining WaysOfObtaining;
 }

@@ -16,6 +16,7 @@ public class UpgradeWindow : MonoBehaviour
     [SerializeField] private Ease _easing;
     [SerializeField] private Image _background;
     [SerializeField] private Image _image;
+    [SerializeField] private TextMeshProUGUI _rareLevel;
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private TextMeshProUGUI _desciption;
     
@@ -36,24 +37,28 @@ public class UpgradeWindow : MonoBehaviour
         TweenSettings.settings.ease = _easing;
     }
 
-    public void SetWindow(IItem item)
+    public void SetWindow(IItem item, ItemSettings settings)
     {
-        Item = item ?? throw new Exception("Item can not be null");
-        
-        _image.overrideSprite = item.Sprite;
-        _name.text = item.Name;
-        _desciption.text = item.CurrentDescription;
-    }
+        SetItem(item);
 
-    public void SetWindow(IItem item, Color color)
-    {
-        SetWindow(item);
+        _rareLevel.text = settings.Rarity != ERarityLevel.None ? settings.Rarity.ToString() : "";
         
-        _background.color = color;
+        _background.color = settings.Color;
         
         var backgroundColor = _background.color;
         backgroundColor.a = _backgroundAlpha;
         _background.color = backgroundColor;
+    }
+    
+    public void SetWindow(IItem item) => SetItem(item);
+
+    private void SetItem(IItem item)
+    {
+        Item = item ?? throw new Exception("Item can not be null");
+
+        _image.overrideSprite = item.Sprite;
+        _name.text = item.Name;
+        _desciption.text = item.CurrentDescription;
     }
 
     public void ChangeOpacity(float targetOpacity, float opacityChangeTime)

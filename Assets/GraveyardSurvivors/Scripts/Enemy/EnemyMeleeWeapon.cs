@@ -35,6 +35,12 @@ public class EnemyMeleeWeapon : Weapon
         _coroutine = StartCoroutine(AttackRoutine());
     }
     
+    public override void StopAttacking()
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+    }
+    
     private IEnumerator AttackRoutine()
     {
         IsAttacking = true;
