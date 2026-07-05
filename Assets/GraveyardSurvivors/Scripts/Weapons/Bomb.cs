@@ -60,6 +60,6 @@ public class Bomb : Weapon
 
     private void OnAttackExecuted()
     {
-        _weaponBearer.Value.TakeDamage(Damage);
+        _weaponBearer.Value.TakeDamage(_damageAfterExplosion);
     }
 }

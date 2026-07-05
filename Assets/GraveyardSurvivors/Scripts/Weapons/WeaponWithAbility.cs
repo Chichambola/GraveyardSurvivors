@@ -30,7 +30,7 @@ public abstract class WeaponWithAbility : Weapon
 
     private bool CanEffectProc()
     {
-        float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
+        float randomNumber = Random.Range(UserUtils.s_lowestPercent, UserUtils.s_highestPercent);
 
         return _effectChance >= randomNumber;
     }

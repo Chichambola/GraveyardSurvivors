@@ -7,18 +7,23 @@ using PrimeTween;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Sequence = PrimeTween.Sequence;
 
 public class ItemDisplayer : MonoBehaviour
 {
     [SerializeField] private float _timeForOpacityChanging;
     [SerializeField] private float _timeBetweenItems;
     [SerializeField] private UpgradeWindow _upgradeWindow;
-    
+
     private Queue<IItem> _itemsToShow;
     private Coroutine _coroutine;
+    private Sequence _opacitySequence;
+    private Sequence _sequence;
     private float _fullVisibility = 1;
     private float _fullOpacity = 0;
     private float _waitTime = 0.1f;
+    private bool _isProcessing;
+    private Sequence _currentSequence;
 
     private void Awake()
     {
@@ -31,60 +36,44 @@ public class ItemDisplayer : MonoBehaviour
         {
             _timeBetweenItems = 0;
         }
-        
+
         if (_timeForOpacityChanging < 0)
         {
             _timeForOpacityChanging = 0;
         }
     }
 
-    private void OnEnable()
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(ShowRoutine());
-    }
-
-    public void Enqueue(Item item)
+    public void Process(Item item)
     {
         if (item == null)
-        {
-            throw new Exception("Item can not be null");
-        }
-        
+            throw new ArgumentNullException(nameof(item), "Item cannot be null");
+
         _itemsToShow.Enqueue(item);
+
+        if (_isProcessing)
+            return;
+        
+        _isProcessing = true;
+        
+        ProcessQueue();
     }
 
-    private IEnumerator ShowRoutine()
+    private void ProcessQueue()
     {
-        var waitForOpacity = new WaitForSeconds(_timeForOpacityChanging);
-        var waitBetweenItems  = new WaitForSeconds(_timeBetweenItems);
-        var waitTime = new WaitForSeconds(_waitTime);
-        
-        while (enabled)
+        if (!enabled || _itemsToShow.Count == 0)
         {
-            if (_itemsToShow.Count <= 0)
-            {
-                yield return waitTime;
-                
-                continue;
-            }
-
-            IItem item = _itemsToShow.Dequeue();
-            
-            _upgradeWindow.SetWindow(item);
-
-            _upgradeWindow.ChangeOpacity(_fullVisibility, _timeForOpacityChanging);
-            
-            yield return waitForOpacity;
-            yield return waitBetweenItems;
-            
-            _upgradeWindow.ChangeOpacity(_fullOpacity, _timeForOpacityChanging);
-
-            yield return waitForOpacity;
+            _isProcessing = false;
+            return;
         }
+
+        IItem item = _itemsToShow.Dequeue();
         
-        yield return null;
+        _upgradeWindow.SetWindow(item);
+
+        _currentSequence = Sequence.Create()
+            .Chain(_upgradeWindow.ChangeOpacity(_fullVisibility, _timeForOpacityChanging)
+                .Chain(Tween.Delay(_timeBetweenItems))
+                .Chain(_upgradeWindow.ChangeOpacity(_fullOpacity, _timeForOpacityChanging)))
+            .ChainCallback(ProcessQueue);
     }
 }

@@ -61,11 +61,11 @@ public class UpgradeWindow : MonoBehaviour
         _desciption.text = item.CurrentDescription;
     }
 
-    public void ChangeOpacity(float targetOpacity, float opacityChangeTime)
+    public Tween ChangeOpacity(float targetOpacity, float opacityChangeTime)
     {
         TweenSettings.settings.duration = opacityChangeTime;
         TweenSettings.endValue = targetOpacity;
         
-        Tween.Alpha(CanvasGroup, TweenSettings);
+        return Tween.Alpha(CanvasGroup, TweenSettings);
     }
 }

@@ -27,7 +27,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     private int _lanternsCount;
     private bool _isInLantern;
-    private bool _canTakeDamage;
     private Rigidbody _rigidbody;
     
     public CharacterStats CurrentStats { get; private set; }
@@ -80,8 +79,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     private void Start()
     {
-        _canTakeDamage = true;
-        
         _light.Init();
         
         StatsChanged?.Invoke(CurrentStats);

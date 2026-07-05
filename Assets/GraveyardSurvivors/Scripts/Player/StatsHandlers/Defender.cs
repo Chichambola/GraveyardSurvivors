@@ -15,12 +15,12 @@ public class Defender : MonoBehaviour
         
         blockChance = blockChance.AddPercentToNumber(luck);
 
-        if (blockChance >= UserUtils.s_HighestPercent)
+        if (blockChance >= UserUtils.s_highestPercent)
         {
             return true;
         }
 
-        float randomPercent = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
+        float randomPercent = Random.Range(UserUtils.s_lowestPercent, UserUtils.s_highestPercent);
         
         if (randomPercent >= blockChance)
         {

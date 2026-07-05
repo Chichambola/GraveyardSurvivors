@@ -2078,7 +2078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 930483005040703314}
   _text: {fileID: 2659084682683424908}
-  _initialValue: 0
+  _initialValue: 10000
 --- !u!1 &6034251807341510317
 GameObject:
   m_ObjectHideFlags: 0

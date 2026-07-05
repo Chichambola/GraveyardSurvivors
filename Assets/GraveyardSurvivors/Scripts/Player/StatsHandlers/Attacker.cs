@@ -14,7 +14,6 @@ public class Attacker : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private List<Weapon> _weaponsPrefab;
-    [SerializeField] private float _minCooldown = 0.3f;
     
     private Coroutine _coroutine;
     private List<Weapon> _currentWeapons;
@@ -94,12 +93,12 @@ public class Attacker : MonoBehaviour
 
     private bool IsEnoughChanceToCrit(float critChance)
     {
-        if (critChance >= UserUtils.s_HighestPercent)
+        if (critChance >= UserUtils.s_highestPercent)
         {
             return true;
         }
         
-        float randomNumber = Random.Range(UserUtils.s_LowestPercent, UserUtils.s_HighestPercent);
+        float randomNumber = Random.Range(UserUtils.s_lowestPercent, UserUtils.s_highestPercent);
         
         return critChance >= randomNumber;
     }

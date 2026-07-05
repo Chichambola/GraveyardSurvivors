@@ -20,7 +20,11 @@ public class Game : MonoBehaviour
     [SerializeField] private ItemDisplayer _itemDisplayer;
     
     private int _primeTweenCapacity = 3000;
+    private static float s_normalTimeSpeed = 1;
+    private static float s_pauseTime = 0.00001f;
     private IPlayer _player;
+    
+    public static bool IsPaused { get; private set; }
     
     private void Awake()
     {
@@ -54,10 +58,22 @@ public class Game : MonoBehaviour
         
         TimerController.Clear();
     }
+
+    public static void Pause()
+    {
+        IsPaused = true;
+        Time.timeScale = s_pauseTime;
+    }
+
+    public static void Resume()
+    {
+        IsPaused = false;
+        Time.timeScale = s_normalTimeSpeed;
+    }
     
     private void OnItemPickedUp(Item item)
     {
-        _itemDisplayer.Enqueue(item);
+        _itemDisplayer.Process(item);
     }
     
     private void OnEnemyDeath(Enemy enemy)

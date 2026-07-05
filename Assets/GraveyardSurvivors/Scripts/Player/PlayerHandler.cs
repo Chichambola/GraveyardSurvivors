@@ -15,8 +15,6 @@ public class PlayerHandler : MonoBehaviour
 
     private Player _player;
     private CharacterStats _statsToUpgrade;
-    private float _normalTimeSpeed = 1;
-    private float _pauseTime = 0.00001f;
 
     private void OnEnable()
     {
@@ -60,7 +58,7 @@ public class PlayerHandler : MonoBehaviour
 
     private void OnPlayerReachedThreshold()
     {
-        Time.timeScale = _pauseTime;
+        Game.Pause();
         _upgradesDisplayer.ShowUpgrades();
         _player.Upgrade(_statsToUpgrade);
     }
@@ -76,7 +74,7 @@ public class PlayerHandler : MonoBehaviour
 
     private void OnItemSelected(Item item)
     {
-        Time.timeScale = _normalTimeSpeed;
+        Game.Resume();
 
         if (item is IBuff buff)
         {
@@ -86,7 +84,7 @@ public class PlayerHandler : MonoBehaviour
 
     private void OnWeaponSelected(Weapon upgrade)
     {
-        Time.timeScale = _normalTimeSpeed;
+        Game.Resume();
         
         if (_player.HasWeapon(upgrade))
         {

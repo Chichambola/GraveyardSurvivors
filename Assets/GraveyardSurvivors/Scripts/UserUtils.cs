@@ -7,33 +7,33 @@ using Random = UnityEngine.Random;
 
 public static class UserUtils
 {
-    public static readonly float s_HighestPercent = 100;
-    public static readonly float s_LowestPercent = 0;
+    public static readonly float s_highestPercent = 100;
+    public static readonly float s_lowestPercent = 0;
 
     public static float AddPercentToNumber(this float originalNumber, float percent)
     {
-        float finalNumber = originalNumber * (1 + (percent / s_HighestPercent));
+        float finalNumber = originalNumber * (1 + (percent / s_highestPercent));
         
         return finalNumber;
     }
 
     public static float SubtractPercentFromNumber(this float originalNumber, float percent)
     {
-        float finalNumber = originalNumber *  (1 - percent / s_HighestPercent);
+        float finalNumber = originalNumber *  (1 - percent / s_highestPercent);
 
         return finalNumber;
     }
 
     public static int AddPercentToNumber(this int originalNumber, float percent)
     {
-        int finalNumber = Mathf.RoundToInt(originalNumber * (1 + (percent / s_HighestPercent)));
+        int finalNumber = Mathf.RoundToInt(originalNumber * (1 + (percent / s_highestPercent)));
         
         return finalNumber;
     }
 
     public static int SubtractPercentFromNumber(this int originalNumber, float percent)
     {
-        int finalNumber = Mathf.RoundToInt(originalNumber *  (1 - percent / s_HighestPercent));
+        int finalNumber = Mathf.RoundToInt(originalNumber *  (1 - percent / s_highestPercent));
 
         return finalNumber;
     }
