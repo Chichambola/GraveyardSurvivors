@@ -10,6 +10,7 @@ public class WeaponBow : WeaponWithAbility
     [SerializeField] private ProjectileSpawner _arrowSpawner;
 
     private Coroutine _attackingRoutine;
+    private WaitForSeconds _attackTime;
     
     public override string UpgradeDescription { get; protected set; }
 
@@ -18,11 +19,13 @@ public class WeaponBow : WeaponWithAbility
         UpgradeDescription = $"Add +{BonusDamagePerUpgrade} damage \n" +
                              $"Add +{_attackStrategy.ProjectilePerUpgrade} to  total projectile amount.";
     }
-
+    
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;
         _arrowSpawner.ProjectileReleased += ProcessAttacker;
+        
+        _attackTime = new WaitForSeconds(Cooldown);
     }
 
     private void OnDisable()
@@ -50,7 +53,14 @@ public class WeaponBow : WeaponWithAbility
 
         _attackingRoutine = StartCoroutine(AttackRoutine());
     }
-    
+
+    public override void SetCooldown(float cooldown)
+    {
+        base.SetCooldown(cooldown);
+        
+        _attackTime = new WaitForSeconds(cooldown);
+    }
+
     private void OnAttackerDetected(IAttacker attacker)
     {
         if (attacker is Enemy enemy)
@@ -63,11 +73,9 @@ public class WeaponBow : WeaponWithAbility
     {
         IsAttacking = true;
         
-        var wait = new WaitForSeconds(Cooldown);
-        
         while (enabled)
         {
-            yield return wait;
+            yield return _attackTime;
             
             _attackStrategy.Execute();
             

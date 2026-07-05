@@ -15,6 +15,7 @@ public class WeaponIronSword : WeaponWithAbility
     [SerializeField] private KnockBack _knockBack;
 
     private Coroutine _attackingRoutine;
+    private WaitForSeconds _attackWait;
     private Coroutine _visibilityRoutine;
     private float _waitTime = 0.1f;
     private Vector3 _debugPos;
@@ -31,6 +32,8 @@ public class WeaponIronSword : WeaponWithAbility
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;
+        
+        _attackWait = new WaitForSeconds(Cooldown);
     }
 
     private void OnDisable()
@@ -60,7 +63,14 @@ public class WeaponIronSword : WeaponWithAbility
         _visibilityRoutine = StartCoroutine(VisibilityRoutine());
         _attackingRoutine = StartCoroutine(AttackingRoutine());
     }
-    
+
+    public override void SetCooldown(float cooldown)
+    {
+        base.SetCooldown(cooldown);
+        
+        _attackWait = new WaitForSeconds(cooldown);
+    }
+
     private void SetParticleSystemDuration(float duration)
     {
         _attackParticles.Stop();
@@ -84,11 +94,9 @@ public class WeaponIronSword : WeaponWithAbility
 
     private IEnumerator AttackingRoutine()
     {
-        var wait = new WaitForSeconds(Cooldown);
-        
         while (enabled)
         {
-            yield return wait;
+            yield return _attackWait;
             
             _attackStrategy.Execute();
             

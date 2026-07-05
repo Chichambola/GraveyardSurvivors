@@ -53,8 +53,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         _rigidbody = GetComponent<Rigidbody>();
         _interactionHandler = GetComponent<InteractionHandler>();
         _inputReader = GetComponent<InputReader>();
-
-        _attacker.Init(this);
         
         InitializeStateMachine();
     }

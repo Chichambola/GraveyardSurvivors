@@ -16,6 +16,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
     
     public Sprite Sprite => _info.Sprite;
     public float Damage => _info.Damage + BonusDamage;
+    public float CurrentCooldown => Cooldown;
     public string Name => _info.Name;
     public string BaseDescription => _info.BaseDescription;
     public abstract string UpgradeDescription { get; protected set; }
@@ -41,7 +42,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
         CurrentDescription = description;
     }
 
-    public void SetCooldown(float cooldown)
+    public virtual void SetCooldown(float cooldown)
     {
         Cooldown = cooldown;
     }

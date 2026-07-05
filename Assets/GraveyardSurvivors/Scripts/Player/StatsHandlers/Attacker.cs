@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Sherbert.Framework.Generic;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,16 +12,13 @@ using Random = UnityEngine.Random;
 
 public class Attacker : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private List<Weapon> _weaponsPrefab;
+    [SerializeField] private float _minCooldown = 0.3f;
     
     private Coroutine _coroutine;
-    private IAttacker _attacker;
     private List<Weapon> _currentWeapons;
-
-    public void Init(IAttacker attacker)
-    {
-        _attacker = attacker;
-    }
+    private float _currentAttackSpeed;
 
     private void Awake()
     {
@@ -36,6 +34,10 @@ public class Attacker : MonoBehaviour
 
     private void OnEnable()
     {
+        _player.StatsChanged += OnStatsChanged;
+
+        _currentAttackSpeed = 0;
+        
         foreach (var prefab in _weaponsPrefab)
         {
             var weapon = CreateWeapon(prefab);
@@ -46,12 +48,14 @@ public class Attacker : MonoBehaviour
 
     private void OnDisable()
     {
+        _player.StatsChanged -= OnStatsChanged;
+        
         foreach (var weapon in _currentWeapons)
         {
             weapon.AttackerDetected -= OnAttackerDetected;
         }
     }
-    
+
     public void UpgradeWeapon(Weapon upgrade)
     {
         var type = upgrade.GetType();
@@ -78,11 +82,11 @@ public class Attacker : MonoBehaviour
     {
         float damage = weapon.Damage;
 
-        float currentCritChance = _attacker.CritChance.AddPercentToNumber(_attacker.Luck);
+        float currentCritChance = _player.CritChance.AddPercentToNumber(_player.Luck);
 
         if (IsEnoughChanceToCrit(currentCritChance))
         {
-            damage *= _attacker.CritMultiplier;
+            damage *= _player.CritMultiplier;
         }
         
         attacker.TakeDamage(damage);
@@ -107,6 +111,26 @@ public class Attacker : MonoBehaviour
         weapon.AttackerDetected += OnAttackerDetected;
             
         weapon.StartAttacking();
+        
         return weapon;
+    }
+    
+    private void OnStatsChanged(CharacterStats stats)
+    {
+        if (Mathf.Approximately(stats.AttackSpeed, _currentAttackSpeed))
+            return;
+        
+        float attackSpeed = stats.AttackSpeed - _currentAttackSpeed;
+        
+        _currentAttackSpeed = stats.AttackSpeed;
+
+        foreach (var weapon in _currentWeapons)
+        {
+            float cooldown = weapon.CurrentCooldown;
+
+            cooldown = cooldown.SubtractPercentFromNumber(attackSpeed);
+            
+            weapon.SetCooldown(cooldown);
+        }
     }
 }

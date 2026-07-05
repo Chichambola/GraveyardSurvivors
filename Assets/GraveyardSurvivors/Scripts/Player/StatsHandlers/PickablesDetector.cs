@@ -69,9 +69,11 @@ public class PickablesDetector : MonoBehaviour
         if (Mathf.Approximately(stats.PickUpRadius, _currentRadiusMultiplier))
             return;
         
+        float radiusMultiplier = stats.PickUpRadius - _currentRadiusMultiplier;
+        
         _currentRadiusMultiplier = stats.PickUpRadius;
         
-        _collider.radius = _initialRadius.AddPercentToNumber(_currentRadiusMultiplier);
+        _collider.radius = _initialRadius.AddPercentToNumber(radiusMultiplier);
     }
 }
 

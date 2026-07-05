@@ -2660,6 +2660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2203646241a39628614ec57cc33667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 930483005040703314}
   _weaponsPrefab:
   - {fileID: 5638386864590902357, guid: d1bc6255757afec44bd558b59a3b3598, type: 3}
 --- !u!1 &7351144744302064916

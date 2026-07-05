@@ -10,7 +10,6 @@ public interface IPlayer
     public float MaxHealth { get; }
     public float MoneyAmount { get; }
     public float CurrentHealth { get; }
-    public float Luck { get; }
     public bool IsLightActive { get; }
     bool HasWeapon(Weapon weapon);
     void ReduceMoney(float value);
