@@ -65,6 +65,7 @@ public class Attacker : MonoBehaviour
     public void AddWeapon(Weapon weapon)
     {
         weapon = CreateWeapon(weapon);
+        
         _currentWeapons.Add(weapon);
     }
 
@@ -111,6 +112,8 @@ public class Attacker : MonoBehaviour
             
         weapon.StartAttacking();
         
+        SetWeaponCooldown(weapon, _currentAttackSpeed);
+        
         return weapon;
     }
     
@@ -125,11 +128,16 @@ public class Attacker : MonoBehaviour
 
         foreach (var weapon in _currentWeapons)
         {
-            float cooldown = weapon.CurrentCooldown;
-
-            cooldown = cooldown.SubtractPercentFromNumber(attackSpeed);
-            
-            weapon.SetCooldown(cooldown);
+            SetWeaponCooldown(weapon, attackSpeed);
         }
+    }
+
+    private void SetWeaponCooldown(Weapon weapon, float attackSpeed)
+    {
+        float cooldown = weapon.CurrentCooldown;
+
+        cooldown = cooldown.SubtractPercentFromNumber(attackSpeed);
+            
+        weapon.SetCooldown(cooldown);
     }
 }

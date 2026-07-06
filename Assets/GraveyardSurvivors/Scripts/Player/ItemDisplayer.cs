@@ -21,7 +21,6 @@ public class ItemDisplayer : MonoBehaviour
     private Sequence _sequence;
     private float _fullVisibility = 1;
     private float _fullOpacity = 0;
-    private float _waitTime = 0.1f;
     private bool _isProcessing;
     private Sequence _currentSequence;
 
@@ -63,6 +62,7 @@ public class ItemDisplayer : MonoBehaviour
         if (!enabled || _itemsToShow.Count == 0)
         {
             _isProcessing = false;
+            
             return;
         }
 
@@ -70,10 +70,11 @@ public class ItemDisplayer : MonoBehaviour
         
         _upgradeWindow.SetWindow(item);
 
-        _currentSequence = Sequence.Create()
-            .Chain(_upgradeWindow.ChangeOpacity(_fullVisibility, _timeForOpacityChanging)
-                .Chain(Tween.Delay(_timeBetweenItems))
-                .Chain(_upgradeWindow.ChangeOpacity(_fullOpacity, _timeForOpacityChanging)))
+        _currentSequence = Sequence
+            .Create()
+            .Chain(_upgradeWindow.ChangeOpacity(_fullOpacity, _fullVisibility, _timeForOpacityChanging))
+            .ChainDelay(_timeBetweenItems)
+            .Chain(_upgradeWindow.ChangeOpacity(_fullVisibility, _fullOpacity, _timeForOpacityChanging))
             .ChainCallback(ProcessQueue);
     }
 }

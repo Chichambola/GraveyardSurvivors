@@ -84,7 +84,7 @@ public class UpgradesHandler : MonoBehaviour
         {
             upgradeWindow.SetSettings(true);
             
-            upgradeWindow.ChangeOpacity(_fullVisibility, _changeOpacityTime);
+            upgradeWindow.ChangeOpacity(_fullOpacity, _fullVisibility, _changeOpacityTime);
 
             upgradeWindow.UpgradeSelected += OnUpgradeSelected;
         }

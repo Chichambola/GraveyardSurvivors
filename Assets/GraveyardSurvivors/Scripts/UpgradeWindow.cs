@@ -25,6 +25,8 @@ public class UpgradeWindow : MonoBehaviour
     protected IItem Item;
     
     private float _backgroundAlpha = .3f;
+    
+    public float Alpha => CanvasGroup.alpha;
 
     protected virtual void Awake()
     {
@@ -41,7 +43,7 @@ public class UpgradeWindow : MonoBehaviour
     {
         SetItem(item);
 
-        _rareLevel.text = settings.Rarity != ERarityLevel.None ? settings.Rarity.ToString() : "";
+        _rareLevel.text = settings.Rarity != ERarityLevel.None ? settings.Rarity.ToString() : String.Empty;
         
         _background.color = settings.Color;
         
@@ -61,10 +63,11 @@ public class UpgradeWindow : MonoBehaviour
         _desciption.text = item.CurrentDescription;
     }
 
-    public Tween ChangeOpacity(float targetOpacity, float opacityChangeTime)
+    public Tween ChangeOpacity(float startValue, float endValue, float opacityChangeTime)
     {
         TweenSettings.settings.duration = opacityChangeTime;
-        TweenSettings.endValue = targetOpacity;
+        TweenSettings.startValue = startValue;
+        TweenSettings.endValue = endValue;
         
         return Tween.Alpha(CanvasGroup, TweenSettings);
     }
