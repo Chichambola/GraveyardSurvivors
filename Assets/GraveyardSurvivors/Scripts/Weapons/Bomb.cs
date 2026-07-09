@@ -12,12 +12,7 @@ public class Bomb : Weapon
     [SerializeField] private InterfaceReference<IAttacker, MonoBehaviour> _weaponBearer;
     [SerializeField] private float _damageAfterExplosion = 99999;
     
-    public override string UpgradeDescription { get; protected set; }
-    
-    public override void Init()
-    {
-        throw new NotImplementedException();
-    }
+    public override string UpgradeDescription { get; }
     
     private void OnEnable()
     {

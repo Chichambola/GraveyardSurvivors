@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemMysticalLiquid : Item
+public class ItemMysticalLiquid : Item, IBuff
 {
-    public override string CurrentDescription => $"+{IncreaseValue}% to crit multiplier";
+    [SerializeField] private int _increaseValue;
 
-    public override CharacterStats ApplyBuff(CharacterStats baseStats)
+    public override string CurrentDescription => $"+{_increaseValue}% to crit multiplier";
+
+    public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.CritMultiplier += IncreaseValue;
+        baseStats.CritMultiplier += _increaseValue;
         
         return baseStats;
     }
     
-    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.CritMultiplier -= IncreaseValue;
+        baseStats.CritMultiplier -= _increaseValue;
         
         return baseStats;
     }

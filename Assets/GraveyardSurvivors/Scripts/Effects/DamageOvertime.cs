@@ -5,6 +5,7 @@ using MEC;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public struct DamageOvertime : IEffect<IAttacker>
@@ -12,6 +13,7 @@ public struct DamageOvertime : IEffect<IAttacker>
     public float Duration;
     public float TickInterval;
     public float DamagePerTick;
+    public float EffectChance;
     public ParticleEffectSpawner Effect;
 
     public event Action<IEffect<IAttacker>> EffectCompleted;
@@ -22,6 +24,9 @@ public struct DamageOvertime : IEffect<IAttacker>
     
     public void Apply(IAttacker attacker)
     {
+        if (!CanApply())
+            return;
+        
         _currentEffects = new List<ParticleEffect>();
         
         _target = attacker ?? throw new ArgumentNullException(nameof(attacker));
@@ -73,5 +78,12 @@ public struct DamageOvertime : IEffect<IAttacker>
         _timer = null;
         _target = null;
         _currentEffects = null;
+    }
+    
+    private bool CanApply()
+    {
+        float randomNumber = Random.Range(UserUtils.s_lowestPercent, UserUtils.s_highestPercent);
+
+        return EffectChance >= randomNumber;
     }
 }

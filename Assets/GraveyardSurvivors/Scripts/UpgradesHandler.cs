@@ -111,8 +111,10 @@ public class UpgradesHandler : MonoBehaviour
         {
             var weapon = _itemsHandler.GetRandomWeapon();
 
-            weapon.SetDescription(_player.HasWeapon(weapon) ? weapon.UpgradeDescription : weapon.BaseDescription);
-
+            bool hasWeapon = PlayerHandler.HasPlayerWeapon(weapon);
+            
+            weapon.SetDescription(hasWeapon ? weapon.UpgradeDescription : weapon.BaseDescription);
+            
             _itemSettings.Color = _rarityColors[ERarityLevel.None];
             _itemSettings.Rarity = ERarityLevel.None;
             

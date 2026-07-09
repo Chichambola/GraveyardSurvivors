@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPumpkinSeed : Item
+public class ItemPumpkinSeed : Item, IBuff
 {
-    public override string CurrentDescription => $"+{IncreaseValue}% to max health";
+    [SerializeField] private int _increaseValue;
+
+    public override string CurrentDescription => $"+{_increaseValue}% to max health";
     
-    public override CharacterStats ApplyBuff(CharacterStats baseStats)
+    public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.MaxHealth = baseStats.MaxHealth.GetClampedValue(IncreaseValue);
+        baseStats.MaxHealth += _increaseValue;
         
         return baseStats;
     }
     
-    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.MaxHealth -= baseStats.MaxHealth.GetClampedValue(IncreaseValue);
+        baseStats.MaxHealth -= _increaseValue;
         
         return baseStats;
     }

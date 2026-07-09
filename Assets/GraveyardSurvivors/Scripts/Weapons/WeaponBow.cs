@@ -4,34 +4,35 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer.Internal.Converters;
 using UnityEngine;
 
-public class WeaponBow : WeaponWithAbility
+public class WeaponBow : Weapon
 {
     [SerializeField] private RangeAttackStrategy _attackStrategy;
     [SerializeField] private ProjectileSpawner _arrowSpawner;
 
+    public override event Action<IAttacker, Weapon> AttackerDetected;
+
     private Coroutine _attackingRoutine;
     private WaitForSeconds _attackTime;
     
-    public override string UpgradeDescription { get; protected set; }
-
-    public override void Init()
-    {
-        UpgradeDescription = $"Add +{BonusDamagePerUpgrade} damage \n" +
-                             $"Add +{_attackStrategy.ProjectilePerUpgrade} to  total projectile amount.";
-    }
-    
+    public override string UpgradeDescription => $"Add +{BonusDamagePerUpgrade} damage \n" +
+                                                 $"Add +{_attackStrategy.ProjectilePerUpgrade} to  total projectile amount.";
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;
-        _arrowSpawner.ProjectileReleased += ProcessAttacker;
+        _arrowSpawner.ProjectileReleased += OnProjectileReleased;
         
         _attackTime = new WaitForSeconds(Cooldown);
+    }
+
+    private void OnProjectileReleased(IAttacker attacker)
+    {
+        AttackerDetected?.Invoke(attacker, this);
     }
 
     private void OnDisable()
     {
         _attackStrategy.AttackerDetected -= OnAttackerDetected;
-        _arrowSpawner.ProjectileReleased -= ProcessAttacker;
+        _arrowSpawner.ProjectileReleased -= OnProjectileReleased;
     }
     
     public override void Attack()

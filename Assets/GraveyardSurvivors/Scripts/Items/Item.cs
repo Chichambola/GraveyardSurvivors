@@ -5,11 +5,10 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable, IWeightedObject, IItem
+public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeightedObject, IItem
 {
     [SerializeField] private ItemInfo _info;
     [SerializeField] private int _weight;
-    [SerializeField] protected int IncreaseValue;
 
     public event Action<Item> CanBeReleased;
     
@@ -36,11 +35,10 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IBuff, IPickable, I
 
     public void ResetCharacteristics() { }
 
-    public void Release()
-    {
-        CanBeReleased?.Invoke(this);
-    }
+    public void Release() => CanBeReleased?.Invoke(this);
 
-    public abstract CharacterStats ApplyBuff(CharacterStats baseStats);
-    public abstract CharacterStats RemoveBuff(CharacterStats baseStats);
+    public virtual void Apply(IAttacker attacker)
+    {
+        throw new NotImplementedException();
+    }
 }

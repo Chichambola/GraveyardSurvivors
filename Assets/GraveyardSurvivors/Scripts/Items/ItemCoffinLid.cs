@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemCoffinLid : Item
-{
-    public override string CurrentDescription => $"+{IncreaseValue}% to armor";
+public class ItemCoffinLid : Item, IBuff
+{    
+    [SerializeField] private int _increaseValue;
+
+    public override string CurrentDescription => $"+{_increaseValue}% to armor";
     
-    public override CharacterStats ApplyBuff(CharacterStats baseStats)
+    public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.Armor = baseStats.Armor.GetClampedValue(IncreaseValue);
+        baseStats.Armor = baseStats.Armor.GetClampedValue(_increaseValue);
         
         return baseStats;
     }
     
-    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.Armor -= baseStats.Armor.GetClampedValue(IncreaseValue);
+        baseStats.Armor -= baseStats.Armor.GetClampedValue(_increaseValue);
         
         return baseStats;
     }

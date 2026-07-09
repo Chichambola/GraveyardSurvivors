@@ -27,14 +27,6 @@ public class ItemsHandler : MonoBehaviour
         _itemsForLevelUp = _itemsForLevelUpPrefabs.ToDictionary(item => item.Key, item => item.Value);
     }
 
-    private void OnEnable()
-    {
-        foreach (var weapon in _weapons)
-        {
-            weapon.Init();
-        }
-    }
-
     public void SpawnRandomItem(Vector3 position, ERarityLevel rarity)
     {
         var tempItems = _itemsToDrop.GetItemsByRarity(rarity);

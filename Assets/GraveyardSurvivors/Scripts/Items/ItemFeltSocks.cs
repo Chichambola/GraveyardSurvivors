@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemFeltSocks : Item
+public class ItemFeltSocks : Item, IBuff
 {
-    public override string CurrentDescription => $"+{IncreaseValue}% to evasion chance";
+    [SerializeField] private int _increaseValue;
+
+    public override string CurrentDescription => $"+{_increaseValue}% to evasion chance";
     
-    public override CharacterStats ApplyBuff(CharacterStats baseStats)
+    public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.EvasionChance = baseStats.EvasionChance.GetClampedValue(IncreaseValue);
+        baseStats.EvasionChance = baseStats.EvasionChance.GetClampedValue(_increaseValue);
         
         return baseStats;
     }
     
-    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.EvasionChance -= baseStats.EvasionChance.GetClampedValue(IncreaseValue);
+        baseStats.EvasionChance -= baseStats.EvasionChance.GetClampedValue(_increaseValue);
         
         return baseStats;
     }

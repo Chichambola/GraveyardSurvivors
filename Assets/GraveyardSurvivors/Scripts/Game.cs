@@ -9,14 +9,20 @@ using UnityEngine.Serialization;
 
 public class Game : MonoBehaviour
 {
+    [Header("Player scripts")]
     [SerializeField] private Player _playerPrefab;
     [SerializeField] private PlayerHandler _playerHandler;
     
+    [Header("Darkness and lantern stuff")]
     [SerializeField] private Darkness _darkness;
     [SerializeField] private LanternLight _lantern;
     [SerializeField] private LightPointer _lanternPointer;
+    
+    [Header("Handlers")]
     [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
     [SerializeField] private InteractablesHandler _interactablesHandler;
+    
+    [Header("Item displaying")]
     [SerializeField] private ItemDisplayer _itemDisplayer;
     
     private int _primeTweenCapacity = 3000;

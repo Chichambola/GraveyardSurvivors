@@ -19,11 +19,9 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem
     public float CurrentCooldown => Cooldown;
     public string Name => _info.Name;
     public string BaseDescription => _info.BaseDescription;
-    public abstract string UpgradeDescription { get; protected set; }
+    public abstract string UpgradeDescription { get; }
     public string CurrentDescription { get; private set; }
     public bool IsAttacking { get; protected set; }
-
-    public abstract void Init();
 
     private void OnDisable()
     {

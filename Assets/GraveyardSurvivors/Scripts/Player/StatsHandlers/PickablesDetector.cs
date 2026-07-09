@@ -10,7 +10,7 @@ public class PickablesDetector : MonoBehaviour
 {
     [SerializeField] private Player _player;
     
-    public event Action<IBuff> BuffDetected;
+    public event Action<Item> ItemDetected;
     public event Action<float> CoinDetected;
     public event Action<float> CrystalDetected; 
     
@@ -46,9 +46,9 @@ public class PickablesDetector : MonoBehaviour
 
     private void DeterminePickableType(IPickable pickable)
     {
-        if (pickable is IBuff buff)
+        if (pickable is Item item)
         {
-            BuffDetected?.Invoke(buff);
+            ItemDetected?.Invoke(item);
         }
 
         if (pickable is Coin coin)

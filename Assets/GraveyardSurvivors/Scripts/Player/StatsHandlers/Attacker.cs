@@ -16,12 +16,14 @@ public class Attacker : MonoBehaviour
     [SerializeField] private List<Weapon> _weaponsPrefab;
     
     private Coroutine _coroutine;
+    private List<Effect> _damageEffects;
     private List<Weapon> _currentWeapons;
     private float _currentAttackSpeed;
 
     private void Awake()
     {
         _currentWeapons = new List<Weapon>();
+        _damageEffects = new List<Effect>();
     }
 
     private void OnValidate()
@@ -53,6 +55,10 @@ public class Attacker : MonoBehaviour
         {
             weapon.AttackerDetected -= OnAttackerDetected;
         }
+        
+        _currentWeapons.Clear();
+        
+        _damageEffects.Clear();
     }
 
     public void UpgradeWeapon(Weapon upgrade)
@@ -77,9 +83,22 @@ public class Attacker : MonoBehaviour
         
         return tempWeapon != null;
     }
+
+    public void AddEffect(Effect effect)
+    {
+        _damageEffects.Add(effect);
+    }
     
     private void OnAttackerDetected(IAttacker attacker, Weapon weapon)
     {
+        if (_damageEffects.Count != 0)
+        {
+            foreach (var effect in _damageEffects)
+            {
+                effect.Execute(attacker);
+            }
+        }
+        
         float damage = weapon.Damage;
 
         float currentCritChance = _player.CritChance.AddPercentToNumber(_player.Luck);

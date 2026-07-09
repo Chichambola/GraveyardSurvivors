@@ -31,10 +31,6 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAlive { get; private set; }
-    public float Speed => CurrentStats.AttackSpeed;
-    public float CritChance => CurrentStats.CritChance;
-    public float CritMultiplier => CurrentStats.CritMultiplier;
-    public float Luck => CurrentStats.Luck;
     public float CurrentHealth { get; private set; }
     public Vector3 CurrentPosition => transform.position;
 

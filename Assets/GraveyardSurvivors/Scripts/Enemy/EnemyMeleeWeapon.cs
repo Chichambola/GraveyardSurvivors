@@ -10,12 +10,7 @@ public class EnemyMeleeWeapon : Weapon
     
     private Coroutine _coroutine;
     
-    public override string UpgradeDescription { get; protected set; }
-
-    public override void Init()
-    {
-        
-    }
+    public override string UpgradeDescription { get; }
 
     private void OnEnable()
     {

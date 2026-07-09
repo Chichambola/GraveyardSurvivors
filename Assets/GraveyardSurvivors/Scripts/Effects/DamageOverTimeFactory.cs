@@ -7,6 +7,7 @@ public class DamageOverTimeFactory : IEffectFactory<IAttacker>
     [SerializeField] private float _duration = 5f;
     [SerializeField] private float _tickInterval = 1f;
     [SerializeField] private float _damagePerTick = 1f;
+    [SerializeField] private float _effectChance = 10f;
     [SerializeField] private ParticleEffectSpawner _damageEffect;
     
     public IEffect<IAttacker> Create()
@@ -16,6 +17,7 @@ public class DamageOverTimeFactory : IEffectFactory<IAttacker>
             Duration = _duration,
             TickInterval = _tickInterval,
             DamagePerTick = _damagePerTick,
+            EffectChance = _effectChance,
             Effect = _damageEffect
         };
     }

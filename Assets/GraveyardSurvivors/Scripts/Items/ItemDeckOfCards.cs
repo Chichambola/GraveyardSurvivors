@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDeckOfCards : Item
+public class ItemDeckOfCards : Item, IBuff
 {
-    public override string CurrentDescription => $"+{IncreaseValue}% to attack speed";
+    [SerializeField] private int _increaseValue;
     
-    public override CharacterStats ApplyBuff(CharacterStats baseStats)
+    public override string CurrentDescription => $"+{_increaseValue}% to attack speed";
+    
+    public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.AttackSpeed = baseStats.AttackSpeed.GetClampedValue(IncreaseValue);
+        baseStats.AttackSpeed = baseStats.AttackSpeed.GetClampedValue(_increaseValue);
         
         return baseStats;
     }
     
-    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.AttackSpeed -= baseStats.AttackSpeed.GetClampedValue(IncreaseValue);
+        baseStats.AttackSpeed -= baseStats.AttackSpeed.GetClampedValue(_increaseValue);
         
         return baseStats;
     }

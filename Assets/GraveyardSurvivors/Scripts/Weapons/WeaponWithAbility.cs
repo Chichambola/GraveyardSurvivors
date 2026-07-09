@@ -7,31 +7,25 @@ using Random = UnityEngine.Random;
 
 public abstract class WeaponWithAbility : Weapon
 {
-    [SerializeField] private Effect[] _effects;
-    [SerializeField] private int _effectChance;
+    [SerializeField] private List<Effect> _effects;
     
     public override event Action<IAttacker, Weapon> AttackerDetected;
 
     protected void ProcessAttacker(IAttacker attacker)
     {
         if (attacker == null)
-            return;
+            throw new Exception($"{nameof(attacker)} can not be null");
         
         AttackerDetected?.Invoke(attacker, this);
-
-        if (CanEffectProc())
+        
+        foreach (var effect in _effects)
         {
-            foreach (var effect in _effects)
-            {
-                effect.Execute(attacker);
-            }
+            effect.Execute(attacker);
         }
     }
 
-    private bool CanEffectProc()
+    public void AddEffect(Effect effect)
     {
-        float randomNumber = Random.Range(UserUtils.s_lowestPercent, UserUtils.s_highestPercent);
-
-        return _effectChance >= randomNumber;
+        _effects.Add(effect);
     }
 }

@@ -22,14 +22,16 @@ public class Defender : MonoBehaviour
 
         float randomPercent = Random.Range(UserUtils.s_lowestPercent, UserUtils.s_highestPercent);
         
-        if (randomPercent >= blockChance)
+        if (randomPercent <= blockChance)
         {
             damage /= _dividerNumber;
             
             return true;
         }
-
-        return false;
+        else
+        {
+            return false;
+        }
     }
     
     public float GetDamageAmount(float armorPercent, float damage)

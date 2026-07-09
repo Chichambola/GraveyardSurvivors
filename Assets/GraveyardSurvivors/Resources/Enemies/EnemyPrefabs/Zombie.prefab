@@ -182,8 +182,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.7674096, z: 1.0361564}
-  m_Center: {x: 0, y: 1.4742697, z: 1.1686839}
+  m_Size: {x: 1.3750068, y: 2.7674093, z: 1.1222069}
+  m_Center: {x: 0.04764405, y: 1.4742699, z: 1.2117094}
 --- !u!114 &1138164290024345996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 7bbf29c81e30830479c32f1046fdf442, type: 2}
   BonusDamagePerUpgrade: 1
-  Cooldown: 0.4
+  Cooldown: 0.3
   _attackStrategy: {fileID: 3653054267437700123}
 --- !u!114 &3653054267437700123
 MonoBehaviour:

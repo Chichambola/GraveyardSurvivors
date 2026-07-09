@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemHolyWater : Item
+public class ItemHolyWater : Item, IBuff
 {
-    public override string CurrentDescription => $"+{IncreaseValue}% to block chance";
+    [SerializeField] private int _increaseValue;
 
-    public override CharacterStats ApplyBuff(CharacterStats baseStats)
+    public override string CurrentDescription => $"+{_increaseValue}% to block chance";
+
+    public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.BlockChance = baseStats.BlockChance.GetClampedValue(IncreaseValue);
+        baseStats.BlockChance = baseStats.BlockChance.GetClampedValue(_increaseValue);
         
         return baseStats;
     }
     
-    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.BlockChance -= baseStats.BlockChance.GetClampedValue(IncreaseValue);
+        baseStats.BlockChance -= baseStats.BlockChance.GetClampedValue(_increaseValue);
         
         return baseStats;
     }

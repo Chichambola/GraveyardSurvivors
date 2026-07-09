@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemCandy : Item
+public class ItemCandy : Item, IBuff
 {
-    public override string CurrentDescription => $"+{IncreaseValue}% to health regeneration";
+    [SerializeField] private int _increaseValue;
+    
+    public override string CurrentDescription => $"+{_increaseValue}% to health regeneration";
 
-    public override CharacterStats ApplyBuff(CharacterStats baseStats)
+    public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.HealthRegeneration = baseStats.HealthRegeneration.GetClampedValue(IncreaseValue);
+        baseStats.HealthRegeneration = baseStats.HealthRegeneration.GetClampedValue(_increaseValue);
         
         return baseStats;
     }
     
-    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.HealthRegeneration -= baseStats.HealthRegeneration.GetClampedValue(IncreaseValue);
+        baseStats.HealthRegeneration -= baseStats.HealthRegeneration.GetClampedValue(_increaseValue);
         
         return baseStats;
     }

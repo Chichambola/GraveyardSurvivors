@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -28,16 +30,17 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     private int _lanternsCount;
     private bool _isInLantern;
     private Rigidbody _rigidbody;
+    private List<Item> _items;
     
     public CharacterStats CurrentStats { get; private set; }
     public Vector3 CurrentPosition => transform.position;
+    public Attacker Attacker => _attacker;
     public float CurrentHealth { get; private set; }
     public float MaxHealth => CurrentStats.MaxHealth;
     public float MoneyAmount => _wallet.CurrentMoneyAmount;
     public float CritChance => CurrentStats.CritChance;
     public float CritMultiplier => CurrentStats.CritMultiplier;
     public float Luck => CurrentStats.Luck;
-    public float Speed => CurrentStats.AttackSpeed;
     public bool IsLightActive => _light.IsActive;
     public bool IsAlive => CurrentHealth > 0;
     
@@ -52,6 +55,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         _rigidbody = GetComponent<Rigidbody>();
         _interactionHandler = GetComponent<InteractionHandler>();
         _inputReader = GetComponent<InputReader>();
+
+        _items = new List<Item>();
         
         InitializeStateMachine();
     }
@@ -65,14 +70,14 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         
         CurrentHealth = CurrentStats.MaxHealth;
         
-        _pickUpsDetector.BuffDetected += OnBuffPickedUp;
+        _pickUpsDetector.ItemDetected += OnItemPickedUp;
         _pickUpsDetector.CoinDetected += _wallet.ReceiveMoney;
         _pickUpsDetector.CrystalDetected += OnCrystalDetected;
     }
 
     private void OnDisable()
     {
-        _pickUpsDetector.BuffDetected -= OnBuffPickedUp;
+        _pickUpsDetector.ItemDetected -= OnItemPickedUp;
         _pickUpsDetector.CoinDetected -= _wallet.ReceiveMoney;
         _pickUpsDetector.CrystalDetected -= OnCrystalDetected;
     }
@@ -149,19 +154,16 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
             
         _health.UpdateStats();
     }
-    
-    public void AddWeapon(Weapon weapon)
+
+    public bool HasItem(Item item)
     {
-        _attacker.AddWeapon(weapon);
+        var type = item.GetType();
+
+        var tempItem = _items.FirstOrDefault(i => i.GetType() == type);
+        
+        return tempItem != null;
     }
 
-    public void UpgradeWeapon(Weapon weapon)
-    {
-        _attacker.UpgradeWeapon(weapon);
-    }
-
-    public bool HasWeapon(Weapon weapon) => _attacker.HasWeapon(weapon);
-    
     public void ApplyEffect(IEffect<IAttacker> effectFactory) { }
 
     public void AddBuff(IBuff buff)
@@ -177,6 +179,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         
         StatsChanged?.Invoke(CurrentStats);
     }
+    
+    public void AddEffect(Effect effect) => _attacker.AddEffect(effect);        
     
     public void Heal(float value)
     {
@@ -199,7 +203,15 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         _light.StartRadiusRoutine();
         _light.ResetRate();
     }
+    
 
+    public void ProcessItem(Item item)
+    {
+        _items.Add(item);
+
+        item.Apply(this);
+    }
+    
     protected override void InitializeStateMachine()
     {
         StateMachine = new StateMachine();
@@ -215,13 +227,15 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     private void OnCrystalDetected(float crystalValue) => GainedXp?.Invoke(crystalValue);
     
-    private void OnBuffPickedUp(IBuff buff)
+    private void OnItemPickedUp(Item item)
     {
-        AddBuff(buff);
-        
-        if (buff is Item item)
+        ProcessItem(item);
+
+        PickedItem?.Invoke(item);
+
+        if (item is IBuff buff)
         {
-            PickedItem?.Invoke(item);
+            AddBuff(buff);
         }
     }
 }

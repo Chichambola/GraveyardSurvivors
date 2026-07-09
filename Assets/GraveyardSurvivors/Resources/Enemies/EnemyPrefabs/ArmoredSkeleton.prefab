@@ -1061,7 +1061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 90f4d73030b01d246bd47f307680c691, type: 2}
   BonusDamagePerUpgrade: 1
-  Cooldown: 0.4
+  Cooldown: 0.3
   _attackStrategy: {fileID: 6398945705746586719}
 --- !u!114 &6398945705746586719
 MonoBehaviour:
@@ -1195,8 +1195,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.7674096, z: 1.0361564}
-  m_Center: {x: 0, y: 1.4742697, z: 1.1686839}
+  m_Size: {x: 1.2852851, y: 2.7674093, z: 1.1795911}
+  m_Center: {x: 0.020010803, y: 1.4742699, z: 1.240401}
 --- !u!114 &6567286370352077153
 MonoBehaviour:
   m_ObjectHideFlags: 0

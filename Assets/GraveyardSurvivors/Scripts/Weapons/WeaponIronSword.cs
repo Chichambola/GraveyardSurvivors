@@ -7,27 +7,24 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class WeaponIronSword : WeaponWithAbility
+public class WeaponIronSword : Weapon
 {
     [SerializeField] private MeleeAttackStrategy _attackStrategy;
     [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _attackParticles;
     [SerializeField] private KnockBack _knockBack;
 
+    public override event Action<IAttacker, Weapon> AttackerDetected;
+
     private Coroutine _attackingRoutine;
     private WaitForSeconds _attackWait;
     private Coroutine _visibilityRoutine;
     private float _waitTime = 0.1f;
     private Vector3 _debugPos;
-
-    public override string UpgradeDescription { get; protected set; }
-
-    public override void Init()
-    {
-        UpgradeDescription = $"Add +{BonusDamagePerUpgrade} damage. \n" +
-                             $"Add +{_attackStrategy.RadiusPercentGain}% to attack radius.\n" +
-                             $"Add +{_knockBack.KnockBackPercentGain}% to knock back force;";
-    }
+    
+    public override string UpgradeDescription => $"Add +{BonusDamagePerUpgrade} damage. \n" +
+                                                 $"Add +{_attackStrategy.RadiusPercentGain}% to attack radius.\n" +
+                                                 $"Add +{_knockBack.KnockBackPercentGain}% to knock back force;";
 
     private void OnEnable()
     {
@@ -87,7 +84,7 @@ public class WeaponIronSword : WeaponWithAbility
 
     private void OnAttackerDetected(IAttacker attacker)
     {
-        ProcessAttacker(attacker);
+        AttackerDetected?.Invoke(attacker, this);
 
         _knockBack.Apply(attacker);
     }

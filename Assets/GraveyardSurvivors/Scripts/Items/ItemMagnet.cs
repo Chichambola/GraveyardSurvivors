@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemMagnet : Item
+public class ItemMagnet : Item, IBuff
 {
-    public override string CurrentDescription => $"+{IncreaseValue}% to pick up radius";
+    [SerializeField] private int _increaseValue;
+
+    public override string CurrentDescription => $"+{_increaseValue}% to pick up radius";
     
-    public override CharacterStats ApplyBuff(CharacterStats baseStats)
+    public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
-        baseStats.PickUpRadius = baseStats.PickUpRadius.GetClampedValue(IncreaseValue);
+        baseStats.PickUpRadius = baseStats.PickUpRadius.GetClampedValue(_increaseValue);
         
         return baseStats;
     }
     
-    public override CharacterStats RemoveBuff(CharacterStats baseStats)
+    public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
-        baseStats.PickUpRadius -= baseStats.PickUpRadius.GetClampedValue(IncreaseValue);
+        baseStats.PickUpRadius -= baseStats.PickUpRadius.GetClampedValue(_increaseValue);
         
         return baseStats;
     }

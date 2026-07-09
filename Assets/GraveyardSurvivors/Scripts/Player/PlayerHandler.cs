@@ -13,7 +13,8 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _playerCamera;
     [SerializeField] private UpgradesHandler _upgradesDisplayer;
 
-    private Player _player;
+    private static Player _player;
+    private static Attacker _playerAttacker;
     private CharacterStats _statsToUpgrade;
 
     private void OnEnable()
@@ -41,6 +42,7 @@ public class PlayerHandler : MonoBehaviour
             _statsToUpgrade = stat.GetStats();
 
             _player = Instantiate(player, _spawnPoint.position, _spawnPoint.rotation);
+            _playerAttacker = _player.Attacker;
             _player.transform.parent = transform;
             _playerCamera.Follow = _player.transform;
 
@@ -56,10 +58,19 @@ public class PlayerHandler : MonoBehaviour
         }
     }
 
+    public static bool HasPlayerWeapon(Weapon weapon) => _playerAttacker.HasWeapon(weapon);
+    
+    public static void AddEffect(Effect effect)
+    {
+        _playerAttacker.AddEffect(effect);
+    }
+    
     private void OnPlayerReachedThreshold()
     {
         Game.Pause();
+        
         _upgradesDisplayer.ShowUpgrades();
+        
         _player.Upgrade(_statsToUpgrade);
     }
 
@@ -75,24 +86,26 @@ public class PlayerHandler : MonoBehaviour
     private void OnItemSelected(Item item)
     {
         Game.Resume();
-
+        
+        _player.ProcessItem(item);
+        
         if (item is IBuff buff)
         {
             _player.AddBuff(buff);
         }
     }
 
-    private void OnWeaponSelected(Weapon upgrade)
+    private void OnWeaponSelected(Weapon weapon)
     {
         Game.Resume();
         
-        if (_player.HasWeapon(upgrade))
+        if (HasPlayerWeapon(weapon))
         {
-            _player.UpgradeWeapon(upgrade);
+            _playerAttacker.UpgradeWeapon(weapon);
         }
         else
         {
-            _player.AddWeapon(upgrade);
+            _playerAttacker.AddWeapon(weapon);
         }
     }
 }
