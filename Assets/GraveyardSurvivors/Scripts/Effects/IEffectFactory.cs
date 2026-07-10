@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IEffectFactory<IAttacker>
 {
+    void SetParticleEffectSpawner(ParticleEffectSpawner spawner);
     IEffect<IAttacker> Create();
 }

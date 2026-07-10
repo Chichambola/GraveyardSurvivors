@@ -18,4 +18,9 @@ public class Effect
             attacker.ApplyEffect(runtimeEffect);
         }
     }
+
+    public void SetEffects(IEffectFactory<IAttacker> effectFactory)
+    {
+        _effects.Add(effectFactory);
+    }
 }

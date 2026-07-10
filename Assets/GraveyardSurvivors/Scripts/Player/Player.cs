@@ -209,7 +209,10 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     {
         _items.Add(item);
 
-        item.Apply(this);
+        if (item is not IBuff)
+        {
+            item.Apply(this);
+        }
     }
     
     protected override void InitializeStateMachine()

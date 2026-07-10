@@ -6,6 +6,7 @@ using System.Net;
 using Sherbert.Framework.Generic;
 using TMPro;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -14,9 +15,9 @@ public class Attacker : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private List<Weapon> _weaponsPrefab;
+    [SerializeField]private List<Effect> _damageEffects;
     
     private Coroutine _coroutine;
-    private List<Effect> _damageEffects;
     private List<Weapon> _currentWeapons;
     private float _currentAttackSpeed;
 
