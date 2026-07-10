@@ -9,6 +9,8 @@ public class Effect
 {
     [SerializeReference] private List<IEffectFactory<IAttacker>> _effects = new();
 
+    public int Count => _effects.Count;
+    
     public virtual void Execute(IAttacker attacker)
     {
         foreach (var effect in _effects)

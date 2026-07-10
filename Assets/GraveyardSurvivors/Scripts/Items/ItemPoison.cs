@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class ItemPoison : Item, IAttackItem
 {
-    [SerializeField] private Effect _effect;
     [SerializeField] private DamageOverTimeFactory _poisonEffect;
+    
+    private Effect _effect;
 
     public override string CurrentDescription => $"Adding {_poisonEffect.Chance}% chance to poison enemies on hit";
 
@@ -14,10 +15,10 @@ public class ItemPoison : Item, IAttackItem
     {
         if (attacker is not Player _)
             return;
-        
-        var spawner = Instantiate(_poisonEffect.Spawner, Vector3.one, Quaternion.identity);
-        
-        _poisonEffect.SetParticleEffectSpawner(spawner);
+
+        _effect = new Effect();
+
+        Debug.Log(_effect.Count);
         
         _effect.SetEffects(_poisonEffect);
         

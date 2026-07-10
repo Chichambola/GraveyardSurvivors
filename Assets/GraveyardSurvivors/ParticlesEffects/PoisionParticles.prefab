@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8614386305367882424}
   - component: {fileID: 5563276619231463570}
   - component: {fileID: 3027385545821991}
+  - component: {fileID: 341785346831163679}
   m_Layer: 0
   m_Name: PoisionParticles
   m_TagString: Untagged
@@ -4901,4 +4902,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 578979047b4758add8b861011210b398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particleSystem: {fileID: 8614386305367882424}
+--- !u!114 &341785346831163679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6647266972105913736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e801a991a650c8bab8a1f6f8d01db47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectPrefab: {fileID: 3027385545821991}
+  PoolCapacity: 0
+  MaxPoolCapacity: 20

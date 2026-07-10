@@ -9,15 +9,10 @@ public class DamageOverTimeFactory : IEffectFactory<IAttacker>
     [SerializeField] private float _tickInterval = 1f;
     [SerializeField] private float _damagePerTick = 1f;
     [SerializeField] private float _effectChance = 10f;
-    [SerializeField] private ParticleEffectSpawner _damageEffect;
-
-    public float Chance => _effectChance;
-    public ParticleEffectSpawner Spawner => _damageEffect;
+    [SerializeField] private EDamageEffectParticle _damageEffect;
     
-    public void SetParticleEffectSpawner(ParticleEffectSpawner spawner)
-    {
-        _damageEffect = spawner;
-    }
+    public float Chance => _effectChance;
+    public EDamageEffectParticle DamageEffect => _damageEffect;
 
     public IEffect<IAttacker> Create()
     {

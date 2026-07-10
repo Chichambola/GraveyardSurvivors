@@ -19,21 +19,17 @@ public class WeaponBow : Weapon
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;
-        _arrowSpawner.ProjectileReleased += OnProjectileReleased;
+        _arrowSpawner.ProjectileHitEnemy += OnProjectileReleased;
         
         _attackTime = new WaitForSeconds(Cooldown);
-    }
-
-    private void OnProjectileReleased(IAttacker attacker)
-    {
-        AttackerDetected?.Invoke(attacker, this);
     }
 
     private void OnDisable()
     {
         _attackStrategy.AttackerDetected -= OnAttackerDetected;
-        _arrowSpawner.ProjectileReleased -= OnProjectileReleased;
+        _arrowSpawner.ProjectileHitEnemy -= OnProjectileReleased;
     }
+    
     
     public override void Attack()
     {
@@ -82,5 +78,10 @@ public class WeaponBow : Weapon
             
             IsAttacking = false;
         }
+    }
+    
+    private void OnProjectileReleased(IAttacker attacker)
+    {
+        AttackerDetected?.Invoke(attacker, this);
     }
 }

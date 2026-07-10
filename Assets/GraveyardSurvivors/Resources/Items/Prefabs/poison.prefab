@@ -150,17 +150,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: efc7209f092befe4c843a76fdd6d5594, type: 2}
   _weight: 10000
-  _effect:
-    _effects: []
   _poisonEffect:
-    _duration: 5
+    _duration: 2
     _tickInterval: 1
-    _damagePerTick: 1
-    _effectChance: 100
-    _damageEffect: {fileID: 7330425763719217108}
-  references:
-    version: 2
-    RefIds: []
+    _damagePerTick: 1.5
+    _effectChance: 10
+    _damageEffect: 0
 --- !u!1 &7643068274461626718
 GameObject:
   m_ObjectHideFlags: 0

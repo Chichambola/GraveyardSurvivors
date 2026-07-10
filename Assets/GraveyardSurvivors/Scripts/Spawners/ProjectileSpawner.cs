@@ -8,7 +8,7 @@ public class ProjectileSpawner : Spawner<Projectile>
 {
     [SerializeField] private Transform _gunPoint;
     
-    public event Action<IAttacker> ProjectileReleased;
+    public event Action<IAttacker> ProjectileHitEnemy;
     
     private IAttacker _currentTarget;
     
@@ -27,6 +27,7 @@ public class ProjectileSpawner : Spawner<Projectile>
         projectile.gameObject.transform.parent = null;
         
         projectile.CanBeReleased += Release;
+        projectile.HitEnemy += OnEnemyHit;
         
         projectile.SetTarget(_currentTarget);
         
@@ -40,13 +41,19 @@ public class ProjectileSpawner : Spawner<Projectile>
         projectile.gameObject.transform.parent = transform;
         
         projectile.CanBeReleased -= Release;
+        projectile.HitEnemy -= OnEnemyHit;
         
         ActiveObjects.Remove(projectile);
         
         base.ActionOnRelease(projectile);
         
-        ProjectileReleased?.Invoke(projectile.CurrentTarget);
-        
         projectile.ResetCharacteristics();
+    }
+    
+    private void OnEnemyHit(Projectile projectile)
+    {
+        ProjectileHitEnemy?.Invoke(_currentTarget);
+        
+        Release(projectile);
     }
 }

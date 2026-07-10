@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     [SerializeField] private Rotator _rotator;
 
     public event Action<Projectile> CanBeReleased;
+    public event Action<Projectile> HitEnemy;
     
     private IAttacker _currentTarget;
     private Coroutine _coroutine;
@@ -35,29 +36,6 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
             StopCoroutine(_coroutine);
         
         _coroutine = StartCoroutine(MovingRoutine());
-    }
-
-    private IEnumerator MovingRoutine()
-    {
-        var target = _currentTarget as MonoBehaviour;
-
-        if (target == null)
-            throw new Exception();
-        
-        while (_currentTarget.IsAlive)
-        {
-            _mover.MoveToPosition(target.transform.position);
-
-            Vector3 distance = target.transform.position - transform.position;
-
-            Vector3 direction = new Vector3(distance.x, 0f, distance.z).normalized;
-            
-            _rotator.Rotate(direction);
-            
-            yield return null;
-        }
-        
-        Release();
     }
     
     public void ResetCharacteristics()
@@ -85,7 +63,30 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     {
         if (enemy == (Enemy)_currentTarget)
         {
-            Release();
+            HitEnemy?.Invoke(this);
         }
+    }
+    
+    private IEnumerator MovingRoutine()
+    {
+        var target = _currentTarget as MonoBehaviour;
+
+        if (target == null)
+            throw new Exception();
+        
+        while (_currentTarget.IsAlive)
+        {
+            _mover.MoveToPosition(target.transform.position);
+
+            Vector3 distance = target.transform.position - transform.position;
+
+            Vector3 direction = new Vector3(distance.x, 0f, distance.z).normalized;
+            
+            _rotator.Rotate(direction);
+            
+            yield return null;
+        }
+        
+        Release();
     }
 }

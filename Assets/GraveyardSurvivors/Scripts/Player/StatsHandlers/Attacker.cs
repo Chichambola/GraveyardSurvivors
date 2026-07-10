@@ -87,6 +87,8 @@ public class Attacker : MonoBehaviour
 
     public void AddEffect(Effect effect)
     {
+        Debug.Log("Here");
+        
         _damageEffects.Add(effect);
     }
     

@@ -180,8 +180,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         StatsChanged?.Invoke(CurrentStats);
     }
     
-    public void AddEffect(Effect effect) => _attacker.AddEffect(effect);        
-    
     public void Heal(float value)
     {
         CurrentHealth += value;
@@ -205,14 +203,9 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     }
     
 
-    public void ProcessItem(Item item)
+    public void AddItem(Item item)
     {
         _items.Add(item);
-
-        if (item is not IBuff)
-        {
-            item.Apply(this);
-        }
     }
     
     protected override void InitializeStateMachine()
@@ -232,7 +225,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     
     private void OnItemPickedUp(Item item)
     {
-        ProcessItem(item);
+        AddItem(item);
 
         PickedItem?.Invoke(item);
 

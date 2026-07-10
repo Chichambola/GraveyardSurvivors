@@ -87,13 +87,16 @@ public class PlayerHandler : MonoBehaviour
     {
         Game.Resume();
         
-        
         if (item is IBuff buff)
         {
             _player.AddBuff(buff);
         }
+        else
+        {
+            item.Apply(_player);
+        }
         
-        _player.ProcessItem(item);
+        _player.AddItem(item);
     }
 
     private void OnWeaponSelected(Weapon weapon)

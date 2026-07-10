@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEffectFactory<IAttacker>
+public enum EDamageEffectParticle
 {
-    IEffect<IAttacker> Create();
+    Poison,
+    Bleed
 }

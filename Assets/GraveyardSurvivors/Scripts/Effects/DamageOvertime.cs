@@ -14,18 +14,21 @@ public struct DamageOvertime : IEffect<IAttacker>
     public float TickInterval;
     public float DamagePerTick;
     public float EffectChance;
-    public ParticleEffectSpawner Effect;
+    public EDamageEffectParticle Effect;
 
     public event Action<IEffect<IAttacker>> EffectCompleted;
     
     private IAttacker _target;
     private List<ParticleEffect> _currentEffects;
     private IntervalTimer _timer;
+    private ParticleEffectSpawner _spawner;
     
     public void Apply(IAttacker attacker)
     {
         if (!CanApply())
             return;
+        
+        _spawner = ParticleEffectHandler.GetSpawner(Effect);
         
         _currentEffects = new List<ParticleEffect>();
         
@@ -33,7 +36,7 @@ public struct DamageOvertime : IEffect<IAttacker>
         
         var targetPosition = _target.CurrentPosition;
         
-        var effect = Effect.Spawn(targetPosition,TickInterval);
+        var effect = _spawner.Spawn(targetPosition,TickInterval);
         
         _currentEffects.Add(effect); 
         
@@ -54,7 +57,7 @@ public struct DamageOvertime : IEffect<IAttacker>
         {
             var targetPosition = _target.CurrentPosition;
             
-            var effect = Effect.Spawn(targetPosition);
+            var effect = _spawner.Spawn(targetPosition);
 
             _currentEffects.Add(effect);
             
@@ -84,6 +87,16 @@ public struct DamageOvertime : IEffect<IAttacker>
     {
         float randomNumber = Random.Range(UserUtils.s_lowestPercent, UserUtils.s_highestPercent);
 
-        return EffectChance >= randomNumber;
+        Debug.Log($"Number: {randomNumber}" +
+                  $"Can apply: {randomNumber <= EffectChance}");
+        
+        if (randomNumber <= EffectChance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
