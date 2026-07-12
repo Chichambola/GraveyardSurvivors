@@ -12,9 +12,8 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] private ExperienceHandler _experienceHandler;
     [SerializeField] private CinemachineVirtualCamera _playerCamera;
     [SerializeField] private UpgradesHandler _upgradesDisplayer;
-
-    private static Player _player;
-    private static Attacker _playerAttacker;
+    
+    private Player _player;
     private CharacterStats _statsToUpgrade;
 
     private void OnEnable()
@@ -42,7 +41,6 @@ public class PlayerHandler : MonoBehaviour
             _statsToUpgrade = stat.GetStats();
 
             _player = Instantiate(player, _spawnPoint.position, _spawnPoint.rotation);
-            _playerAttacker = _player.Attacker;
             _player.transform.parent = transform;
             _playerCamera.Follow = _player.transform;
 
@@ -56,13 +54,6 @@ public class PlayerHandler : MonoBehaviour
         {
             throw new KeyNotFoundException($"Player {player.name} has not been registered.");
         }
-    }
-
-    public static bool HasPlayerWeapon(Weapon weapon) => _playerAttacker.HasWeapon(weapon);
-    
-    public static void AddEffect(Effect effect)
-    {
-        _playerAttacker.AddEffect(effect);
     }
     
     private void OnPlayerReachedThreshold()
@@ -87,29 +78,13 @@ public class PlayerHandler : MonoBehaviour
     {
         Game.Resume();
         
-        if (item is IBuff buff)
-        {
-            _player.AddBuff(buff);
-        }
-        else
-        {
-            item.Apply(_player);
-        }
-        
         _player.AddItem(item);
     }
 
     private void OnWeaponSelected(Weapon weapon)
     {
         Game.Resume();
-        
-        if (HasPlayerWeapon(weapon))
-        {
-            _playerAttacker.UpgradeWeapon(weapon);
-        }
-        else
-        {
-            _playerAttacker.AddWeapon(weapon);
-        }
+
+        _player.ProcessWeapon(weapon);
     }
 }

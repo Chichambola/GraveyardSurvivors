@@ -37,6 +37,13 @@ public static class UserUtils
 
         return finalNumber;
     }
+
+    public static float CalculatePercentageOf(float part, float whole)
+    {
+        float percentage = (part / whole) * s_highestPercent;
+        
+        return percentage;
+    }
     
     public static float GetClampedValue(this float originalValue, float increasePercent, float maxThreshold = 100f)
     {

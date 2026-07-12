@@ -18,6 +18,7 @@ public class EnemyStats
     public float MoneyForKill;
     public float XpForKill;
     public float LanternEnergy;
+    public float IncomingDamageMultiplier;
     public float Luck;
     
     public EnemyStats(EnemyStats stats)

@@ -87,16 +87,6 @@ public struct DamageOvertime : IEffect<IAttacker>
     {
         float randomNumber = Random.Range(UserUtils.s_lowestPercent, UserUtils.s_highestPercent);
 
-        Debug.Log($"Number: {randomNumber}" +
-                  $"Can apply: {randomNumber <= EffectChance}");
-        
-        if (randomNumber <= EffectChance)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return randomNumber <= EffectChance;
     }
 }

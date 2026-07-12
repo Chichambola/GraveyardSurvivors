@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IAttackItem
 {
-    
+    void SetPlayer(IPlayer player);
 }

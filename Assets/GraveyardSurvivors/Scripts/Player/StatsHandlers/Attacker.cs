@@ -16,6 +16,8 @@ public class Attacker : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private List<Weapon> _weaponsPrefab;
     [SerializeField]private List<Effect> _damageEffects;
+
+    public event Action<Enemy> EnemyDetected;
     
     private Coroutine _coroutine;
     private List<Weapon> _currentWeapons;
@@ -62,18 +64,16 @@ public class Attacker : MonoBehaviour
         _damageEffects.Clear();
     }
 
-    public void UpgradeWeapon(Weapon upgrade)
+    public void ProcessWeapon(Weapon weapon)
     {
-        var type = upgrade.GetType();
-        
-        _currentWeapons.FirstOrDefault(w => w.GetType() == type)?.Upgrade();
-    }
-
-    public void AddWeapon(Weapon weapon)
-    {
-        weapon = CreateWeapon(weapon);
-        
-        _currentWeapons.Add(weapon);
+        if (HasWeapon(weapon))
+        {
+            UpgradeWeapon(weapon);
+        }
+        else
+        {
+            AddWeapon(weapon);
+        }
     }
 
     public bool HasWeapon(Weapon weapon)
@@ -87,13 +87,16 @@ public class Attacker : MonoBehaviour
 
     public void AddEffect(Effect effect)
     {
-        Debug.Log("Here");
-        
         _damageEffects.Add(effect);
     }
     
     private void OnAttackerDetected(IAttacker attacker, Weapon weapon)
     {
+        if (attacker is Enemy enemy)
+        {
+            EnemyDetected?.Invoke(enemy);
+        }
+        
         if (_damageEffects.Count != 0)
         {
             foreach (var effect in _damageEffects)
@@ -161,5 +164,19 @@ public class Attacker : MonoBehaviour
         cooldown = cooldown.SubtractPercentFromNumber(attackSpeed);
             
         weapon.SetCooldown(cooldown);
+    }
+    
+    private void UpgradeWeapon(Weapon upgrade)
+    {
+        var type = upgrade.GetType();
+        
+        _currentWeapons.FirstOrDefault(w => w.GetType() == type)?.Upgrade();
+    }
+
+    private void AddWeapon(Weapon weapon)
+    {
+        weapon = CreateWeapon(weapon);
+        
+        _currentWeapons.Add(weapon);
     }
 }

@@ -19,6 +19,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public event Action<Enemy> CanBeReleased;
     public event Action<Enemy> NoHealthLeft;
+    public event Action<Enemy> TookDamage; 
     
     private IPlayer _player;
     private Coroutine _attackRoutine;
@@ -32,6 +33,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAlive { get; private set; }
     public float CurrentHealth { get; private set; }
+    public float MaxHealth => CurrentStats.MaxHealth;
     public Vector3 CurrentPosition => transform.position;
 
     public void Init(IPlayer player, EnemyStats stats)
@@ -99,12 +101,14 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
         _health.text = $"{CurrentHealth:f1}";
         
-        if (CurrentHealth <= 0 && IsAlive)
-        {
-            IsAlive = false;
+        TookDamage?.Invoke(this);
+
+        if (!(CurrentHealth <= 0) || !IsAlive)
+            return;
+        
+        IsAlive = false;
             
-            Die();
-        }
+        Die();
     }
     
     public void ApplyEffect(IEffect<IAttacker> effect)

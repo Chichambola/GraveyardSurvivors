@@ -21,13 +21,13 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeighte
 
     public int Weight => _weight;
     
-    private void Awake()
+    protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<BoxCollider>();
     }
 
-    private void OnValidate()
+    protected virtual void OnValidate()
     {
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Collider>().isTrigger = true;
@@ -36,9 +36,4 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeighte
     public void ResetCharacteristics() { }
 
     public void Release() => CanBeReleased?.Invoke(this);
-
-    public virtual void Apply(IAttacker attacker)
-    {
-        throw new NotImplementedException();
-    }
 }

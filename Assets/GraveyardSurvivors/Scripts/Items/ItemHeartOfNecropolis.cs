@@ -5,16 +5,31 @@ using UnityEngine;
 
 public class ItemHeartOfNecropolis : Item, IBuff
 {
-    [SerializeField] private int _damageMultiplier = 20;
-    [SerializeField] private int _increaseValue;
+    [SerializeField] private int _increaseValue = 30;
+    [SerializeField] private int _healthRegenDecreasePercent = 50;
     
-    public override string CurrentDescription => $"+{_increaseValue}% to max health. +{_damageMultiplier}% incoming damage";
-    
+    public override string CurrentDescription => $"+{_increaseValue} Max HP at the cost of -{_healthRegenDecreasePercent}%HP Regen. ";
+
+    protected override void OnValidate()
+    {
+        base.OnValidate();
+
+        if (_healthRegenDecreasePercent < 0)
+        {
+            _healthRegenDecreasePercent = 0;
+        }
+
+        if (_healthRegenDecreasePercent > 100)
+        {
+            _healthRegenDecreasePercent = 100;
+        }
+    }
+
     public CharacterStats ApplyBuff(CharacterStats baseStats)
     {
         baseStats.MaxHealth += _increaseValue;
         
-        baseStats.IncomingDamageMultiplier = baseStats.IncomingDamageMultiplier.GetClampedValue(_damageMultiplier);
+        baseStats.HealthRegeneration = baseStats.HealthRegeneration.SubtractPercentFromNumber(_healthRegenDecreasePercent);
         
         return baseStats;
     }
@@ -22,7 +37,9 @@ public class ItemHeartOfNecropolis : Item, IBuff
     public CharacterStats RemoveBuff(CharacterStats baseStats)
     {
         baseStats.MaxHealth -= _increaseValue;
-        baseStats.IncomingDamageMultiplier -= baseStats.IncomingDamageMultiplier.GetClampedValue(_damageMultiplier);
+        
+        baseStats.HealthRegeneration = baseStats.HealthRegeneration.AddPercentToNumber(_healthRegenDecreasePercent);
+
         
         return baseStats;
     }

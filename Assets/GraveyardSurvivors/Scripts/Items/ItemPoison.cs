@@ -8,21 +8,25 @@ public class ItemPoison : Item, IAttackItem
     [SerializeField] private DamageOverTimeFactory _poisonEffect;
     
     private Effect _effect;
+    private IPlayer _player;
 
     public override string CurrentDescription => $"Adding {_poisonEffect.Chance}% chance to poison enemies on hit";
-
-    public override void Apply(IAttacker attacker)
+    
+    public void SetPlayer(IPlayer player)
     {
-        if (attacker is not Player _)
-            return;
-
+        if (_player != null)
+            throw new System.Exception("Player is already set");
+        
+        _player = player;
+    }
+    
+    public void Apply()
+    {
         _effect = new Effect();
-
-        Debug.Log(_effect.Count);
         
         _effect.SetEffects(_poisonEffect);
-        
-        PlayerHandler.AddEffect(_effect);
+
+        _player?.AddEffect(_effect);
     }
 }
  
