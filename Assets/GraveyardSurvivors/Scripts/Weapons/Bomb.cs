@@ -13,7 +13,8 @@ public class Bomb : Weapon
     [SerializeField] private float _damageAfterExplosion = 99999;
     
     public override string UpgradeDescription { get; }
-    
+    public override string BaseDescription { get; }
+
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;

@@ -8,7 +8,7 @@ public class RunState : BaseState
 
     public override void DoEnter()
     {
-        Animator.CrossFade(s_Run, CrossFadeDuration);
+        Animator.CrossFade(s_run, CrossFadeDuration);
     }
 
     public override void FixedUpdate()

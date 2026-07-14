@@ -14,8 +14,11 @@ public class WeaponBow : Weapon
     private Coroutine _attackingRoutine;
     private WaitForSeconds _attackTime;
     
+    public override string BaseDescription => $"Range weapon.\n" +
+                                              $"Shoots {_attackStrategy.InitialProjectileAmount} at a time prioritizing enemies in front of the player.";
     public override string UpgradeDescription => $"Add +{BonusDamagePerUpgrade} damage \n" +
                                                  $"Add +{_attackStrategy.ProjectilePerUpgrade} to  total projectile amount.";
+    
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;

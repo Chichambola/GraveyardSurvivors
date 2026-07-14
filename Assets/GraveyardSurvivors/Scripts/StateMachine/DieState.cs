@@ -18,7 +18,7 @@ public class DieState : BaseState
         _timer.Stopped += DoExit;
         _timer.Start();
         
-        Animator.CrossFade(s_Death, CrossFadeDuration);
+        Animator.CrossFade(s_death, CrossFadeDuration);
     }
 
     public override void DoExit()

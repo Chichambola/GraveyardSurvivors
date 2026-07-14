@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -12,11 +13,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     [SerializeField] private DamageZone _damageZone;
     [Header("Services")]
     [SerializeField] protected PlayerDetector PlayerDetector;
-    [SerializeField] private Defender _defender;
+    [SerializeField] protected InterfaceReference<IWeapon, MonoBehaviour> Weapon;
     [SerializeField] private TextMeshProUGUI _health;
-    [SerializeField] protected Weapon Weapon;
-
-
+    [SerializeField] private Defender _defender;
+    
     public event Action<Enemy> CanBeReleased;
     public event Action<Enemy> NoHealthLeft;
     public event Action<Enemy> TookDamage; 
@@ -26,13 +26,13 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
     private List<IEffect<IAttacker>> _currentEffects;
-    private float _initialHealth;
-    private float _initialSpeed;
+    private float _currentHealth;
+    private float _storedDamage;
     private int _movementEffectCount;
 
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAlive { get; private set; }
-    public float CurrentHealth { get; private set; }
+    public float CurrentHealth => _currentHealth - _storedDamage;
     public float MaxHealth => CurrentStats.MaxHealth;
     public Vector3 CurrentPosition => transform.position;
 
@@ -40,11 +40,13 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         _player = player;
 
-        CurrentStats = stats; 
+        _storedDamage = 0;
+
+        CurrentStats = stats;
+
+        _currentHealth = CurrentStats.MaxHealth;
         
-        CurrentHealth = stats.MaxHealth;
-        
-        _health.text = $"{CurrentStats.MaxHealth:f1}";
+        _health.text = $"{_currentHealth:f1}";
         
         IsAlive = true;
     }
@@ -72,12 +74,12 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         InitializeStateMachine();
 
-        Weapon.AttackerDetected += OnAttackerDetected;
+        Weapon.Value.AttackerDetected += OnAttackerDetected;
     }
 
     private void OnDisable()
     {
-        Weapon.AttackerDetected -= OnAttackerDetected;
+        Weapon.Value.AttackerDetected -= OnAttackerDetected;
     }
 
     public void ResetCharacteristics()
@@ -90,19 +92,21 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public void Upgrade(EnemyStats stats)
     {
         CurrentStats = stats;
-        Weapon.Upgrade();
+        Weapon.Value.Upgrade();
     }
 
     public void TakeDamage(float damage)
     {
+        TookDamage?.Invoke(this);
+        
         damage = _defender.GetDamageAmount(CurrentStats.Armor, damage);
+        
+        damage = damage.AddPercentToNumber(CurrentStats.IncomingDamageMultiplier);
 
-        CurrentHealth -= damage;
-
+        _storedDamage += damage;
+        
         _health.text = $"{CurrentHealth:f1}";
         
-        TookDamage?.Invoke(this);
-
         if (!(CurrentHealth <= 0) || !IsAlive)
             return;
         
@@ -157,7 +161,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleAttack()
     {
-        Weapon.Attack();
+        Weapon.Value.Attack();
     }
     
     public void SetColliderCenter(Vector3 offsetAfterDeath, bool isResetting)
@@ -184,7 +188,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         DefineAtTransition(idleState, runState, new FuncPredicate(() => IsAlive));
         
         DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !Weapon.IsAttacking));
+            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !Weapon.Value.IsAttacking));
         
         DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
         DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
@@ -196,13 +200,11 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         NoHealthLeft?.Invoke(this);
         
-        CurrentHealth = 0;
-        
         _movementEffectCount = 0;
 
         _health.text = $"{CurrentHealth}";
 
-        Weapon.StopAttacking();
+        Weapon.Value.StopAttacking();
         
         RemoveAllEffects();
         

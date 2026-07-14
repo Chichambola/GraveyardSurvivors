@@ -287,7 +287,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 393618829167630708}
-  - component: {fileID: 9003346802289927355}
+  - component: {fileID: 3266976154770957663}
   - component: {fileID: 3653054267437700123}
   m_Layer: 0
   m_Name: Weapon
@@ -312,7 +312,7 @@ Transform:
   - {fileID: 3911100963055204037}
   m_Father: {fileID: 9007132564956147045}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9003346802289927355
+--- !u!114 &3266976154770957663
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,13 +321,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1460903546567066256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485a0b08d02f05602b43eff2c3812425, type: 3}
+  m_Script: {fileID: 11500000, guid: e5bbd95836ae3284598ffeaa9f157df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _info: {fileID: 11400000, guid: 7bbf29c81e30830479c32f1046fdf442, type: 2}
-  BonusDamagePerUpgrade: 1
-  Cooldown: 0.3
   _attackStrategy: {fileID: 3653054267437700123}
+  _damage: 1
+  _cooldown: 0.3
+  _damagePerUpgrade: 0.5
 --- !u!114 &3653054267437700123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,7 +518,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6800221008874116930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -823,9 +823,10 @@ MonoBehaviour:
   Mover: {fileID: 2864853422003173727}
   _damageZone: {fileID: 2491473788055411636}
   PlayerDetector: {fileID: 6375594758851993861}
-  _defender: {fileID: 5106020596504560185}
+  Weapon:
+    _underlyingValue: {fileID: 3266976154770957663}
   _health: {fileID: 3678190649255506134}
-  Weapon: {fileID: 9003346802289927355}
+  _defender: {fileID: 5106020596504560185}
 --- !u!114 &2864853422003173727
 MonoBehaviour:
   m_ObjectHideFlags: 0

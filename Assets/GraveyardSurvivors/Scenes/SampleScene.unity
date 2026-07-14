@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2118,7 +2118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &258041549
 Transform:
   m_ObjectHideFlags: 0
@@ -2160,6 +2160,7 @@ MonoBehaviour:
     MoneyForKill: 0
     XpForKill: 0
     LanternEnergy: 0
+    IncomingDamageMultiplier: 0
     Luck: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
@@ -2167,6 +2168,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _isSpawning: 1
 --- !u!1 &264294664
 GameObject:
   m_ObjectHideFlags: 0
@@ -8159,10 +8161,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.4
+  m_fontSize: 72
   m_fontSizeBase: 77.4
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -14913,23 +14915,17 @@ MonoBehaviour:
   _itemSpawner: {fileID: 2055380388}
   _itemsToDropPrefabs:
     keys:
-    - {fileID: -6795875221895891607, guid: 6548f24377d81df42a1242d04aa49566, type: 3}
     - {fileID: -7635428409179756100, guid: 80d50f06a33dcff449b0c9b1a450cdc3, type: 3}
-    - {fileID: 7111968728577630430, guid: 4d70d33fb54921646826d70a3fac7680, type: 3}
-    - {fileID: -29700579064363286, guid: a741b67b88ecd3349835c42b0bf3d512, type: 3}
-    values: 03000000010000000100000002000000
+    - {fileID: -7049433452083003737, guid: b68acefe98ffa4a49b4d175f68059bc1, type: 3}
+    - {fileID: 3857508017085827166, guid: 2537fa0e67fa4bc39860ea171f79048e, type: 3}
+    values: 020000000100000003000000
   _itemsForLevelUpPrefabs:
     keys:
-    - {fileID: -4722422550531824380, guid: 5391d689314df8a6e969f502437550b7, type: 3}
-    - {fileID: 3002361926396818639, guid: 3bf13085e26e8244681953ebcb918990, type: 3}
-    - {fileID: 1264647093896674163, guid: a3afb0c7c825ef08993baf619c797402, type: 3}
-    - {fileID: 3857508017085827166, guid: 2537fa0e67fa4bc39860ea171f79048e, type: 3}
-    - {fileID: 3250717161611408165, guid: ca485738553818006b60e298ebfed3ce, type: 3}
-    - {fileID: 8756619577773032967, guid: f12bdded8834ee84ea66643b1eb80ea4, type: 3}
-    values: 010000000200000001000000030000000100000001000000
-  _weapons:
-  - {fileID: 5638386864590902357, guid: d1bc6255757afec44bd558b59a3b3598, type: 3}
-  - {fileID: 7916467909278291421, guid: a95a28e2e12c7634eb50289e0439b2ef, type: 3}
+    - {fileID: 7916467909278291421, guid: a95a28e2e12c7634eb50289e0439b2ef, type: 3}
+    - {fileID: 5638386864590902357, guid: d1bc6255757afec44bd558b59a3b3598, type: 3}
+    - {fileID: -29700579064363286, guid: a741b67b88ecd3349835c42b0bf3d512, type: 3}
+    - {fileID: 7111968728577630430, guid: 4d70d33fb54921646826d70a3fac7680, type: 3}
+    values: 01000000010000000300000002000000
 --- !u!4 &1204296357
 Transform:
   m_ObjectHideFlags: 0
@@ -17351,7 +17347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1428741548
 Transform:
   m_ObjectHideFlags: 0
@@ -17393,6 +17389,7 @@ MonoBehaviour:
     MoneyForKill: 1
     XpForKill: 1
     LanternEnergy: 0
+    IncomingDamageMultiplier: 0
     Luck: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
@@ -17400,6 +17397,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _isSpawning: 1
 --- !u!1 &1439293271
 GameObject:
   m_ObjectHideFlags: 0
@@ -18465,10 +18463,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.4
+  m_fontSize: 72
   m_fontSizeBase: 77.4
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -21257,10 +21255,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.4
+  m_fontSize: 72
   m_fontSizeBase: 77.4
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -22375,7 +22373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1925439054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22402,6 +22400,7 @@ MonoBehaviour:
     MoneyForKill: 0
     XpForKill: 0
     LanternEnergy: 0
+    IncomingDamageMultiplier: 0
     Luck: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
@@ -22409,6 +22408,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 2
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _isSpawning: 1
 --- !u!4 &1925439055
 Transform:
   m_ObjectHideFlags: 0
@@ -22800,7 +22800,6 @@ MonoBehaviour:
   - {fileID: 1903451900}
   _changeOpacityTime: 0.5
   _itemsHandler: {fileID: 1204296356}
-  _amountOfWeaponsPerUpgrade: 1
   _levels: {fileID: 1975721312}
 --- !u!4 &1975721311
 Transform:
@@ -23474,9 +23473,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemySpawners:
   - {fileID: 2123011993}
-  - {fileID: 1428741549}
-  - {fileID: 1925439054}
-  - {fileID: 258041550}
   _spawnCollidersHandler: {fileID: 283037511}
   _placementVerifier: {fileID: 2050020224}
   _minTime: 8
@@ -24833,6 +24829,7 @@ MonoBehaviour:
     MoneyForKill: 0
     XpForKill: 1
     LanternEnergy: 1
+    IncomingDamageMultiplier: 0
     Luck: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
@@ -24840,6 +24837,7 @@ MonoBehaviour:
   _weight: 70
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _isSpawning: 1
 --- !u!1 &2135301144
 GameObject:
   m_ObjectHideFlags: 0

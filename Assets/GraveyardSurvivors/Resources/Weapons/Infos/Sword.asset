@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdc351a4ce429b445b1280d5ae7c2710, type: 3}
-  m_Name: IronSword
+  m_Script: {fileID: 11500000, guid: 03a01e5b95c4973f9933558dcf298178, type: 3}
+  m_Name: Sword
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 341d6a330c9ed0a489ca6471fa70c6b4, type: 3}
-  _name: Iron sword
-  _baseDescription: Melee weapon. Apllies bleeding and knock back on hit;
-  _damage: 2
+  _name: Sword

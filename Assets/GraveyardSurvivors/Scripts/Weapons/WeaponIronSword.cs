@@ -26,6 +26,9 @@ public class WeaponIronSword : Weapon
                                                  $"Add +{_attackStrategy.RadiusPercentGain}% to attack radius.\n" +
                                                  $"Add +{_knockBack.KnockBackPercentGain}% to knock back force;";
 
+    public override string BaseDescription => $"Melee weapon.\n" +
+                                              $"Knocks back enemies on hit.";
+
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;

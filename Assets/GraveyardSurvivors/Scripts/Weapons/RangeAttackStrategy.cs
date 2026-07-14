@@ -20,6 +20,7 @@ public class RangeAttackStrategy : AttackStrategy
     private int _currentProjectileAmount;
 
     public int ProjectilePerUpgrade => _projectilePerUpgrade;
+    public int InitialProjectileAmount => _initialProjectileAmount;
 
     private void Awake()
     {
@@ -42,6 +43,9 @@ public class RangeAttackStrategy : AttackStrategy
                 foreach (var attacker in sortedAttackers)
                 {
                     AttackerDetected?.Invoke(attacker);
+                    
+                    if (_count > _currentProjectileAmount) 
+                        return;
                 }
             }
             

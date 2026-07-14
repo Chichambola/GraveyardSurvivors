@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1142816510843383114}
-  - component: {fileID: 4873230860632232592}
   - component: {fileID: 5751068212462771672}
   - component: {fileID: 5059154876432265284}
   - component: {fileID: 6860781101718310688}
@@ -119,20 +118,6 @@ Transform:
   - {fileID: 3567738560636625878}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4873230860632232592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8105351716186805442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a12b7b0225781d41a31506130e4d463, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _points: {fileID: 6860781101718310688}
-  _thrower: {fileID: 5751068212462771672}
 --- !u!114 &5751068212462771672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,9 +130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc519370bca9f5cbd867e51855f188bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _curve: {fileID: 5059154876432265284}
-  _rotationSpeed: 0
-  _speed: 2
+  _jumpPower: 0
+  _duration: 1.5
+  _numberofJumps: 1
 --- !u!114 &5059154876432265284
 MonoBehaviour:
   m_ObjectHideFlags: 0

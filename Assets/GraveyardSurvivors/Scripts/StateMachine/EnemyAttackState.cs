@@ -14,7 +14,7 @@ public class EnemyAttackState : BaseState
     {
         if (StateHandler is not Enemy character) return;
         
-        Animator.CrossFade(s_Attack, CrossFadeDuration);
+        Animator.CrossFade(s_attack, CrossFadeDuration);
         
         character.HandleAttack();
     }

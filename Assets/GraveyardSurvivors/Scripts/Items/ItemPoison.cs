@@ -18,9 +18,11 @@ public class ItemPoison : Item, IAttackItem
             throw new System.Exception("Player is already set");
         
         _player = player;
+        
+        AddEffect();
     }
-    
-    public void Apply()
+
+    private void AddEffect()
     {
         _effect = new Effect();
         

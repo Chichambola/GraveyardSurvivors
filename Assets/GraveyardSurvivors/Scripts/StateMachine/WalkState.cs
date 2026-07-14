@@ -8,7 +8,7 @@ public class WalkState : BaseState
     
     public override void DoEnter()
     {
-        Animator.CrossFade(s_Walk, CrossFadeDuration);
+        Animator.CrossFade(s_walk, CrossFadeDuration);
     }
 
     public override void FixedUpdate()

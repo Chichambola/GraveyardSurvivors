@@ -430,8 +430,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
-  BonusDamagePerUpgrade: 1
-  Cooldown: 1
+  _weight: 0
+  _isItem: 0
+  BonusDamagePerUpgrade: 10
+  Cooldown: 2
+  _damage: 25
   _attackStrategy: {fileID: 5380774487396859826}
   _weaponBearer:
     _underlyingValue: {fileID: 2158510540606250342}
@@ -1097,9 +1100,10 @@ MonoBehaviour:
   Mover: {fileID: 5529676922395853904}
   _damageZone: {fileID: 4714903918488013307}
   PlayerDetector: {fileID: 1942943560831323276}
-  _defender: {fileID: 8495916584587225802}
+  Weapon:
+    _underlyingValue: {fileID: 9097205137456547513}
   _health: {fileID: 2926252959164244938}
-  Weapon: {fileID: 9097205137456547513}
+  _defender: {fileID: 8495916584587225802}
 --- !u!114 &5529676922395853904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1194,7 +1198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1923393577208119394
 RectTransform:
   m_ObjectHideFlags: 0

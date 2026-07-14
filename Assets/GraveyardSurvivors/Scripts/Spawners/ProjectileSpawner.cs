@@ -52,8 +52,8 @@ public class ProjectileSpawner : Spawner<Projectile>
     
     private void OnEnemyHit(Projectile projectile)
     {
-        ProjectileHitEnemy?.Invoke(_currentTarget);
+        ProjectileHitEnemy?.Invoke(projectile.CurrentTarget);
         
-        Release(projectile);
+        projectile.Release();
     }
 }

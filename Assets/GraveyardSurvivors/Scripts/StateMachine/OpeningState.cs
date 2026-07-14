@@ -8,6 +8,6 @@ public class OpeningState : BaseState
     
     public override void DoEnter()
     {
-        Animator.CrossFade(s_Opening, CrossFadeDuration);
+        Animator.CrossFade(s_opening, CrossFadeDuration);
     }
 }

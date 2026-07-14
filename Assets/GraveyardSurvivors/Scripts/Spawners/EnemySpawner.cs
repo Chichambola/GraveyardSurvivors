@@ -27,6 +27,9 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     [Header("Unity workaround")]
     [SerializeField] private Vector3 _offsetAfterDeath = new (0, -90, 0);
 
+    [Header("Debug")] 
+    [SerializeField] private bool _isSpawning = true;
+
     private float _minRandomValue = -2f;
     private float _maxRandomValue = 4f;
     private Vector3 _spawnPoint;
@@ -42,6 +45,9 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
     public void Spawn(Vector3 position)
     {
+        if (!_isSpawning)
+            return;
+        
         for (int i = 0; i < _numberOfEnemiesSpawnAtOnce; i++)
         {
             _spawnPoint = position;

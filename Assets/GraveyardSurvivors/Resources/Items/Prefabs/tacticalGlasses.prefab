@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8123590568473238742}
   - component: {fileID: 4252974414907243659}
   - component: {fileID: -5600268751410814440}
-  - component: {fileID: 8756619577773032967}
+  - component: {fileID: -7049433452083003737}
   m_Layer: 0
-  m_Name: poison
+  m_Name: tacticalGlasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +136,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8756619577773032967
+--- !u!114 &-7049433452083003737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,18 +145,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6181936772671151368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90c383a672d504e49844e7e27fa7b0c2, type: 3}
+  m_Script: {fileID: 11500000, guid: adf70c7f2034e95b6911a0f1d1cdc018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _info: {fileID: 11400000, guid: efc7209f092befe4c843a76fdd6d5594, type: 2}
-  _weight: 50
+  _info: {fileID: 11400000, guid: 804fe9cb1b7af944c980e06e78f5c38d, type: 2}
+  _weight: 90
   _isItem: 1
-  _poisonEffect:
-    _duration: 2
-    _tickInterval: 1
-    _damagePerTick: 1.5
-    _effectChance: 10
-    _damageEffect: 0
+  _damagePercentBoost: 20
+  _healthThreshold: 90
+  _damagePerUpgrade: 5
 --- !u!1 &7643068274461626718
 GameObject:
   m_ObjectHideFlags: 0

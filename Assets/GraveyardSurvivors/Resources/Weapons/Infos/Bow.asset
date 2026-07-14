@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdc351a4ce429b445b1280d5ae7c2710, type: 3}
-  m_Name: ArmoredSkeletonArm
+  m_Script: {fileID: 11500000, guid: 03a01e5b95c4973f9933558dcf298178, type: 3}
+  m_Name: Bow
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
-  _name: ArmoredSkeletonArm
-  _baseDescription: 
-  _damage: 4
+  _sprite: {fileID: 21300000, guid: 8c5e5033fe838ef40989eeb85a513b7f, type: 3}
+  _name: Bow

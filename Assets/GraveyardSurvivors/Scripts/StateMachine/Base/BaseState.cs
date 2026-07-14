@@ -9,12 +9,12 @@ public class BaseState : IState
     protected readonly CharacterBase StateHandler;
     protected readonly Animator Animator;
     
-    protected static readonly int s_Run = Animator.StringToHash("Run");
-    protected static readonly int s_Idle = Animator.StringToHash("Idle");
-    protected static readonly int s_Attack = Animator.StringToHash("Attack");
-    protected static readonly int s_Death = Animator.StringToHash("Death");
-    protected static readonly int s_Walk = Animator.StringToHash("Walk");
-    protected static readonly int s_Opening = Animator.StringToHash("Opening");
+    protected static readonly int s_run = Animator.StringToHash("Run");
+    protected static readonly int s_idle = Animator.StringToHash("Idle");
+    protected static readonly int s_attack = Animator.StringToHash("Attack");
+    protected static readonly int s_death = Animator.StringToHash("Death");
+    protected static readonly int s_walk = Animator.StringToHash("Walk");
+    protected static readonly int s_opening = Animator.StringToHash("Opening");
 
     protected const float CrossFadeDuration = 0.15f;
 

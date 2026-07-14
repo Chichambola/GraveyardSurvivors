@@ -106,6 +106,15 @@ public static class UserUtils
 
         return default(T);
     }
+    
+    public static IEnumerable<IWeightedObject> GetWeightedObjects(this Dictionary<Item, ERarityLevel> dictionary,ERarityLevel rarity)
+    {
+        return dictionary
+            .Where(kvp => kvp.Value == rarity)
+            .Select(kvp => kvp.Key)
+            .OfType<IWeightedObject>()
+            .ToList();
+    }
 
     public static float RoundToFifths(this float value)
     {
@@ -120,13 +129,5 @@ public static class UserUtils
         position.z += Random.Range(minValue, maxValue);
 
         return position;
-    }
-    
-    public static List<Item> GetItemsByRarity(this Dictionary<Item, ERarityLevel> dictionary, ERarityLevel rarity)
-    {
-        return dictionary
-            .Where(kvp => kvp.Value == rarity)
-            .Select(kvp => kvp.Key)
-            .ToList();
     }
 }

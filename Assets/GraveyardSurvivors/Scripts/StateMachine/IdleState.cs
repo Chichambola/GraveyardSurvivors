@@ -8,6 +8,6 @@ public class IdleState : BaseState
 
     public override void DoEnter()
     {
-        Animator.CrossFade(s_Idle, CrossFadeDuration);
+        Animator.CrossFade(s_idle, CrossFadeDuration);
     }
 }

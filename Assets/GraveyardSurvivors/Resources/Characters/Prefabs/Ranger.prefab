@@ -64,6 +64,7 @@ Transform:
   - {fileID: 238693456520220458}
   - {fileID: 2582745075401836166}
   - {fileID: 2072821896417032599}
+  - {fileID: 4185530208629815695}
   m_Father: {fileID: 6820181342422801515}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &227465351377247924
@@ -908,6 +909,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7268001377205792876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1762388583088286711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4185530208629815695}
+  - component: {fileID: 5942448908655781904}
+  m_Layer: 0
+  m_Name: ItemsHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4185530208629815695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762388583088286711}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4205336045660507138}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5942448908655781904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762388583088286711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80468a018c12da1faa50bd4127f55cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 930483005040703314}
 --- !u!1 &1901972071719087800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2663,6 +2709,10 @@ MonoBehaviour:
   _player: {fileID: 930483005040703314}
   _weaponsPrefab:
   - {fileID: 5638386864590902357, guid: d1bc6255757afec44bd558b59a3b3598, type: 3}
+  _damageEffects: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &7351144744302064916
 GameObject:
   m_ObjectHideFlags: 0
@@ -7685,6 +7735,7 @@ MonoBehaviour:
   _attacker: {fileID: 6277263831435311590}
   _baseStats: {fileID: 11400000, guid: 33bece1b209fce2489a57609fc172ea9, type: 2}
   _statsViewer: {fileID: 7397251735399933207}
+  _itemsHandler: {fileID: 5942448908655781904}
   _health: {fileID: 7806447276525855132}
   _wallet: {fileID: 2418341122684004869}
   _light: {fileID: 3474814700427343827}

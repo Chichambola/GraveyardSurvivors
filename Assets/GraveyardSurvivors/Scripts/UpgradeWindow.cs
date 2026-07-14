@@ -26,8 +26,6 @@ public class UpgradeWindow : MonoBehaviour
     
     private float _backgroundAlpha = .3f;
     
-    public float Alpha => CanvasGroup.alpha;
-
     protected virtual void Awake()
     {
         CanvasGroup = GetComponent<CanvasGroup>();
@@ -39,13 +37,13 @@ public class UpgradeWindow : MonoBehaviour
         TweenSettings.settings.ease = _easing;
     }
 
-    public void SetWindow(IItem item, ItemSettings settings)
+    public void SetWindow(IItem item, Color color)
     {
         SetItem(item);
-
-        _rareLevel.text = settings.Rarity != ERarityLevel.None ? settings.Rarity.ToString() : String.Empty;
         
-        _background.color = settings.Color;
+        _background.color = color;
+
+        _rareLevel.text = item.Rarity.ToString();
         
         var backgroundColor = _background.color;
         backgroundColor.a = _backgroundAlpha;

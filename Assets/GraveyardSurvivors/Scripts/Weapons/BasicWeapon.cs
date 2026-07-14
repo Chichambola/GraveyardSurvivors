@@ -1,18 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
-public class EnemyMeleeWeapon : Weapon
+public class BasicWeapon : MonoBehaviour, IWeapon
 {
     [SerializeField] private MeleeAttackStrategy _attackStrategy;
+    [SerializeField] private float _damage;
+    [SerializeField] private float _cooldown;
+    [SerializeField] private float _damagePerUpgrade = 1;
     
     private Coroutine _coroutine;
+    private bool _isAttacking;
     
-    public override string UpgradeDescription { get; }
-    public override string BaseDescription { get; }
+    public event Action<IAttacker, Weapon> AttackerDetected;
 
+    public float Damage => _damage;
+    public bool IsAttacking => _isAttacking;
+    
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;
@@ -23,7 +29,12 @@ public class EnemyMeleeWeapon : Weapon
         _attackStrategy.AttackerDetected -= OnAttackerDetected;
     }
     
-    public override void Attack()
+    public void Upgrade()
+    {
+        _damage += _damagePerUpgrade;
+    }
+    
+    public void Attack()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -31,7 +42,7 @@ public class EnemyMeleeWeapon : Weapon
         _coroutine = StartCoroutine(AttackRoutine());
     }
     
-    public override void StopAttacking()
+    public void StopAttacking()
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -39,9 +50,9 @@ public class EnemyMeleeWeapon : Weapon
     
     private IEnumerator AttackRoutine()
     {
-        IsAttacking = true;
+        _isAttacking = true;
         
-        var wait = new WaitForSeconds(Cooldown);
+        var wait = new WaitForSeconds(_cooldown);
         
         while (enabled)
         {
@@ -49,7 +60,7 @@ public class EnemyMeleeWeapon : Weapon
             
             _attackStrategy.Execute();
             
-            IsAttacking = false;
+            _isAttacking = false;
         }
     }
     

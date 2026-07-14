@@ -18,7 +18,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     [SerializeField] private StatsViewer _statsViewer;
     
     [Header("Services")] 
-    [SerializeField] private PlayersItemsHandler _itemsHandler;
+    [SerializeField] private Inventory _itemsHandler;
     [SerializeField] private Health _health;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private LanternLight _light;
@@ -202,7 +202,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     public void AddItem(Item item)
     {
-        _itemsHandler.AddItem(item);
+        _itemsHandler.Add(item);
     }
     
     protected override void InitializeStateMachine()
@@ -224,7 +224,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     
     private void OnItemPickedUp(Item item)
     {
-        _itemsHandler.AddItem(item);
+        _itemsHandler.Add(item);
 
         PickedItem?.Invoke(item);
     }

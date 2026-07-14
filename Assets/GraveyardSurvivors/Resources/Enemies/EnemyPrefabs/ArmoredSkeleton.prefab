@@ -269,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2427909387439168727
 RectTransform:
   m_ObjectHideFlags: 0
@@ -437,9 +437,10 @@ MonoBehaviour:
   Mover: {fileID: 9198884861547997829}
   _damageZone: {fileID: 3680220431082829727}
   PlayerDetector: {fileID: 3810879339430432190}
-  _defender: {fileID: 2601827664011398758}
+  Weapon:
+    _underlyingValue: {fileID: 2449316190531277775}
   _health: {fileID: 463873145867478184}
-  Weapon: {fileID: 861282645860133735}
+  _defender: {fileID: 2601827664011398758}
 --- !u!114 &9198884861547997829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,8 +1023,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7448468488472628437}
-  - component: {fileID: 861282645860133735}
   - component: {fileID: 6398945705746586719}
+  - component: {fileID: 2449316190531277775}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -1047,22 +1048,6 @@ Transform:
   - {fileID: 1186141363934546108}
   m_Father: {fileID: 3609522409623139469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &861282645860133735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6825108176610803921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485a0b08d02f05602b43eff2c3812425, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _info: {fileID: 11400000, guid: 90f4d73030b01d246bd47f307680c691, type: 2}
-  BonusDamagePerUpgrade: 1
-  Cooldown: 0.3
-  _attackStrategy: {fileID: 6398945705746586719}
 --- !u!114 &6398945705746586719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,6 +1062,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _area: {fileID: 6567286370352077153}
   _radiusPercentGain: 5
+--- !u!114 &2449316190531277775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6825108176610803921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bbd95836ae3284598ffeaa9f157df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackStrategy: {fileID: 6398945705746586719}
+  _damage: 2
+  _cooldown: 0.3
+  _damagePerUpgrade: 0.5
 --- !u!1 &6883585963125570166
 GameObject:
   m_ObjectHideFlags: 0

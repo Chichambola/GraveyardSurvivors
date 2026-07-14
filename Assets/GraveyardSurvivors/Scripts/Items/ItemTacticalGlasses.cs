@@ -13,7 +13,7 @@ public class ItemTacticalGlasses : Item, IUpgradeable, IAttackItem
     private HashSet<Enemy> _enemies;
     
     public override string CurrentDescription => $"Deal +{_damagePercentBoost}% more damage to enemies above {_healthThreshold}% HP. \n" +
-                                                 $"Add +{_damagePercentBoost}% to damage percentage for each upgrade.";
+                                                 $"Add +{_damagePerUpgrade}% to damage percentage for each upgrade.";
 
     protected override void Awake()
     {
@@ -38,22 +38,31 @@ public class ItemTacticalGlasses : Item, IUpgradeable, IAttackItem
         {
             _player.EnemyDetected -= OnEnemyDetected;
         }
+
+        if (_enemies.Count != 0)
+        {
+            foreach (var enemy in _enemies)
+            {
+                Unsubscribe(enemy);
+            }
+        }
+        
+        _enemies.Clear();
     }
 
-    public void Upgrade()
-    {
-        _damagePercentBoost += _damagePerUpgrade;
-    }
+    public void Upgrade() => _damagePercentBoost += _damagePerUpgrade;
     
     private void OnEnemyDetected(Enemy enemy)
     {
-        if (!_enemies.Add(enemy))
-        {
+        if (!IsHealthAboveThreshold(enemy))
             return;
-        }
-
+        
+        if (!_enemies.Add(enemy))
+            return;
+        
         enemy.TookDamage += OnEnemyTookDamage;
         enemy.NoHealthLeft += OnNoHealthLeft;
+        
         enemy.CurrentStats.IncomingDamageMultiplier += _damagePercentBoost;
     }
 
@@ -61,10 +70,9 @@ public class ItemTacticalGlasses : Item, IUpgradeable, IAttackItem
     {
         if (_enemies.Contains(enemy))
         {
+            Unsubscribe(enemy);
+
             _enemies.Remove(enemy);
-            
-            enemy.TookDamage -= OnEnemyTookDamage;
-            enemy.NoHealthLeft -= OnNoHealthLeft;
         }
         else
         {
@@ -75,19 +83,25 @@ public class ItemTacticalGlasses : Item, IUpgradeable, IAttackItem
     private void OnEnemyTookDamage(Enemy enemy)
     {
         if (IsHealthAboveThreshold(enemy))
-        {
-            enemy.CurrentStats.IncomingDamageMultiplier += _damagePercentBoost;
-        }
-        else
-        {
-            enemy.CurrentStats.IncomingDamageMultiplier -= _damagePercentBoost;
-        }
+            return;
+        
+        enemy.CurrentStats.IncomingDamageMultiplier -= _damagePercentBoost;
+        
+        Unsubscribe(enemy);
+
+        _enemies.Remove(enemy);
+    }
+
+    private void Unsubscribe(Enemy enemy)
+    {
+        enemy.TookDamage -= OnEnemyTookDamage;
+        enemy.NoHealthLeft -= OnNoHealthLeft;
     }
 
     private bool IsHealthAboveThreshold(IAttacker enemy)
     {
         float percentage = UserUtils.CalculatePercentageOf(enemy.CurrentHealth, enemy.MaxHealth);
-
+        
         return percentage >= _healthThreshold;
     }
 }

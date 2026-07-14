@@ -21,46 +21,32 @@ public class UpgradesHandler : MonoBehaviour
     
     [Header("Items handler and its values")]
     [SerializeField] private ItemsHandler _itemsHandler;
-    [SerializeField] private int _amountOfWeaponsPerUpgrade = 1;
     [SerializeField] private RarityLevelHandler _levels;
+    [SerializeField] private int _searchCount = 10;
     
     public event Action<Item> ItemSelected;
     public event Action<Weapon> WeaponSelected;
     
     private float _fullVisibility = 1;
     private float _fullOpacity = 0;
-    private int _amountOfItemWindows;
     private TweenSettings<float> _tweenSettings;
-    private ItemSettings _itemSettings;
     private IPlayer _player;
     private List<int> _indexes;
+    private List<Item> _itemsToShow;
+    private Dictionary<Item, ERarityLevel> _itemsDict;
 
     private void Awake()
     {
         _tweenSettings = new TweenSettings<float>();
         _indexes = new List<int>();
-        _itemSettings = new ItemSettings();
-    }
-
-    private void OnValidate()
-    {
-        if (_amountOfWeaponsPerUpgrade >= _upgradeWindows.Count)
-        {
-            _amountOfWeaponsPerUpgrade = _upgradeWindows.Count - 1;
-        }
-
-        if (_amountOfWeaponsPerUpgrade < 0)
-        {
-            _amountOfWeaponsPerUpgrade = 0;
-        }
+        _itemsDict = new Dictionary<Item, ERarityLevel>();
+        _itemsToShow = new List<Item>();
     }
 
     private void OnEnable()
     {
         _tweenSettings.settings.duration = _changeOpacityTime;
         _tweenSettings.settings.useUnscaledTime = true;
-
-        _amountOfItemWindows = _upgradeWindows.Count - _amountOfWeaponsPerUpgrade;
     }
     
     public void SetPlayer(IPlayer player)
@@ -76,10 +62,10 @@ public class UpgradesHandler : MonoBehaviour
         
         ChangeBackgroundOpacity(_fullVisibility);
         
-        SetWindowsWithWeapons();
+        FindItems();
         
-        SetWindowsWithItems();
-
+        SetWindows();
+        
         foreach (var upgradeWindow in _upgradeWindows)
         {
             upgradeWindow.SetSettings(true);
@@ -90,36 +76,59 @@ public class UpgradesHandler : MonoBehaviour
         }
     }
 
-    private void SetWindowsWithItems()
+    private void FindItems()
     {
-        for (int i = 0; i < _amountOfItemWindows; i++)
+        _itemsDict = _itemsHandler.GetItemsForLevelUp();
+        
+        for (int i = 0; i < _upgradeWindows.Count; i++)
         {
-            RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
+            bool isFound = false;
+
+            int searchAmount = 0;
             
-            var item = _itemsHandler.GetItemForLevelUp(level.Rarity);
-            
-            _itemSettings.Rarity = level.Rarity;
-            _itemSettings.Color = _rarityColors[level.Rarity];
-            
-            SetRandomWindow(item);
+            while (isFound != true || searchAmount > _searchCount)
+            {
+                var item = GetItem(_itemsDict);
+
+                if (!_itemsToShow.Contains(item))
+                {
+                    _itemsToShow.Add(item);
+                        
+                    isFound = true;
+
+                    if (item != null)
+                        _itemsDict.Remove(item);
+                    else
+                        throw new Exception(nameof(item));
+                }
+
+                searchAmount++;
+            }
+
+            if (searchAmount > _searchCount)
+            {
+                var item = GetItem(_itemsDict);
+                
+                _itemsToShow.Add(item);
+            }
         }
     }
 
-    private void SetWindowsWithWeapons()
+    private Item GetItem(Dictionary<Item, ERarityLevel> itemsDict)
     {
-        for (int i = 0; i < _amountOfWeaponsPerUpgrade; i++)
-        {
-            var weapon = _itemsHandler.GetRandomWeapon();
+        RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
+            
+        var items = itemsDict.GetWeightedObjects(level.Rarity);
 
-            bool hasWeapon = _player.HasWeapon(weapon);
-            
-            weapon.SetDescription(hasWeapon ? weapon.UpgradeDescription : weapon.BaseDescription);
-            
-            _itemSettings.Color = _rarityColors[ERarityLevel.None];
-            _itemSettings.Rarity = ERarityLevel.None;
-            
-            SetRandomWindow(weapon);
-        }
+        var item = UserUtils.GetElementByWeight(items) as Item;
+
+        if (item == null)
+            throw new Exception($"{nameof(item)} is not Item");
+        
+        item.SetRarityLevel(level);
+
+        return item;
+
     }
 
     private void ChangeBackgroundOpacity(float alphaValue)
@@ -138,30 +147,44 @@ public class UpgradesHandler : MonoBehaviour
         }
         
         ChangeBackgroundOpacity(_fullOpacity);
+        
+        _itemsToShow.Clear();
+        
+        _itemsDict.Clear();
 
         if (upgrade is Item item)
         {
-            ItemSelected?.Invoke(item);
+            if (upgrade is Weapon weapon)
+            {
+                WeaponSelected?.Invoke(weapon);
+                
+                return;
+            }
             
-            return;
-        }
-
-        if (upgrade is Weapon weapon)
-        {
-            WeaponSelected?.Invoke(weapon);
+            ItemSelected?.Invoke(item);
             
             return;
         }
     }
     
-    private void SetRandomWindow(IItem item)
+    private void SetWindows()
     {
-        int randomIndex = Random.Range(0, _indexes.Count);
+        foreach (var item in _itemsToShow)
+        {
+            if (item is Weapon weapon)
+            {
+                bool hasWeapon = _player.HasWeapon(weapon);
+            
+                weapon.SetDescription(hasWeapon ? weapon.UpgradeDescription : weapon.BaseDescription);
+            }
+            
+            int randomIndex = Random.Range(0, _indexes.Count);
         
-        int index = _indexes[randomIndex];
+            int index = _indexes[randomIndex];
+            
+            _indexes.Remove(index);
         
-        _indexes.Remove(index);
-        
-        _upgradeWindows[index].SetWindow(item, _itemSettings);
+            _upgradeWindows[index].SetWindow(item, _rarityColors[item.Rarity]);
+        }
     }
 }

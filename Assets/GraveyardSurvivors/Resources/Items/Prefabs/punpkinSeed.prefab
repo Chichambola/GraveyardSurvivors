@@ -149,4 +149,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 3e4dc936e689deea384af53bfa5d84fb, type: 2}
   _weight: 100
+  _isItem: 1
   _increaseValue: 10

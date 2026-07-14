@@ -10,10 +10,8 @@ public class ItemHeartOfNecropolis : Item, IBuff
     
     public override string CurrentDescription => $"+{_increaseValue} Max HP at the cost of -{_healthRegenDecreasePercent}%HP Regen. ";
 
-    protected override void OnValidate()
+    protected void OnValidate()
     {
-        base.OnValidate();
-
         if (_healthRegenDecreasePercent < 0)
         {
             _healthRegenDecreasePercent = 0;
