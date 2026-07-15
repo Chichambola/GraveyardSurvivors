@@ -4,6 +4,7 @@ using Cinemachine;
 using PrimeTween;
 using Sherbert.Framework.Generic;
 using TMPro;
+using UnityEditor.Profiling;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,17 +25,23 @@ public class Game : MonoBehaviour
     
     [Header("Item displaying")]
     [SerializeField] private ItemDisplayer _itemDisplayer;
+
     
     private int _primeTweenCapacity = 3000;
     private static float s_normalTimeSpeed = 1;
     private static float s_pauseTime = 0.00001f;
+    private static GameTimer s_gameTimer;
     private IPlayer _player;
     
     public static bool IsPaused { get; private set; }
+    public static int Minutes => s_gameTimer.Minutes;
+    public static int Seconds => s_gameTimer.Seconds;
     
     private void Awake()
     {
         PrimeTweenConfig.SetTweensCapacity(_primeTweenCapacity);
+
+       s_gameTimer =  s_gameTimer.GetComponent<GameTimer>();
     }
 
     private void Update()
@@ -50,7 +57,7 @@ public class Game : MonoBehaviour
 
         _player.PickedItem += OnItemPickedUp;
         
-        _enemySpawnerHandler.SetPlayer(_player);
+        _enemySpawnerHandler.Init(_player);
         _interactablesHandler.Init(_player);
         _lanternPointer.Init(_player, _lantern);
         _darkness.Init(_player);

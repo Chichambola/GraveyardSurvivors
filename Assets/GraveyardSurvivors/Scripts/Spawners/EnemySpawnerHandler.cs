@@ -27,8 +27,7 @@ public class EnemySpawnerHandler : MonoBehaviour
     [SerializeField] private float _pointGainPercent = 10;
     
     [Header("Upgrade timing settings")]
-    [SerializeField] private SerializableDictionary<int, float> _minutesAndPercents;
-    [SerializeField] private GameTimer _gameTimer;
+    [SerializeField] private SerializableDictionary<int, float> _minutesAndPercentsInitialValues;
 
     public event Action<Enemy> EnemyWasKilled;
 
@@ -36,8 +35,11 @@ public class EnemySpawnerHandler : MonoBehaviour
     private Coroutine _spawnRoutine;
     private Coroutine _upgradeRoutine;
     private List<Enemy> _currentEnemies;
+    private List<EnemySpawner> _availableSpawners;
     private Queue<EnemySpawner> _enemiesToSpawn;
+    private Dictionary<int, float> _minutesAndPercents;
     private IntervalTimer _timer;
+    private IPlayer _player;
     private float _availablePoints;
     private bool _isChoosing;
 
@@ -45,17 +47,12 @@ public class EnemySpawnerHandler : MonoBehaviour
     {
         _currentEnemies = new List<Enemy>();
         _enemiesToSpawn = new Queue<EnemySpawner>();
+        _minutesAndPercents = _minutesAndPercentsInitialValues.ToDictionary(item => item.Key, item => item.Value);
     }
 
     private void OnEnable()
     {
         _availablePoints = _initialAvailablePoints;
-
-        foreach (IEnemySpawner<Enemy> enemySpawner in _enemySpawners)
-        {
-            enemySpawner.EnemyWasReleased += OnEnemyRelease;
-            enemySpawner.EnemyWasSpawned += _currentEnemies.Add;
-        }
         
         if(_upgradeRoutine != null)
             StopCoroutine(_upgradeRoutine);
@@ -65,24 +62,21 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (IEnemySpawner<Enemy> enemySpawner in _enemySpawners)
+        foreach (var enemySpawner in _availableSpawners)
         {
             enemySpawner.EnemyWasReleased -= OnEnemyRelease;
             enemySpawner.EnemyWasSpawned -= _currentEnemies.Add;
         }
     }
-
-    public void SetPlayer(IPlayer player)
+    
+    public void Init(IPlayer player)
     {
         if (_enemySpawners.Length <= 0)
-        {
             throw new Exception($"Length can not be less than 0");
-        }
+
+        _player = player;
         
-        foreach (var spawner in _enemySpawners)
-        {
-            spawner.SetPlayer(player);
-        }
+        FindAvailableSpawners();
         
         StartChoosing();
         
@@ -91,7 +85,26 @@ public class EnemySpawnerHandler : MonoBehaviour
         
         _spawnRoutine = StartCoroutine(SpawnRoutine());
     }
-    
+
+    private void FindAvailableSpawners()
+    {
+        foreach (var enemySpawner in _enemySpawners)
+        {
+            if (!enemySpawner.IsAvailable)
+                continue;
+            
+            enemySpawner.EnemyWasReleased += OnEnemyRelease;
+            enemySpawner.EnemyWasSpawned += _currentEnemies.Add;
+            
+            enemySpawner.SetPlayer(_player);
+            
+            _availableSpawners.Add(enemySpawner);
+        }
+
+        if (_availableSpawners.Count <= 0)
+            throw new Exception("You need at lease have 1 available spawner at the beginning.");
+    }
+
     private void StartChoosing()
     {
         _isChoosing = true;
@@ -185,7 +198,7 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private void ChooseSpawner()
     {
-        EnemySpawner chosenSpawner = UserUtils.GetElementByWeight(_enemySpawners);
+        EnemySpawner chosenSpawner = UserUtils.GetElementByWeight(_availableSpawners);
 
         if (_availablePoints > chosenSpawner.Cost && _currentEnemies.Count < _maxEnemiesAmount)
         {
@@ -203,7 +216,7 @@ public class EnemySpawnerHandler : MonoBehaviour
     {
         while (_minutesAndPercents.Count != 0)
         {
-            if (_minutesAndPercents.Remove(_gameTimer.Minutes, out var percent))
+            if (_minutesAndPercents.Remove(Game.Minutes, out var percent))
             {
                 Upgrade(percent);
             }
@@ -216,6 +229,7 @@ public class EnemySpawnerHandler : MonoBehaviour
     {
         _spawnRate = _spawnRate.GetClampedValueInverse(percent);
         _pointGainPercent = _pointGainPercent.GetClampedValue(percent);
+        
         _maxPoints = _maxPoints.AddPercentToNumber(percent);
         _maxEnemiesAmount = _maxEnemiesAmount.AddPercentToNumber(percent);
 

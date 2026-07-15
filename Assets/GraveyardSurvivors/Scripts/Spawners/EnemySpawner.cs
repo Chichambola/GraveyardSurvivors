@@ -14,6 +14,7 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 {
     [SerializeField] private EnemyInfo _enemyInfo;
     [SerializeField] private EnemyStats _statsForUpgrade;
+    [SerializeField] private bool _isAvailable;
     
     [Header("Loot spawners")]
     [SerializeField] private PickablesSpawner _coinSpawner;
@@ -27,35 +28,21 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     [Header("Unity workaround")]
     [SerializeField] private Vector3 _offsetAfterDeath = new (0, -90, 0);
 
-    [Header("Debug")] 
-    [SerializeField] private bool _isSpawning = true;
-
-    private float _minRandomValue = -2f;
-    private float _maxRandomValue = 4f;
-    private Vector3 _spawnPoint;
-    private List<Enemy> _spawnedUnits;
-    private EnemyStats _baseStats;
-    private IPlayer _player;
-    
     public event Action<Enemy> EnemyWasReleased;
     public event Action<Enemy> EnemyWasSpawned;
     
+    private float _minRandomValue = -2f;
+    private float _maxRandomValue = 4f;
+    private Vector3 _spawnPoint;
+    private IPlayer _player;
+    private Enemy _enemyPrefab;
+    private EnemyStats _baseStats;
+    private List<Enemy> _spawnedUnits;
+
     public int Cost => _unitCost;
     public int Weight => _weight;
-
-    public void Spawn(Vector3 position)
-    {
-        if (!_isSpawning)
-            return;
-        
-        for (int i = 0; i < _numberOfEnemiesSpawnAtOnce; i++)
-        {
-            _spawnPoint = position;
-            
-            GetObject();
-        }
-    }
-
+    public bool IsAvailable => _isAvailable;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -63,8 +50,14 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         _baseStats = _enemyInfo.GetStats();
 
         _statsForUpgrade = new EnemyStats(_statsForUpgrade);
+
+        _enemyPrefab = Instantiate(ObjectPrefab, transform);
+
+        _enemyPrefab.gameObject.SetActive(false);
         
         _spawnedUnits = new List<Enemy>();
+        
+        SetPrefab(_enemyPrefab);
     }
 
     private void OnDisable()
@@ -83,11 +76,21 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         _spawnedUnits.Clear();
     }
     
+    public void Spawn(Vector3 position)
+    {
+        for (int i = 0; i < _numberOfEnemiesSpawnAtOnce; i++)
+        {
+            _spawnPoint = position;
+            
+            GetObject();
+        }
+    }
+    
     public void Upgrade()
     {
         _baseStats.SetStats(_statsForUpgrade);
         
-        ObjectPrefab.Upgrade(_baseStats);
+        _enemyPrefab.Upgrade(_baseStats);
 
         foreach (var enemy in _spawnedUnits)
         {
@@ -95,10 +98,9 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         }
     }
 
-    public void SetPlayer(IPlayer player)
-    {
-        _player = player;
-    }
+    public void SetPlayer(IPlayer player) => _player = player;
+
+    public void SetActive(bool isActive) => _isAvailable = isActive;
 
     protected override void ActionOnGet(Enemy enemy)
     {
