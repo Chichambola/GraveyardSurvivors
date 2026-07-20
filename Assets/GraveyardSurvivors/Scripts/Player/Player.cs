@@ -144,9 +144,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     public void TakeDamage(float damage)
     {
-        if (!_health.CanTakeDamage)
-            return;
-
         if (!_health.TryTakeDamage(ref damage))
             return;
         

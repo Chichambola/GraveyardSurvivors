@@ -30,20 +30,24 @@ public class Game : MonoBehaviour
     private int _primeTweenCapacity = 3000;
     private static float s_normalTimeSpeed = 1;
     private static float s_pauseTime = 0.00001f;
-    private static GameTimer s_gameTimer;
     private IPlayer _player;
     
     public static bool IsPaused { get; private set; }
-    public static int Minutes => s_gameTimer.Minutes;
-    public static int Seconds => s_gameTimer.Seconds;
+    public static Game Instance { get; private set; }
     
     private void Awake()
     {
         PrimeTweenConfig.SetTweensCapacity(_primeTweenCapacity);
-
-       s_gameTimer =  s_gameTimer.GetComponent<GameTimer>();
+        
+       if (Instance != null && Instance != this)
+       {
+           Destroy(gameObject);
+           return;
+       }
+        
+       Instance = this;
     }
-
+    
     private void Update()
     {
         TimerController.UpdateTimers();
@@ -58,6 +62,7 @@ public class Game : MonoBehaviour
         _player.PickedItem += OnItemPickedUp;
         
         _enemySpawnerHandler.Init(_player);
+        _enemySpawnerHandler.StartProcess();
         _interactablesHandler.Init(_player);
         _lanternPointer.Init(_player, _lantern);
         _darkness.Init(_player);

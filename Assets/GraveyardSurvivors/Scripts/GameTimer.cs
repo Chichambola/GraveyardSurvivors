@@ -9,13 +9,13 @@ public class GameTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private float _debugElapsedTime;
+    public event Action ReachedMinute;
     
     private int _seconds;
     private int _minutes;
+    private int _previousMinute;
     private float _elapsedTime;
-
-    public int Minutes => _minutes;
-    public int Seconds => _seconds;
+    
     public static GameTimer Instance { get; private set; }
     
     private void Awake()
@@ -36,6 +36,11 @@ public class GameTimer : MonoBehaviour
         UpdateTimer();
     }
 
+    private void OnEnable()
+    {
+        _previousMinute = 0;
+    }
+
     private void OnDisable()
     {
         _elapsedTime = 0;
@@ -46,8 +51,14 @@ public class GameTimer : MonoBehaviour
         _elapsedTime += Time.deltaTime;
         
         _minutes = Mathf.FloorToInt(_elapsedTime / 60);
-        Debug.Log(_minutes);
         _seconds = Mathf.FloorToInt(_elapsedTime % 60);
+        
+        if (_minutes != _previousMinute)
+        {
+            ReachedMinute?.Invoke();
+            
+            _previousMinute = _minutes;
+        }
         
         _timerText.text = $"{_minutes:00} : {_seconds:00}";
     }

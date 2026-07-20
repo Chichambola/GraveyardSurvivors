@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2118,7 +2118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &258041549
 Transform:
   m_ObjectHideFlags: 0
@@ -2154,21 +2154,17 @@ MonoBehaviour:
     MaxHealth: 7
     Armor: 2
     MovementSpeed: 2
-    AttackSpeed: 0
-    CritChance: 0
-    CritMultiplier: 0
     MoneyForKill: 0
     XpForKill: 0
     LanternEnergy: 0
     IncomingDamageMultiplier: 0
-    Luck: 0
+  _isAvailable: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 20
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _isSpawning: 1
 --- !u!1 &264294664
 GameObject:
   m_ObjectHideFlags: 0
@@ -17354,7 +17350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1428741548
 Transform:
   m_ObjectHideFlags: 0
@@ -17390,21 +17386,17 @@ MonoBehaviour:
     MaxHealth: 5
     Armor: 2
     MovementSpeed: 0
-    AttackSpeed: 0
-    CritChance: 0
-    CritMultiplier: 0
     MoneyForKill: 1
     XpForKill: 1
     LanternEnergy: 0
     IncomingDamageMultiplier: 0
-    Luck: 0
+  _isAvailable: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 7
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _isSpawning: 1
 --- !u!1 &1439293271
 GameObject:
   m_ObjectHideFlags: 0
@@ -22380,7 +22372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1925439054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22401,21 +22393,17 @@ MonoBehaviour:
     MaxHealth: 3
     Armor: 1
     MovementSpeed: 0
-    AttackSpeed: 0
-    CritChance: 0
-    CritMultiplier: 0
     MoneyForKill: 0
     XpForKill: 0
     LanternEnergy: 0
     IncomingDamageMultiplier: 0
-    Luck: 0
+  _isAvailable: 1
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
-  _unitCost: 5
+  _unitCost: 6
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 2
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _isSpawning: 1
 --- !u!4 &1925439055
 Transform:
   m_ObjectHideFlags: 0
@@ -23460,9 +23448,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1925439055}
   - {fileID: 2123011992}
   - {fileID: 1428741548}
-  - {fileID: 1925439055}
   - {fileID: 258041549}
   m_Father: {fileID: 997767819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23479,25 +23467,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySpawners:
+  - {fileID: 1925439054}
   - {fileID: 2123011993}
+  - {fileID: 1428741549}
+  - {fileID: 258041550}
   _spawnCollidersHandler: {fileID: 283037511}
   _placementVerifier: {fileID: 2050020224}
-  _minTime: 8
-  _maxTime: 15
-  _spawnRate: 0.7
-  _maxEnemiesAmount: 30
-  _initialAvailablePoints: 50
-  _maxPoints: 300
-  _pointGainPercent: 30
-  _minutesAndPercents:
-    keys: 010000000200000003000000040000000500000006000000
-    values:
-    - 5
-    - 8
-    - 12
-    - 15
-    - 20
-    - 25
+  _initialValues:
+    InitialAvailablePoints: 20
+    MaxPoints: 300
+    MinTime: 8
+    MaxTime: 15
+    SpawnRate: 0.7
+    MaxEnemiesAmount: 30
+    PointGainPercent: 30
+  _upgradesPercentsInitialValues:
+  - 5
+  - 10
+  - 15
+  - 20
+  - 25
+  - 30
   _gameTimer: {fileID: 602367797}
 --- !u!114 &2050020224
 MonoBehaviour:
@@ -24830,21 +24820,17 @@ MonoBehaviour:
     MaxHealth: 4
     Armor: 1
     MovementSpeed: 0
-    AttackSpeed: 0
-    CritChance: 0
-    CritMultiplier: 0
     MoneyForKill: 0
     XpForKill: 1
     LanternEnergy: 1
     IncomingDamageMultiplier: 0
-    Luck: 0
+  _isAvailable: 0
   _coinSpawner: {fileID: 1012258921}
   _crystalSpawner: {fileID: 1035285751}
   _unitCost: 6
   _weight: 70
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _isSpawning: 1
 --- !u!1 &2135301144
 GameObject:
   m_ObjectHideFlags: 0

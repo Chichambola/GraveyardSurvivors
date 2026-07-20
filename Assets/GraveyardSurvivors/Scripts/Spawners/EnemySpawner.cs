@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
+public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject, IRestarter
 {
     [SerializeField] private EnemyInfo _enemyInfo;
     [SerializeField] private EnemyStats _statsForUpgrade;
@@ -47,15 +47,25 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     {
         base.Awake();
 
-        _baseStats = _enemyInfo.GetStats();
-
         _statsForUpgrade = new EnemyStats(_statsForUpgrade);
 
+        _spawnedUnits = new List<Enemy>();
+    }
+
+    private void OnEnable()
+    {
+        RestartersHandler.Register(this);
+        
+        InitializeEnemy();
+    }
+
+    private void InitializeEnemy()
+    {
+        _baseStats = _enemyInfo.GetStats();
+        
         _enemyPrefab = Instantiate(ObjectPrefab, transform);
 
         _enemyPrefab.gameObject.SetActive(false);
-        
-        _spawnedUnits = new List<Enemy>();
         
         SetPrefab(_enemyPrefab);
     }
@@ -74,6 +84,8 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         }
         
         _spawnedUnits.Clear();
+        
+        RestartersHandler.Deregister(this);
     }
     
     public void Spawn(Vector3 position)
@@ -84,6 +96,13 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
             
             GetObject();
         }
+    }
+    
+    public void Restart()
+    {
+        Destroy(_enemyPrefab.gameObject);
+        
+        InitializeEnemy();
     }
     
     public void Upgrade()

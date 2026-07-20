@@ -1439,8 +1439,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 930483005040703314}
-  _healCooldown: 1
-  _invincibilityAfterDamage: 0.3
+  _healCooldown: 1.5
+  _reduceDamageTime: 2
   _defender: {fileID: 3962644393961421149}
   _evader: {fileID: 962139294001224673}
   _statsViewer: {fileID: 7397251735399933207}

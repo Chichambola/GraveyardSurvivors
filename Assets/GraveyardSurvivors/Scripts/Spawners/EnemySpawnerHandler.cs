@@ -3,100 +3,112 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sherbert.Framework.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
-public class EnemySpawnerHandler : MonoBehaviour
+public class EnemySpawnerHandler : MonoBehaviour, IRestarter
 {
     [Header("Spawners settings")]
-    [SerializeField] private EnemySpawner[] _enemySpawners;
+    [SerializeField] private List<EnemySpawner> _enemySpawners;
     [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;
     [SerializeField] private PlacementVerifier _placementVerifier;
-    
-    [Header("Spawning settings")]
-    [SerializeField] private int _minTime = 15;
-    [SerializeField] private int _maxTime = 60;
-    [SerializeField] private float _spawnRate = 0.8f;
-    [SerializeField] private int _maxEnemiesAmount = 30;
-    
-    [Header("Points settings")]
-    [SerializeField] private int _initialAvailablePoints = 30;
-    [SerializeField] private int _maxPoints = 250;
-    [SerializeField] private float _pointGainPercent = 10;
+
+    [SerializeField] private SpawnerHandlerSettings _initialValues;
     
     [Header("Upgrade timing settings")]
-    [SerializeField] private SerializableDictionary<int, float> _minutesAndPercentsInitialValues;
+    [SerializeField] private List<float> _upgradesPercentsInitialValues;
+    [SerializeField] private GameTimer _gameTimer;
 
     public event Action<Enemy> EnemyWasKilled;
 
     private Coroutine _choosingRoutine;
     private Coroutine _spawnRoutine;
-    private Coroutine _upgradeRoutine;
     private List<Enemy> _currentEnemies;
     private List<EnemySpawner> _availableSpawners;
+    private List<float> _upgradePercents;
     private Queue<EnemySpawner> _enemiesToSpawn;
-    private Dictionary<int, float> _minutesAndPercents;
     private IntervalTimer _timer;
     private IPlayer _player;
+    private SpawnerHandlerSettings _settings;
     private float _availablePoints;
     private bool _isChoosing;
+    private bool _isGameTimerAttached;
 
     private void Awake()
     {
         _currentEnemies = new List<Enemy>();
         _enemiesToSpawn = new Queue<EnemySpawner>();
-        _minutesAndPercents = _minutesAndPercentsInitialValues.ToDictionary(item => item.Key, item => item.Value);
+        _availableSpawners = new List<EnemySpawner>();
+        _upgradePercents = _upgradesPercentsInitialValues.ToList();
     }
 
     private void OnEnable()
     {
-        _availablePoints = _initialAvailablePoints;
+        RestartersHandler.Register(this);
         
-        if(_upgradeRoutine != null)
-            StopCoroutine(_upgradeRoutine);
+        _isGameTimerAttached = true;
 
-        _upgradeRoutine = StartCoroutine(UpgradingRoutine());
+        _gameTimer.ReachedMinute += OnMinuteReached;
     }
 
     private void OnDisable()
     {
-        foreach (var enemySpawner in _availableSpawners)
-        {
-            enemySpawner.EnemyWasReleased -= OnEnemyRelease;
-            enemySpawner.EnemyWasSpawned -= _currentEnemies.Add;
-        }
+        UnsubscribeFromSpawners();
+
+        if (_isGameTimerAttached)
+            _gameTimer.ReachedMinute -= OnMinuteReached;
+        
+        RestartersHandler.Deregister(this);
     }
-    
+
     public void Init(IPlayer player)
     {
-        if (_enemySpawners.Length <= 0)
+        if (_enemySpawners.Count <= 0)
             throw new Exception($"Length can not be less than 0");
 
         _player = player;
+    }
+    
+    public void Restart()
+    {
+        UnsubscribeFromSpawners();
+        
+        StartProcess();
+    }
+
+    public void StartProcess()
+    {
+        _settings = _initialValues;
+        
+        _availablePoints = _settings.InitialAvailablePoints;
         
         FindAvailableSpawners();
         
         StartChoosing();
+        
+        if (!_isGameTimerAttached)
+            _gameTimer.ReachedMinute += OnMinuteReached;
         
         if (_spawnRoutine != null)
             StopCoroutine(_spawnRoutine);
         
         _spawnRoutine = StartCoroutine(SpawnRoutine());
     }
-
+    
     private void FindAvailableSpawners()
     {
         foreach (var enemySpawner in _enemySpawners)
         {
+            enemySpawner.SetPlayer(_player);
+            
             if (!enemySpawner.IsAvailable)
                 continue;
             
             enemySpawner.EnemyWasReleased += OnEnemyRelease;
             enemySpawner.EnemyWasSpawned += _currentEnemies.Add;
-            
-            enemySpawner.SetPlayer(_player);
             
             _availableSpawners.Add(enemySpawner);
         }
@@ -124,11 +136,11 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private void OnIntervalReached()
     {
-        _availablePoints = _availablePoints.AddPercentToNumber(_pointGainPercent);
+        _availablePoints = _availablePoints.AddPercentToNumber(_settings.PointGainPercent);
 
-        if (_availablePoints > _maxPoints)
+        if (_availablePoints > _settings.MaxPoints)
         {
-            _availablePoints = _maxPoints;
+            _availablePoints = _settings.MaxPoints;
             
             OnTimerStopped();
         }
@@ -146,7 +158,7 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private IEnumerator SpawnRoutine()
     {
-        var wait = new WaitForSeconds(_spawnRate);
+        var wait = new WaitForSeconds(_settings.SpawnRate);
 
         while (enabled)
         {
@@ -179,16 +191,16 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private IEnumerator ChoosingRoutine()
     {
-        var wait = new WaitForSecondsRealtime(_spawnRate);
+        var wait = new WaitForSecondsRealtime(_settings.SpawnRate);
         
-        while (_isChoosing && _currentEnemies.Count < _maxEnemiesAmount)
+        while (_isChoosing && _currentEnemies.Count < _settings.MaxEnemiesAmount)
         {
             ChooseSpawner();
 
             yield return wait;
         }
         
-        int time = Random.Range(_minTime, _maxTime);
+        float time = Random.Range(_settings.MinTime, _settings.MaxTime);
         
         _timer = new IntervalTimer(time);
         _timer.Stopped += OnTimerStopped;
@@ -198,9 +210,9 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private void ChooseSpawner()
     {
-        EnemySpawner chosenSpawner = UserUtils.GetElementByWeight(_availableSpawners);
+        var chosenSpawner = UserUtils.GetElementByWeight(_availableSpawners);
 
-        if (_availablePoints > chosenSpawner.Cost && _currentEnemies.Count < _maxEnemiesAmount)
+        if (_availablePoints > chosenSpawner.Cost && _currentEnemies.Count < _settings.MaxEnemiesAmount)
         {
             _availablePoints -= chosenSpawner.Cost;
 
@@ -211,31 +223,64 @@ public class EnemySpawnerHandler : MonoBehaviour
             _isChoosing = false;
         }
     }
-
-    private IEnumerator UpgradingRoutine()
+    
+    private void OnMinuteReached()
     {
-        while (_minutesAndPercents.Count != 0)
+        if (_upgradePercents.Count > 0)
         {
-            if (_minutesAndPercents.Remove(Game.Minutes, out var percent))
-            {
-                Upgrade(percent);
-            }
+            var percent = _upgradePercents.First();
             
-            yield return null;
+            _upgradePercents.Remove(percent);
+            
+            Upgrade(percent);
+        }
+
+        if (_availableSpawners.Count != _enemySpawners.Count)
+        {
+            var enemySpawner = _enemySpawners.First();
+            
+            enemySpawner.SetActive(true);
+            
+            _availableSpawners.Add(enemySpawner);
+        }
+        
+        if (_upgradePercents.Count <= 0 && _enemySpawners.Count == _availableSpawners.Count)
+        {
+            _isGameTimerAttached = false;
+            _gameTimer.ReachedMinute -= OnMinuteReached;
         }
     }
     
     private void Upgrade(float percent)
     {
-        _spawnRate = _spawnRate.GetClampedValueInverse(percent);
-        _pointGainPercent = _pointGainPercent.GetClampedValue(percent);
+        var spawnRatePercent = _settings.SpawnRate.GetClampedValueInverse(percent);
+
+        _settings.SpawnRate = _settings.SpawnRate.SubtractPercentFromNumber(spawnRatePercent);
         
-        _maxPoints = _maxPoints.AddPercentToNumber(percent);
-        _maxEnemiesAmount = _maxEnemiesAmount.AddPercentToNumber(percent);
+        _settings.MaxPoints = _settings.MaxPoints.AddPercentToNumber(percent);
+        _settings.MaxEnemiesAmount = _settings.MaxEnemiesAmount.AddPercentToNumber(percent);
 
         foreach (var enemySpawner in _enemySpawners)
         {
             enemySpawner.Upgrade();
         }
+    }
+    
+    private void UnsubscribeFromSpawners()
+    {
+        for (int i = _availableSpawners.Count - 1; i >= 0; i--)
+        {
+            _availableSpawners[i].EnemyWasReleased -= OnEnemyRelease;
+            _availableSpawners[i].EnemyWasSpawned -= _currentEnemies.Add;
+            
+            if (i == 0)
+            {
+                continue;
+            }
+            
+            _availableSpawners[i].SetActive(false);
+        }
+
+        _availableSpawners.Clear();
     }
 }
