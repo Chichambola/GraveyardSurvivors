@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 3608908}
   - component: {fileID: 3608911}
   - component: {fileID: 3608910}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (39)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 71411579}
   - component: {fileID: 71411581}
   - component: {fileID: 71411580}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (48)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 73892013}
   - component: {fileID: 73892015}
   - component: {fileID: 73892014}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (86)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 77963034}
   - component: {fileID: 77963036}
   - component: {fileID: 77963035}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (69)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 86890167}
   - component: {fileID: 86890170}
   - component: {fileID: 86890169}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 88020859}
   - component: {fileID: 88020861}
   - component: {fileID: 88020860}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (135)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -675,7 +675,7 @@ GameObject:
   - component: {fileID: 90883368}
   - component: {fileID: 90883370}
   - component: {fileID: 90883369}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (81)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 119314493}
   - component: {fileID: 119314495}
   - component: {fileID: 119314494}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (131)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -888,7 +888,7 @@ GameObject:
   - component: {fileID: 123069690}
   - component: {fileID: 123069692}
   - component: {fileID: 123069691}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (87)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -971,7 +971,7 @@ GameObject:
   - component: {fileID: 128702499}
   - component: {fileID: 128702501}
   - component: {fileID: 128702500}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (126)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1054,7 +1054,7 @@ GameObject:
   - component: {fileID: 136100914}
   - component: {fileID: 136100916}
   - component: {fileID: 136100915}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (92)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1137,7 +1137,7 @@ GameObject:
   - component: {fileID: 139096908}
   - component: {fileID: 139096910}
   - component: {fileID: 139096909}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (78)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1252,7 +1252,7 @@ GameObject:
   - component: {fileID: 184939664}
   - component: {fileID: 184939666}
   - component: {fileID: 184939665}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (114)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1335,7 +1335,7 @@ GameObject:
   - component: {fileID: 190247361}
   - component: {fileID: 190247363}
   - component: {fileID: 190247362}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (90)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1418,7 +1418,7 @@ GameObject:
   - component: {fileID: 197900251}
   - component: {fileID: 197900253}
   - component: {fileID: 197900252}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (107)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1501,7 +1501,7 @@ GameObject:
   - component: {fileID: 198038354}
   - component: {fileID: 198038356}
   - component: {fileID: 198038355}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (143)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1584,7 +1584,7 @@ GameObject:
   - component: {fileID: 213172055}
   - component: {fileID: 213172057}
   - component: {fileID: 213172056}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (76)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1667,7 +1667,7 @@ GameObject:
   - component: {fileID: 223128655}
   - component: {fileID: 223128657}
   - component: {fileID: 223128656}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (141)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1750,7 +1750,7 @@ GameObject:
   - component: {fileID: 223971206}
   - component: {fileID: 223971208}
   - component: {fileID: 223971207}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (156)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1833,7 +1833,7 @@ GameObject:
   - component: {fileID: 226999187}
   - component: {fileID: 226999189}
   - component: {fileID: 226999188}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (134)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1916,7 +1916,7 @@ GameObject:
   - component: {fileID: 235714622}
   - component: {fileID: 235714625}
   - component: {fileID: 235714624}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2030,7 +2030,7 @@ GameObject:
   - component: {fileID: 253212031}
   - component: {fileID: 253212033}
   - component: {fileID: 253212032}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (127)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2165,6 +2165,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _canSpawn: 0
 --- !u!1 &264294664
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,7 +2177,7 @@ GameObject:
   - component: {fileID: 264294665}
   - component: {fileID: 264294668}
   - component: {fileID: 264294667}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2259,7 +2260,7 @@ GameObject:
   - component: {fileID: 265651625}
   - component: {fileID: 265651627}
   - component: {fileID: 265651626}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (150)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2342,7 +2343,7 @@ GameObject:
   - component: {fileID: 268784580}
   - component: {fileID: 268784582}
   - component: {fileID: 268784581}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (120)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2562,7 +2563,7 @@ GameObject:
   - component: {fileID: 285545670}
   - component: {fileID: 285545673}
   - component: {fileID: 285545672}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2645,7 +2646,7 @@ GameObject:
   - component: {fileID: 294481843}
   - component: {fileID: 294481845}
   - component: {fileID: 294481844}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (75)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2728,7 +2729,7 @@ GameObject:
   - component: {fileID: 312957687}
   - component: {fileID: 312957689}
   - component: {fileID: 312957688}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (155)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2945,7 +2946,7 @@ GameObject:
   - component: {fileID: 349730336}
   - component: {fileID: 349730338}
   - component: {fileID: 349730337}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (71)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3033,6 +3034,7 @@ GameObject:
   - component: {fileID: 360078378}
   - component: {fileID: 360078376}
   - component: {fileID: 360078375}
+  - component: {fileID: 360078379}
   m_Layer: 6
   m_Name: Light
   m_TagString: Untagged
@@ -3050,7 +3052,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 550256710}
@@ -3089,6 +3091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c970b8010eba0bf3b762e592143c0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackArea: {fileID: 360078379}
 --- !u!114 &360078374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3163,7 +3166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _light: {fileID: 360078372}
   _enemyDetector: {fileID: 360078374}
-  _shrinkRateIncrease: 0.01
+  _shrinkRateIncrease: 0.008
 --- !u!114 &360078378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3177,6 +3180,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerDetector: {fileID: 360078373}
+--- !u!114 &360078379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360078369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ed9e844e55af54bafc479b1ae417af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mask:
+    serializedVersion: 2
+    m_Bits: 8
+  NumberOfColliders: 50
 --- !u!1 &375712434
 GameObject:
   m_ObjectHideFlags: 0
@@ -3188,7 +3207,7 @@ GameObject:
   - component: {fileID: 375712435}
   - component: {fileID: 375712437}
   - component: {fileID: 375712436}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (142)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3335,7 +3354,7 @@ GameObject:
   - component: {fileID: 392500515}
   - component: {fileID: 392500518}
   - component: {fileID: 392500517}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (40)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3418,7 +3437,7 @@ GameObject:
   - component: {fileID: 403838020}
   - component: {fileID: 403838022}
   - component: {fileID: 403838021}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (138)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3501,7 +3520,7 @@ GameObject:
   - component: {fileID: 416332951}
   - component: {fileID: 416332953}
   - component: {fileID: 416332952}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (146)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3584,7 +3603,7 @@ GameObject:
   - component: {fileID: 431169669}
   - component: {fileID: 431169672}
   - component: {fileID: 431169671}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3667,7 +3686,7 @@ GameObject:
   - component: {fileID: 463544094}
   - component: {fileID: 463544096}
   - component: {fileID: 463544095}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (112)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3750,7 +3769,7 @@ GameObject:
   - component: {fileID: 472955346}
   - component: {fileID: 472955349}
   - component: {fileID: 472955348}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3833,7 +3852,7 @@ GameObject:
   - component: {fileID: 475274425}
   - component: {fileID: 475274427}
   - component: {fileID: 475274426}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (119)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3916,7 +3935,7 @@ GameObject:
   - component: {fileID: 477091102}
   - component: {fileID: 477091105}
   - component: {fileID: 477091104}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4074,7 +4093,7 @@ GameObject:
   - component: {fileID: 491306716}
   - component: {fileID: 491306718}
   - component: {fileID: 491306717}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (153)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4157,7 +4176,7 @@ GameObject:
   - component: {fileID: 491931833}
   - component: {fileID: 491931835}
   - component: {fileID: 491931834}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (99)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4374,7 +4393,7 @@ GameObject:
   - component: {fileID: 518646557}
   - component: {fileID: 518646560}
   - component: {fileID: 518646559}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4457,7 +4476,7 @@ GameObject:
   - component: {fileID: 526703207}
   - component: {fileID: 526703210}
   - component: {fileID: 526703209}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4559,7 +4578,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
-  _damageMultiplier: 0.1
   _rate: 1.5
 --- !u!4 &531874430
 Transform:
@@ -4587,7 +4605,7 @@ GameObject:
   - component: {fileID: 547999617}
   - component: {fileID: 547999619}
   - component: {fileID: 547999618}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (60)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4717,7 +4735,7 @@ GameObject:
   - component: {fileID: 561570245}
   - component: {fileID: 561570247}
   - component: {fileID: 561570246}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (46)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4800,7 +4818,7 @@ GameObject:
   - component: {fileID: 567814590}
   - component: {fileID: 567814593}
   - component: {fileID: 567814592}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4883,7 +4901,7 @@ GameObject:
   - component: {fileID: 572323885}
   - component: {fileID: 572323887}
   - component: {fileID: 572323886}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (104)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4966,7 +4984,7 @@ GameObject:
   - component: {fileID: 597691648}
   - component: {fileID: 597691650}
   - component: {fileID: 597691649}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (121)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5049,7 +5067,7 @@ GameObject:
   - component: {fileID: 601460886}
   - component: {fileID: 601460888}
   - component: {fileID: 601460887}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (53)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5166,7 +5184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerText: {fileID: 722507730}
-  _debugElapsedTime: 0
+  _debugElapsedTime: 415
 --- !u!1 &614689062
 GameObject:
   m_ObjectHideFlags: 0
@@ -5178,7 +5196,7 @@ GameObject:
   - component: {fileID: 614689063}
   - component: {fileID: 614689066}
   - component: {fileID: 614689065}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5309,7 +5327,7 @@ GameObject:
   - component: {fileID: 638440216}
   - component: {fileID: 638440219}
   - component: {fileID: 638440218}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5526,7 +5544,7 @@ GameObject:
   - component: {fileID: 672614841}
   - component: {fileID: 672614844}
   - component: {fileID: 672614843}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5609,7 +5627,7 @@ GameObject:
   - component: {fileID: 697457338}
   - component: {fileID: 697457340}
   - component: {fileID: 697457339}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (139)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6092,7 +6110,7 @@ GameObject:
   - component: {fileID: 741965597}
   - component: {fileID: 741965600}
   - component: {fileID: 741965599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (43)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6250,7 +6268,7 @@ GameObject:
   - component: {fileID: 754700285}
   - component: {fileID: 754700288}
   - component: {fileID: 754700287}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (36)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6333,7 +6351,7 @@ GameObject:
   - component: {fileID: 756490118}
   - component: {fileID: 756490120}
   - component: {fileID: 756490119}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (55)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6416,7 +6434,7 @@ GameObject:
   - component: {fileID: 778261987}
   - component: {fileID: 778261990}
   - component: {fileID: 778261989}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6499,7 +6517,7 @@ GameObject:
   - component: {fileID: 781296790}
   - component: {fileID: 781296792}
   - component: {fileID: 781296791}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (67)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6582,7 +6600,7 @@ GameObject:
   - component: {fileID: 796508863}
   - component: {fileID: 796508865}
   - component: {fileID: 796508864}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (93)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6665,7 +6683,7 @@ GameObject:
   - component: {fileID: 800844554}
   - component: {fileID: 800844556}
   - component: {fileID: 800844555}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gate-graveyard-door-r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6858,7 +6876,7 @@ GameObject:
   - component: {fileID: 810025562}
   - component: {fileID: 810025564}
   - component: {fileID: 810025563}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (111)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7002,7 +7020,7 @@ GameObject:
   - component: {fileID: 844844964}
   - component: {fileID: 844844966}
   - component: {fileID: 844844965}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (47)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7086,7 +7104,7 @@ GameObject:
   - component: {fileID: 870422266}
   - component: {fileID: 870422265}
   - component: {fileID: 870422264}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gate-graveyard-body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7191,7 +7209,7 @@ GameObject:
   - component: {fileID: 879651040}
   - component: {fileID: 879651042}
   - component: {fileID: 879651041}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7317,6 +7335,70 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8192704, y: 0, z: 2.5032442}
   m_Center: {x: 0.4096352, y: -3.14, z: -1.71}
+--- !u!1 &892503876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 892503877}
+  - component: {fileID: 892503878}
+  m_Layer: 0
+  m_Name: HedhehogSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &892503877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892503876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2050020222}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &892503878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892503876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 590520e6df1142c48a25b4e3fbed9409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectPrefab: {fileID: 3540171344158461208, guid: e9437f58a24cf594eb53140956960976, type: 3}
+  PoolCapacity: 0
+  MaxPoolCapacity: 10
+  _enemyInfo: {fileID: 11400000, guid: 4bdbd8fa9ab6af142b5ce70d3a49d3f8, type: 2}
+  _statsForUpgrade:
+    MaxHealth: 1
+    Armor: 1
+    MovementSpeed: 0
+    MoneyForKill: 0
+    XpForKill: 0
+    LanternEnergy: 0
+    IncomingDamageMultiplier: 0
+  _isAvailable: 0
+  _coinSpawner: {fileID: 1012258921}
+  _crystalSpawner: {fileID: 1035285751}
+  _unitCost: 10
+  _weight: 100
+  _numberOfEnemiesSpawnAtOnce: 1
+  _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _canSpawn: 1
 --- !u!1 &903700546
 GameObject:
   m_ObjectHideFlags: 0
@@ -7328,7 +7410,7 @@ GameObject:
   - component: {fileID: 903700547}
   - component: {fileID: 903700549}
   - component: {fileID: 903700548}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (158)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7411,7 +7493,7 @@ GameObject:
   - component: {fileID: 915594158}
   - component: {fileID: 915594161}
   - component: {fileID: 915594160}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (42)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7494,7 +7576,7 @@ GameObject:
   - component: {fileID: 938993767}
   - component: {fileID: 938993769}
   - component: {fileID: 938993768}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (130)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7577,7 +7659,7 @@ GameObject:
   - component: {fileID: 943613274}
   - component: {fileID: 943613276}
   - component: {fileID: 943613275}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (129)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7660,7 +7742,7 @@ GameObject:
   - component: {fileID: 956145218}
   - component: {fileID: 956145221}
   - component: {fileID: 956145220}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (41)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7870,7 +7952,7 @@ GameObject:
   - component: {fileID: 968449009}
   - component: {fileID: 968449012}
   - component: {fileID: 968449011}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7953,7 +8035,7 @@ GameObject:
   - component: {fileID: 969056391}
   - component: {fileID: 969056393}
   - component: {fileID: 969056392}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (98)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8070,7 +8152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _experienceIncreasePercent: 30
-  _initialTargetXp: 10
+  _initialTargetXp: 1000000
   _maxXp: 5000
   _text: {fileID: 657627956}
 --- !u!1 &979486973
@@ -8218,7 +8300,7 @@ GameObject:
   - component: {fileID: 979710168}
   - component: {fileID: 979710171}
   - component: {fileID: 979710170}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (37)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8376,7 +8458,7 @@ GameObject:
   - component: {fileID: 990611099}
   - component: {fileID: 990611101}
   - component: {fileID: 990611100}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (147)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13773,7 +13855,7 @@ GameObject:
   - component: {fileID: 1047898277}
   - component: {fileID: 1047898279}
   - component: {fileID: 1047898278}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (50)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13856,7 +13938,7 @@ GameObject:
   - component: {fileID: 1053017482}
   - component: {fileID: 1053017484}
   - component: {fileID: 1053017483}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (136)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13939,7 +14021,7 @@ GameObject:
   - component: {fileID: 1062952153}
   - component: {fileID: 1062952155}
   - component: {fileID: 1062952154}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (85)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14106,7 +14188,7 @@ GameObject:
   - component: {fileID: 1088793843}
   - component: {fileID: 1088793846}
   - component: {fileID: 1088793845}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14410,7 +14492,7 @@ GameObject:
   - component: {fileID: 1127341236}
   - component: {fileID: 1127341239}
   - component: {fileID: 1127341238}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14558,7 +14640,7 @@ GameObject:
   - component: {fileID: 1178791857}
   - component: {fileID: 1178791859}
   - component: {fileID: 1178791858}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (157)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14641,7 +14723,7 @@ GameObject:
   - component: {fileID: 1194350756}
   - component: {fileID: 1194350759}
   - component: {fileID: 1194350758}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14724,7 +14806,7 @@ GameObject:
   - component: {fileID: 1194667320}
   - component: {fileID: 1194667322}
   - component: {fileID: 1194667321}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (73)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14807,7 +14889,7 @@ GameObject:
   - component: {fileID: 1195711951}
   - component: {fileID: 1195711953}
   - component: {fileID: 1195711952}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (110)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14956,7 +15038,7 @@ GameObject:
   - component: {fileID: 1207271940}
   - component: {fileID: 1207271942}
   - component: {fileID: 1207271941}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (89)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15039,7 +15121,7 @@ GameObject:
   - component: {fileID: 1211387720}
   - component: {fileID: 1211387723}
   - component: {fileID: 1211387722}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15122,7 +15204,7 @@ GameObject:
   - component: {fileID: 1216155620}
   - component: {fileID: 1216155622}
   - component: {fileID: 1216155621}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (91)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15239,7 +15321,7 @@ GameObject:
   - component: {fileID: 1232918452}
   - component: {fileID: 1232918454}
   - component: {fileID: 1232918453}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (113)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15322,7 +15404,7 @@ GameObject:
   - component: {fileID: 1235962364}
   - component: {fileID: 1235962366}
   - component: {fileID: 1235962365}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gate-graveyard-door-l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15539,7 +15621,7 @@ GameObject:
   - component: {fileID: 1250330340}
   - component: {fileID: 1250330342}
   - component: {fileID: 1250330341}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (74)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15858,7 +15940,7 @@ GameObject:
   - component: {fileID: 1264906496}
   - component: {fileID: 1264906499}
   - component: {fileID: 1264906498}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16006,7 +16088,7 @@ GameObject:
   - component: {fileID: 1285578536}
   - component: {fileID: 1285578538}
   - component: {fileID: 1285578537}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (140)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16089,7 +16171,7 @@ GameObject:
   - component: {fileID: 1286010769}
   - component: {fileID: 1286010771}
   - component: {fileID: 1286010770}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (154)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16172,7 +16254,7 @@ GameObject:
   - component: {fileID: 1286018424}
   - component: {fileID: 1286018426}
   - component: {fileID: 1286018425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (96)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16255,7 +16337,7 @@ GameObject:
   - component: {fileID: 1291084068}
   - component: {fileID: 1291084070}
   - component: {fileID: 1291084069}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (125)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16338,7 +16420,7 @@ GameObject:
   - component: {fileID: 1297603553}
   - component: {fileID: 1297603556}
   - component: {fileID: 1297603555}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16514,7 +16596,7 @@ GameObject:
   - component: {fileID: 1309050575}
   - component: {fileID: 1309050577}
   - component: {fileID: 1309050576}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (45)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16630,7 +16712,7 @@ GameObject:
   - component: {fileID: 1326826891}
   - component: {fileID: 1326826893}
   - component: {fileID: 1326826892}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (118)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16847,7 +16929,7 @@ GameObject:
   - component: {fileID: 1330251126}
   - component: {fileID: 1330251128}
   - component: {fileID: 1330251127}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (159)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16930,7 +17012,7 @@ GameObject:
   - component: {fileID: 1338970190}
   - component: {fileID: 1338970192}
   - component: {fileID: 1338970191}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (62)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17013,7 +17095,7 @@ GameObject:
   - component: {fileID: 1347306001}
   - component: {fileID: 1347306003}
   - component: {fileID: 1347306002}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (105)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17096,7 +17178,7 @@ GameObject:
   - component: {fileID: 1363663560}
   - component: {fileID: 1363663562}
   - component: {fileID: 1363663561}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (49)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17179,7 +17261,7 @@ GameObject:
   - component: {fileID: 1379117105}
   - component: {fileID: 1379117107}
   - component: {fileID: 1379117106}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17262,7 +17344,7 @@ GameObject:
   - component: {fileID: 1389199534}
   - component: {fileID: 1389199537}
   - component: {fileID: 1389199536}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17397,6 +17479,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _canSpawn: 0
 --- !u!1 &1439293271
 GameObject:
   m_ObjectHideFlags: 0
@@ -17408,7 +17491,7 @@ GameObject:
   - component: {fileID: 1439293272}
   - component: {fileID: 1439293274}
   - component: {fileID: 1439293273}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (145)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17491,7 +17574,7 @@ GameObject:
   - component: {fileID: 1446254270}
   - component: {fileID: 1446254273}
   - component: {fileID: 1446254272}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17574,7 +17657,7 @@ GameObject:
   - component: {fileID: 1448092278}
   - component: {fileID: 1448092280}
   - component: {fileID: 1448092279}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (116)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17657,7 +17740,7 @@ GameObject:
   - component: {fileID: 1451028403}
   - component: {fileID: 1451028405}
   - component: {fileID: 1451028404}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (65)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17740,7 +17823,7 @@ GameObject:
   - component: {fileID: 1462979824}
   - component: {fileID: 1462979826}
   - component: {fileID: 1462979825}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (149)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17823,7 +17906,7 @@ GameObject:
   - component: {fileID: 1463817843}
   - component: {fileID: 1463817845}
   - component: {fileID: 1463817844}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (95)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17906,7 +17989,7 @@ GameObject:
   - component: {fileID: 1483235621}
   - component: {fileID: 1483235623}
   - component: {fileID: 1483235622}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (83)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17987,7 +18070,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1483734804}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Gate_Graveyard (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18023,7 +18106,7 @@ GameObject:
   - component: {fileID: 1512750493}
   - component: {fileID: 1512750495}
   - component: {fileID: 1512750494}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (133)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18106,7 +18189,7 @@ GameObject:
   - component: {fileID: 1517919802}
   - component: {fileID: 1517919805}
   - component: {fileID: 1517919804}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18189,7 +18272,7 @@ GameObject:
   - component: {fileID: 1523939787}
   - component: {fileID: 1523939789}
   - component: {fileID: 1523939788}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (57)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18272,7 +18355,7 @@ GameObject:
   - component: {fileID: 1532681369}
   - component: {fileID: 1532681371}
   - component: {fileID: 1532681370}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (77)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18569,7 +18652,7 @@ GameObject:
   - component: {fileID: 1550612313}
   - component: {fileID: 1550612315}
   - component: {fileID: 1550612314}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (152)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18652,7 +18735,7 @@ GameObject:
   - component: {fileID: 1556810838}
   - component: {fileID: 1556810841}
   - component: {fileID: 1556810840}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18735,7 +18818,7 @@ GameObject:
   - component: {fileID: 1563457290}
   - component: {fileID: 1563457292}
   - component: {fileID: 1563457291}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (64)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18987,7 +19070,7 @@ GameObject:
   - component: {fileID: 1582292743}
   - component: {fileID: 1582292746}
   - component: {fileID: 1582292745}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19236,7 +19319,7 @@ GameObject:
   - component: {fileID: 1603541503}
   - component: {fileID: 1603541505}
   - component: {fileID: 1603541504}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (58)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19319,7 +19402,7 @@ GameObject:
   - component: {fileID: 1613953126}
   - component: {fileID: 1613953128}
   - component: {fileID: 1613953127}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (82)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19477,7 +19560,7 @@ GameObject:
   - component: {fileID: 1637079122}
   - component: {fileID: 1637079125}
   - component: {fileID: 1637079124}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19560,7 +19643,7 @@ GameObject:
   - component: {fileID: 1649678811}
   - component: {fileID: 1649678813}
   - component: {fileID: 1649678812}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (101)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19643,7 +19726,7 @@ GameObject:
   - component: {fileID: 1662956724}
   - component: {fileID: 1662956727}
   - component: {fileID: 1662956726}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19726,7 +19809,7 @@ GameObject:
   - component: {fileID: 1675827856}
   - component: {fileID: 1675827859}
   - component: {fileID: 1675827858}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19809,7 +19892,7 @@ GameObject:
   - component: {fileID: 1678733313}
   - component: {fileID: 1678733315}
   - component: {fileID: 1678733314}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (106)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19892,7 +19975,7 @@ GameObject:
   - component: {fileID: 1681285605}
   - component: {fileID: 1681285607}
   - component: {fileID: 1681285606}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (80)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19977,7 +20060,7 @@ GameObject:
   - component: {fileID: 1688076978}
   - component: {fileID: 1688076980}
   - component: {fileID: 1688076979}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20256,7 +20339,7 @@ GameObject:
   - component: {fileID: 1689664674}
   - component: {fileID: 1689664676}
   - component: {fileID: 1689664675}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (52)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20339,7 +20422,7 @@ GameObject:
   - component: {fileID: 1689970054}
   - component: {fileID: 1689970056}
   - component: {fileID: 1689970055}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (124)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20525,7 +20608,7 @@ GameObject:
   - component: {fileID: 1752048071}
   - component: {fileID: 1752048073}
   - component: {fileID: 1752048072}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (59)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20608,7 +20691,7 @@ GameObject:
   - component: {fileID: 1756077019}
   - component: {fileID: 1756077021}
   - component: {fileID: 1756077020}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (109)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20691,7 +20774,7 @@ GameObject:
   - component: {fileID: 1759131623}
   - component: {fileID: 1759131625}
   - component: {fileID: 1759131624}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (148)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20774,7 +20857,7 @@ GameObject:
   - component: {fileID: 1761598312}
   - component: {fileID: 1761598314}
   - component: {fileID: 1761598313}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (94)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20932,7 +21015,7 @@ GameObject:
   - component: {fileID: 1779915770}
   - component: {fileID: 1779915772}
   - component: {fileID: 1779915771}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (70)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21015,7 +21098,7 @@ GameObject:
   - component: {fileID: 1783131895}
   - component: {fileID: 1783131898}
   - component: {fileID: 1783131897}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21098,7 +21181,7 @@ GameObject:
   - component: {fileID: 1784501724}
   - component: {fileID: 1784501726}
   - component: {fileID: 1784501725}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (115)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21380,7 +21463,7 @@ GameObject:
   - component: {fileID: 1806638886}
   - component: {fileID: 1806638888}
   - component: {fileID: 1806638887}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (102)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21463,7 +21546,7 @@ GameObject:
   - component: {fileID: 1814629824}
   - component: {fileID: 1814629826}
   - component: {fileID: 1814629825}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (128)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21546,7 +21629,7 @@ GameObject:
   - component: {fileID: 1821751056}
   - component: {fileID: 1821751058}
   - component: {fileID: 1821751057}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (144)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21629,7 +21712,7 @@ GameObject:
   - component: {fileID: 1827794788}
   - component: {fileID: 1827794790}
   - component: {fileID: 1827794789}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (117)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21712,7 +21795,7 @@ GameObject:
   - component: {fileID: 1846614846}
   - component: {fileID: 1846614849}
   - component: {fileID: 1846614848}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21795,7 +21878,7 @@ GameObject:
   - component: {fileID: 1856418158}
   - component: {fileID: 1856418161}
   - component: {fileID: 1856418160}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21878,7 +21961,7 @@ GameObject:
   - component: {fileID: 1859282057}
   - component: {fileID: 1859282059}
   - component: {fileID: 1859282058}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (72)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21961,7 +22044,7 @@ GameObject:
   - component: {fileID: 1882333688}
   - component: {fileID: 1882333690}
   - component: {fileID: 1882333689}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (84)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22075,7 +22158,7 @@ GameObject:
   - component: {fileID: 1893004756}
   - component: {fileID: 1893004758}
   - component: {fileID: 1893004757}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (137)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22284,7 +22367,7 @@ GameObject:
   - component: {fileID: 1908997254}
   - component: {fileID: 1908997256}
   - component: {fileID: 1908997255}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (51)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22404,6 +22487,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 2
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _canSpawn: 0
 --- !u!4 &1925439055
 Transform:
   m_ObjectHideFlags: 0
@@ -22430,7 +22514,7 @@ GameObject:
   - component: {fileID: 1947674459}
   - component: {fileID: 1947674462}
   - component: {fileID: 1947674461}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22513,7 +22597,7 @@ GameObject:
   - component: {fileID: 1949624010}
   - component: {fileID: 1949624012}
   - component: {fileID: 1949624011}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (151)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22596,7 +22680,7 @@ GameObject:
   - component: {fileID: 1950351059}
   - component: {fileID: 1950351061}
   - component: {fileID: 1950351060}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (103)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22679,7 +22763,7 @@ GameObject:
   - component: {fileID: 1975582191}
   - component: {fileID: 1975582194}
   - component: {fileID: 1975582193}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22839,7 +22923,7 @@ GameObject:
   - component: {fileID: 1990411411}
   - component: {fileID: 1990411414}
   - component: {fileID: 1990411413}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23104,7 +23188,7 @@ GameObject:
   - component: {fileID: 2003307614}
   - component: {fileID: 2003307616}
   - component: {fileID: 2003307615}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (100)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23262,7 +23346,7 @@ GameObject:
   - component: {fileID: 2033081634}
   - component: {fileID: 2033081636}
   - component: {fileID: 2033081635}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (68)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23345,7 +23429,7 @@ GameObject:
   - component: {fileID: 2034657231}
   - component: {fileID: 2034657234}
   - component: {fileID: 2034657233}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (38)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23452,6 +23536,7 @@ Transform:
   - {fileID: 2123011992}
   - {fileID: 1428741548}
   - {fileID: 258041549}
+  - {fileID: 892503877}
   m_Father: {fileID: 997767819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2050020223
@@ -23471,6 +23556,7 @@ MonoBehaviour:
   - {fileID: 2123011993}
   - {fileID: 1428741549}
   - {fileID: 258041550}
+  _lastMinuteSpawner: {fileID: 892503878}
   _spawnCollidersHandler: {fileID: 283037511}
   _placementVerifier: {fileID: 2050020224}
   _initialValues:
@@ -23565,7 +23651,7 @@ GameObject:
   - component: {fileID: 2061882590}
   - component: {fileID: 2061882592}
   - component: {fileID: 2061882591}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (132)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23648,7 +23734,7 @@ GameObject:
   - component: {fileID: 2065360046}
   - component: {fileID: 2065360048}
   - component: {fileID: 2065360047}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (97)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23731,7 +23817,7 @@ GameObject:
   - component: {fileID: 2069968934}
   - component: {fileID: 2069968936}
   - component: {fileID: 2069968935}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (108)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24149,7 +24235,7 @@ GameObject:
   - component: {fileID: 2088354661}
   - component: {fileID: 2088354664}
   - component: {fileID: 2088354663}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24364,7 +24450,7 @@ GameObject:
   - component: {fileID: 2111162609}
   - component: {fileID: 2111162611}
   - component: {fileID: 2111162610}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (122)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24447,7 +24533,7 @@ GameObject:
   - component: {fileID: 2115913836}
   - component: {fileID: 2115913838}
   - component: {fileID: 2115913837}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (123)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24530,7 +24616,7 @@ GameObject:
   - component: {fileID: 2116474167}
   - component: {fileID: 2116474169}
   - component: {fileID: 2116474168}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (63)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24613,7 +24699,7 @@ GameObject:
   - component: {fileID: 2122282874}
   - component: {fileID: 2122282876}
   - component: {fileID: 2122282875}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (61)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24696,7 +24782,7 @@ GameObject:
   - component: {fileID: 2122971694}
   - component: {fileID: 2122971696}
   - component: {fileID: 2122971695}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (66)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24831,6 +24917,7 @@ MonoBehaviour:
   _weight: 70
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
+  _canSpawn: 0
 --- !u!1 &2135301144
 GameObject:
   m_ObjectHideFlags: 0
@@ -24842,7 +24929,7 @@ GameObject:
   - component: {fileID: 2135301145}
   - component: {fileID: 2135301147}
   - component: {fileID: 2135301146}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (88)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25120,7 +25207,7 @@ GameObject:
   - component: {fileID: 2144095496}
   - component: {fileID: 2144095498}
   - component: {fileID: 2144095497}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m (79)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25234,7 +25321,7 @@ GameObject:
   - component: {fileID: 3523285066505500905}
   - component: {fileID: 8196550220880196375}
   - component: {fileID: 8173719147276236173}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gate-graveyard-body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25252,7 +25339,7 @@ GameObject:
   - component: {fileID: 370686448483035012}
   - component: {fileID: 7751439678997781525}
   - component: {fileID: 7886210033999606004}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gate-graveyard-door-l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25278,7 +25365,7 @@ GameObject:
   - component: {fileID: 3831420320695497299}
   - component: {fileID: 6182568434946344104}
   - component: {fileID: 6634564920931409892}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gate-graveyard-door-r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25311,7 +25398,7 @@ GameObject:
   - component: {fileID: 5263273858768729823}
   - component: {fileID: 9125766349640792442}
   - component: {fileID: 6431645411598765488}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall_Graveyard_2m
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25683,7 +25770,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8567072719010009727}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Gate_Graveyard
   m_TagString: Untagged
   m_Icon: {fileID: 0}

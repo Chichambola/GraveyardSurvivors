@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    public event Action<IAttacker, Weapon> AttackerDetected;
+    public event Action<IAttacker, IWeapon> AttackerDetected;
     public float Damage { get; }
     public bool IsAttacking { get; }
     void Attack();

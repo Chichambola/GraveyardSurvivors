@@ -21,7 +21,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public event Action<Enemy> NoHealthLeft;
     public event Action<Enemy> TookDamage; 
     
-    private IPlayer _player;
+    protected IPlayer Player;
     private Coroutine _attackRoutine;
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
@@ -38,7 +38,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public void Init(IPlayer player, EnemyStats stats)
     {
-        _player = player;
+        Player = player ?? throw new Exception($"Player is null");
 
         _storedDamage = 0;
 
@@ -70,14 +70,14 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         StateMachine.FixedUpdate();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         InitializeStateMachine();
 
         Weapon.Value.AttackerDetected += OnAttackerDetected;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         Weapon.Value.AttackerDetected -= OnAttackerDetected;
     }
@@ -152,11 +152,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     public override void HandleMovement()
     {
-        Mover.MoveToPosition(_player.CurrentPosition, CurrentStats.MovementSpeed);
-        
-        Vector3 direction = (_player.CurrentPosition - transform.position).normalized;
-        
-        Rotator.Rotate(direction);
+        MoveTowards(Player.CurrentPosition);
     }
 
     public override void HandleAttack()
@@ -194,6 +190,23 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
 
         StateMachine.SetState(idleState);
+    }
+    
+    protected virtual void OnAttackerDetected(IAttacker attacker, IWeapon weapon)
+    {
+        if (attacker is IPlayer player)
+        {
+            player.TakeDamage(weapon.Damage);
+        }
+    }
+    
+    protected void MoveTowards(Vector3 position)
+    {
+        Mover.MoveToPosition(position, CurrentStats.MovementSpeed);
+        
+        Vector3 direction = (position - transform.position).normalized;
+        
+        Rotator.Rotate(direction);
     }
     
     private void Die()
@@ -240,13 +253,5 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         effect.EffectCompleted -= RemoveEffect;
         _currentEffects.Remove(effect);
-    }
-    
-    private void OnAttackerDetected(IAttacker attacker, Weapon weapon)
-    {
-        if (attacker is IPlayer player)
-        {
-            player.TakeDamage(weapon.Damage);
-        }
     }
 }

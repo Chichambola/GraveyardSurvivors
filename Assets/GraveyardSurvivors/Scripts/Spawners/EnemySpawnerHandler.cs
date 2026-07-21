@@ -4,18 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using Sherbert.Framework.Generic;
 using Unity.Collections;
+using UnityEditor.Profiling;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
-public class EnemySpawnerHandler : MonoBehaviour, IRestarter
+public class EnemySpawnerHandler : MonoBehaviour
 {
-    [Header("Spawners settings")]
+    [Header("Spawners")]
     [SerializeField] private List<EnemySpawner> _enemySpawners;
+    [SerializeField] private EnemySpawner _lastMinuteSpawner;
+    
+    [Header("Services")]
     [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;
     [SerializeField] private PlacementVerifier _placementVerifier;
-
+    
+    [Header("Settings")]
     [SerializeField] private SpawnerHandlerSettings _initialValues;
     
     [Header("Upgrade timing settings")]
@@ -34,35 +39,11 @@ public class EnemySpawnerHandler : MonoBehaviour, IRestarter
     private IPlayer _player;
     private SpawnerHandlerSettings _settings;
     private float _availablePoints;
+    private int _thresholdMinute = 7;
     private bool _isChoosing;
     private bool _isGameTimerAttached;
-
-    private void Awake()
-    {
-        _currentEnemies = new List<Enemy>();
-        _enemiesToSpawn = new Queue<EnemySpawner>();
-        _availableSpawners = new List<EnemySpawner>();
-        _upgradePercents = _upgradesPercentsInitialValues.ToList();
-    }
-
-    private void OnEnable()
-    {
-        RestartersHandler.Register(this);
-        
-        _isGameTimerAttached = true;
-
-        _gameTimer.ReachedMinute += OnMinuteReached;
-    }
-
-    private void OnDisable()
-    {
-        UnsubscribeFromSpawners();
-
-        if (_isGameTimerAttached)
-            _gameTimer.ReachedMinute -= OnMinuteReached;
-        
-        RestartersHandler.Deregister(this);
-    }
+    private bool _isLastMinute;
+    private FuncPredicate _canUnsubscribe;
 
     public void Init(IPlayer player)
     {
@@ -72,11 +53,38 @@ public class EnemySpawnerHandler : MonoBehaviour, IRestarter
         _player = player;
     }
     
-    public void Restart()
+    private void Awake()
     {
-        UnsubscribeFromSpawners();
+        _currentEnemies = new List<Enemy>();
+        _enemiesToSpawn = new Queue<EnemySpawner>();
+        _availableSpawners = new List<EnemySpawner>();
+        _canUnsubscribe = new FuncPredicate(() => _upgradePercents.Count > 0 || _availableSpawners.Count != _enemySpawners.Count || !_isLastMinute);
+    }
+    
+    private void OnEnable()
+    {
+        _isGameTimerAttached = true;
+
+        _isLastMinute = false;
         
-        StartProcess();
+        _upgradePercents = _upgradesPercentsInitialValues.ToList();
+
+        _gameTimer.ReachedMinute += OnMinuteReached;
+    }
+
+    private void OnDisable()
+    {
+        foreach (var enemySpawner in _availableSpawners)
+        {
+            enemySpawner.EnemyWasReleased -= OnEnemyRelease;
+            enemySpawner.EnemyWasSpawned -= _currentEnemies.Add;
+        }
+
+        _currentEnemies.Clear();
+        _availableSpawners.Clear();
+
+        if (_isGameTimerAttached)
+            _gameTimer.ReachedMinute -= OnMinuteReached;
     }
 
     public void StartProcess()
@@ -138,12 +146,12 @@ public class EnemySpawnerHandler : MonoBehaviour, IRestarter
     {
         _availablePoints = _availablePoints.AddPercentToNumber(_settings.PointGainPercent);
 
-        if (_availablePoints > _settings.MaxPoints)
-        {
-            _availablePoints = _settings.MaxPoints;
+        if (!(_availablePoints > _settings.MaxPoints))
+            return;
+        
+        _availablePoints = _settings.MaxPoints;
             
-            OnTimerStopped();
-        }
+        OnTimerStopped();
     }
 
     private void OnTimerStopped()
@@ -224,7 +232,7 @@ public class EnemySpawnerHandler : MonoBehaviour, IRestarter
         }
     }
     
-    private void OnMinuteReached()
+    private void OnMinuteReached(int minute)
     {
         if (_upgradePercents.Count > 0)
         {
@@ -237,20 +245,27 @@ public class EnemySpawnerHandler : MonoBehaviour, IRestarter
 
         if (_availableSpawners.Count != _enemySpawners.Count)
         {
-            var enemySpawner = _enemySpawners.First();
+            var enemySpawner = _enemySpawners.First(spawner => !spawner.IsAvailable);
             
             enemySpawner.SetActive(true);
             
             _availableSpawners.Add(enemySpawner);
         }
-        
-        if (_upgradePercents.Count <= 0 && _enemySpawners.Count == _availableSpawners.Count)
+
+        if (minute >= _thresholdMinute)
         {
-            _isGameTimerAttached = false;
-            _gameTimer.ReachedMinute -= OnMinuteReached;
+            _isLastMinute = true;
+
+            SetLastMinuteSpawner();
         }
+        
+        if (_canUnsubscribe.Evaluate())
+            return;
+        
+        _isGameTimerAttached = false;
+        _gameTimer.ReachedMinute -= OnMinuteReached;
     }
-    
+
     private void Upgrade(float percent)
     {
         var spawnRatePercent = _settings.SpawnRate.GetClampedValueInverse(percent);
@@ -266,21 +281,20 @@ public class EnemySpawnerHandler : MonoBehaviour, IRestarter
         }
     }
     
-    private void UnsubscribeFromSpawners()
+    private void SetLastMinuteSpawner()
     {
-        for (int i = _availableSpawners.Count - 1; i >= 0; i--)
+        foreach (var enemySpawner in _availableSpawners)
         {
-            _availableSpawners[i].EnemyWasReleased -= OnEnemyRelease;
-            _availableSpawners[i].EnemyWasSpawned -= _currentEnemies.Add;
-            
-            if (i == 0)
-            {
-                continue;
-            }
-            
-            _availableSpawners[i].SetActive(false);
+            enemySpawner.EnemyWasReleased -= OnEnemyRelease;
+            enemySpawner.EnemyWasSpawned -= _currentEnemies.Add;
         }
-
+            
         _availableSpawners.Clear();
+            
+        _availableSpawners.Add(_lastMinuteSpawner);
+        _lastMinuteSpawner.SetPlayer(_player);
+        _lastMinuteSpawner.SetActive(true);
+        _lastMinuteSpawner.EnemyWasSpawned += _currentEnemies.Add;
+        _lastMinuteSpawner.EnemyWasReleased += OnEnemyRelease;
     }
 }

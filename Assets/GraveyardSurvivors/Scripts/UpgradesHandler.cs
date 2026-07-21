@@ -120,10 +120,10 @@ public class UpgradesHandler : MonoBehaviour
             
         var items = itemsDict.GetWeightedObjects(level.Rarity);
 
-        var item = UserUtils.GetElementByWeight(items) as Item;
+        var weightedObject = UserUtils.GetElementByWeight(items);
 
-        if (item == null)
-            throw new Exception($"{nameof(item)} is not Item");
+        if (weightedObject is not Item item)
+            throw new Exception($"{weightedObject} is not Item");
         
         item.SetRarityLevel(level);
 

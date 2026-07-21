@@ -97,13 +97,14 @@ public static class UserUtils
         foreach (var item in weightedObjects)
         {
             if (item.Weight <= 0)
-                continue;
+                throw new Exception($"{item}'s weight should not be 0 or less than 0");
             
             currentWeight += item.Weight;
+            
             if (randomValue < currentWeight)
                 return item;
         }
-
+        
         return default(T);
     }
     

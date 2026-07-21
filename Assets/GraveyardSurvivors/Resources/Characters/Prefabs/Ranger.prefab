@@ -1441,6 +1441,7 @@ MonoBehaviour:
   _player: {fileID: 930483005040703314}
   _healCooldown: 1.5
   _reduceDamageTime: 2
+  _waitTime: 1
   _defender: {fileID: 3962644393961421149}
   _evader: {fileID: 962139294001224673}
   _statsViewer: {fileID: 7397251735399933207}
@@ -7739,6 +7740,7 @@ MonoBehaviour:
   _health: {fileID: 7806447276525855132}
   _wallet: {fileID: 2418341122684004869}
   _light: {fileID: 3474814700427343827}
+  _isImmortal: 1
 --- !u!114 &1658106383447107767
 MonoBehaviour:
   m_ObjectHideFlags: 0

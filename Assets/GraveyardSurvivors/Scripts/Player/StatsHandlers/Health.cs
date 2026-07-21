@@ -17,15 +17,9 @@ public class Health : MonoBehaviour
 
     private Coroutine _healthRegenerationRoutine;
     private Coroutine _reduceDamageRoutine; 
-    private int _damageReduceAfterDamage = 60;
+    private int _damageReduceAfterDamage = 80;
     private bool _isTakingLessDamage;
     private bool _isOnCooldown;
-
-    private void Update()
-    {
-        Debug.Log($"{nameof(_isTakingLessDamage)}: {_isTakingLessDamage}\n" +
-                  $"{nameof(_isOnCooldown)}: {_isOnCooldown}\n");
-    }
 
     private void OnEnable()
     {

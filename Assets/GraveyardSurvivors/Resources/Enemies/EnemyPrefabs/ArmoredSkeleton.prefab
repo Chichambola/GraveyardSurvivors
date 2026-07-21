@@ -269,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2427909387439168727
 RectTransform:
   m_ObjectHideFlags: 0
@@ -393,9 +393,9 @@ Transform:
   - {fileID: 3661174875146965331}
   - {fileID: 8619858778478042082}
   - {fileID: 7501286251474773077}
-  - {fileID: 2427909387439168727}
   - {fileID: 5600284322242521202}
   - {fileID: 7448468488472628437}
+  - {fileID: 2427909387439168727}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2682104378487237926
@@ -1226,6 +1226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c970b8010eba0bf3b762e592143c0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackArea: {fileID: 6567286370352077153}
 --- !u!1 &9058757534584702224
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public abstract class WeaponWithAbility : Weapon
 {
     [SerializeField] private List<Effect> _effects;
     
-    public override event Action<IAttacker, Weapon> AttackerDetected;
+    public override event Action<IAttacker, IWeapon> AttackerDetected;
 
     protected void ProcessAttacker(IAttacker attacker)
     {

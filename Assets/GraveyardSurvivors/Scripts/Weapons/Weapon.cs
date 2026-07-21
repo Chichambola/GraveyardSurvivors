@@ -14,7 +14,7 @@ public abstract class Weapon : Item, IWeapon
     protected float BonusDamage;
     private string _description;
     
-    public virtual event Action<IAttacker, Weapon> AttackerDetected;
+    public virtual event Action<IAttacker, IWeapon> AttackerDetected;
     
     public float Damage => _damage + BonusDamage;
     public float CurrentCooldown => Cooldown;

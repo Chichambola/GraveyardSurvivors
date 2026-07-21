@@ -7,10 +7,8 @@ using UnityEngine;
 public class Darkness : MonoBehaviour
 {
     [SerializeField] private float _damage = 10f;
-    [SerializeField] private float _damageMultiplier = 0.5f;
     [SerializeField] private float _rate = 1.5f;
 
-    private float _initialDamage;
     private IPlayer _player;
     private Coroutine _coroutine;
     private bool _isPlayerInDarkness;
@@ -18,8 +16,6 @@ public class Darkness : MonoBehaviour
     public void Init(IPlayer player)
     {
         _player = player ?? throw new Exception("Player can not be null");
-
-        _initialDamage = _damage;
         
         if (_coroutine != null)
             StopCoroutine(_coroutine);
@@ -37,19 +33,10 @@ public class Darkness : MonoBehaviour
             {
                 _player.TakeDamage(_damage);
                 
-                _damage +=  _damageMultiplier * _damage;
-                
                 yield return wait;
             }
-            else
-            {
-                if (!Mathf.Approximately(_damage, _initialDamage))
-                {
-                    _damage = _initialDamage;
-                }
-                
-                yield return null;   
-            }
+
+            yield return null;
         }
     }
 }

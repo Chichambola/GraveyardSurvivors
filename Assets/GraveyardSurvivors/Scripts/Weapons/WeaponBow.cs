@@ -9,7 +9,7 @@ public class WeaponBow : Weapon
     [SerializeField] private RangeAttackStrategy _attackStrategy;
     [SerializeField] private ProjectileSpawner _arrowSpawner;
 
-    public override event Action<IAttacker, Weapon> AttackerDetected;
+    public override event Action<IAttacker, IWeapon> AttackerDetected;
 
     private Coroutine _attackingRoutine;
     private WaitForSeconds _attackTime;

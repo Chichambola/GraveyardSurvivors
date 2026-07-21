@@ -9,7 +9,7 @@ public class GameTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private float _debugElapsedTime;
-    public event Action ReachedMinute;
+    public event Action<int> ReachedMinute;
     
     private int _seconds;
     private int _minutes;
@@ -55,7 +55,7 @@ public class GameTimer : MonoBehaviour
         
         if (_minutes != _previousMinute)
         {
-            ReachedMinute?.Invoke();
+            ReachedMinute?.Invoke(_minutes);
             
             _previousMinute = _minutes;
         }

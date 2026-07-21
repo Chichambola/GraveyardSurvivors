@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject, IRestarter
+public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObject
 {
     [SerializeField] private EnemyInfo _enemyInfo;
     [SerializeField] private EnemyStats _statsForUpgrade;
@@ -27,6 +27,8 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
     
     [Header("Unity workaround")]
     [SerializeField] private Vector3 _offsetAfterDeath = new (0, -90, 0);
+
+    [SerializeField] private bool _canSpawn;
 
     public event Action<Enemy> EnemyWasReleased;
     public event Action<Enemy> EnemyWasSpawned;
@@ -54,8 +56,6 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
 
     private void OnEnable()
     {
-        RestartersHandler.Register(this);
-        
         InitializeEnemy();
     }
 
@@ -84,25 +84,19 @@ public class EnemySpawner : Spawner<Enemy>, IEnemySpawner<Enemy>, IWeightedObjec
         }
         
         _spawnedUnits.Clear();
-        
-        RestartersHandler.Deregister(this);
     }
     
     public void Spawn(Vector3 position)
     {
+        if (!_canSpawn)
+            return;
+        
         for (int i = 0; i < _numberOfEnemiesSpawnAtOnce; i++)
         {
             _spawnPoint = position;
             
             GetObject();
         }
-    }
-    
-    public void Restart()
-    {
-        Destroy(_enemyPrefab.gameObject);
-        
-        InitializeEnemy();
     }
     
     public void Upgrade()

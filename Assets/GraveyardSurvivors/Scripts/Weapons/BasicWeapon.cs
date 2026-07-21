@@ -14,7 +14,7 @@ public class BasicWeapon : MonoBehaviour, IWeapon
     private Coroutine _coroutine;
     private bool _isAttacking;
     
-    public event Action<IAttacker, Weapon> AttackerDetected;
+    public event Action<IAttacker, IWeapon> AttackerDetected;
 
     public float Damage => _damage;
     public bool IsAttacking => _isAttacking;
@@ -69,9 +69,6 @@ public class BasicWeapon : MonoBehaviour, IWeapon
         if (attacker == null)
             throw new Exception();
         
-        if (attacker is Player player)
-        {
-            player.TakeDamage(Damage);
-        }
+        AttackerDetected?.Invoke(attacker, this);
     }
 }

@@ -7,6 +7,7 @@ public interface IPlayer
 {
     public event Action<Item> PickedItem;
     public event Action<Enemy> EnemyDetected; 
+    public event Action Died;
     public Vector3 CurrentPosition { get; }
     public float MaxHealth { get; }
     public float MoneyAmount { get; }

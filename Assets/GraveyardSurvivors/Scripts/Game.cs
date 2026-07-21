@@ -6,6 +6,7 @@ using Sherbert.Framework.Generic;
 using TMPro;
 using UnityEditor.Profiling;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class Game : MonoBehaviour
@@ -27,10 +28,10 @@ public class Game : MonoBehaviour
     [SerializeField] private ItemDisplayer _itemDisplayer;
 
     
+    private IPlayer _player;
     private int _primeTweenCapacity = 3000;
     private static float s_normalTimeSpeed = 1;
-    private static float s_pauseTime = 0.00001f;
-    private IPlayer _player;
+    private static float s_pauseTime = 0.000001f;
     
     public static bool IsPaused { get; private set; }
     public static Game Instance { get; private set; }
@@ -60,6 +61,7 @@ public class Game : MonoBehaviour
         _player = _playerHandler.Spawn(_playerPrefab);
 
         _player.PickedItem += OnItemPickedUp;
+        _player.Died += OnPlayerDeath;
         
         _enemySpawnerHandler.Init(_player);
         _enemySpawnerHandler.StartProcess();
@@ -75,6 +77,7 @@ public class Game : MonoBehaviour
         _player.PickedItem -= OnItemPickedUp;
         
         TimerController.Clear();
+        Tween.StopAll();
     }
 
     public static void Pause()
@@ -97,5 +100,12 @@ public class Game : MonoBehaviour
     private void OnEnemyDeath(Enemy enemy)
     {
         _lantern.ProcessEnemyDeath(enemy);
+    }
+
+    private void OnPlayerDeath()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        
+        SceneManager.LoadScene(currentSceneName);
     }
 }

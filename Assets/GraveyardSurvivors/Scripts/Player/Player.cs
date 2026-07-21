@@ -22,12 +22,15 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     [SerializeField] private Health _health;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private LanternLight _light;
+
+    [SerializeField] private bool _isImmortal;
     
     public event Action InteractionButtonPressed;
     public event Action<CharacterStats> StatsChanged;
     public event Action<float> GainedXp;
     public event Action<Item> PickedItem;
     public event Action<Enemy> EnemyDetected;
+    public event Action Died;
 
     private int _lanternsCount;
     private bool _isInLantern;
@@ -144,12 +147,20 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     public void TakeDamage(float damage)
     {
+        if (_isImmortal)
+            return;
+        
         if (!_health.TryTakeDamage(ref damage))
             return;
         
         CurrentHealth -= damage;
             
         _health.UpdateStats();
+
+        if (CurrentHealth <= 0)
+        {
+            Died?.Invoke();
+        }
     }
     
     public bool HasWeapon(Weapon weapon) => _attacker.HasWeapon(weapon);

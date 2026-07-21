@@ -21,7 +21,7 @@ MonoBehaviour:
     DamageAmplifier: 0
     IncomingDamageMultiplier: 0
     BlockChance: 0
-    EvasionChance: 10
+    EvasionChance: 5
     Armor: 0
     CritChance: 10
     CritMultiplier: 2

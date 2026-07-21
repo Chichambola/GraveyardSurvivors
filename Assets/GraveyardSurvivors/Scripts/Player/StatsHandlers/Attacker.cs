@@ -90,7 +90,7 @@ public class Attacker : MonoBehaviour
         _damageEffects.Add(effect);
     }
     
-    private void OnAttackerDetected(IAttacker attacker, Weapon weapon)
+    private void OnAttackerDetected(IAttacker attacker, IWeapon weapon)
     {
         if (attacker is Enemy enemy)
         {

@@ -14,7 +14,7 @@ public class WeaponIronSword : Weapon
     [SerializeField] private ParticleSystem _attackParticles;
     [SerializeField] private KnockBack _knockBack;
 
-    public override event Action<IAttacker, Weapon> AttackerDetected;
+    public override event Action<IAttacker, IWeapon> AttackerDetected;
 
     private Coroutine _attackingRoutine;
     private WaitForSeconds _attackWait;

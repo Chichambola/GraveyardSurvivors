@@ -130,7 +130,11 @@ public class LanternLight : MonoBehaviour, ILantern
         while (enabled)
         {
             if (Game.IsPaused)
+            {
                 yield return null;
+
+                continue;
+            }
             
             _collider.radius = LerpToValue(_collider.radius, _targetRadius);
 
