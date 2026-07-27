@@ -2165,7 +2165,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!1 &264294664
 GameObject:
   m_ObjectHideFlags: 0
@@ -3091,7 +3091,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c970b8010eba0bf3b762e592143c0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackArea: {fileID: 360078379}
 --- !u!114 &360078374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5184,7 +5183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timerText: {fileID: 722507730}
-  _debugElapsedTime: 415
+  _debugElapsedTime: 0
 --- !u!1 &614689062
 GameObject:
   m_ObjectHideFlags: 0
@@ -17460,7 +17459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 590520e6df1142c48a25b4e3fbed9409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectPrefab: {fileID: 4941924877525104701, guid: 9a7e021d693bb0d4393ea5db99daa088, type: 3}
+  ObjectPrefab: {fileID: 241725098635721679, guid: 9a7e021d693bb0d4393ea5db99daa088, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 10
   _enemyInfo: {fileID: 11400000, guid: 3751f957921fe4948b6a2e681ced8caf, type: 2}
@@ -17479,7 +17478,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!1 &1439293271
 GameObject:
   m_ObjectHideFlags: 0
@@ -22468,7 +22467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 590520e6df1142c48a25b4e3fbed9409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectPrefab: {fileID: 4360565655115198188, guid: 82dfd2526ab9a9c41ad573242a457e46, type: 3}
+  ObjectPrefab: {fileID: 7656801990460114153, guid: 82dfd2526ab9a9c41ad573242a457e46, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 15
   _enemyInfo: {fileID: 11400000, guid: 706419855f7f6cb45a6abb385c07e429, type: 2}
@@ -22487,7 +22486,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 2
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!4 &1925439055
 Transform:
   m_ObjectHideFlags: 0
@@ -23562,9 +23561,8 @@ MonoBehaviour:
   _initialValues:
     InitialAvailablePoints: 20
     MaxPoints: 300
-    MinTime: 8
-    MaxTime: 15
-    SpawnRate: 0.7
+    SpawnRateMinTime: 5
+    SpawnRateMaxTime: 12
     MaxEnemiesAmount: 30
     PointGainPercent: 30
   _upgradesPercentsInitialValues:
@@ -23575,6 +23573,7 @@ MonoBehaviour:
   - 25
   - 30
   _gameTimer: {fileID: 602367797}
+  _thresholdMinute: 7
 --- !u!114 &2050020224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24898,7 +24897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 590520e6df1142c48a25b4e3fbed9409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectPrefab: {fileID: 4653577741235025862, guid: 1a94e396e9abb004fb62a60712bbac78, type: 3}
+  ObjectPrefab: {fileID: 266379904198995899, guid: 1a94e396e9abb004fb62a60712bbac78, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 10
   _enemyInfo: {fileID: 11400000, guid: ab0b1a819130dbf0d83fb5af8bb4c1a3, type: 2}
@@ -24917,7 +24916,7 @@ MonoBehaviour:
   _weight: 70
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!1 &2135301144
 GameObject:
   m_ObjectHideFlags: 0

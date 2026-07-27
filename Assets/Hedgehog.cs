@@ -7,60 +7,43 @@ using UnityEngine;
 
 public class Hedgehog : Enemy, IFollower
 {
+    [Header("Follower settings")]
     [SerializeField] private float _runawayDistance = 4f;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private Target _target;
-    [SerializeField] private TextMeshProUGUI _running;
-    [SerializeField] private TextMeshProUGUI _attacking;
+    [Header("Upgrade")]
+    [SerializeField] private float _upgradeDamage = 2f;
     
     private bool _isRunningAway;
     private Vector3 _targetPosition;
     
     protected override void OnEnable()
     {
-        base.OnEnable();
+        InitializeStateMachine();
+
+        PlayerDetector.PlayerDetected += OnPlayerDetected;
 
         _isRunningAway = false;
         
         _targetPosition = Vector3.zero;
     }
 
-    protected override void OnDisable()
+    protected void OnDisable()
     {
-        base.OnDisable();
-
+        PlayerDetector.PlayerDetected -= OnPlayerDetected;
         _target.WasReached -= OnTargetReached;
     }
 
+    public override void Upgrade(EnemyStats stats)
+    {
+        base.Upgrade(stats);
+
+        DamageZone.Upgrade(_upgradeDamage);
+    }
+    
     public override void HandleMovement()
     {
         MoveTowards(_isRunningAway ? _targetPosition : Player.CurrentPosition);
-    }
-
-    protected override void OnAttackerDetected(IAttacker attacker, IWeapon weapon)
-    {
-        base.OnAttackerDetected(attacker, weapon);
-
-        if (_isRunningAway)
-            return;
-        
-        SetTargetPosition(attacker);
-    }
-
-    protected override void InitializeStateMachine()
-    {
-        var idleState = new IdleState(this, Animator);
-        var dieState = new DieState(this, Animator);
-        var runState = new RunState(this, Animator);
-        var attackState = new EnemyAttackState(this, Animator);
-
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => IsAlive));
-        
-        DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
-        DefineAtTransition(runState, attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear && !_isRunningAway));
-        DefineAtTransition(attackState, runState, new FuncPredicate(() => CurrentHealth >= 0 && !PlayerDetector.IsPlayerNear || _isRunningAway));
-
-        StateMachine.SetState(idleState);
     }
     
     private void SetTargetPosition(IAttacker attacker)
@@ -98,13 +81,12 @@ public class Hedgehog : Enemy, IFollower
         _isRunningAway = false;
         _targetPosition = Vector3.zero;
     }
-
-    private void OnDrawGizmos()
+    
+    private void OnPlayerDetected(IPlayer player)
     {
         if (_isRunningAway)
-        {
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawLine(transform.position, _targetPosition);
-        }
+            return;
+        
+        SetTargetPosition(player as IAttacker);
     }
 }

@@ -454,7 +454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3202798790180922837}
   - component: {fileID: 8807167764928869736}
-  - component: {fileID: 4653577741235025862}
+  - component: {fileID: 266379904198995899}
   - component: {fileID: 8696614376307728057}
   - component: {fileID: 5936001690060495124}
   - component: {fileID: 4517118454182904602}
@@ -509,7 +509,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4653577741235025862
+--- !u!114 &266379904198995899
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -518,18 +518,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4287946536270150599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b8f7f0bd7877a8788e86ad9d039db84, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d6a8f90e0276e74493dd1e7acdd2ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 8807167764928869736}
   Rotator: {fileID: 5936001690060495124}
   Mover: {fileID: 8696614376307728057}
-  _damageZone: {fileID: 2972276178730984106}
+  DamageZone: {fileID: 2972276178730984106}
   PlayerDetector: {fileID: 1603803209121266957}
-  Weapon:
-    _underlyingValue: {fileID: 3807123656848047503}
   _health: {fileID: 2307875020064126990}
   _defender: {fileID: 886728962877736986}
+  _weapon:
+    _underlyingValue: {fileID: 3807123656848047503}
 --- !u!114 &8696614376307728057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1164,4 +1164,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c970b8010eba0bf3b762e592143c0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackArea: {fileID: 770066853625037643}

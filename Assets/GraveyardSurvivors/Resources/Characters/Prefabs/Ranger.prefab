@@ -7740,7 +7740,7 @@ MonoBehaviour:
   _health: {fileID: 7806447276525855132}
   _wallet: {fileID: 2418341122684004869}
   _light: {fileID: 3474814700427343827}
-  _isImmortal: 1
+  _isImmortal: 0
 --- !u!114 &1658106383447107767
 MonoBehaviour:
   m_ObjectHideFlags: 0

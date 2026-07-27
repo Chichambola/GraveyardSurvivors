@@ -8,12 +8,11 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
-public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
+public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 {
-    [SerializeField] private DamageZone _damageZone;
+    [SerializeField] protected DamageZone DamageZone;
     [Header("Services")]
     [SerializeField] protected PlayerDetector PlayerDetector;
-    [SerializeField] protected InterfaceReference<IWeapon, MonoBehaviour> Weapon;
     [SerializeField] private TextMeshProUGUI _health;
     [SerializeField] private Defender _defender;
     
@@ -73,26 +72,15 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     protected virtual void OnEnable()
     {
         InitializeStateMachine();
-
-        Weapon.Value.AttackerDetected += OnAttackerDetected;
     }
 
-    protected virtual void OnDisable()
-    {
-        Weapon.Value.AttackerDetected -= OnAttackerDetected;
-    }
-
-    public void ResetCharacteristics()
-    {
-
-    }
+    public void ResetCharacteristics() { }
 
     public override void Release() => CanBeReleased?.Invoke(this);
     
-    public void Upgrade(EnemyStats stats)
+    public virtual void Upgrade(EnemyStats stats)
     {
         CurrentStats = stats;
-        Weapon.Value.Upgrade();
     }
 
     public void TakeDamage(float damage)
@@ -129,16 +117,7 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     public void ChangeSpeed(float speedValue, bool isSlowing)
     {
-        float tempSpeed;
-        
-        if (isSlowing)
-        {
-            tempSpeed = Mover.Speed.SubtractPercentFromNumber(speedValue); 
-        }
-        else
-        {
-            tempSpeed = Mover.Speed.AddPercentToNumber(speedValue); 
-        }
+        var tempSpeed = isSlowing ? Mover.Speed.SubtractPercentFromNumber(speedValue) : Mover.Speed.AddPercentToNumber(speedValue);
 
         if (_movementEffectCount == 0)
         {
@@ -155,22 +134,19 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         MoveTowards(Player.CurrentPosition);
     }
 
-    public override void HandleAttack()
-    {
-        Weapon.Value.Attack();
-    }
+    public override void HandleAttack() { }
     
     public void SetColliderCenter(Vector3 offsetAfterDeath, bool isResetting)
     {
         if (isResetting)
         {
             _collider.center -= offsetAfterDeath;
-            _damageZone.gameObject.transform.position -= offsetAfterDeath;
+            DamageZone.gameObject.transform.position -= offsetAfterDeath;
         }
         else
         {
             _collider.center += offsetAfterDeath;
-            _damageZone.gameObject.transform.position += offsetAfterDeath;
+            DamageZone.gameObject.transform.position += offsetAfterDeath;
         }
     }
     
@@ -179,15 +155,10 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         var idleState = new IdleState(this, Animator);
         var dieState = new DieState(this, Animator);
         var runState = new RunState(this, Animator);
-        var attackState = new EnemyAttackState(this, Animator);
 
         DefineAtTransition(idleState, runState, new FuncPredicate(() => IsAlive));
         
-        DefineAtTransition(attackState, runState,
-            new FuncPredicate(() => !PlayerDetector.IsPlayerNear && !Weapon.Value.IsAttacking));
-        
         DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
-        DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
 
         StateMachine.SetState(idleState);
     }
@@ -209,15 +180,13 @@ public class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         Rotator.Rotate(direction);
     }
     
-    private void Die()
+    protected virtual void Die()
     {
         NoHealthLeft?.Invoke(this);
         
         _movementEffectCount = 0;
 
         _health.text = $"{CurrentHealth}";
-
-        Weapon.Value.StopAttacking();
         
         RemoveAllEffects();
         

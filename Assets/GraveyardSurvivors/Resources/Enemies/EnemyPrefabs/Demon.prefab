@@ -759,7 +759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c970b8010eba0bf3b762e592143c0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackArea: {fileID: 2887417800227581584}
 --- !u!135 &8773304096707564737
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1116,12 +1115,12 @@ MonoBehaviour:
   Animator: {fileID: 8896866391641432355}
   Rotator: {fileID: 3456306083640340297}
   Mover: {fileID: 5529676922395853904}
-  _damageZone: {fileID: 4714903918488013307}
+  DamageZone: {fileID: 4714903918488013307}
   PlayerDetector: {fileID: 1942943560831323276}
-  Weapon:
-    _underlyingValue: {fileID: 9097205137456547513}
   _health: {fileID: 2926252959164244938}
   _defender: {fileID: 8495916584587225802}
+  _weapon:
+    _underlyingValue: {fileID: 9097205137456547513}
 --- !u!114 &5529676922395853904
 MonoBehaviour:
   m_ObjectHideFlags: 0

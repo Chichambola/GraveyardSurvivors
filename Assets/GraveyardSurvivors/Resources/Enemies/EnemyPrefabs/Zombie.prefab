@@ -212,7 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c970b8010eba0bf3b762e592143c0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackArea: {fileID: 1138164290024345996}
 --- !u!1 &1049797337740689892
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9007132564956147045}
   - component: {fileID: 7745078345119053515}
-  - component: {fileID: 4360565655115198188}
+  - component: {fileID: 7656801990460114153}
   - component: {fileID: 2864853422003173727}
   - component: {fileID: 1879320688110641685}
   - component: {fileID: 5052325448032058343}
@@ -807,7 +806,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4360565655115198188
+--- !u!114 &7656801990460114153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -816,18 +815,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7841497988087309809}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b8f7f0bd7877a8788e86ad9d039db84, type: 3}
+  m_Script: {fileID: 11500000, guid: ad1dd015d939702459f1d993958e6a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 7745078345119053515}
   Rotator: {fileID: 1879320688110641685}
   Mover: {fileID: 2864853422003173727}
-  _damageZone: {fileID: 2491473788055411636}
+  DamageZone: {fileID: 2491473788055411636}
   PlayerDetector: {fileID: 6375594758851993861}
-  Weapon:
-    _underlyingValue: {fileID: 3266976154770957663}
   _health: {fileID: 3678190649255506134}
   _defender: {fileID: 5106020596504560185}
+  _weapon:
+    _underlyingValue: {fileID: 3266976154770957663}
 --- !u!114 &2864853422003173727
 MonoBehaviour:
   m_ObjectHideFlags: 0

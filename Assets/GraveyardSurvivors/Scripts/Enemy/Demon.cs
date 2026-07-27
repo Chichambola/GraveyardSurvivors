@@ -1,32 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper;
 using UnityEngine;
 
 public class Demon : Enemy
 {
-    private BaseState _idleState;
+    [SerializeField] private InterfaceReference<IWeapon, MonoBehaviour> _weapon;
 
-    public override void HandleAttack()
+    private BaseState _idleState;
+    
+    protected override void OnEnable()
     {
-        StateMachine.SetState(_idleState);
-        
-        base.HandleAttack();
+        _weapon.Value.AttackerDetected += OnAttackerDetected;
+    }
+
+    private void OnDisable()
+    {
+        _weapon.Value.AttackerDetected -= OnAttackerDetected;
     }
 
     protected override void InitializeStateMachine()
     {
-        StateMachine = new StateMachine();
-
+        base.InitializeStateMachine();
+        
         _idleState = new IdleState(this, Animator);
-        var dieState = new DieState(this, Animator);
-        var runState = new RunState(this, Animator);
-        var attackState = new EnemyAttackState(this, Animator);
         
-        DefineAtTransition(_idleState, runState, new FuncPredicate(() => Mover.Speed > 0));
-        DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
-        DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
+        DefineAnyTransition(_idleState, new FuncPredicate(() => PlayerDetector.IsPlayerNear));
+    }
+
+    protected override void Die()
+    {
+        base.Die();
         
+        _weapon.Value.StopAttacking();
+    }
+
+    protected override void OnAttackerDetected(IAttacker attacker, IWeapon weapon)
+    {
+        weapon.Attack();
         StateMachine.SetState(_idleState);
     }
 }

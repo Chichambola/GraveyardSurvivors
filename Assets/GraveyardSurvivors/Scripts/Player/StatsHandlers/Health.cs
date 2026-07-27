@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,60 +11,68 @@ public class Health : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private float _healCooldown;
     [SerializeField] private float _reduceDamageTime = 1f;
-    [SerializeField] private float _waitTime = 1;
     [Header("Services")] 
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private StatsViewer _statsViewer;
-
-    private Coroutine _healthRegenerationRoutine;
-    private Coroutine _reduceDamageRoutine; 
-    private int _damageReduceAfterDamage = 80;
+    
+    private CancellationTokenSource _ctsHealing;
+    private CancellationTokenSource _ctsDamage;
+    private int _damageReduceAfterDamage = 70;
     private bool _isTakingLessDamage;
     private bool _isOnCooldown;
+
+    private void Awake()
+    {
+        _ctsHealing = new CancellationTokenSource();
+        _ctsHealing.RegisterRaiseCancelOnDestroy(gameObject);
+    }
 
     private void OnEnable()
     {
         _isTakingLessDamage = false;
         _isOnCooldown = false;
-
-        if (_healthRegenerationRoutine != null)
-            StopCoroutine(_healthRegenerationRoutine);
-
-        _healthRegenerationRoutine = StartCoroutine(Healing());
+        
+        HealingTask().Forget();
     }
 
     public void UpdateStats() => _statsViewer.UpdateStats(_player.CurrentHealth, _player.CurrentStats.MaxHealth);
 
-    private IEnumerator ReducedDamageRoutine()
+    private async UniTaskVoid ReduceDamageTask()
     {
-        var wait = new WaitForSeconds(_reduceDamageTime);
-        
-        while (enabled)
+        while (!_ctsDamage.IsCancellationRequested)
         {
             _isTakingLessDamage = true;
-            
-            yield return wait;
-            
-            wait = new WaitForSeconds(_waitTime);
-            
-            _isTakingLessDamage = false;
+
+            await  UniTask.Delay(
+                TimeSpan.FromSeconds(_reduceDamageTime),
+                DelayType.UnscaledDeltaTime,
+                default,
+                cancellationToken: _ctsDamage.Token);
             
             _isOnCooldown = true;
-            
-            yield return wait;
-            
+            _isTakingLessDamage = false;
+
+            await UniTask.Delay(
+                TimeSpan.FromSeconds(_reduceDamageTime),
+                DelayType.UnscaledDeltaTime,
+                default,
+                _ctsDamage.Token);
+
             _isOnCooldown = false;
+            
+            _ctsDamage.Cancel();
         }
     }
     
-    private IEnumerator Healing()
+    private async UniTaskVoid HealingTask()
     {
-        var wait = new WaitForSeconds(_healCooldown);
-
-        while (enabled)
+        while (!_ctsHealing.Token.IsCancellationRequested)
         {
-            yield return wait;
+            await UniTask.Delay(TimeSpan.FromSeconds(_healCooldown),
+                DelayType.UnscaledDeltaTime,
+                default,
+                _ctsHealing.Token);
 
             _player.Heal(_player.CurrentStats.HealthRegeneration);
 
@@ -85,18 +95,18 @@ public class Health : MonoBehaviour
         }
 
         damage = damage.AddPercentToNumber(_player.CurrentStats.IncomingDamageMultiplier);
-        
+
         if (_isTakingLessDamage)
             damage = damage.SubtractPercentFromNumber(_damageReduceAfterDamage);
 
-        if (_isTakingLessDamage || _isOnCooldown) 
+        if (_isOnCooldown || _isTakingLessDamage) 
             return true;
-        
-        if (_reduceDamageRoutine != null)
-            StopCoroutine(_reduceDamageRoutine);
-                
-        _reduceDamageRoutine = StartCoroutine(ReducedDamageRoutine());
 
+        _ctsDamage = new CancellationTokenSource();
+        _ctsDamage.RegisterRaiseCancelOnDestroy(gameObject);
+        
+        ReduceDamageTask().Forget();
+        
         return true;
     }
 }

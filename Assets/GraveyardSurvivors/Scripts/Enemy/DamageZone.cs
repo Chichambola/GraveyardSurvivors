@@ -8,6 +8,8 @@ using UnityEngine;
 public class DamageZone : MonoBehaviour
 {
     [SerializeField] private float _damageOnCollision = 3f;
+
+    public event Action PlayerDetected;
     
     private BoxCollider _collider;
     private HashSet<Collider> _collidersToIgnore;
@@ -29,6 +31,10 @@ public class DamageZone : MonoBehaviour
         else
         {
             player.TakeDamage(_damageOnCollision);
+            
+            PlayerDetected?.Invoke();
         }
     }
+
+    public void Upgrade(float damage) => _damageOnCollision += damage;
 }

@@ -1,22 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper;
 using UnityEngine;
 
 public class Zombie : Enemy
 {
+    [SerializeField] private InterfaceReference<IWeapon, MonoBehaviour> _weapon;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        _weapon.Value.AttackerDetected += OnAttackerDetected;
+    }
+
+    private void OnDisable()
+    {
+        _weapon.Value.AttackerDetected -= OnAttackerDetected;
+    }
+
+    public override void Upgrade(EnemyStats stats)
+    {
+        base.Upgrade(stats);
+
+        _weapon.Value.Upgrade();
+    }
+
+    public override void HandleAttack()
+    {
+        _weapon.Value.Attack();
+    }
+
     protected override void InitializeStateMachine()
     {
-        StateMachine = new StateMachine();
+        base.InitializeStateMachine();
 
-        var idleState = new IdleState(this, Animator);
-        var dieState = new DieState(this, Animator);
-        var walkState = new WalkState(this, Animator);
         var attackState = new EnemyAttackState(this, Animator);
         
-        DefineAtTransition(idleState, walkState, new FuncPredicate(() => Mover.Speed > 0));
-        DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
         DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
+    }
+
+    protected override void Die()
+    {
+        base.Die();
         
-        StateMachine.SetState(idleState);
+        _weapon.Value.StopAttacking();
     }
 }
