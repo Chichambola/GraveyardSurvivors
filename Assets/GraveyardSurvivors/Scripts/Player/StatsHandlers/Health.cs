@@ -44,18 +44,16 @@ public class Health : MonoBehaviour
         {
             _isTakingLessDamage = true;
 
-            await UniTask.Delay(
-                TimeSpan.FromSeconds(_reduceDamageTime),
-                cancellationToken: _ctsDamage.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_reduceDamageTime), cancellationToken: _ctsDamage.Token);
             
             _isOnCooldown = true;
             _isTakingLessDamage = false;
 
-            await UniTask.Delay(
-                TimeSpan.FromSeconds(_reduceDamageTime),
-                cancellationToken: _ctsDamage.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_reduceDamageTime), cancellationToken: _ctsDamage.Token);
 
             _isOnCooldown = false;
+            
+            _ctsDamage.Cancel();
         }
     }
     
@@ -63,10 +61,7 @@ public class Health : MonoBehaviour
     {
         while (!_ctsHealing.Token.IsCancellationRequested)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_healCooldown),
-                DelayType.UnscaledDeltaTime,
-                default,
-                _ctsHealing.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_healCooldown), DelayType.UnscaledDeltaTime, cancellationToken: _ctsHealing.Token);
 
             _player.Heal(_player.CurrentStats.HealthRegeneration);
 
@@ -98,10 +93,8 @@ public class Health : MonoBehaviour
 
         _ctsDamage = new CancellationTokenSource();
         _ctsDamage.RegisterRaiseCancelOnDestroy(gameObject);
-        
-        await ReduceDamageTask();
-        
-        _ctsDamage.Cancel();
+
+        ReduceDamageTask().Forget();
         
         return true;
     }
