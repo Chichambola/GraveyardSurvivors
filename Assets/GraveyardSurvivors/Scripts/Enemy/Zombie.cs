@@ -7,6 +7,16 @@ using UnityEngine;
 public class Zombie : Enemy
 {
     [SerializeField] private InterfaceReference<IWeapon, MonoBehaviour> _weapon;
+    
+    private EnemyAttackState _attackState;
+    private FuncPredicate _s;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        _attackState = new EnemyAttackState(this, Animator);
+    }
 
     protected override void OnEnable()
     {
@@ -35,10 +45,9 @@ public class Zombie : Enemy
     protected override void InitializeStateMachine()
     {
         base.InitializeStateMachine();
-
-        var attackState = new EnemyAttackState(this, Animator);
         
-        DefineAnyTransition(attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
+        DefineAtTransition(RunState, _attackState, new FuncPredicate(() => CurrentHealth >= 0 && PlayerDetector.IsPlayerNear));
+        DefineAtTransition(_attackState, RunState, new FuncPredicate(() => CurrentHealth >= 0 && !PlayerDetector.IsPlayerNear && !_weapon.Value.IsAttacking));
     }
 
     protected override void Die()

@@ -326,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackStrategy: {fileID: 3653054267437700123}
   _damage: 1
-  _cooldown: 0.3
+  _cooldown: 0.6
   _damagePerUpgrade: 0.5
 --- !u!114 &3653054267437700123
 MonoBehaviour:

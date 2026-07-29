@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEditor.Profiling;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class PlayerDetector : Detector
 {
     public event Action<IPlayer> PlayerDetected;
@@ -12,6 +11,11 @@ public class PlayerDetector : Detector
     
     public bool IsPlayerNear { get; private set; }
 
+    private void OnDisable()
+    {
+        IsPlayerNear = false;
+    }
+    
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out IPlayer player))
@@ -30,10 +34,5 @@ public class PlayerDetector : Detector
 
             IsPlayerNear = false;
         }
-    }
-
-    private void OnDisable()
-    {
-        IsPlayerNear = false;
     }
 }

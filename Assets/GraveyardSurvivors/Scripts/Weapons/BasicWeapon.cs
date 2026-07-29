@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -11,16 +14,17 @@ public class BasicWeapon : MonoBehaviour, IWeapon
     [SerializeField] private float _cooldown;
     [SerializeField] private float _damagePerUpgrade = 1;
     
-    private Coroutine _coroutine;
-    private bool _isAttacking;
+    private CancellationTokenSource _cts;
     
     public event Action<IAttacker, IWeapon> AttackerDetected;
 
     public float Damage => _damage;
-    public bool IsAttacking => _isAttacking;
+    public bool IsAttacking { get; private set; }
     
     private void OnEnable()
     {
+        IsAttacking = false;
+        
         _attackStrategy.AttackerDetected += OnAttackerDetected;
     }
 
@@ -36,31 +40,30 @@ public class BasicWeapon : MonoBehaviour, IWeapon
     
     public void Attack()
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        if (IsAttacking)
+            return;
+        
+        _cts = new CancellationTokenSource();
+        _cts.RegisterRaiseCancelOnDestroy(gameObject);
 
-        _coroutine = StartCoroutine(AttackRoutine());
+        AttackTask().Forget();
     }
     
-    public void StopAttacking()
+    public void StopAttacking() => _cts?.Cancel();
+
+    private async UniTaskVoid AttackTask()
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-    }
-    
-    private IEnumerator AttackRoutine()
-    {
-        _isAttacking = true;
-        
-        var wait = new WaitForSeconds(_cooldown);
-        
-        while (enabled)
+        while (_cts?.IsCancellationRequested == false)
         {
-            yield return wait;
+            IsAttacking = true;
             
             _attackStrategy.Execute();
             
-            _isAttacking = false;
+            await UniTask.Delay(TimeSpan.FromSeconds(_cooldown), cancellationToken: _cts.Token);
+            
+            IsAttacking = false;
+            
+            _cts.Cancel();
         }
     }
     

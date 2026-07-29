@@ -21,6 +21,8 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     public event Action<Enemy> TookDamage; 
     
     protected IPlayer Player;
+    protected IdleState IdleState;
+    protected RunState RunState;
     private Coroutine _attackRoutine;
     private Rigidbody _rigidbody;
     private CapsuleCollider _collider;
@@ -28,6 +30,7 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     private float _currentHealth;
     private float _storedDamage;
     private int _movementEffectCount;
+    private DieState _dieState;
 
     public EnemyStats CurrentStats { get; private set; }
     public bool IsAlive { get; private set; }
@@ -57,6 +60,10 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         _currentEffects = new List<IEffect<IAttacker>>();
         
         StateMachine = new StateMachine();
+        
+        IdleState = new IdleState(this, Animator);
+        _dieState = new DieState(this, Animator);
+        RunState = new RunState(this, Animator);
     }
     
     protected override void Update()
@@ -152,15 +159,11 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     
     protected override void InitializeStateMachine()
     {
-        var idleState = new IdleState(this, Animator);
-        var dieState = new DieState(this, Animator);
-        var runState = new RunState(this, Animator);
-
-        DefineAtTransition(idleState, runState, new FuncPredicate(() => IsAlive));
+        DefineAtTransition(IdleState, RunState, new FuncPredicate(() => IsAlive));
         
-        DefineAnyTransition(dieState, new FuncPredicate(() => CurrentHealth <= 0));
+        DefineAnyTransition(_dieState, new FuncPredicate(() => CurrentHealth <= 0));
 
-        StateMachine.SetState(idleState);
+        StateMachine.SetState(IdleState);
     }
     
     protected virtual void OnAttackerDetected(IAttacker attacker, IWeapon weapon)
