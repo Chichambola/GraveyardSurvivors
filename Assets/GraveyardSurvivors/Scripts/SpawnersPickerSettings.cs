@@ -4,25 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[Serializable]
-public struct SpawnersPickerSettings
+public class SpawnersPickerSettings : MonoBehaviour
 {
-    public int InitialAvailablePoints { get; private set; }
-    public int MaxPoints { get; private set; }
-    public int MaxEnemiesAmount { get; private set; }
-    public float SpawnRateMinTime { get; private set; }
-    public float SpawnRateMaxTime{ get; private set; }
-    public float PointsGainPerSecond { get; private set; }
+    [SerializeField] private int _availablePoints;
+    [SerializeField] private int _maxPoints;
+    [SerializeField] private int _maxEnemiesAmount;
+    [SerializeField] private float _minTime;
+    [SerializeField] private float _maxTime;
+    [SerializeField] private float _pointsGainPerSecond;
 
-    public SpawnersPickerSettings(int availablePoints, int maxPoints, float minTime, float maxTime ,float spawnRate, int maxEnemiesAmount, float pointsGainPerSecond, float pointsGainInterval)
-    {
-        InitialAvailablePoints = availablePoints;
-        MaxPoints = maxPoints;
-        SpawnRateMinTime = minTime;
-        SpawnRateMaxTime = maxTime;
-        MaxEnemiesAmount = maxEnemiesAmount;
-        PointsGainPerSecond = pointsGainPerSecond;
-    }
+    public int InitialAvailablePoints => _availablePoints;
+    public int MaxPoints => _maxPoints;
+    public int MaxEnemiesAmount => _maxEnemiesAmount;
+    public float SpawnRateMinTime => _minTime;
+    public float SpawnRateMaxTime => _maxTime;
+    public float PointsGainPerSecond => _pointsGainPerSecond;
+    
 
     public void Upgrade(float percent)
     {
