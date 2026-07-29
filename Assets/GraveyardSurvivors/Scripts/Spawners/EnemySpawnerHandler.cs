@@ -231,9 +231,8 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private void Upgrade(float percent)
     {
-        _settings.MaxPoints = _settings.MaxPoints.AddPercentToNumber(percent);
-        _settings.MaxEnemiesAmount = _settings.MaxEnemiesAmount.AddPercentToNumber(percent);
-
+        _settings.Upgrade(percent);
+        
         foreach (var enemySpawner in _enemySpawners)
         {
             enemySpawner.Upgrade();

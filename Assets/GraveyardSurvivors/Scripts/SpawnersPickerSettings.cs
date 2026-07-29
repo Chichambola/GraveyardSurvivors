@@ -7,15 +7,12 @@ using UnityEngine.Serialization;
 [Serializable]
 public struct SpawnersPickerSettings
 {
-    public int InitialAvailablePoints;
-    public int MaxPoints;
-    
-    public float SpawnRateMinTime;
-    public float SpawnRateMaxTime;
-    
-    public int MaxEnemiesAmount;
-    
-    [FormerlySerializedAs("PointGainPercent")] public float PointsGainPerSecond;
+    public int InitialAvailablePoints { get; private set; }
+    public int MaxPoints { get; private set; }
+    public int MaxEnemiesAmount { get; private set; }
+    public float SpawnRateMinTime { get; private set; }
+    public float SpawnRateMaxTime{ get; private set; }
+    public float PointsGainPerSecond { get; private set; }
 
     public SpawnersPickerSettings(int availablePoints, int maxPoints, float minTime, float maxTime ,float spawnRate, int maxEnemiesAmount, float pointsGainPerSecond, float pointsGainInterval)
     {
@@ -25,5 +22,11 @@ public struct SpawnersPickerSettings
         SpawnRateMaxTime = maxTime;
         MaxEnemiesAmount = maxEnemiesAmount;
         PointsGainPerSecond = pointsGainPerSecond;
+    }
+
+    public void Upgrade(float percent)
+    {
+        MaxPoints = MaxPoints.AddPercentToNumber(percent);
+        MaxEnemiesAmount = MaxEnemiesAmount.AddPercentToNumber(percent);
     }
 }
