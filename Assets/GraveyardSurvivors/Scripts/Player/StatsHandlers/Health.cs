@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private float _healCooldown;
     [SerializeField] private float _reduceDamageTime = 1f;
+    [SerializeField] private float _reduceDamageCooldown = 2f;
     [Header("Services")] 
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
@@ -49,7 +50,7 @@ public class Health : MonoBehaviour
             _isOnCooldown = true;
             _isTakingLessDamage = false;
 
-            await UniTask.Delay(TimeSpan.FromSeconds(_reduceDamageTime), cancellationToken: _ctsDamage.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_reduceDamageCooldown), cancellationToken: _ctsDamage.Token);
 
             _isOnCooldown = false;
             
@@ -90,7 +91,7 @@ public class Health : MonoBehaviour
         
         if (_isOnCooldown || _isTakingLessDamage) 
             return true;
-
+        
         _ctsDamage = new CancellationTokenSource();
         _ctsDamage.RegisterRaiseCancelOnDestroy(gameObject);
 

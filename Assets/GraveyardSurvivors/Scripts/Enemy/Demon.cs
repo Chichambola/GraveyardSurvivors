@@ -9,7 +9,14 @@ public class Demon : Enemy
     [SerializeField] private InterfaceReference<IWeapon, MonoBehaviour> _weapon;
 
     private BaseState _idleState;
-    
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        _idleState = new IdleState(this, Animator);
+    }
+
     protected override void OnEnable()
     {
         _weapon.Value.AttackerDetected += OnAttackerDetected;
@@ -23,8 +30,6 @@ public class Demon : Enemy
     protected override void InitializeStateMachine()
     {
         base.InitializeStateMachine();
-        
-        _idleState = new IdleState(this, Animator);
         
         DefineAnyTransition(_idleState, new FuncPredicate(() => PlayerDetector.IsPlayerNear));
     }

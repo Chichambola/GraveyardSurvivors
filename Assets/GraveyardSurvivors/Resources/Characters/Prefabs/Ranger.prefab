@@ -1440,8 +1440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 930483005040703314}
   _healCooldown: 1.5
-  _reduceDamageTime: 2
-  _waitTime: 1
+  _reduceDamageTime: 0.8
+  _reduceDamageCooldown: 1.8
   _defender: {fileID: 3962644393961421149}
   _evader: {fileID: 962139294001224673}
   _statsViewer: {fileID: 7397251735399933207}
@@ -2708,8 +2708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 930483005040703314}
-  _weaponsPrefab:
-  - {fileID: 5638386864590902357, guid: d1bc6255757afec44bd558b59a3b3598, type: 3}
+  _weaponsPrefab: []
   _damageEffects: []
   references:
     version: 2

@@ -9,8 +9,7 @@ public class Zombie : Enemy
     [SerializeField] private InterfaceReference<IWeapon, MonoBehaviour> _weapon;
     
     private EnemyAttackState _attackState;
-    private FuncPredicate _s;
-
+    
     protected override void Awake()
     {
         base.Awake();

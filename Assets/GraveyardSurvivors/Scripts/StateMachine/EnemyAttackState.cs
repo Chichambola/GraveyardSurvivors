@@ -12,11 +12,12 @@ public class EnemyAttackState : BaseState
 
     public override void DoEnter()
     {
-        if (StateHandler is not Enemy character) return;
-        
         Animator.CrossFade(s_attack, CrossFadeDuration);
-        
-        character.HandleAttack();
+    }
+
+    public override void Update()
+    {
+        StateHandler.HandleAttack();
     }
 }
 
