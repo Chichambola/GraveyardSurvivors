@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3289,6 +3289,7 @@ GameObject:
   - component: {fileID: 386456281}
   - component: {fileID: 386456282}
   - component: {fileID: 386456283}
+  - component: {fileID: 386456284}
   m_Layer: 0
   m_Name: LightAlterHandler
   m_TagString: Untagged
@@ -3324,9 +3325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractableSpawner: {fileID: 386456283}
-  Cost: 10
-  IncreasePercent: 30
-  _costThreshold: 1000
+  _costHandler: {fileID: 386456284}
 --- !u!114 &386456283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3341,7 +3340,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPrefab: {fileID: 1785589636022686039, guid: e66baaaed13329149b12d36b9a9cbab6, type: 3}
   PoolCapacity: 0
-  MaxPoolCapacity: 5
+  MaxPoolCapacity: 20
+--- !u!114 &386456284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386456280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c1ef1f45327ff489b74caa524407ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cost: 20
+  _increasePercent: 15
+  _costThreshold: 1000
 --- !u!1 &392500514
 GameObject:
   m_ObjectHideFlags: 0
@@ -7730,6 +7744,57 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943613273}
   m_Mesh: {fileID: -7737516218245646062, guid: 424ca62b13b54604f91c3130a72a23b2, type: 3}
+--- !u!1 &948640839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 948640840}
+  - component: {fileID: 948640841}
+  m_Layer: 0
+  m_Name: Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &948640840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948640839}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2050020222}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &948640841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948640839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70e8b9c1fa049143b70509200085198, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _availablePoints: 20
+  _maxPoints: 200
+  _maxEnemiesAmount: 20
+  _spawnRate: 1.3
+  _minTime: 2
+  _maxTime: 5
+  _pointsGainPerSecond: 20
 --- !u!1 &956145217
 GameObject:
   m_ObjectHideFlags: 0
@@ -14574,6 +14639,7 @@ GameObject:
   - component: {fileID: 1140258359}
   - component: {fileID: 1140258358}
   - component: {fileID: 1140258360}
+  - component: {fileID: 1140258361}
   m_Layer: 0
   m_Name: ChestHandler
   m_TagString: Untagged
@@ -14594,10 +14660,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractableSpawner: {fileID: 1140258360}
-  Cost: 25
-  IncreasePercent: 20
-  _costThreshold: 1000
   _itemsHandler: {fileID: 1204296356}
+  _costHandler: {fileID: 1140258361}
 --- !u!4 &1140258359
 Transform:
   m_ObjectHideFlags: 0
@@ -14627,7 +14691,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPrefab: {fileID: 389328422361486788, guid: 264bd5b3894ef1c4f9e51804357abe0e, type: 3}
   PoolCapacity: 0
-  MaxPoolCapacity: 5
+  MaxPoolCapacity: 25
+--- !u!114 &1140258361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140258357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c1ef1f45327ff489b74caa524407ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cost: 25
+  _increasePercent: 30
+  _costThreshold: 1000
 --- !u!1 &1178791856
 GameObject:
   m_ObjectHideFlags: 0
@@ -21397,6 +21476,7 @@ GameObject:
   - component: {fileID: 1806162019}
   - component: {fileID: 1806162021}
   - component: {fileID: 1806162022}
+  - component: {fileID: 1806162023}
   m_Layer: 0
   m_Name: ChanceAltarHandler
   m_TagString: Untagged
@@ -21432,10 +21512,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractableSpawner: {fileID: 1806162022}
-  Cost: 15
-  IncreasePercent: 40
-  _costThreshold: 1000
   _itemsHandler: {fileID: 1204296356}
+  _costHandler: {fileID: 1806162023}
 --- !u!114 &1806162022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21450,7 +21528,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPrefab: {fileID: 7514767359008438798, guid: e29052480226c1f4e862272d1d82f8bf, type: 3}
   PoolCapacity: 0
-  MaxPoolCapacity: 5
+  MaxPoolCapacity: 20
+--- !u!114 &1806162023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806162018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c1ef1f45327ff489b74caa524407ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cost: 20
+  _increasePercent: 30
+  _costThreshold: 1000
 --- !u!1 &1806638885
 GameObject:
   m_ObjectHideFlags: 0
@@ -23531,6 +23624,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 948640840}
   - {fileID: 1925439055}
   - {fileID: 2123011992}
   - {fileID: 1428741548}
@@ -23555,16 +23649,10 @@ MonoBehaviour:
   - {fileID: 2123011993}
   - {fileID: 1428741549}
   - {fileID: 258041550}
-  _lastMinuteSpawner: {fileID: 892503878}
+  - {fileID: 892503878}
   _spawnCollidersHandler: {fileID: 283037511}
   _placementVerifier: {fileID: 2050020224}
-  _initialValues:
-    InitialAvailablePoints: 20
-    MaxPoints: 300
-    SpawnRateMinTime: 5
-    SpawnRateMaxTime: 12
-    MaxEnemiesAmount: 30
-    PointsGainPerSecond: 30
+  _settings: {fileID: 948640841}
   _upgradesPercentsInitialValues:
   - 5
   - 10
@@ -25060,7 +25148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectPrefab: {fileID: 117811364892704532, guid: 1d7b49d2062c37280b0109ae9b6b629a, type: 3}
   PoolCapacity: 0
-  MaxPoolCapacity: 5
+  MaxPoolCapacity: 20
 --- !u!1 &2140803116
 GameObject:
   m_ObjectHideFlags: 0
