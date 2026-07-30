@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInteractable : CostInteractableHandler
+public interface IPriceOwner
 {
-    
+    void InitializePrices();
 }

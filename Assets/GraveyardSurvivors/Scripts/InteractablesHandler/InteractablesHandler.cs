@@ -43,9 +43,9 @@ public class InteractablesHandler : MonoBehaviour
                     interactable.Spawn(position);
                 }
                 
-                if (interactable is CostInteractableHandler costInteractable)
+                if (interactable is IPriceOwner priceOwner)
                 {
-                    costInteractable.SetValueForObjects();
+                    priceOwner.InitializePrices();
                 } 
             }
         }

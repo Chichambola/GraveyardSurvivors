@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class LightAltarHandler : CostInteractableHandler, IInteractableHandler
+public class HealAltarHandler : InteractableHandler, IPriceOwner
 {
+    [SerializeField] private CostHandler _costHandler;
+    
     private void OnEnable()
     {
         InteractableSpawner.InteractableWasChosen += OnLightAltarChosen;
@@ -18,7 +20,7 @@ public class LightAltarHandler : CostInteractableHandler, IInteractableHandler
     
     private void OnLightAltarChosen(Interactable interactable)
     {
-        if (interactable is LightAltar altar == false)
+        if (interactable is HealAltar altar == false)
             throw new Exception();
 
         if (Player.MoneyAmount < altar.Value)
@@ -32,6 +34,8 @@ public class LightAltarHandler : CostInteractableHandler, IInteractableHandler
         
         altar.IncreaseInteractionAmount();
         
-        altar.SetValue(IncreaseCost(altar.Value));
+        altar.SetValue(_costHandler.IncreaseCost(altar.Value));
     }
+    
+    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
 }

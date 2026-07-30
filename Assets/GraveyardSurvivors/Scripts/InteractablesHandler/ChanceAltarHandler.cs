@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEditor.Profiling;
 using UnityEngine;
 
-public class ChanceAltarHandler : ItemInteractable, IInteractableHandler
+public class ChanceAltarHandler : InteractableHandler, IPriceOwner
 {
     [SerializeField] private ItemsHandler _itemsHandler;
+    [SerializeField] private CostHandler _costHandler;
     
     private void OnEnable()
     {
@@ -41,7 +42,7 @@ public class ChanceAltarHandler : ItemInteractable, IInteractableHandler
         
         CanDrop(rarityLevel.Rarity, altar);
             
-        altar.SetValue(IncreaseCost(altar.CurrentCost));
+        altar.SetValue(_costHandler.IncreaseCost(altar.CurrentCost));
     }
 
     private void CanDrop(ERarityLevel rarityLevel, ChanceAltar altar)
@@ -57,4 +58,6 @@ public class ChanceAltarHandler : ItemInteractable, IInteractableHandler
             _itemsHandler.SpawnRandomItem(altar.transform.position, rarityLevel);   
         }
     }
+
+    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
 }

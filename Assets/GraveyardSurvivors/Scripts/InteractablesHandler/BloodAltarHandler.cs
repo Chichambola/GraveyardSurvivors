@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BloodAltarHandler : InteractableHandler, IInteractableHandler
+public class BloodAltarHandler : InteractableHandler
 {
     private void OnEnable()
     {

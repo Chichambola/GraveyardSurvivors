@@ -9,9 +9,10 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class ChestHandler : CostInteractableHandler, IInteractableHandler
+public class ChestHandler : InteractableHandler, IPriceOwner
 {
     [SerializeField] private ItemsHandler _itemsHandler;
+    [SerializeField] private CostHandler _costHandler;
     
     private void OnEnable()
     {
@@ -28,7 +29,7 @@ public class ChestHandler : CostInteractableHandler, IInteractableHandler
         if (interactable is Chest chest == false)
             throw new Exception(nameof(chest));
         
-        if (Player.MoneyAmount < Cost)
+        if (Player.MoneyAmount < _costHandler.Cost)
         {
             Debug.Log("Not enough money");
         }
@@ -36,7 +37,7 @@ public class ChestHandler : CostInteractableHandler, IInteractableHandler
         {
             chest.Open();
             
-            Player.ReduceMoney(Cost);
+            Player.ReduceMoney(_costHandler.Cost);
             
             RarityLevel rarityLevel = UserUtils.GetElementByWeight(chest.Weights);
 
@@ -45,9 +46,11 @@ public class ChestHandler : CostInteractableHandler, IInteractableHandler
             
             _itemsHandler.SpawnRandomItem(chest.transform.position, rarityLevel.Rarity);
             
-            IncreaseCost();
+            _costHandler.IncreaseCost();
         }
         
-        InteractableSpawner.SetValueForObjects(Cost);
+        InteractableSpawner.SetValueForObjects(_costHandler.Cost);
     }
+    
+    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
 }

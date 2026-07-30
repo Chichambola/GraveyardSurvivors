@@ -2,24 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class EnemySpawnerHandler : MonoBehaviour
 {
-    [Header("Spawners")] [SerializeField] private List<EnemySpawner> _enemySpawners;
-    [SerializeField] private EnemySpawner _lastMinuteSpawner;
+    [Header("Spawners")]
+    [SerializeField] private List<EnemySpawner> _enemySpawners;
 
-    [Header("Services")] [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;
+    [Header("Services")]
+    [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;
     [SerializeField] private PlacementVerifier _placementVerifier;
 
-    [SerializeField] private SpawnersPickerSettings _initialValues;
+    [SerializeField] private PointsHandler _pointsHandler;
+    [SerializeField] private int _maxEnemiesAmount;
+    [SerializeField] private float _spawnRate;
 
-    [Header("Upgrade timing settings")] [SerializeField]
-    private List<float> _upgradesPercentsInitialValues;
-
+    [Header("Upgrade timing settings")]
+    [SerializeField] private List<float> _upgradesPercentsInitialValues;
+    
     [SerializeField] private GameTimer _gameTimer;
     [SerializeField] private int _thresholdMinute = 7;
 
@@ -27,16 +29,13 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private List<Enemy> _currentEnemies;
     private List<EnemySpawner> _availableSpawners;
-    private Queue<EnemySpawner> _spawnQueue;
     private List<float> _upgradePercents;
     private IPlayer _player;
+    private Queue<EnemySpawner> _spawnQueue;
     private FuncPredicate _canUnsubscribe;
     private CancellationTokenSource _ctsSpawn;
-    private CancellationTokenSource _ctsPoints;
-    private SpawnersPickerSettings _settings;
     private bool _isGameTimerAttached;
     private bool _isLastMinute;
-    private float _availablePoints;
 
     public void Init(IPlayer player)
     {
@@ -50,9 +49,10 @@ public class EnemySpawnerHandler : MonoBehaviour
     {
         _currentEnemies = new List<Enemy>();
         _availableSpawners = new List<EnemySpawner>();
-        _canUnsubscribe = new FuncPredicate(() =>
+        
+        _canUnsubscribe = new FuncPredicate(() => 
             _upgradePercents.Count > 0 || _availableSpawners.Count != _enemySpawners.Count || !_isLastMinute);
-
+        
         _ctsSpawn = new CancellationTokenSource();
         _ctsSpawn.RegisterRaiseCancelOnDestroy(gameObject);
     }
@@ -60,8 +60,6 @@ public class EnemySpawnerHandler : MonoBehaviour
     private void OnEnable()
     {
         _isGameTimerAttached = true;
-
-        _settings = _initialValues;
 
         _isLastMinute = false;
 
@@ -87,8 +85,6 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     public void StartProcess()
     {
-        _availablePoints = _settings.InitialAvailablePoints;
-
         FindAvailableSpawners();
 
         SpawnTask().Forget();
@@ -120,16 +116,13 @@ public class EnemySpawnerHandler : MonoBehaviour
     {
         while (!_ctsSpawn.IsCancellationRequested)
         {
-            FillSpawnQueue();
+            FillSpawnQueue(out float sum);
 
+            _pointsHandler.ReducePoints(sum);
+            
             await Spawn();
 
-            _ctsPoints = new CancellationTokenSource();
-            _ctsPoints.RegisterRaiseCancelOnDestroy(gameObject);
-
-            await GainPointsTask();
-            
-            _ctsPoints.Cancel();
+            await _pointsHandler.GainPoints();
         }
     }
 
@@ -137,26 +130,24 @@ public class EnemySpawnerHandler : MonoBehaviour
     {
         foreach (var enemySpawner in _spawnQueue)
         {
-            if (_currentEnemies.Count >= _settings.MaxEnemiesAmount)
+            if (_currentEnemies.Count >= _maxEnemiesAmount)
             {
-                await UniTask.WaitUntil(() => _currentEnemies.Count < _settings.MaxEnemiesAmount, cancellationToken: _ctsSpawn.Token);
+                await UniTask.WaitUntil(() => _currentEnemies.Count < _maxEnemiesAmount, cancellationToken: _ctsSpawn.Token);
             }
             else
             {
                 Spawn(enemySpawner);
-                
-                float time = GetSpawnTime();
                     
-                await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _ctsSpawn.Token);
+                await UniTask.Delay(TimeSpan.FromSeconds(_spawnRate), cancellationToken: _ctsSpawn.Token);
             }
         }
     }
 
-    private void FillSpawnQueue()
+    private void FillSpawnQueue(out float sum)
     {
         _spawnQueue = new Queue<EnemySpawner>();
         
-        float sum = 0;
+        sum = 0;
         bool isEnoughPoints = true;
 
         while (isEnoughPoints)
@@ -165,7 +156,7 @@ public class EnemySpawnerHandler : MonoBehaviour
 
             sum += chosenSpawner.Cost;
 
-            if (sum <= _availablePoints)
+            if (sum <= _pointsHandler.AvailablePoints)
             {
                 _spawnQueue.Enqueue(chosenSpawner);
             }
@@ -178,8 +169,6 @@ public class EnemySpawnerHandler : MonoBehaviour
 
     private void Spawn(EnemySpawner chosenSpawner)
     {
-        _availablePoints -= chosenSpawner.Cost;
-
         bool canPlace = false;
 
         while (!canPlace)
@@ -208,18 +197,16 @@ public class EnemySpawnerHandler : MonoBehaviour
 
         if (_availableSpawners.Count != _enemySpawners.Count)
         {
-            var enemySpawner = _enemySpawners.First(spawner => !spawner.IsAvailable);
-
-            enemySpawner.SetActive(true);
-
-            _availableSpawners.Add(enemySpawner);
+            AddAvailableSpawner();
         }
 
-        if (minute >= _thresholdMinute)
+        if (minute >= _thresholdMinute && _enemySpawners.Count == 1)
         {
             _isLastMinute = true;
-
-            SetLastMinuteSpawner();
+            
+            _availableSpawners.Clear();
+            
+            AddAvailableSpawner();
         }
 
         if (_canUnsubscribe.Evaluate())
@@ -229,67 +216,30 @@ public class EnemySpawnerHandler : MonoBehaviour
         _gameTimer.ReachedMinute -= OnMinuteReached;
     }
 
+    private void AddAvailableSpawner()
+    {
+        var enemySpawner = _enemySpawners.First(spawner => !spawner.IsAvailable);
+
+        enemySpawner.SetActive(true);
+        
+        _availableSpawners.Add(enemySpawner);
+    }
+
     private void Upgrade(float percent)
     {
-        _settings.Upgrade(percent);
+        _maxEnemiesAmount = _maxEnemiesAmount.AddPercentToNumber(percent);
+        _pointsHandler.Upgrade(percent);
         
         foreach (var enemySpawner in _enemySpawners)
         {
             enemySpawner.Upgrade();
         }
     }
-
-    private void SetLastMinuteSpawner()
-    {
-        foreach (var enemySpawner in _availableSpawners)
-        {
-            enemySpawner.EnemyWasReleased -= OnEnemyRelease;
-            enemySpawner.EnemyWasSpawned -= _currentEnemies.Add;
-        }
-
-        _availableSpawners.Clear();
-
-        _availableSpawners.Add(_lastMinuteSpawner);
-        _lastMinuteSpawner.SetPlayer(_player);
-        _lastMinuteSpawner.SetActive(true);
-        _lastMinuteSpawner.EnemyWasSpawned += _currentEnemies.Add;
-        _lastMinuteSpawner.EnemyWasReleased += OnEnemyRelease;
-    }
-
+    
     private void OnEnemyRelease(Enemy enemy)
     {
         _currentEnemies.Remove(enemy);
 
         EnemyWasKilled?.Invoke(enemy);
     }
-
-    private async UniTask GainPointsTask()
-    {
-        float elapsedTime = 0;
-        float lastSecond = 0;
-        float time = GetSpawnTime();
-
-        while (!_ctsPoints.IsCancellationRequested && elapsedTime < time)
-        {
-            elapsedTime += Time.deltaTime;
-
-            float seconds = Mathf.FloorToInt(elapsedTime % 60);
-            
-            if (!Mathf.Approximately(seconds, lastSecond))
-            {
-                lastSecond = seconds;
-                
-                _availablePoints += _settings.PointsGainPerSecond;
-            }
-
-            await UniTask.Yield(_ctsPoints.Token);
-        }
-
-        if (_availablePoints >= _settings.MaxPoints)
-        {
-            _availablePoints = _settings.MaxPoints;
-        }
-    }
-
-    private float GetSpawnTime() => Random.Range(_settings.SpawnRateMinTime, _settings.SpawnRateMaxTime);
 }

@@ -16,8 +16,5 @@ public abstract class InteractableHandler : MonoBehaviour
         Player = player;
     }
 
-    public void Spawn(Vector3 position)
-    {
-        InteractableSpawner.Spawn(position);
-    }
+    public void Spawn(Vector3 position) => InteractableSpawner.Spawn(position);
 }

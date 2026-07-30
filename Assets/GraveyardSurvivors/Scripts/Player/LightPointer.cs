@@ -24,6 +24,7 @@ public class LightPointer : MonoBehaviour
     {
         _player = player;
         _lantern = lantern;
+        
         var color = _arrowObject.material.color;
         color.a = _fullOpacity;
         _arrowObject.material.color = color;
