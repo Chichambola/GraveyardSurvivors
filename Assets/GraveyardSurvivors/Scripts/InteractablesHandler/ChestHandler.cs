@@ -14,19 +14,11 @@ public class ChestHandler : InteractableHandler, IPriceOwner
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
     
-    private void OnEnable()
+    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
+    
+    protected override void OnInteractableChosen<T>(T interactable)
     {
-        InteractableSpawner.InteractableWasChosen += OnChestChosen;
-    }
-
-    private void OnDisable()
-    {
-        InteractableSpawner.InteractableWasChosen -= OnChestChosen;
-    }
-
-    private void OnChestChosen(Interactable interactable)
-    {
-        if (interactable is Chest chest == false)
+        if (interactable is not Chest chest)
             throw new Exception(nameof(chest));
         
         if (Player.MoneyAmount < _costHandler.Cost)
@@ -51,6 +43,4 @@ public class ChestHandler : InteractableHandler, IPriceOwner
         
         InteractableSpawner.SetValueForObjects(_costHandler.Cost);
     }
-    
-    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
 }

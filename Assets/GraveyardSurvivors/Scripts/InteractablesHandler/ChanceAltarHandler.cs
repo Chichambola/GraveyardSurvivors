@@ -9,20 +9,12 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
     
-    private void OnEnable()
+    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
+    
+    protected override void OnInteractableChosen<T>(T interactable)
     {
-        InteractableSpawner.InteractableWasChosen += OnChanceAltarChosen;
-    }
-
-    private void OnDisable()
-    {
-        InteractableSpawner.InteractableWasChosen -= OnChanceAltarChosen;
-    }
-
-    private void OnChanceAltarChosen(Interactable interactable)
-    {
-        if (interactable is ChanceAltar altar == false)
-            throw new Exception();
+        if (interactable is not ChanceAltar altar)
+            throw new Exception(nameof(altar));
         
         if (Player.MoneyAmount < altar.CurrentCost)
         {
@@ -44,7 +36,7 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
             
         altar.SetValue(_costHandler.IncreaseCost(altar.CurrentCost));
     }
-
+    
     private void CanDrop(ERarityLevel rarityLevel, ChanceAltar altar)
     {
         if (rarityLevel == ERarityLevel.None)
@@ -58,6 +50,4 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
             _itemsHandler.SpawnRandomItem(altar.transform.position, rarityLevel);   
         }
     }
-
-    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
 }

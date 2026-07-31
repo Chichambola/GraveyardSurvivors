@@ -6,23 +6,15 @@ using UnityEngine;
 
 public class HealAltarHandler : InteractableHandler, IPriceOwner
 {
-    [SerializeField] private CostHandler _costHandler;
+    [SerializeField] private CostHandler _costHandler; 
     
-    private void OnEnable()
-    {
-        InteractableSpawner.InteractableWasChosen += OnLightAltarChosen;
-    }
-
-    private void OnDisable()
-    {
-        InteractableSpawner.InteractableWasChosen -= OnLightAltarChosen;
-    }
+    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
     
-    private void OnLightAltarChosen(Interactable interactable)
+    protected override void OnInteractableChosen<T>(T interactable)
     {
-        if (interactable is HealAltar altar == false)
-            throw new Exception();
-
+        if (interactable is not HealAltar altar)
+            throw new Exception(nameof(altar));
+        
         if (Player.MoneyAmount < altar.Value)
         {
             Debug.Log("Not enough money");
@@ -36,6 +28,4 @@ public class HealAltarHandler : InteractableHandler, IPriceOwner
         
         altar.SetValue(_costHandler.IncreaseCost(altar.Value));
     }
-    
-    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
 }

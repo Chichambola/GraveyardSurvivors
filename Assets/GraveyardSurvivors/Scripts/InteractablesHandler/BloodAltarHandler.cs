@@ -5,20 +5,10 @@ using UnityEngine;
 
 public class BloodAltarHandler : InteractableHandler
 {
-    private void OnEnable()
+    protected override void OnInteractableChosen<T>(T interactable)
     {
-        InteractableSpawner.InteractableWasChosen += OnAltarChosen;
-    }
-
-    private void OnDisable()
-    {
-        InteractableSpawner.InteractableWasChosen -= OnAltarChosen;
-    }
-    
-    private void OnAltarChosen(Interactable interactable)
-    {
-        if (interactable is BloodAltar altar == false)
-            throw new Exception();
+        if (interactable is not BloodAltar altar)
+            throw new Exception(nameof(altar));
         
         float necessaryHealth = GetAmountOfNecessaryHealth(Player.MaxHealth, altar);
 
