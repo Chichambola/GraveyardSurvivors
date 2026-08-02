@@ -518,7 +518,7 @@ Transform:
   m_GameObject: {fileID: 944860470588529996}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: -4.221}
+  m_LocalPosition: {x: 0, y: 0, z: -4.221}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2482,6 +2482,7 @@ GameObject:
   - component: {fileID: 3474814700427343827}
   - component: {fileID: 1601001508329279439}
   - component: {fileID: 6069078403803328412}
+  - component: {fileID: 3692314678454201447}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -2566,12 +2567,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8191ea2729bbd86cdac64cf4254696c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lightArea: {fileID: 3002928476797716162}
+  _playerDetector: {fileID: 0}
   _light: {fileID: 6346140974122923364}
-  _collider: {fileID: 5170166388784743591}
-  _radius: 2.5
+  _radius: {fileID: 3692314678454201447}
   _disableThreshold: 0.75
-  _shrinkRate: 0.008
+  _shrinkTime: 25
+  _currentDuration: 0
 --- !u!114 &1601001508329279439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2599,6 +2600,22 @@ MonoBehaviour:
   _enemyDetector: {fileID: 1601001508329279439}
   _damage: 1
   _rate: 1
+--- !u!114 &3692314678454201447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6663640922598211934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d608a16ae338414981a3734d51731e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 3
+  _rateWhenGainingEnergy: 1
+  _area: {fileID: 3002928476797716162}
+  _collider: {fileID: 5170166388784743591}
 --- !u!1 &6794014380032969292
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,41 +8,41 @@ public class RateChanger : MonoBehaviour
 {
     [SerializeField] private LanternLight _light;
     [SerializeField] private EnemyDetector _enemyDetector;
-    [SerializeField] private float _shrinkRateIncrease = 0.1f;
+    [SerializeField] private float _shrinkRateIncrease = 5;
 
     private void OnEnable()
     {
-        _enemyDetector.EnemyDetected += IncreaseRate;
-        _enemyDetector.EnemyLeft += DecreaseRate;
+        _enemyDetector.EnemyDetected += DecreaseDuration;
+        _enemyDetector.EnemyLeft += IncreaseDuration;
     }
 
     private void OnDisable()
     {
-        _enemyDetector.EnemyDetected -= IncreaseRate;
-        _enemyDetector.EnemyLeft -= DecreaseRate;
+        _enemyDetector.EnemyDetected -= DecreaseDuration;
+        _enemyDetector.EnemyLeft -= IncreaseDuration;
     }
 
-    private void DecreaseRate(Enemy enemy)
+    private void DecreaseDuration(Enemy enemy)
+    {
+        if (enemy == null) 
+            throw new Exception();
+
+        var decreaseValue = _light.CurrentDuration.GetClampedValueInverse(_shrinkRateIncrease);
+
+        var duration = _light.CurrentDuration.SubtractPercentFromNumber(decreaseValue);
+
+        _light.SetDuration(duration);
+    }
+
+    private void IncreaseDuration(Enemy enemy)
     {
         if (enemy == null)
             throw new Exception();
         
-        float currentRate = _light.ShrinkRate;
+        var increaseValue = _light.CurrentDuration.GetClampedValue(_shrinkRateIncrease, _light.InitialRadius);
 
-        currentRate -= _shrinkRateIncrease;
+        var duration = _light.CurrentDuration.AddPercentToNumber(increaseValue);
 
-        _light.SetRate(currentRate);
-    }
-
-    private void IncreaseRate(Enemy enemy)
-    {
-        if (enemy == null)
-            throw new Exception();
-        
-        float currentRate = _light.ShrinkRate;
-
-        currentRate += _shrinkRateIncrease;
-        
-        _light.SetRate(currentRate);
+        _light.SetDuration(duration);
     }
 }

@@ -19,6 +19,5 @@ public interface IPlayer
     void TakeDamage(float value);
     void Heal(float value);
     void ResetRadius();
-    void StartLight();
     void AddEffect(Effect effect);
 }
