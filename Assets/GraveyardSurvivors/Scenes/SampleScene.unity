@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3028,20 +3028,20 @@ GameObject:
   m_Component:
   - component: {fileID: 360078370}
   - component: {fileID: 360078372}
-  - component: {fileID: 360078374}
-  - component: {fileID: 360078373}
   - component: {fileID: 360078377}
   - component: {fileID: 360078378}
+  - component: {fileID: 360078379}
+  - component: {fileID: 360078374}
+  - component: {fileID: 360078373}
   - component: {fileID: 360078376}
   - component: {fileID: 360078375}
-  - component: {fileID: 360078379}
   m_Layer: 6
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &360078370
 Transform:
   m_ObjectHideFlags: 0
@@ -3073,12 +3073,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8191ea2729bbd86cdac64cf4254696c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lightArea: {fileID: 1041548476}
   _light: {fileID: 1577614068}
-  _collider: {fileID: 360078376}
-  _radius: 3
+  _radius: {fileID: 360078378}
   _disableThreshold: 0.9
-  _shrinkRate: 0.005
+  _shrinkTime: 25
+  _currentDuration: 0
 --- !u!114 &360078373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3165,7 +3164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _light: {fileID: 360078372}
   _enemyDetector: {fileID: 360078374}
-  _shrinkRateIncrease: 0.008
+  _shrinkRateIncrease: 5
 --- !u!114 &360078378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3175,10 +3174,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 360078369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c83cd6f30e4a71140940d4af97213d73, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d608a16ae338414981a3734d51731e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerDetector: {fileID: 360078373}
+  _radius: 3
+  _rateWhenGainingEnergy: 1
+  _area: {fileID: 1041548476}
+  _collider: {fileID: 360078376}
 --- !u!114 &360078379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3188,13 +3190,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 360078369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07ed9e844e55af54bafc479b1ae417af, type: 3}
+  m_Script: {fileID: 11500000, guid: 07aef37d5d0a0254bbbcbe78d764f2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mask:
-    serializedVersion: 2
-    m_Bits: 8
-  NumberOfColliders: 50
+  _playerDetector: {fileID: 360078373}
 --- !u!1 &375712434
 GameObject:
   m_ObjectHideFlags: 0
@@ -7788,13 +7787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70e8b9c1fa049143b70509200085198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _availablePoints: 20
-  _maxPoints: 200
-  _maxEnemiesAmount: 20
-  _spawnRate: 1.3
-  _minTime: 2
-  _maxTime: 5
-  _pointsGainPerSecond: 20
 --- !u!1 &956145217
 GameObject:
   m_ObjectHideFlags: 0
@@ -9033,7 +9025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1041548475
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -19132,7 +19124,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.6833328e-38, z: 7.6e-43, w: -2.2129648e-28}
+  m_BoundingSphereOverride: {x: 2.710943e-20, y: 6.704094e-39, z: 8.385e-42, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -23604,6 +23596,7 @@ GameObject:
   - component: {fileID: 2050020222}
   - component: {fileID: 2050020223}
   - component: {fileID: 2050020224}
+  - component: {fileID: 2050020225}
   m_Layer: 0
   m_Name: EnemySpawners
   m_TagString: Untagged
@@ -23652,7 +23645,9 @@ MonoBehaviour:
   - {fileID: 892503878}
   _spawnCollidersHandler: {fileID: 283037511}
   _placementVerifier: {fileID: 2050020224}
-  _settings: {fileID: 948640841}
+  _pointsHandler: {fileID: 2050020225}
+  _maxEnemiesAmount: 20
+  _spawnRate: 1.5
   _upgradesPercentsInitialValues:
   - 5
   - 10
@@ -23678,6 +23673,23 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &2050020225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050020221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f3cb05785bb3a8e97d810d932220c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _availablePoints: 0
+  _maxPoints: 200
+  _minTime: 2
+  _maxTime: 5
+  _pointsGainPerSecond: 15
 --- !u!1 &2055380387
 GameObject:
   m_ObjectHideFlags: 0
@@ -24506,8 +24518,7 @@ MonoBehaviour:
     - {fileID: 1140258358}
     - {fileID: 1806162021}
     - {fileID: 2138666185}
-    - {fileID: 386456282}
-    values: 1e0000000a0000000300000003000000
+    values: 1e0000000a00000003000000
   _spawnCollidersHandler: {fileID: 283037511}
   _placementVerifier: {fileID: 1994042615}
 --- !u!4 &2099592629
