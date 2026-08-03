@@ -33,6 +33,7 @@ public class LanternLight : MonoBehaviour, ILantern
     {
         if (_radius.Value > 0)
         {
+            _radius.Init(_shrinkTime);
             _radius.ChangeRadius(_defaultValue, _shrinkTime).Forget();
             _isRadiusActive = true;
         }
@@ -89,12 +90,9 @@ public class LanternLight : MonoBehaviour, ILantern
         _radius.ResetToInitialValue();
     }
     
-    public void SetDuration(float duration)
-    {
-        _currentDuration = duration;
-        
-        _radius.SetDuration(duration);
-    }
+    public void IncreaseSpeed(float duration) => _radius.IncreaseSpeed(duration);
+    
+    public void DecreaseSpeed(float duration) => _radius.DecreaseSpeed(duration);
     
     private async UniTask WaitTask()
     {

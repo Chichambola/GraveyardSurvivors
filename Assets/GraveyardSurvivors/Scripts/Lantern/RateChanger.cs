@@ -12,37 +12,29 @@ public class RateChanger : MonoBehaviour
 
     private void OnEnable()
     {
-        _enemyDetector.EnemyDetected += DecreaseDuration;
-        _enemyDetector.EnemyLeft += IncreaseDuration;
+        _enemyDetector.EnemyDetected += DecreaseSpeed;
+        _enemyDetector.EnemyLeft += IncreaseSpeed;
     }
 
     private void OnDisable()
     {
-        _enemyDetector.EnemyDetected -= DecreaseDuration;
-        _enemyDetector.EnemyLeft -= IncreaseDuration;
+        _enemyDetector.EnemyDetected -= DecreaseSpeed;
+        _enemyDetector.EnemyLeft -= IncreaseSpeed;
     }
 
-    private void DecreaseDuration(Enemy enemy)
+    private void IncreaseSpeed(Enemy enemy)
     {
         if (enemy == null) 
             throw new Exception();
-
-        var decreaseValue = _light.CurrentDuration.GetClampedValueInverse(_shrinkRateIncrease);
-
-        var duration = _light.CurrentDuration.SubtractPercentFromNumber(decreaseValue);
-
-        _light.SetDuration(duration);
+        
+        _light.IncreaseSpeed(_shrinkRateIncrease);
     }
 
-    private void IncreaseDuration(Enemy enemy)
+    private void DecreaseSpeed(Enemy enemy)
     {
         if (enemy == null)
             throw new Exception();
-        
-        var increaseValue = _light.CurrentDuration.GetClampedValue(_shrinkRateIncrease, _light.InitialRadius);
 
-        var duration = _light.CurrentDuration.AddPercentToNumber(increaseValue);
-
-        _light.SetDuration(duration);
+        _light.DecreaseSpeed(_shrinkRateIncrease);
     }
 }
