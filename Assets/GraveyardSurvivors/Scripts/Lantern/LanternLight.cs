@@ -96,7 +96,9 @@ public class LanternLight : MonoBehaviour, ILantern
     
     private async UniTask WaitTask()
     {
-        await UniTask.WaitUntil(() => _radius.Value < _disableThreshold);
+        await UniTask.WaitWhile(() => _radius.Value > _disableThreshold);
+        
+        Debug.Log("Here");
         
         _isRadiusActive = false;
         _radius.StopChanging();

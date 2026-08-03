@@ -19,14 +19,11 @@ public class RadiusEffectScaler : MonoBehaviour
     [SerializeField] private ParticleSystem _area;
     [SerializeField] private SphereCollider _collider;
 
-    private CancellationToken _cts;
-    private TweenSettings<float> _settings;
-    private Sequence _sequence;
+    private Coroutine _coroutine;
     private float _defaulTimeScale = 1;
     private float _initialRadius;
     private float _targetRadius;
     private float _time;
-    private TimeoutController _timeoutController;
 
     public float Value => _collider.radius;
     public float InitialValue => _initialRadius;
@@ -40,26 +37,9 @@ public class RadiusEffectScaler : MonoBehaviour
     private void Awake()
     {
         _initialRadius = _radius;
-        
-        _timeoutController = new TimeoutController();
-        _settings = new TweenSettings<float>();
     }
     
     public void ResetToInitialValue() => ChangeRadius(_initialRadius).Forget();
-    
-    public void IncreaseSpeed(float value)
-    {
-        float gainPercent = _sequence.timeScale.GetClampedValue(value, _maxTimeScale);
-        
-        _sequence.timeScale += _sequence.timeScale.AddPercentToNumber(gainPercent);
-    }
-
-    public void DecreaseSpeed(float value)
-    {
-        float lostPercent = _sequence.timeScale.GetClampedValueInverse(value, _defaulTimeScale);
-        
-        _sequence.timeScale -= _sequence.timeScale.SubtractPercentFromNumber(lostPercent);
-    }
 
     public void StopChanging() => _cts?.Cancel();
 
@@ -69,30 +49,9 @@ public class RadiusEffectScaler : MonoBehaviour
         _area.gameObject.SetActive(value);
     }
     
-    public async UniTask ChangeRadius(float targetRadius, float time = 0f)
+    public IEnumerator ChangeRadiusRoutine()
     {
-        _targetRadius = targetRadius;
         
-        _time = Mathf.Approximately(time, default) ? _rateWhenGainingEnergy : time;
         
-        try
-        {
-            _cts = _timeoutController.Timeout(TimeSpan.FromSeconds(_time));
-
-            await _sequence;
-            
-            _timeoutController.Reset();
-        }
-        catch (Exception ex)
-        {
-            if (_timeoutController.IsTimeout())
-            {
-                Debug.LogError("Операция не уложилась в отведенное время!");
-            }
-            else
-            {
-                Debug.LogException(ex);
-            }
-        }
     }
 }
