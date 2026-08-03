@@ -3179,6 +3179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 3
   _rateWhenGainingEnergy: 1
+  _maxTimeScale: 2
   _area: {fileID: 1041548476}
   _collider: {fileID: 360078376}
 --- !u!114 &360078379
@@ -13890,8 +13891,8 @@ RectTransform:
   m_GameObject: {fileID: 1041548474}
   m_LocalRotation: {x: 0.15810229, y: 0.6892051, z: -0.6892051, w: 0.15810229}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.13, y: 2.13, z: 2.1299999}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 360078370}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
