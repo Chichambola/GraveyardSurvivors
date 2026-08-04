@@ -18,37 +18,35 @@ public class LanternLight : MonoBehaviour, ILantern
     [SerializeField] private float _shrinkTime = 25f;
     [SerializeField] private float _currentDuration;
     
-    private CancellationTokenSource _cts;
     private float _lastRadius;
     private float _initialRange;
     private int _defaultValue = 0;
     private bool _isRadiusActive;
 
     public bool IsActive => _radius.Value > _disableThreshold;
-    public float CurrentDuration => _currentDuration;
-    public float InitialRadius => _radius.InitialValue;
     public Vector3 CurrentPosition => transform.position;
 
-    public async UniTaskVoid Init()
+    public void Init()
     {
-        if (_radius.Value > 0)
-        {
-            _radius.Init(_shrinkTime);
-            _radius.ChangeRadius(_defaultValue, _shrinkTime).Forget();
-            _isRadiusActive = true;
-        }
-
-        _cts = new CancellationTokenSource();
-        _cts.RegisterRaiseCancelOnDestroy(gameObject);
-
-        await WaitTask();
+        if (!(_radius.Value > 0))
+            return;
+        
+        _radius.ThreshholdReached += OnThresholdReached;
+        _radius.Init();
+        _radius.ChangeRadius(_defaultValue, _shrinkTime).Forget();
+        _isRadiusActive = true;
     }
 
     private void Awake()
     {
         _lastRadius = _disableThreshold;
     }
-    
+
+    private void OnDisable()
+    {
+        _radius.ThreshholdReached -= OnThresholdReached;
+    }
+
     public async void ProcessEnemyDeath(Enemy enemy)
     {
         if (enemy == null)
@@ -77,8 +75,6 @@ public class LanternLight : MonoBehaviour, ILantern
             
             _radius.SetActive(true);
             
-            WaitTask().Forget();
-            
             await _radius.ChangeRadius(_lastRadius);
         }
     }
@@ -87,23 +83,16 @@ public class LanternLight : MonoBehaviour, ILantern
     {
         _light.range = _initialRange;
         
-        _radius.ResetToInitialValue();
+        _radius.ChangeRadius(_radius.InitialValue).Forget();
     }
     
     public void IncreaseSpeed(float duration) => _radius.IncreaseSpeed(duration);
     
     public void DecreaseSpeed(float duration) => _radius.DecreaseSpeed(duration);
     
-    private async UniTask WaitTask()
+    private void OnThresholdReached()
     {
-        await UniTask.WaitWhile(() => _radius.Value > _disableThreshold);
-        
-        Debug.Log("Here");
-        
         _isRadiusActive = false;
-        _radius.StopChanging();
         _radius.SetActive(false);
-        
-        _cts.Cancel();
     }
 }
