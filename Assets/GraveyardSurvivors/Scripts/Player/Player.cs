@@ -87,7 +87,7 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     private void Start()
     {
-        _light.Init().Forget();
+        _light.Init();
         
         StatsChanged?.Invoke(CurrentStats);
     }

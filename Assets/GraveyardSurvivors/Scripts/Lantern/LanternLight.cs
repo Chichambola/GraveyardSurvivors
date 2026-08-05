@@ -31,9 +31,8 @@ public class LanternLight : MonoBehaviour, ILantern
         if (!(_radius.Value > 0))
             return;
         
-        _radius.ThreshholdReached += OnThresholdReached;
-        _radius.Init();
-        _radius.ChangeRadius(_defaultValue, _shrinkTime).Forget();
+        _radius.ThresholdReached += OnThresholdReached;
+        _radius.ChangeRadius(_defaultValue, _shrinkTime, _disableThreshold).Forget();
         _isRadiusActive = true;
     }
 
@@ -44,7 +43,7 @@ public class LanternLight : MonoBehaviour, ILantern
 
     private void OnDisable()
     {
-        _radius.ThreshholdReached -= OnThresholdReached;
+        _radius.ThresholdReached -= OnThresholdReached;
     }
 
     public async void ProcessEnemyDeath(Enemy enemy)
@@ -94,5 +93,6 @@ public class LanternLight : MonoBehaviour, ILantern
     {
         _isRadiusActive = false;
         _radius.SetActive(false);
+        _radius.StopChanging();
     }
 }
