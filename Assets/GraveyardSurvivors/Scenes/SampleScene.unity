@@ -2165,7 +2165,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 1
+  _canSpawn: 0
 --- !u!1 &264294664
 GameObject:
   m_ObjectHideFlags: 0
@@ -3041,7 +3041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &360078370
 Transform:
   m_ObjectHideFlags: 0
@@ -3052,8 +3052,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 550256710}
   - {fileID: 1002513577}
@@ -3076,7 +3076,7 @@ MonoBehaviour:
   _light: {fileID: 1577614068}
   _radius: {fileID: 360078378}
   _disableThreshold: 0.9
-  _shrinkTime: 25
+  _shrinkTime: 40
   _currentDuration: 0
 --- !u!114 &360078373
 MonoBehaviour:
@@ -3148,7 +3148,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.00001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &360078377
 MonoBehaviour:
@@ -3177,11 +3177,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d608a16ae338414981a3734d51731e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isTurnedOn: 1
   _radius: 3
   _rateWhenGainingEnergy: 1
   _maxTimeScale: 2
   _area: {fileID: 1041548476}
   _collider: {fileID: 360078376}
+  _easeType: 8
 --- !u!114 &360078379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7411,7 +7413,7 @@ MonoBehaviour:
   _weight: 100
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 1
+  _canSpawn: 0
 --- !u!1 &903700546
 GameObject:
   m_ObjectHideFlags: 0
@@ -9026,7 +9028,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!199 &1041548475
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -17550,7 +17552,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 1
+  _canSpawn: 0
 --- !u!1 &1439293271
 GameObject:
   m_ObjectHideFlags: 0
@@ -19125,7 +19127,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.710943e-20, y: 6.704094e-39, z: 8.385e-42, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 3.839688e+19, z: 4.5616e-41, w: 9.829621e-15}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -22572,7 +22574,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 1
+  _canSpawn: 0
 --- !u!4 &1925439055
 Transform:
   m_ObjectHideFlags: 0
@@ -25016,7 +25018,7 @@ MonoBehaviour:
   _weight: 70
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 1
+  _canSpawn: 0
 --- !u!1 &2135301144
 GameObject:
   m_ObjectHideFlags: 0
