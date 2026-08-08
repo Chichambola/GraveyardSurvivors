@@ -3030,6 +3030,7 @@ GameObject:
   - component: {fileID: 360078372}
   - component: {fileID: 360078377}
   - component: {fileID: 360078378}
+  - component: {fileID: 360078380}
   - component: {fileID: 360078379}
   - component: {fileID: 360078374}
   - component: {fileID: 360078373}
@@ -3076,8 +3077,8 @@ MonoBehaviour:
   _light: {fileID: 1577614068}
   _radius: {fileID: 360078378}
   _disableThreshold: 0.9
-  _shrinkTime: 40
-  _currentDuration: 0
+  _shrinkTime: 70
+  _rateWhenGainingEnergy: 1
 --- !u!114 &360078373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3177,13 +3178,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d608a16ae338414981a3734d51731e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isTurnedOn: 1
   _radius: 3
-  _rateWhenGainingEnergy: 1
   _maxTimeScale: 2
   _area: {fileID: 1041548476}
   _collider: {fileID: 360078376}
-  _easeType: 8
+  _thresholdVerifier: {fileID: 360078380}
+  _easeType: 1
 --- !u!114 &360078379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3197,6 +3197,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerDetector: {fileID: 360078373}
+--- !u!114 &360078380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360078369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bda415c31043d6438c2045651f7e691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: {fileID: 360078378}
 --- !u!1 &375712434
 GameObject:
   m_ObjectHideFlags: 0
