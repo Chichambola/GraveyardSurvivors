@@ -2,37 +2,33 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening.Core.Easing;
 using PrimeTween;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.ProBuilder.Shapes;
 using Sequence = PrimeTween.Sequence;
 using Tween = PrimeTween.Tween;
 
 public class RadiusEffectScaler : MonoBehaviour
 {
-    [SerializeField] private bool _isTurnedOn;
     [SerializeField] private float _radius = 3f;
-    [SerializeField] private float _rateWhenGainingEnergy = 1f;
     [SerializeField] private float _maxTimeScale = 2;
     [SerializeField] private ParticleSystem _area;
     [SerializeField] private SphereCollider _collider;
-    [SerializeField] private Ease _easeType;
+    [SerializeField] private ThresholdVerifier _thresholdVerifier;
+    [SerializeField] private Ease _easeType = Ease.InCubic;
 
+    public event Action Reached;
     public event Action ThresholdReached;
-    
+
+    private Sequence _changeRadius;
     private CancellationTokenSource _cts;
-    private Sequence _sequence;
     private TweenSettings<float> _settings;
-    private float _defaulTimeScale = 1;
     private float _initialRadius;
     private float _currentTimeScale;
     private float _targetRadius;
     private float _time;
-    private float _disableThreshold;
+    private readonly float _defaultTimeScale = 1;
 
-    public float Value => _collider.radius;
+    public float Value => _collider.transform.localScale.x;
     public float InitialValue => _initialRadius;
     
     private void Awake()
@@ -40,96 +36,102 @@ public class RadiusEffectScaler : MonoBehaviour
         _initialRadius = _radius;
         _settings = new TweenSettings<float>();
         
+        _settings.settings.ease = _easeType;
+        
+        _collider.radius = 1;
+        _currentTimeScale = 1;
+    }
+
+    private void OnEnable()
+    {
+        _thresholdVerifier.ThresholdReached += OnThresholdReached;
+    }
+
+    private void OnDisable()
+    {
+        _thresholdVerifier.ThresholdReached -= OnThresholdReached;
+    }
+
+    private void OnValidate()
+    {
         var radius = new Vector3(_radius, _radius, _radius);
         
         _collider.transform.localScale = radius;
         _area.transform.localScale = radius;
-        _settings.settings.ease = _easeType;
-        _collider.radius = 1;
-        _currentTimeScale = 1;
     }
-    
+
     public void SetActive(bool value)
     {
         _collider.gameObject.SetActive(value);
         _area.gameObject.SetActive(value);
-        _cts?.Cancel();
     }
     
     public void IncreaseSpeed(float duration)
     {
         return;
         
-        var gainPercent = _sequence.timeScale.GetClampedValue(duration, _maxTimeScale);
+        var gainPercent = _changeRadius.timeScale.GetClampedValue(duration, _maxTimeScale);
         
-        _sequence.timeScale = _sequence.timeScale.AddPercentToNumber(gainPercent);
+        _changeRadius.timeScale = _changeRadius.timeScale.AddPercentToNumber(gainPercent);
 
-        _currentTimeScale = _sequence.timeScale;
+        _currentTimeScale = _changeRadius.timeScale;
     }
     
     public void DecreaseSpeed(float duration)
     {
         return;
         
-        var lostPercent = _sequence.timeScale.GetClampedValueInverse(duration, _defaulTimeScale);
+        var lostPercent = _changeRadius.timeScale.GetClampedValueInverse(duration, _defaultTimeScale);
         
-        _sequence.timeScale = _sequence.timeScale.SubtractPercentFromNumber(lostPercent);
+        _changeRadius.timeScale = _changeRadius.timeScale.SubtractPercentFromNumber(lostPercent);
 
-        _currentTimeScale = _sequence.timeScale;
+        _currentTimeScale = _changeRadius.timeScale;
     }
 
-    public void StopChanging() => _cts?.Cancel();
-
-    public async UniTask ChangeRadius(float targetRadius, float time = 0f, float disableThreshold = 0f)
+    public void StopChanging()
     {
-        CreateToken();
+        if (!_changeRadius.isAlive)
+            return;
         
-        _time = Mathf.Approximately(time, default) ? _rateWhenGainingEnergy : time;
-
-        SetSettings(targetRadius);
-        
-        _sequence = Sequence.Create()
-            .Group(Tween.Scale(_collider.transform, _settings)
-                .Group(Tween.Scale(_area.transform, _settings)));
-        
-        _sequence.timeScale = _currentTimeScale;
-        
-        if (!Mathf.Approximately(disableThreshold, default))
-        {
-            _disableThreshold = disableThreshold;
-            _sequence.Group(Tween.Custom(_collider, _settings, OnValueChange));
-        }
-        
-        await _sequence.ToYieldInstruction().WithCancellation(_cts.Token);
-        
+        _changeRadius.Stop();
         _cts.Cancel();
     }
 
-    private void OnValueChange(SphereCollider sphere, float value)
+    public void ChangeRadius(float targetRadius, float time = 0f, float disableThreshold = 0f)
     {
-        Debug.Log("Here");
+        StopChanging();
+
+        if (!Mathf.Approximately(disableThreshold, default))
+            _thresholdVerifier.Execute(disableThreshold);
         
-        if (Value < _disableThreshold)
-        {
-            ThresholdReached?.Invoke();
-        }
+        SetSettings(targetRadius, time);
+        
+        ChangeRadius().Forget();
     }
 
-    private void CreateToken()
+    private async UniTask ChangeRadius()
     {
-        if (_cts is { IsCancellationRequested: false })
-            _cts.Cancel();
-        
         _cts = new CancellationTokenSource();
         _cts.RegisterRaiseCancelOnDestroy(gameObject);
+        
+        _changeRadius = Sequence.Create().Group(Tween.Scale(_collider.transform, _settings).Group(Tween.Scale(_area.transform, _settings)));
+        
+        _changeRadius.timeScale = _currentTimeScale;
+
+        await _changeRadius.ToYieldInstruction().WithCancellation(_cts.Token);
+
+        Reached?.Invoke();
     }
 
-    private void SetSettings(float targetRadius)
+    private void SetSettings(float targetRadius, float time)
     {
         _targetRadius = targetRadius;
+        _time = time;
         
-        _settings.startValue = _collider.radius;
+        _settings.startValue = _collider.transform.localScale.x;
         _settings.endValue = _targetRadius;
         _settings.settings.duration = _time;
     }
+    
+    private void OnThresholdReached() => ThresholdReached?.Invoke();
 }

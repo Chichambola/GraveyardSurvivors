@@ -196,6 +196,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     }
 
     public void ResetRadius() => _light.ResetRadius();
+
+    public void StartLight() => _light.StartLight();
     
     public void AddItem(Item item)
     {

@@ -12,11 +12,13 @@ public class RadiusResetter : MonoBehaviour
     private void OnEnable()
     {
         _playerDetector.PlayerDetected += OnPlayerDetected;
+        _playerDetector.PlayerLeft += OnPlayerLeft;
     }
 
     private void OnDisable()
     {
         _playerDetector.PlayerDetected -= OnPlayerDetected;
+        _playerDetector.PlayerLeft -= OnPlayerLeft;
     }
     
     private void OnPlayerDetected(IPlayer player)
@@ -24,5 +26,12 @@ public class RadiusResetter : MonoBehaviour
         _player = player ?? throw new Exception(nameof(player));
         
         _player.ResetRadius();
+    }
+
+    private void OnPlayerLeft()
+    {
+        _player.StartLight();
+
+        _player = null;
     }
 }

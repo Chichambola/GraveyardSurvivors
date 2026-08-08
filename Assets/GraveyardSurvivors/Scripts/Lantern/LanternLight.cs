@@ -16,11 +16,11 @@ public class LanternLight : MonoBehaviour, ILantern
     [Header("Radius values")]
     [SerializeField] private float _disableThreshold = 0.3f;
     [SerializeField] private float _shrinkTime = 25f;
-    [SerializeField] private float _currentDuration;
+    [SerializeField] private float _rateWhenGainingEnergy = 1f;
     
     private float _lastRadius;
     private float _initialRange;
-    private int _defaultValue = 0;
+    private readonly int _defaultValue = 0;
     private bool _isRadiusActive;
 
     public bool IsActive => _radius.Value > _disableThreshold;
@@ -32,7 +32,8 @@ public class LanternLight : MonoBehaviour, ILantern
             return;
         
         _radius.ThresholdReached += OnThresholdReached;
-        _radius.ChangeRadius(_defaultValue, _shrinkTime, _disableThreshold).Forget();
+        _radius.Reached += StartLight;
+        _radius.ChangeRadius(_defaultValue, _shrinkTime, _disableThreshold);
         _isRadiusActive = true;
     }
 
@@ -44,24 +45,19 @@ public class LanternLight : MonoBehaviour, ILantern
     private void OnDisable()
     {
         _radius.ThresholdReached -= OnThresholdReached;
+        _radius.Reached -= StartLight;
     }
 
-    public async void ProcessEnemyDeath(Enemy enemy)
+    public void ProcessEnemyDeath(Enemy enemy)
     {
         if (enemy == null)
             throw new Exception("Enemy cannot be null!");
         
         if (_isRadiusActive)
         {
-            float energyValue = _radius.Value.AddPercentToNumber(enemy.CurrentStats.LanternEnergy);
-
-            var timePercentage = UserUtils.CalculatePercentageOf(_radius.Value, _radius.InitialValue);
-
-            var tempShrinkTime= _shrinkTime.GetClampedValueInverse(timePercentage);
-
-            _currentDuration = _shrinkTime.SubtractPercentFromNumber(tempShrinkTime);
-
-            _radius.ChangeRadius(_currentDuration).Forget();
+            float targetRadius = _radius.Value.AddPercentToNumber(enemy.CurrentStats.LanternEnergy);
+            
+            _radius.ChangeRadius(targetRadius, _rateWhenGainingEnergy);
         }
         else
         {
@@ -74,7 +70,7 @@ public class LanternLight : MonoBehaviour, ILantern
             
             _radius.SetActive(true);
             
-            await _radius.ChangeRadius(_lastRadius);
+            StartLight();
         }
     }
 
@@ -82,12 +78,19 @@ public class LanternLight : MonoBehaviour, ILantern
     {
         _light.range = _initialRange;
         
-        _radius.ChangeRadius(_radius.InitialValue).Forget();
+        _radius.ChangeRadius(_radius.InitialValue);
     }
     
     public void IncreaseSpeed(float duration) => _radius.IncreaseSpeed(duration);
     
     public void DecreaseSpeed(float duration) => _radius.DecreaseSpeed(duration);
+
+    public void StartLight()
+    {
+        float remainingTime = (_radius.Value / _radius.InitialValue) * _shrinkTime;
+        
+        _radius.ChangeRadius(_defaultValue, remainingTime, _disableThreshold);
+    }
     
     private void OnThresholdReached()
     {
