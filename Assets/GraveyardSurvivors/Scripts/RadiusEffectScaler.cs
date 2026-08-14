@@ -13,8 +13,8 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
     [SerializeField] private ParticleSystem _area;
     [SerializeField] private SphereCollider _collider;
     [SerializeField] private Ease _easeType = Ease.InCubic;
-    [SerializeField] private bool _show = false;
-    
+
+    public event Action Reached;
     private Sequence _changeRadius;
     private CancellationTokenSource _cts;
     private TweenSettings<float> _settings;
@@ -26,24 +26,18 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
     public float Value => _collider.transform.localScale.x;
     public float InitialValue => _initialRadius;
     public float TimeScale => _currentTimeScale;
+    public bool IsActive { get; private set; }
     
     private void Awake()
     {
         _initialRadius = _radius;
+        IsActive = true;
         _settings = new TweenSettings<float>();
         
         _settings.settings.ease = _easeType;
         
         _collider.radius = 1;
         _currentTimeScale = 1;
-    }
-
-    private void Update()
-    {
-        if (_show)
-        {
-            Debug.Log(_currentTimeScale);
-        }
     }
 
     private void OnValidate()
@@ -56,6 +50,7 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
 
     public void SetActive(bool value)
     {
+        IsActive = value;
         _collider.gameObject.SetActive(value);
         _area.gameObject.SetActive(value);
     }
@@ -88,13 +83,16 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
         _cts = new CancellationTokenSource();
         _cts.RegisterRaiseCancelOnDestroy(gameObject);
         
-        _changeRadius = Sequence.Create().Group(Tween.Scale(_collider.transform, _settings).Group(Tween.Scale(_area.transform, _settings)));
+        _changeRadius = Sequence
+            .Create()
+            .Group(Tween.Scale(_collider.transform, _settings)
+                .Group(Tween.Scale(_area.transform, _settings)));
         
         _changeRadius.timeScale = _currentTimeScale;
 
         await _changeRadius.ToYieldInstruction().WithCancellation(_cts.Token);
-        
-        StopChanging();
+
+        Reached?.Invoke();
     }
 
     private void SetSettings(float targetRadius, float time)

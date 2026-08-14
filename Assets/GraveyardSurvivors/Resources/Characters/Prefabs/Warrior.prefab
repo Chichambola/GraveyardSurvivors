@@ -239,7 +239,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.92941177, b: 0.46666667, a: 1}
   m_Intensity: 1
-  m_Range: 15
+  m_Range: 0
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -649,8 +649,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2203646241a39628614ec57cc33667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapons: []
-  _cooldown: 0.5
+  _player: {fileID: 0}
+  _weaponsPrefab: []
+  _damageEffects: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &2301959313386411790
 GameObject:
   m_ObjectHideFlags: 0
@@ -7235,12 +7239,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8191ea2729bbd86cdac64cf4254696c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lightArea: {fileID: 902086933660707063}
   _light: {fileID: 4953558875977866578}
-  _collider: {fileID: 3305484886692889429}
-  _radius: 2.5
+  _lightRadius: 0
+  _radius: {fileID: 0}
+  _thresholdValidator: {fileID: 0}
   _disableThreshold: 0.75
-  _shrinkRate: 0.01
+  _shrinkTime: 25
+  _rateWhenGainingEnergy: 1
+  _maxTimeScale: 2
 --- !u!114 &1302635145358737663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7629,10 +7635,11 @@ MonoBehaviour:
   _attacker: {fileID: 3576614735168740133}
   _baseStats: {fileID: 11400000, guid: 008db7118c8cbb94496d64b4d32834ea, type: 2}
   _statsViewer: {fileID: 2930424314521966787}
-  _invincibilityAfterDamage: 0.3
+  _itemsHandler: {fileID: 0}
   _health: {fileID: 0}
   _wallet: {fileID: 8618297670006930452}
   _light: {fileID: 5418540070453717813}
+  _isImmortal: 0
 --- !u!114 &4827197996965815838
 MonoBehaviour:
   m_ObjectHideFlags: 0

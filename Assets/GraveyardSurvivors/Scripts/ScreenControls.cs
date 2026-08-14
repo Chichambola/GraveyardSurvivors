@@ -14,7 +14,7 @@ public class ScreenControls : MonoBehaviour
 
     private bool _wasPressed;
     private Vector3 _direction;
-    
+
     private void OnEnable()
     {
         _movementButton.onClick.AddListener(ChangeDirection);

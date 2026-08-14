@@ -6,6 +6,7 @@ using UnityEngine;
 public class RadiusResetter : MonoBehaviour
 {
     [SerializeField] private PlayerDetector _playerDetector;
+    [SerializeField] private float _speed = 3f;
 
     private IPlayer _player;
     
@@ -25,7 +26,7 @@ public class RadiusResetter : MonoBehaviour
     {
         _player = player ?? throw new Exception(nameof(player));
         
-        _player.ResetRadius();
+        _player.ResetRadius(_speed);
     }
 
     private void OnPlayerLeft()

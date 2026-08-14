@@ -68,7 +68,6 @@ public class Game : MonoBehaviour
         _interactablesHandler.Init(_player);
         _lanternPointer.Init(_player, _lantern);
         _darkness.Init(_player);
-        _lantern.Init();
     }
 
     private void OnDisable()
