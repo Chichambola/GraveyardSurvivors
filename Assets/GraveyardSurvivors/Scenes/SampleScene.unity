@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!1 &264294664
 GameObject:
   m_ObjectHideFlags: 0
@@ -3076,9 +3076,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _light: {fileID: 1577614068}
   _radius: {fileID: 360078378}
+  _thresholdValidator: {fileID: 360078380}
   _disableThreshold: 0.9
   _shrinkTime: 70
   _rateWhenGainingEnergy: 1
+  _maxTimeScale: 2
 --- !u!114 &360078373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3179,11 +3181,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 3
-  _maxTimeScale: 2
   _area: {fileID: 1041548476}
   _collider: {fileID: 360078376}
-  _thresholdVerifier: {fileID: 360078380}
   _easeType: 1
+  _show: 1
 --- !u!114 &360078379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3209,7 +3210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bda415c31043d6438c2045651f7e691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: {fileID: 360078378}
 --- !u!1 &375712434
 GameObject:
   m_ObjectHideFlags: 0
@@ -7426,7 +7426,7 @@ MonoBehaviour:
   _weight: 100
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!1 &903700546
 GameObject:
   m_ObjectHideFlags: 0
@@ -17565,7 +17565,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!1 &1439293271
 GameObject:
   m_ObjectHideFlags: 0
@@ -22241,7 +22241,7 @@ Transform:
   m_GameObject: {fileID: 1884805292}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.83, z: -4.5}
+  m_LocalPosition: {x: 0, y: -1.83, z: -5.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22587,7 +22587,7 @@ MonoBehaviour:
   _weight: 50
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!4 &1925439055
 Transform:
   m_ObjectHideFlags: 0
@@ -25031,7 +25031,7 @@ MonoBehaviour:
   _weight: 70
   _numberOfEnemiesSpawnAtOnce: 1
   _offsetAfterDeath: {x: 0, y: -90, z: 0}
-  _canSpawn: 0
+  _canSpawn: 1
 --- !u!1 &2135301144
 GameObject:
   m_ObjectHideFlags: 0

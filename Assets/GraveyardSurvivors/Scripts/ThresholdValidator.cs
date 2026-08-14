@@ -6,21 +6,23 @@ using Cysharp.Threading.Tasks;
 using PrimeTween;
 using UnityEngine;
 
-public class ThresholdVerifier : MonoBehaviour
+public class ThresholdValidator : MonoBehaviour
 {
-    [SerializeField] private RadiusEffectScaler _radius;
-    
     public event Action ThresholdReached;
     
     private Sequence _checkValueSequence;
     private CancellationTokenSource _cts;
+    private IValueOwner _valueOwner;
     private readonly float _timeCheck = 0.01f;
     private readonly int _amountOfCycles = -1;
     private float _disableThreshold;
     
-    public void Execute(float disableThreshold)
+    public void Execute(IValueOwner valueOwner, float disableThreshold)
     {
+        _valueOwner = valueOwner;
         _disableThreshold = disableThreshold;
+
+        StopValidating();
         
         CreateToken();
         
@@ -29,9 +31,6 @@ public class ThresholdVerifier : MonoBehaviour
     
     private async UniTaskVoid CreateThresholdSequence()
     {
-        if (_disableThreshold <= 0)
-            return;
-        
         _checkValueSequence = Sequence.Create(cycles: _amountOfCycles).Group(Tween.Delay(_timeCheck, OnThresholdReached));
         
         await _checkValueSequence.ToYieldInstruction().WithCancellation(_cts.Token);
@@ -39,7 +38,7 @@ public class ThresholdVerifier : MonoBehaviour
     
     private void OnThresholdReached()
     {
-        if (!(_radius.Value < _disableThreshold))
+        if (!(_valueOwner.Value < _disableThreshold))
             return;
         
         ThresholdReached?.Invoke();
@@ -47,13 +46,17 @@ public class ThresholdVerifier : MonoBehaviour
 
     private void CreateToken()
     {
-        if (_checkValueSequence.isAlive)
-        {
-            _checkValueSequence.Stop();
-            _cts.Cancel();
-        }
-
         _cts = new CancellationTokenSource();
         _cts.RegisterRaiseCancelOnDestroy(gameObject);
+    }
+
+    public void StopValidating()
+    {
+        if (!_checkValueSequence.isAlive)
+            return;
+        
+        _checkValueSequence.Stop();
+        _cts.Cancel();
+        _valueOwner = null;
     }
 }

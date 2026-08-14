@@ -10,16 +10,23 @@ public class RateChanger : MonoBehaviour
     [SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private float _shrinkRateIncrease = 5;
 
+    private List<Enemy> _enemies;
+    
+    private void Awake()
+    {
+        _enemies = new List<Enemy>();
+    }
+
     private void OnEnable()
     {
-        _enemyDetector.EnemyDetected += DecreaseSpeed;
-        _enemyDetector.EnemyLeft += IncreaseSpeed;
+        _enemyDetector.EnemyDetected += IncreaseSpeed;
+        _enemyDetector.EnemyLeft += DecreaseSpeed;
     }
 
     private void OnDisable()
     {
-        _enemyDetector.EnemyDetected -= DecreaseSpeed;
-        _enemyDetector.EnemyLeft -= IncreaseSpeed;
+        _enemyDetector.EnemyDetected -= IncreaseSpeed;
+        _enemyDetector.EnemyLeft -= DecreaseSpeed;
     }
 
     private void IncreaseSpeed(Enemy enemy)
@@ -27,7 +34,9 @@ public class RateChanger : MonoBehaviour
         if (enemy == null) 
             throw new Exception();
         
-        _light.IncreaseSpeed(_shrinkRateIncrease);
+        _enemies.Add(enemy);
+        
+        _light.ChangeSpeed(_shrinkRateIncrease, _enemies.Count);
     }
 
     private void DecreaseSpeed(Enemy enemy)
@@ -35,6 +44,8 @@ public class RateChanger : MonoBehaviour
         if (enemy == null)
             throw new Exception();
 
-        _light.DecreaseSpeed(_shrinkRateIncrease);
+        _enemies.Remove(enemy);
+        
+        _light.ChangeSpeed(_shrinkRateIncrease, _enemies.Count);
     }
 }

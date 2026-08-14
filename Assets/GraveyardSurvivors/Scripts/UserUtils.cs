@@ -59,14 +59,14 @@ public static class UserUtils
         return originalValue;
     }
     
-    public static float GetClampedValueInverse(this float originalValue, float increasePercent, float minThreshold = 0f)
+    public static float GetClampedValueInverse(this float originalValue, float decreasePercent, float minThreshold = 0f)
     {
         if (originalValue <= minThreshold)
             return originalValue;
 
         float aboveMin = originalValue - minThreshold;
         
-        float availablePercent = (aboveMin * increasePercent) / (100f - minThreshold);
+        float availablePercent = (aboveMin * decreasePercent) / (1 - minThreshold);
         
         originalValue -= availablePercent;
 

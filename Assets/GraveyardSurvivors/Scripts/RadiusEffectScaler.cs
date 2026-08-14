@@ -7,18 +7,14 @@ using UnityEngine;
 using Sequence = PrimeTween.Sequence;
 using Tween = PrimeTween.Tween;
 
-public class RadiusEffectScaler : MonoBehaviour
+public class RadiusEffectScaler : MonoBehaviour, IValueOwner
 {
     [SerializeField] private float _radius = 3f;
-    [SerializeField] private float _maxTimeScale = 2;
     [SerializeField] private ParticleSystem _area;
     [SerializeField] private SphereCollider _collider;
-    [SerializeField] private ThresholdVerifier _thresholdVerifier;
     [SerializeField] private Ease _easeType = Ease.InCubic;
-
-    public event Action Reached;
-    public event Action ThresholdReached;
-
+    [SerializeField] private bool _show = false;
+    
     private Sequence _changeRadius;
     private CancellationTokenSource _cts;
     private TweenSettings<float> _settings;
@@ -26,10 +22,10 @@ public class RadiusEffectScaler : MonoBehaviour
     private float _currentTimeScale;
     private float _targetRadius;
     private float _time;
-    private readonly float _defaultTimeScale = 1;
 
     public float Value => _collider.transform.localScale.x;
     public float InitialValue => _initialRadius;
+    public float TimeScale => _currentTimeScale;
     
     private void Awake()
     {
@@ -42,14 +38,12 @@ public class RadiusEffectScaler : MonoBehaviour
         _currentTimeScale = 1;
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        _thresholdVerifier.ThresholdReached += OnThresholdReached;
-    }
-
-    private void OnDisable()
-    {
-        _thresholdVerifier.ThresholdReached -= OnThresholdReached;
+        if (_show)
+        {
+            Debug.Log(_currentTimeScale);
+        }
     }
 
     private void OnValidate()
@@ -65,44 +59,24 @@ public class RadiusEffectScaler : MonoBehaviour
         _collider.gameObject.SetActive(value);
         _area.gameObject.SetActive(value);
     }
-    
-    public void IncreaseSpeed(float duration)
-    {
-        return;
-        
-        var gainPercent = _changeRadius.timeScale.GetClampedValue(duration, _maxTimeScale);
-        
-        _changeRadius.timeScale = _changeRadius.timeScale.AddPercentToNumber(gainPercent);
 
-        _currentTimeScale = _changeRadius.timeScale;
+    public void SetTimeScale(float timeScale)
+    {
+        _currentTimeScale = timeScale;
     }
     
-    public void DecreaseSpeed(float duration)
-    {
-        return;
-        
-        var lostPercent = _changeRadius.timeScale.GetClampedValueInverse(duration, _defaultTimeScale);
-        
-        _changeRadius.timeScale = _changeRadius.timeScale.SubtractPercentFromNumber(lostPercent);
-
-        _currentTimeScale = _changeRadius.timeScale;
-    }
-
     public void StopChanging()
     {
         if (!_changeRadius.isAlive)
             return;
         
         _changeRadius.Stop();
-        _cts.Cancel();
+        _cts?.Cancel();
     }
 
-    public void ChangeRadius(float targetRadius, float time = 0f, float disableThreshold = 0f)
+    public void ChangeRadius(float targetRadius, float time)
     {
         StopChanging();
-
-        if (!Mathf.Approximately(disableThreshold, default))
-            _thresholdVerifier.Execute(disableThreshold);
         
         SetSettings(targetRadius, time);
         
@@ -119,8 +93,8 @@ public class RadiusEffectScaler : MonoBehaviour
         _changeRadius.timeScale = _currentTimeScale;
 
         await _changeRadius.ToYieldInstruction().WithCancellation(_cts.Token);
-
-        Reached?.Invoke();
+        
+        StopChanging();
     }
 
     private void SetSettings(float targetRadius, float time)
@@ -132,6 +106,4 @@ public class RadiusEffectScaler : MonoBehaviour
         _settings.endValue = _targetRadius;
         _settings.settings.duration = _time;
     }
-    
-    private void OnThresholdReached() => ThresholdReached?.Invoke();
 }
