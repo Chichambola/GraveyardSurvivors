@@ -87,8 +87,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     private void Start()
     {
-        _light.Init();
-        
         StatsChanged?.Invoke(CurrentStats);
     }
 
@@ -195,19 +193,10 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
         }
     }
 
-    public void ResetRadius()
-    {
-        _light.ResetRadius();
-        _light.SetRate(0);
-    }
+    public void ResetRadius(float duration) => _light.ResetRadius(duration);
 
-    public void StartLight()
-    {
-        _light.StartRadiusRoutine();
-        _light.ResetRate();
-    }
+    public void StartLight() => _light.StartLight();
     
-
     public void AddItem(Item item)
     {
         _itemsHandler.Add(item);

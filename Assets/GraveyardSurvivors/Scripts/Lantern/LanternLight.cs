@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.iOS;
@@ -8,157 +10,123 @@ using UnityEngine.Serialization;
 
 public class LanternLight : MonoBehaviour, ILantern
 {
-    [Header("Visuals and collider")]
-    [SerializeField] private ParticleSystem _lightArea;
+    [Header("Visuals")]
     [SerializeField] private Light _light;
-    [SerializeField] private SphereCollider _collider;
+    [SerializeField] private RadiusEffectScaler _radius;
+    [SerializeField] private ThresholdValidator _thresholdValidator;
     [Header("Radius values")]
-    [SerializeField] private float _radius = 3f;
     [SerializeField] private float _disableThreshold = 0.3f;
-    [SerializeField] private float _shrinkRate = 0.1f;
-
-    public event Action GainedEnergy;
-    public event Action ThresholdReached;
+    [SerializeField] private float _shrinkTime = 25f;
+    [SerializeField] private float _rateWhenGainingEnergy = 1f;
+    [SerializeField] private float _maxTimeScale = 2;
     
-    private Coroutine _coroutine;
-    private float _initialRadius;
-    private float _initialRate;
     private float _lastRadius;
-    private float _initialRange;
-    private float _targetRadius;
-    private int _defaultValue = 0;
+    private bool _isSubscribed;
+    private readonly int _defaultValue = 0;
+    private readonly float _defaultTimeScale = 1;
 
-    public bool IsActive => _collider.radius > _disableThreshold;
-    public float ShrinkRate => _shrinkRate;
-    public bool IsGainingEnergy => _targetRadius != 0;
+    public bool IsActive => _radius.Value > _disableThreshold;
     public Vector3 CurrentPosition => transform.position;
 
-    public void Init()
-    {
-        if (_radius > 0)
-        {
-            SetLightRadius(_radius);
-            StartRadiusRoutine();
-        }
-    }
-    
     private void Awake()
     {
-        _initialRadius = _radius;
-        _initialRate = _shrinkRate;
-        _initialRange = _light.range;
         _lastRadius = _disableThreshold;
     }
-
-    public void SetRate(float value) => _shrinkRate = value;
     
-    public void ResetRate() => _shrinkRate = _initialRate;
-    
-    public void StartRadiusRoutine(float targetValue = 0f)
+    private void OnEnable()
     {
-        _targetRadius = targetValue;
-        
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        _radius.ChangeRadius(_defaultValue, _shrinkTime);
+        _thresholdValidator.Execute(_radius, _disableThreshold);
+        _thresholdValidator.ThresholdReached += OnThresholdReached;
+    }
 
-        _coroutine = StartCoroutine(ChangingRadiusRoutine());
+    private void OnDisable()
+    {
+        _thresholdValidator.ThresholdReached -= OnThresholdReached;
     }
 
     public void ProcessEnemyDeath(Enemy enemy)
     {
         if (enemy == null)
             throw new Exception("Enemy cannot be null!");
-
-        if (_collider.radius > _disableThreshold)
+        
+        if (_radius.IsActive)
         {
-            float tempRadius = _collider.radius.AddPercentToNumber(enemy.CurrentStats.LanternEnergy);
-
-            if (tempRadius > _initialRadius)
-            {
-                _targetRadius = _defaultValue;
-            }
-            else
-            {
-                _targetRadius = tempRadius;
-            }
+            if (_isSubscribed)
+                _radius.Reached -= OnRadiusReached;
+            
+            float targetRadius = _radius.Value.AddPercentToNumber(enemy.CurrentStats.LanternEnergy);
+            
+            _radius.ChangeRadius(targetRadius, _rateWhenGainingEnergy);
+            
+            _radius.Reached += OnRadiusReached;
+            
+            _isSubscribed = true;
         }
         else
         {
             _lastRadius = _lastRadius.AddPercentToNumber(enemy.CurrentStats.LanternEnergy);
 
-            if (_lastRadius > _disableThreshold)
-            {
-                _targetRadius = _lastRadius;
-
-                _lastRadius = _disableThreshold;
-            }
-        }
-    }
-
-    public void ResetRadius()
-    {
-        _light.range = _initialRange;
-        
-        StartRadiusRoutine(_radius);
-    }
-
-    private float LerpToValue(float currentValue, float finalValue)
-    {
-        float value;
-        
-        if (IsGainingEnergy)
-        {
-            if (Mathf.Approximately(_collider.radius, finalValue))
-            {
-                GainedEnergy?.Invoke();
-
-                _targetRadius = _defaultValue;
-            }
+            if (!(_lastRadius > _disableThreshold))
+                return;
             
-            value = Mathf.MoveTowards(currentValue, finalValue, Time.deltaTime);
-
-            return value;
+            _radius.SetActive(true);
+            
+            StartLight();
+            
+            _thresholdValidator.Execute(_radius, _disableThreshold);
         }
+    }
 
-        value = Mathf.MoveTowards(currentValue, finalValue, _shrinkRate * Time.fixedDeltaTime);
+    public void ResetRadius(float speed)
+    {
+        if (!_radius.IsActive)
+            _radius.SetActive(true);
 
-        return value;
+        if (!_light.enabled)
+            _light.enabled = true;
+        
+        _radius.ChangeRadius(_radius.InitialValue, speed);
+    }
+
+    public void ChangeSpeed(float multiplier, float factor)
+    {
+        float progress = (_radius.TimeScale - _defaultTimeScale) / (_maxTimeScale - _defaultTimeScale);
+
+        float bonusMultiplier = Mathf.Max(multiplier / 100) * (1f - progress);
+
+        bonusMultiplier = Mathf.Max(bonusMultiplier, 0);
+        
+        float speedBonus = (_maxTimeScale - _defaultTimeScale) * bonusMultiplier;
+        
+        float timeScale = _defaultTimeScale + (speedBonus * factor);
+
+        timeScale = Mathf.Min(timeScale, _maxTimeScale);
+        
+        _radius.SetTimeScale(timeScale);
+    }
+
+    public void StartLight()
+    {
+        float remainingTime = (_radius.Value / _radius.InitialValue) * _shrinkTime;
+        
+        _radius.ChangeRadius(_defaultValue, remainingTime);
     }
     
-    private IEnumerator ChangingRadiusRoutine()
+    private void OnThresholdReached()
     {
-        while (enabled)
-        {
-            if (Game.IsPaused)
-            {
-                yield return null;
-
-                continue;
-            }
-            
-            _collider.radius = LerpToValue(_collider.radius, _targetRadius);
-
-            _light.range = LerpToValue(_light.range, _targetRadius);
-
-            SetLightRadius(_collider.radius);
-
-            if (_collider.radius <= _disableThreshold && IsGainingEnergy == false)
-            {
-                ThresholdReached?.Invoke();
-                
-                SetLightRadius(_defaultValue);
-            }
-            
-            yield return null;
-        }
+        _radius.SetActive(false);
+        _radius.StopChanging();
+        _light.enabled = false;
+        _thresholdValidator.StopValidating();
     }
     
-    private void SetLightRadius(float value)
+    private void OnRadiusReached()
     {
-        var particleSize = new Vector3(value, value, value);
+        StartLight();
 
-        _lightArea.transform.localScale = particleSize;
-        _collider.radius = value;
-        //_light.range = value;
+        _isSubscribed = false;
+        
+        _radius.Reached -= OnRadiusReached;
     }
 }

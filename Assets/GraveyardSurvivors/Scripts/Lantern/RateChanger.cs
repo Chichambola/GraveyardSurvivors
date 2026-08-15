@@ -8,41 +8,44 @@ public class RateChanger : MonoBehaviour
 {
     [SerializeField] private LanternLight _light;
     [SerializeField] private EnemyDetector _enemyDetector;
-    [SerializeField] private float _shrinkRateIncrease = 0.1f;
+    [SerializeField] private float _shrinkRateIncrease = 5;
+
+    private List<Enemy> _enemies;
+    
+    private void Awake()
+    {
+        _enemies = new List<Enemy>();
+    }
 
     private void OnEnable()
     {
-        _enemyDetector.EnemyDetected += IncreaseRate;
-        _enemyDetector.EnemyLeft += DecreaseRate;
+        _enemyDetector.EnemyDetected += IncreaseSpeed;
+        _enemyDetector.EnemyLeft += DecreaseSpeed;
     }
 
     private void OnDisable()
     {
-        _enemyDetector.EnemyDetected -= IncreaseRate;
-        _enemyDetector.EnemyLeft -= DecreaseRate;
+        _enemyDetector.EnemyDetected -= IncreaseSpeed;
+        _enemyDetector.EnemyLeft -= DecreaseSpeed;
     }
 
-    private void DecreaseRate(Enemy enemy)
+    private void IncreaseSpeed(Enemy enemy)
+    {
+        if (enemy == null) 
+            throw new Exception();
+        
+        _enemies.Add(enemy);
+        
+        _light.ChangeSpeed(_shrinkRateIncrease, _enemies.Count);
+    }
+
+    private void DecreaseSpeed(Enemy enemy)
     {
         if (enemy == null)
             throw new Exception();
+
+        _enemies.Remove(enemy);
         
-        float currentRate = _light.ShrinkRate;
-
-        currentRate -= _shrinkRateIncrease;
-
-        _light.SetRate(currentRate);
-    }
-
-    private void IncreaseRate(Enemy enemy)
-    {
-        if (enemy == null)
-            throw new Exception();
-        
-        float currentRate = _light.ShrinkRate;
-
-        currentRate += _shrinkRateIncrease;
-        
-        _light.SetRate(currentRate);
+        _light.ChangeSpeed(_shrinkRateIncrease, _enemies.Count);
     }
 }

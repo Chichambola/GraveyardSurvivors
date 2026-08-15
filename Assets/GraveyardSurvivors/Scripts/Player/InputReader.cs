@@ -29,6 +29,11 @@ public class InputReader : MonoBehaviour
         _playerInput.Disable();
     }
 
+    public void SetMovementDirection(Vector3 movementDirection)
+    {
+        MovementDirection = movementDirection;
+    }
+    
     private void Update()
     {
         MovementDirection = _playerInput.Movement.Move.ReadValue<Vector3>();

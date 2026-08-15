@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 565072860269253723}
   - component: {fileID: 248304176100849451}
   m_Layer: 8
-  m_Name: LightAltar
+  m_Name: HealAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,9 +67,12 @@ MonoBehaviour:
   Outline: {fileID: 4662231299592631844}
   ValueViewer: {fileID: 8423225458018734472}
   _maxInteractionsAmount: 3
-  _timeBeforeShrinking: 5
-  _light: {fileID: 1050723065949224833}
   _radiusMultiplier: 2
+  _cooldown: 1.5
+  _healAmount: 3
+  _playerDetector: {fileID: 0}
+  _healArea: {fileID: 0}
+  _collider: {fileID: 0}
 --- !u!54 &565072860269253723
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5547,7 +5550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detector: {fileID: 355637784098373397}
-  _buffAmount: 1.5
+  _healAmount: 1
   _cooldown: 1.5
 --- !u!114 &256263642786581643
 MonoBehaviour:

@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 0}
   _name: 
+  _weight: 100
+  _rarityLevel:
+    _weight: 100
+    _rarity: 1

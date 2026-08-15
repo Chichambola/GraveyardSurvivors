@@ -6,29 +6,22 @@ using UnityEngine.Serialization;
 
 public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeightedObject, IItem
 {
-    [Header("Item specific fields")]
     [SerializeField] private ItemInfo _info;
-    [SerializeField] private int _weight;
-    [SerializeField] private bool _isItem = true;
-
+    
     public event Action<Item> CanBeReleased;
     
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
     private SpriteRenderer _spriteRenderer;
-    private RarityLevel _rarityLevel;
 
     public Sprite Sprite => _info.Sprite;
     public string Name => _info.Name;
     public abstract string CurrentDescription { get; }
-    public ERarityLevel Rarity => _rarityLevel.Rarity; 
-    public int Weight => _weight;
+    public ERarityLevel Rarity => _info.Rarity; 
+    public int Weight => _info.Weight;
     
     protected virtual void Awake()
-    {
-        if (!_isItem)
-            return;
-        
+    { 
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<BoxCollider>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -42,10 +35,5 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeighte
     {
         _collider.enabled = false;
         _spriteRenderer.enabled = false;
-    }
-
-    public void SetRarityLevel(RarityLevel level)
-    {
-        _rarityLevel = level;
     }
 }

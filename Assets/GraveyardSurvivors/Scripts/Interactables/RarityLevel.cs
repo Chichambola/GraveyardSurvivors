@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class RarityLevel : MonoBehaviour, IWeightedObject
+[Serializable]
+public class RarityLevel : IWeightedObject
 {
     [SerializeField] private int _weight;
     [SerializeField] private ERarityLevel _rarity;
@@ -13,11 +14,6 @@ public class RarityLevel : MonoBehaviour, IWeightedObject
     
     public int Weight => _weight;
     public ERarityLevel Rarity => _rarity;
-
-    private void Awake()
-    {
-        _initialWeight = _weight;
-    }
 
     public void ResetChance()
     {

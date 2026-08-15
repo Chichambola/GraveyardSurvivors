@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 2480817023560889596}
   - component: {fileID: 5638386864590902357}
   - component: {fileID: 460224436147248108}
-  - component: {fileID: 6380478512811579441}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -198,9 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ecc4141dd173b649813cb5b46495b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _info: {fileID: 11400000, guid: d1a3b49e0838c5a4d95a427b336dea7c, type: 2}
-  _weight: 60
-  _isItem: 1
+  _itemInfo: {fileID: 11400000, guid: d1a3b49e0838c5a4d95a427b336dea7c, type: 2}
   BonusDamagePerUpgrade: 0.5
   Cooldown: 1
   _damage: 1.5
@@ -223,27 +220,6 @@ MonoBehaviour:
   - {fileID: 2828809385489303952}
   _initialProjectileAmount: 2
   _projectilePerUpgrade: 1
---- !u!65 &6380478512811579441
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5098741600780619218}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7360202670523053228
 GameObject:
   m_ObjectHideFlags: 0

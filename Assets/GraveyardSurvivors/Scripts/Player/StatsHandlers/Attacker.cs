@@ -135,9 +135,9 @@ public class Attacker : MonoBehaviour
             
         weapon.AttackerDetected += OnAttackerDetected;
             
-        weapon.StartAttacking();
-        
         SetWeaponCooldown(weapon, _currentAttackSpeed);
+        
+        weapon.Attack();
         
         return weapon;
     }

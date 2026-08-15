@@ -27,7 +27,7 @@ public class WeaponIronSword : Weapon
                                                  $"Add +{_knockBack.KnockBackPercentGain}% to knock back force;";
 
     public override string BaseDescription => $"Melee weapon.\n" +
-                                              $"Knocks back enemies on hit.";
+                                                 $"Knocks back enemies on hit.";
 
     private void OnEnable()
     {
@@ -52,7 +52,7 @@ public class WeaponIronSword : Weapon
         base.Upgrade();
     }
 
-    public override void StartAttacking()
+    public override void Attack()
     {
         if (_attackingRoutine != null)
             StopCoroutine(_attackingRoutine);
@@ -62,6 +62,11 @@ public class WeaponIronSword : Weapon
 
         _visibilityRoutine = StartCoroutine(VisibilityRoutine());
         _attackingRoutine = StartCoroutine(AttackingRoutine());
+    }
+
+    public override void StopAttacking()
+    {
+        
     }
 
     public override void SetCooldown(float cooldown)
