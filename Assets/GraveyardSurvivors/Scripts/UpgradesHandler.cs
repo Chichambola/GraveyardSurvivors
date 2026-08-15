@@ -49,7 +49,12 @@ public class UpgradesHandler : MonoBehaviour
         _tweenSettings.settings.duration = _changeOpacityTime;
         _tweenSettings.settings.useUnscaledTime = true;
     }
-    
+
+    private void OnValidate()
+    {
+        _upgradeWindows = _upgradeWindows.RemoveNonUniqueItems();
+    }
+
     public void SetPlayer(IPlayer player)
     {
         _player = player ?? throw new ArgumentNullException(nameof(player));

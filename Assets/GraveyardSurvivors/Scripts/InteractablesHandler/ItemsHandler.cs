@@ -24,8 +24,14 @@ public class ItemsHandler : MonoBehaviour
 
     private void Awake()
     {
-        _itemsToDrop = _itemsToDropPrefabs.ToList().Select(item => item.Value).ToList();
+        _itemsToDrop = _itemsToDropPrefabs.Select(item => item.Value).ToList();
         _itemsForLevelUp = _itemsForLevelUpPrefabs.Select(item => item.Value).ToList();
+    }
+
+    private void OnEnable()
+    {
+        _itemsToDrop = _itemsToDrop.RemoveNonUniqueItems();
+        _itemsForLevelUp = _itemsForLevelUp.RemoveNonUniqueItems();
     }
 
     public void SpawnRandomItem(Vector3 position, ERarityLevel rarity)
@@ -41,5 +47,5 @@ public class ItemsHandler : MonoBehaviour
         _itemSpawner.Spawn(position);
     }
 
-    public List<IItem> GetItemsForLevelUp() => _itemsToDrop.ToList();
+    public List<IItem> GetItemsForLevelUp() => _itemsForLevelUp.ToList();
 }

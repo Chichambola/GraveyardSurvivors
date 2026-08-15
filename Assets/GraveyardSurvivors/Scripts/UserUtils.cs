@@ -132,4 +132,13 @@ public static class UserUtils
 
         return position;
     }
+
+    public static List<T> RemoveNonUniqueItems<T>(this List<T> list)
+    {
+        var hashSet = new HashSet<T>();
+        
+        list.RemoveAll(item => hashSet.Add(item) == false);
+
+        return list;
+    }
 }

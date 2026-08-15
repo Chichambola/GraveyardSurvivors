@@ -31,9 +31,7 @@ public class Attacker : MonoBehaviour
 
     private void OnValidate()
     {
-        var hashSet = new HashSet<Weapon>();
-        
-        _weaponsPrefab.RemoveAll(weapon => hashSet.Add(weapon) == false);
+        _weaponsPrefab = _weaponsPrefab.RemoveNonUniqueItems();
     }
 
     private void OnEnable()
