@@ -17,7 +17,7 @@ public class HealAltar : Interactable
     [SerializeField] private float _cooldown = 1.5f;
     [SerializeField] private float _healAmount = 3f;
     [SerializeField] private PlayerDetector _playerDetector;
-    [FormerlySerializedAs("_radiusEffectHandler")] [SerializeField] private RadiusEffectScaler radiusEffectScaler;
+    [SerializeField] private RadiusEffectScaler _radiusEffectScaler;
     
     private int _currentInteractionsAmount;
     private float _radius;

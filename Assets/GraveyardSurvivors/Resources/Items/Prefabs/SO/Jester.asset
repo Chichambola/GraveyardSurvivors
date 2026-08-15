@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03a01e5b95c4973f9933558dcf298178, type: 3}
-  m_Name: Magnet
+  m_Name: Jester
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 42db1a269aeb1a746b0aa6f4f29588b8, type: 3}
-  _name: Magnet
+  _sprite: {fileID: 21300000, guid: 1fcb8ac74bb98dd23865e317baead281, type: 3}
+  _name: Jester's cap
   _rarityLevel:
-    _weight: 90
-    _rarity: 1
+    _weight: 55
+    _rarity: 2

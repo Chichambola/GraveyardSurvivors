@@ -33,12 +33,6 @@ public class WeaponBow : Weapon
         _arrowSpawner.ProjectileHitEnemy -= OnProjectileReleased;
     }
     
-    
-    public override void Attack()
-    {
-        _attackStrategy.Execute();
-    }
-
     public override void Upgrade()
     {
         _attackStrategy.Upgrade();
@@ -46,12 +40,17 @@ public class WeaponBow : Weapon
         base.Upgrade();
     }
 
-    public override void StartAttacking()
+    public override void Attack()
     {
         if (_attackingRoutine != null)
             StopCoroutine(_attackingRoutine);
 
         _attackingRoutine = StartCoroutine(AttackRoutine());
+    }
+
+    public override void StopAttacking()
+    {
+        
     }
 
     public override void SetCooldown(float cooldown)

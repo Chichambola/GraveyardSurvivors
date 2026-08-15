@@ -97,7 +97,8 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
 
     private void SetSettings(float targetRadius, float time)
     {
-        _targetRadius = targetRadius;
+        _targetRadius = targetRadius > _initialRadius ? _initialRadius : targetRadius;
+        
         _time = time;
         
         _settings.startValue = _collider.transform.localScale.x;

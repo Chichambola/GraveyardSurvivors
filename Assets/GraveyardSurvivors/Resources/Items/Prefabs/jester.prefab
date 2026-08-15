@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2964549322420685037}
   - component: {fileID: -9017330893883213566}
   - component: {fileID: -4478980104806933535}
+  - component: {fileID: -8865551218459536983}
   m_Layer: 0
   m_Name: jester
   m_TagString: Untagged
@@ -134,3 +135,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-8865551218459536983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72866264957235694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4004c953c9f8085c8cd3b32eec5aba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _info: {fileID: 11400000, guid: d9e26fd60e0d2704780cb1133cbb932e, type: 2}
+  _weight: 50
+  _isItem: 1
+  _increaseValue: 5

@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprite: {fileID: 21300000, guid: 35189fa492930d32da5c4887a2468a57, type: 3}
   _name: Heart of necropolis
+  _rarityLevel:
+    _weight: 15
+    _rarity: 3

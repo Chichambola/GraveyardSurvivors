@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -108,11 +109,11 @@ public static class UserUtils
         return default(T);
     }
     
-    public static IEnumerable<IWeightedObject> GetWeightedObjects(this Dictionary<Item, ERarityLevel> dictionary,ERarityLevel rarity)
+    public static IEnumerable<IWeightedObject> GetWeightedItems(this List<IItem> list,ERarityLevel rarity)
     {
-        return dictionary
-            .Where(kvp => kvp.Value == rarity)
-            .Select(kvp => kvp.Key)
+        return list
+            .Where(item => item.Rarity == rarity)
+            .Select(item => item)
             .OfType<IWeightedObject>()
             .ToList();
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper;
 using PrimeTween;
 using Sherbert.Framework.Generic;
 using Unity.Android.Gradle;
@@ -32,15 +33,15 @@ public class UpgradesHandler : MonoBehaviour
     private TweenSettings<float> _tweenSettings;
     private IPlayer _player;
     private List<int> _indexes;
-    private List<Item> _itemsToShow;
-    private Dictionary<Item, ERarityLevel> _itemsDict;
+    private List<IItem> _itemsToShow;
+    private List<IItem> _itemsList;
 
     private void Awake()
     {
         _tweenSettings = new TweenSettings<float>();
         _indexes = new List<int>();
-        _itemsDict = new Dictionary<Item, ERarityLevel>();
-        _itemsToShow = new List<Item>();
+        _itemsList = new List<IItem>();
+        _itemsToShow = new List<IItem>();
     }
 
     private void OnEnable()
@@ -78,7 +79,7 @@ public class UpgradesHandler : MonoBehaviour
 
     private void FindItems()
     {
-        _itemsDict = _itemsHandler.GetItemsForLevelUp();
+        _itemsList = _itemsHandler.GetItemsForLevelUp();
         
         for (int i = 0; i < _upgradeWindows.Count; i++)
         {
@@ -88,7 +89,7 @@ public class UpgradesHandler : MonoBehaviour
             
             while (isFound != true || searchAmount > _searchCount)
             {
-                var item = GetItem(_itemsDict);
+                var item = GetItem();
 
                 if (!_itemsToShow.Contains(item))
                 {
@@ -97,7 +98,7 @@ public class UpgradesHandler : MonoBehaviour
                     isFound = true;
 
                     if (item != null)
-                        _itemsDict.Remove(item);
+                        _itemsList.Remove(item);
                     else
                         throw new Exception(nameof(item));
                 }
@@ -107,28 +108,25 @@ public class UpgradesHandler : MonoBehaviour
 
             if (searchAmount > _searchCount)
             {
-                var item = GetItem(_itemsDict);
+                var item = GetItem();
                 
                 _itemsToShow.Add(item);
             }
         }
     }
 
-    private Item GetItem(Dictionary<Item, ERarityLevel> itemsDict)
+    private IItem GetItem()
     {
         RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
-            
-        var items = itemsDict.GetWeightedObjects(level.Rarity);
+        
+        var items = _itemsList.GetWeightedItems(level.Rarity);
 
         var weightedObject = UserUtils.GetElementByWeight(items);
 
-        if (weightedObject is not Item item)
+        if (weightedObject is not IItem item)
             throw new Exception($"{weightedObject} is not Item");
-        
-        item.SetRarityLevel(level);
 
         return item;
-
     }
 
     private void ChangeBackgroundOpacity(float alphaValue)
@@ -150,7 +148,7 @@ public class UpgradesHandler : MonoBehaviour
         
         _itemsToShow.Clear();
         
-        _itemsDict.Clear();
+        _itemsList.Clear();
 
         if (upgrade is Item item)
         {
