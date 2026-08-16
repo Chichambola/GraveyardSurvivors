@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14985,8 +14985,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemSpawner: {fileID: 2055380388}
-  _itemsToDropPrefabs: []
-  _itemsForLevelUpPrefabs: []
+  _itemsToDropPrefabs:
+  - _underlyingValue: {fileID: -6795875221895891607, guid: 6548f24377d81df42a1242d04aa49566, type: 3}
+  - _underlyingValue: {fileID: 2840532805630495736, guid: 1206a0e4f7623734e8857d4e5c79df10, type: 3}
+  - _underlyingValue: {fileID: -7635428409179756100, guid: 80d50f06a33dcff449b0c9b1a450cdc3, type: 3}
+  - _underlyingValue: {fileID: 7111968728577630430, guid: 4d70d33fb54921646826d70a3fac7680, type: 3}
+  - _underlyingValue: {fileID: -7049433452083003737, guid: b68acefe98ffa4a49b4d175f68059bc1, type: 3}
+  _itemsForLevelUpPrefabs:
+  - _underlyingValue: {fileID: -29700579064363286, guid: a741b67b88ecd3349835c42b0bf3d512, type: 3}
+  - _underlyingValue: {fileID: -4722422550531824380, guid: 5391d689314df8a6e969f502437550b7, type: 3}
+  - _underlyingValue: {fileID: 3002361926396818639, guid: 3bf13085e26e8244681953ebcb918990, type: 3}
+  - _underlyingValue: {fileID: 1264647093896674163, guid: a3afb0c7c825ef08993baf619c797402, type: 3}
+  - _underlyingValue: {fileID: -8865551218459536983, guid: a717473d38588107dbf9bd4498fece8f, type: 3}
+  - _underlyingValue: {fileID: 3857508017085827166, guid: 2537fa0e67fa4bc39860ea171f79048e, type: 3}
+  - _underlyingValue: {fileID: 8756619577773032967, guid: f12bdded8834ee84ea66643b1eb80ea4, type: 3}
+  - _underlyingValue: {fileID: 3250717161611408165, guid: ca485738553818006b60e298ebfed3ce, type: 3}
 --- !u!4 &1204296357
 Transform:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AYellowpaper;
 using Sherbert.Framework.Generic;
+using Sirenix.OdinInspector;
 using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
@@ -24,14 +25,8 @@ public class ItemsHandler : MonoBehaviour
 
     private void Awake()
     {
-        _itemsToDrop = _itemsToDropPrefabs.Select(item => item.Value).ToList();
-        _itemsForLevelUp = _itemsForLevelUpPrefabs.Select(item => item.Value).ToList();
-    }
-
-    private void OnEnable()
-    {
-        _itemsToDrop = _itemsToDrop.RemoveNonUniqueItems();
-        _itemsForLevelUp = _itemsForLevelUp.RemoveNonUniqueItems();
+        _itemsToDrop = _itemsToDropPrefabs.Select(item => item.Value).ToList().RemoveNonUniqueItems();
+        _itemsForLevelUp = _itemsForLevelUpPrefabs.Select(item => item.Value).ToList().RemoveNonUniqueItems();
     }
 
     public void SpawnRandomItem(Vector3 position, ERarityLevel rarity)
