@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class RarityLevelHandler : MonoBehaviour
 {
-    [SerializeReference] private RarityLevel _none;
-    [SerializeReference] private RarityLevel _common;
-    [SerializeReference] private RarityLevel _rare;
-    [SerializeReference] private RarityLevel _legendary;
+    [SerializeReference] private List<RarityLevel> _levels;
 
     public List<RarityLevel> Weights { get; private set; }
 
     private void Awake()
     {
-        Weights = new () {_none, _common, _rare, _legendary};
+        Weights = new List<RarityLevel>();
+        
+        foreach (var level in _levels)
+        {
+            Weights.Add(level);
+        }
     }
 }

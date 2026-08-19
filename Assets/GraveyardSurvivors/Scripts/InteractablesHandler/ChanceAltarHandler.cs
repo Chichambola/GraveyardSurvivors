@@ -23,7 +23,7 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
             return;
         }
         
-        RarityLevel rarityLevel = UserUtils.GetElementByWeight(altar.Weights) as RarityLevel;
+        RarityLevel rarityLevel = UserUtils.GetElementByWeight(altar.Weights);
 
         if (rarityLevel == null)
             throw new Exception(nameof(rarityLevel));

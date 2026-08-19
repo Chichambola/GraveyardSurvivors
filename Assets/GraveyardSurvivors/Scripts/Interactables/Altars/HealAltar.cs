@@ -42,6 +42,8 @@ public class HealAltar : Interactable
         
         _radius += _radiusMultiplier;
         
+        _radiusEffectScaler.ChangeRadius(_radius, _cooldown);
+        
         if (_currentInteractionsAmount == _maxInteractionsAmount)
         {
             IsAvailable = false;

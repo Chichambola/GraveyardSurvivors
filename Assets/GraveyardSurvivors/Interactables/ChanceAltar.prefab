@@ -434,7 +434,7 @@ MonoBehaviour:
   ValueViewer: {fileID: 831034912937131186}
   MaxInteractionsAmount: 2
   _countdownTime: 1.5
-  _levelHandler: {fileID: 0}
+  _levelHandler: {fileID: 4574921176664964515}
 --- !u!114 &831034912937131186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,33 +461,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668c8ecea899c4c4d88be35dc709aa7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _none:
-    rid: 3357222759816495137
-  _common:
-    rid: 3357222759816495138
-  _rare:
-    rid: 3357222759816495139
-  _legendary:
-    rid: 3357222759816495140
+  _levels:
+  - rid: 3357222804978663440
+  - rid: 3357222804978663441
+  - rid: 3357222804978663442
+  - rid: 3357222804978663443
   references:
     version: 2
     RefIds:
-    - rid: 3357222759816495137
+    - rid: 3357222804978663440
       type: {class: RarityLevel, ns: , asm: Assembly-CSharp}
       data:
         _weight: 40
         _rarity: 0
-    - rid: 3357222759816495138
+    - rid: 3357222804978663441
       type: {class: RarityLevel, ns: , asm: Assembly-CSharp}
       data:
-        _weight: 80
+        _weight: 50
         _rarity: 1
-    - rid: 3357222759816495139
+    - rid: 3357222804978663442
       type: {class: RarityLevel, ns: , asm: Assembly-CSharp}
       data:
-        _weight: 25
+        _weight: 20
         _rarity: 2
-    - rid: 3357222759816495140
+    - rid: 3357222804978663443
       type: {class: RarityLevel, ns: , asm: Assembly-CSharp}
       data:
         _weight: 5
