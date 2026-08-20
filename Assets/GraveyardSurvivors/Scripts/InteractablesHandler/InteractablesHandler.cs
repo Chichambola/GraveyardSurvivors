@@ -8,7 +8,7 @@ using UnityEditor.Profiling;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class InteractablesHandler : MonoBehaviour
+public class InteractablesHandler : MonoBehaviour, IHandler
 {
     [SerializeField] private SerializableDictionary<InteractableHandler, int> _interactables;
     [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;

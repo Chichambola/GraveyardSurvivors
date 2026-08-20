@@ -8,7 +8,7 @@ public class RadiusResetter : MonoBehaviour
     [SerializeField] private PlayerDetector _playerDetector;
     [SerializeField] private float _speed = 3f;
 
-    private IPlayer _player;
+    private ILightCarrier _carrier;
     
     private void OnEnable()
     {
@@ -24,15 +24,18 @@ public class RadiusResetter : MonoBehaviour
     
     private void OnPlayerDetected(IPlayer player)
     {
-        _player = player ?? throw new Exception(nameof(player));
+        if (player is not ILightCarrier carrier)
+            return;
         
-        _player.ResetRadius(_speed);
+        _carrier = carrier;
+        
+        _carrier.ResetRadius(_speed);
     }
 
     private void OnPlayerLeft()
     {
-        _player.StartLight();
+        _carrier.StartChangingRadius();
 
-        _player = null;
+        _carrier = null;
     }
 }

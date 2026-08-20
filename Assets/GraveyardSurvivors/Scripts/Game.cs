@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AYellowpaper;
 using Cinemachine;
 using PrimeTween;
 using Sherbert.Framework.Generic;
@@ -19,16 +20,16 @@ public class Game : MonoBehaviour
     [SerializeField] private Darkness _darkness;
     [SerializeField] private LanternLight _lantern;
     [SerializeField] private LightPointer _lanternPointer;
-    
-    [Header("Handlers")]
-    [SerializeField] private EnemySpawnerHandler _enemySpawnerHandler;
-    [SerializeField] private InteractablesHandler _interactablesHandler;
+
+    [Header("Handlers")] 
+    [SerializeField] private List<InterfaceReference<IHandler, MonoBehaviour>> _handlers;
     
     [Header("Item displaying")]
     [SerializeField] private ItemDisplayer _itemDisplayer;
 
     
     private IPlayer _player;
+    private EnemySpawnerHandler _enemySpawnerHandler;
     private int _primeTweenCapacity = 3000;
     private static float s_normalTimeSpeed = 1;
     private static float s_pauseTime = 0.000001f;
@@ -56,16 +57,25 @@ public class Game : MonoBehaviour
     
     private void OnEnable()
     {
-        _enemySpawnerHandler.EnemyWasKilled += OnEnemyDeath;
-        
         _player = _playerHandler.Spawn(_playerPrefab);
-
         _player.PickedItem += OnItemPickedUp;
         _player.Died += OnPlayerDeath;
+
+        foreach (var handler in _handlers)
+        {
+            handler.Value.Init(_player);
+
+            if (handler.Value is EnemySpawnerHandler enemySpawnerHandler)
+            {
+                _enemySpawnerHandler = enemySpawnerHandler;
+            }
+        }
+
+        if (_enemySpawnerHandler == null)
+             throw new Exception("Enemy spawner handler should not be null");
+
+        _enemySpawnerHandler.EnemyWasKilled += OnEnemyDeath;
         
-        _enemySpawnerHandler.Init(_player);
-        _enemySpawnerHandler.StartProcess();
-        _interactablesHandler.Init(_player);
         _lanternPointer.Init(_player, _lantern);
         _darkness.Init(_player);
     }

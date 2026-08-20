@@ -2925,7 +2925,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 1.33
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &624647270159725080
 Rigidbody:
@@ -2969,8 +2969,8 @@ MonoBehaviour:
   _light: {fileID: 7444358808003696786}
   _radius: {fileID: 3692314678454201447}
   _thresholdValidator: {fileID: 440972600722406507}
-  _disableThreshold: 0.75
-  _shrinkTime: 30
+  _disableThreshold: 0.65
+  _shrinkTime: 45
   _rateWhenGainingEnergy: 3
   _maxTimeScale: 2
 --- !u!114 &1601001508329279439
@@ -8291,7 +8291,7 @@ MonoBehaviour:
   _health: {fileID: 7806447276525855132}
   _wallet: {fileID: 2418341122684004869}
   _light: {fileID: 3474814700427343827}
-  _isImmortal: 1
+  _isImmortal: 0
 --- !u!114 &1658106383447107767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8683,7 +8683,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &51430420703791245
 Transform:
   m_ObjectHideFlags: 0

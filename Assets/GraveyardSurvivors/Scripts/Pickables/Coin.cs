@@ -7,12 +7,5 @@ using UnityEngine.Serialization;
 
 public class Coin : Pickable
 {
-    public override event Action<Pickable> CanBeReleased;
 
-    public override void Release()
-    {
-        base.Release();
-        
-        CanBeReleased?.Invoke(this);
-    }
 }

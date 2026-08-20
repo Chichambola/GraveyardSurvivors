@@ -37,7 +37,6 @@ public class ItemHeartOfNecropolis : Item, IBuff
         baseStats.MaxHealth -= _increaseValue;
         
         baseStats.HealthRegeneration = baseStats.HealthRegeneration.AddPercentToNumber(_healthRegenDecreasePercent);
-
         
         return baseStats;
     }

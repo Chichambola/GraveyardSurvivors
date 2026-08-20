@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hedgehog
   m_EditorClassIdentifier: 
   _stats:
-    MaxHealth: 15
+    MaxHealth: 10
     Armor: 10
     MovementSpeed: 15
     MoneyForKill: 9

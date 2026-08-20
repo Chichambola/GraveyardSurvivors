@@ -27,6 +27,7 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
     public float InitialValue => _initialRadius;
     public float TimeScale => _currentTimeScale;
     public bool IsActive { get; private set; }
+    public bool IsEqualToInitialValue => Mathf.Approximately(Value, InitialValue);
     
     private void Awake()
     {
@@ -36,7 +37,6 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
         
         _settings.settings.ease = _easeType;
         
-        _collider.radius = 1;
         _currentTimeScale = 1;
     }
 
@@ -55,10 +55,9 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
         _area.gameObject.SetActive(value);
     }
 
-    public void SetTimeScale(float timeScale)
-    {
-        _currentTimeScale = timeScale;
-    }
+    public void SetTimeScale(float timeScale) => _currentTimeScale = timeScale;
+    
+    public void SetInitialRadius(float radius) => _initialRadius = radius;
     
     public void StopChanging()
     {
@@ -68,7 +67,7 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
         _changeRadius.Stop();
         _cts?.Cancel();
     }
-
+    
     public void ChangeRadius(float targetRadius, float time)
     {
         StopChanging();
@@ -78,6 +77,10 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
         ChangeRadius().Forget();
     }
 
+    public void Pause() => _changeRadius.timeScale = 0;
+
+    public void Resume() => _changeRadius.timeScale = _currentTimeScale;
+    
     private async UniTask ChangeRadius()
     {
         _cts = new CancellationTokenSource();
@@ -89,7 +92,7 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
                 .Group(Tween.Scale(_area.transform, _settings)));
         
         _changeRadius.timeScale = _currentTimeScale;
-
+        
         await _changeRadius.ToYieldInstruction().WithCancellation(_cts.Token);
 
         Reached?.Invoke();

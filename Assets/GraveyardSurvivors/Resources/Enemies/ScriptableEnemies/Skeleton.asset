@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Skeleton
   m_EditorClassIdentifier: 
   _stats:
-    MaxHealth: 15
+    MaxHealth: 10
     Armor: 0
     MovementSpeed: 0
-    AttackSpeed: 0
     MoneyForKill: 2
     XpForKill: 3
     LanternEnergy: 5
+    IncomingDamageMultiplier: 0

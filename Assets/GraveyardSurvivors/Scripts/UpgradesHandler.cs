@@ -126,11 +126,8 @@ public class UpgradesHandler : MonoBehaviour
         
         var items = _itemsList.GetWeightedItems(level.Rarity);
 
-        var weightedObject = UserUtils.GetElementByWeight(items);
-
-        if (weightedObject is not IItem item)
-            throw new Exception($"{weightedObject} is not Item");
-
+        var item = UserUtils.GetElementByWeight(items) as IItem;
+        
         return item;
     }
 

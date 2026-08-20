@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
-public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
+public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrier, ITarget
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private PickablesDetector _pickUpsDetector;
@@ -31,10 +31,12 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
     public event Action<Item> PickedItem;
     public event Action<Enemy> EnemyDetected;
     public event Action Died;
-
+    public event Action WasReached;
+    
     private int _lanternsCount;
     private bool _isInLantern;
     private Rigidbody _rigidbody;
+    private IFollower _follower;
     
     public CharacterStats CurrentStats { get; private set; }
     public Vector3 CurrentPosition => transform.position;
@@ -195,12 +197,13 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
     public void ResetRadius(float duration) => _light.ResetRadius(duration);
 
+    public void StartChangingRadius() => _light.StartChanging();
+
     public void StartLight() => _light.StartLight();
     
-    public void AddItem(Item item)
-    {
-        _itemsHandler.Add(item);
-    }
+    public void PauseLight() => _light.PauseLight();
+    
+    public void AddItem(Item item) => _itemsHandler.Add(item);
     
     protected override void InitializeStateMachine()
     {
@@ -225,5 +228,4 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer
 
         PickedItem?.Invoke(item);
     }
-
 }

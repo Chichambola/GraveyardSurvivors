@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
-public class Target : MonoBehaviour, ITarget
+public class Target : MonoBehaviour
 {
     public event Action WasReached;
 
@@ -32,16 +32,6 @@ public class Target : MonoBehaviour, ITarget
     {
         _follower = null;
     }
-
-    public void SetFollower(IFollower follower)
-    {
-        _follower = follower;
-    }
-
-    public void SetPosition(Vector3 position)
-    {
-        transform.position = position;
-    }
     
     private void OnTriggerEnter(Collider other)
     {
@@ -54,5 +44,15 @@ public class Target : MonoBehaviour, ITarget
         WasReached?.Invoke();
 
         _follower = null;
+    }
+
+    public void SetFollower(IFollower follower)
+    {
+        _follower = follower;
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 }

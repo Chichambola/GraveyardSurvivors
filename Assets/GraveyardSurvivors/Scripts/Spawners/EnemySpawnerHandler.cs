@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemySpawnerHandler : MonoBehaviour
+public class EnemySpawnerHandler : MonoBehaviour, IHandler
 {
     [Header("Spawners")]
     [SerializeField] private List<EnemySpawner> _enemySpawners;
@@ -43,6 +43,13 @@ public class EnemySpawnerHandler : MonoBehaviour
             throw new Exception($"Length can not be less than 0");
 
         _player = player;
+        
+        FindAvailableSpawners();
+
+        SpawnTask().Forget();
+
+        if (!_isGameTimerAttached)
+            _gameTimer.ReachedMinute += OnMinuteReached;
     }
 
     private void Awake()
@@ -81,16 +88,6 @@ public class EnemySpawnerHandler : MonoBehaviour
 
         if (_isGameTimerAttached)
             _gameTimer.ReachedMinute -= OnMinuteReached;
-    }
-
-    public void StartProcess()
-    {
-        FindAvailableSpawners();
-
-        SpawnTask().Forget();
-
-        if (!_isGameTimerAttached)
-            _gameTimer.ReachedMinute += OnMinuteReached;
     }
 
     private void FindAvailableSpawners()

@@ -35,14 +35,18 @@ public class LanternLight : MonoBehaviour, ILantern
     
     private void OnEnable()
     {
-        _radius.ChangeRadius(_defaultValue, _shrinkTime);
-        _thresholdValidator.Execute(_radius, _disableThreshold);
         _thresholdValidator.ThresholdReached += OnThresholdReached;
     }
 
     private void OnDisable()
     {
         _thresholdValidator.ThresholdReached -= OnThresholdReached;
+    }
+
+    private void Start()
+    {
+        _radius.ChangeRadius(_defaultValue, _shrinkTime);
+        _thresholdValidator.Execute(_radius, _disableThreshold);
     }
 
     public void ProcessEnemyDeath(Enemy enemy)
@@ -72,7 +76,7 @@ public class LanternLight : MonoBehaviour, ILantern
             
             _radius.SetActive(true);
             
-            StartLight();
+            _radius.ChangeRadius(_lastRadius, _rateWhenGainingEnergy);
             
             _thresholdValidator.Execute(_radius, _disableThreshold);
         }
@@ -80,13 +84,17 @@ public class LanternLight : MonoBehaviour, ILantern
 
     public void ResetRadius(float speed)
     {
+        if (_radius.IsEqualToInitialValue) 
+            return;
+        
         if (!_radius.IsActive)
             _radius.SetActive(true);
-
+        
         if (!_light.enabled)
             _light.enabled = true;
         
         _radius.ChangeRadius(_radius.InitialValue, speed);
+        _thresholdValidator.Execute(_radius, _disableThreshold);
     }
 
     public void ChangeSpeed(float multiplier, float factor)
@@ -106,12 +114,16 @@ public class LanternLight : MonoBehaviour, ILantern
         _radius.SetTimeScale(timeScale);
     }
 
-    public void StartLight()
+    public void StartChanging()
     {
         float remainingTime = (_radius.Value / _radius.InitialValue) * _shrinkTime;
         
         _radius.ChangeRadius(_defaultValue, remainingTime);
     }
+
+    public void StartLight() => _radius.Resume();
+
+    public void PauseLight() => _radius.Pause();
     
     private void OnThresholdReached()
     {
@@ -123,9 +135,11 @@ public class LanternLight : MonoBehaviour, ILantern
     
     private void OnRadiusReached()
     {
-        StartLight();
+        StartChanging();
 
         _isSubscribed = false;
+
+        _lastRadius = _radius.Value;
         
         _radius.Reached -= OnRadiusReached;
     }

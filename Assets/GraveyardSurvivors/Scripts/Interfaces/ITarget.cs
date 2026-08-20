@@ -5,7 +5,5 @@ using UnityEngine;
 
 public interface ITarget
 {
-    public event Action WasReached;
-    void SetFollower(IFollower follower);
-    void SetPosition(Vector3 position);
+    public Vector3 CurrentPosition { get; }
 }

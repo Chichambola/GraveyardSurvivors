@@ -11,7 +11,9 @@ public class InteractableSpawner : Spawner<Interactable>
 
     public void Spawn(Vector3 position)
     {
-        _spawnPoint = position;
+        var offset = new Vector3(0,ObjectPrefab.transform.position.y, 0);
+        
+        _spawnPoint = position + offset;
 
         GetObject();
     }

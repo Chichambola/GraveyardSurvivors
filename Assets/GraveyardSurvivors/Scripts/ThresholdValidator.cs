@@ -13,16 +13,16 @@ public class ThresholdValidator : MonoBehaviour
     private Sequence _checkValueSequence;
     private CancellationTokenSource _cts;
     private IValueOwner _valueOwner;
-    private readonly float _timeCheck = 0.01f;
+    private readonly float _timeCheck = 0.02f;
     private readonly int _amountOfCycles = -1;
     private float _disableThreshold;
     
     public void Execute(IValueOwner valueOwner, float disableThreshold)
     {
+        StopValidating();
+        
         _valueOwner = valueOwner;
         _disableThreshold = disableThreshold;
-
-        StopValidating();
         
         CreateToken();
         

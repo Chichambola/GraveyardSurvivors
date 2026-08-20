@@ -198,9 +198,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemInfo: {fileID: 11400000, guid: d1a3b49e0838c5a4d95a427b336dea7c, type: 2}
-  BonusDamagePerUpgrade: 0.5
+  BonusDamagePerUpgrade: 1
   Cooldown: 1
-  _damage: 1.5
+  _damage: 2
   _attackStrategy: {fileID: 460224436147248108}
   _arrowSpawner: {fileID: 7555314215730688092}
 --- !u!114 &460224436147248108

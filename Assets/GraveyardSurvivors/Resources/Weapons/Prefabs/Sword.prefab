@@ -5058,7 +5058,7 @@ MonoBehaviour:
   _itemInfo: {fileID: 11400000, guid: 452331656fe18ba44a6a7a60f1d4167c, type: 2}
   BonusDamagePerUpgrade: 1
   Cooldown: 1
-  _damage: 1
+  _damage: 3
   _attackStrategy: {fileID: 502460077594037009}
   _area: {fileID: 6899689260534660976}
   _attackParticles: {fileID: 1859997674124492629}

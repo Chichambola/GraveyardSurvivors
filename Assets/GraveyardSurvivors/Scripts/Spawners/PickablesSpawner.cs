@@ -5,22 +5,28 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PickablesSpawner : Spawner<Pickable>
+public class PickablesSpawner : Spawner<Pickable>, IHandler
 {
     [SerializeField] private Vector3 _spawnOffset;
     
     private Vector3 _spawnPosition;
+    private IPlayer _player;
     private readonly int _minRotation = 0;
     private readonly int _highestRotation = 360;
     
-    public void Spawn(Vector3 position, float coinsAmount)
+    public void Init(IPlayer player)
     {
-        if (coinsAmount <= 0)
-            throw new Exception($"Invalid amount of coins: {coinsAmount}.");
+        _player = player ?? throw new Exception("Player is null");
+    }
+    
+    public void Spawn(Vector3 position, float amount)
+    {
+        if (amount <= 0)
+            throw new Exception($"Invalid amount of coins: {amount}.");
 
         _spawnPosition = position;
         
-        for (int i = 0; i < coinsAmount; i++)
+        for (int i = 0; i < amount; i++)
         {
             GetObject();
         }
@@ -29,6 +35,7 @@ public class PickablesSpawner : Spawner<Pickable>
     protected override void ActionOnGet(Pickable pickable)
     {
         pickable.CanBeReleased += Release;
+        pickable.WasPickedUp += OnPickedUp;
         
         float yRotation = Random.Range(_minRotation, _highestRotation);
         
@@ -46,5 +53,10 @@ public class PickablesSpawner : Spawner<Pickable>
         pickable.CanBeReleased -= Release;
         
         base.ActionOnRelease(pickable);
+    }
+    
+    private void OnPickedUp(Pickable pickable)
+    {
+        pickable.StartMoving(_player as ITarget);
     }
 }
