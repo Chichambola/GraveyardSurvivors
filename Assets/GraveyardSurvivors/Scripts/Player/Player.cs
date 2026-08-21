@@ -31,7 +31,6 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     public event Action<Item> PickedItem;
     public event Action<Enemy> EnemyDetected;
     public event Action Died;
-    public event Action WasReached;
     
     private int _lanternsCount;
     private bool _isInLantern;

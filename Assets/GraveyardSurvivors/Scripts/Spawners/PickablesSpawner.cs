@@ -35,7 +35,7 @@ public class PickablesSpawner : Spawner<Pickable>, IHandler
     protected override void ActionOnGet(Pickable pickable)
     {
         pickable.CanBeReleased += Release;
-        pickable.WasPickedUp += OnPickedUp;
+        pickable.PickedUp += OnPickedUp;
         
         float yRotation = Random.Range(_minRotation, _highestRotation);
         
@@ -57,6 +57,6 @@ public class PickablesSpawner : Spawner<Pickable>, IHandler
     
     private void OnPickedUp(Pickable pickable)
     {
-        pickable.StartMoving(_player as ITarget);
+        pickable.StartMoving(_player as ITarget).Forget();
     }
 }

@@ -105,7 +105,7 @@ public class UpgradesHandler : MonoBehaviour
                     if (item != null)
                         _itemsList.Remove(item);
                     else
-                        throw new Exception(nameof(item));
+                        throw new Exception(item.Name);
                 }
 
                 searchAmount++;
@@ -126,7 +126,10 @@ public class UpgradesHandler : MonoBehaviour
         
         var items = _itemsList.GetWeightedItems(level.Rarity);
 
-        var item = UserUtils.GetElementByWeight(items) as IItem;
+        var weightedObject = UserUtils.GetElementByWeight(items);
+
+        if (weightedObject is not IItem item)
+            throw new Exception($"Found item does not implement IItem");
         
         return item;
     }

@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc519370bca9f5cbd867e51855f188bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ease: 1
   _jumpPower: 1
   _duration: 0.61
   _numberofJumps: 1
@@ -75,6 +74,7 @@ GameObject:
   - component: {fileID: 6382296687967610808}
   - component: {fileID: 3971443133013662731}
   - component: {fileID: 5550019293873393314}
+  - component: {fileID: 3413562999161063872}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -211,8 +211,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _endPoint: {fileID: 4706741937018459665}
   _thrower: {fileID: 8145135701270782164}
+  _mover: {fileID: 3413562999161063872}
   _value: 1
   _timeBeforeRelease: 120
+  _settings:
+    startFromCurrent: 0
+    startValue: {x: 0, y: 0, z: 0}
+    endValue: {x: 0, y: 0, z: 0}
+    settings:
+      duration: 2
+      ease: 1
+      customEase:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      cycles: 1
+      cycleMode: 0
+      startDelay: 0
+      endDelay: 0
+      useUnscaledTime: 0
+      _useFixedUpdate: 0
+      _updateType: 0
+  _shakeSettings:
+    strength: {x: 1, y: 1, z: 0}
+    duration: 0.5
+    frequency: 3
+    enableFalloff: 0
+    falloffEase: 0
+    strengthOverTime:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    asymmetry: 0.425
+    easeBetweenShakes: 2
+    cycles: 1
+    startDelay: 0
+    endDelay: 0
+    useUnscaledTime: 0
+    _useFixedUpdate: 0
+    _updateType: 0
+--- !u!114 &3413562999161063872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5969257773788388218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af51e27f34b4b2c428427995af66fb5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 2
 --- !u!1 &7416902752058137248
 GameObject:
   m_ObjectHideFlags: 0
