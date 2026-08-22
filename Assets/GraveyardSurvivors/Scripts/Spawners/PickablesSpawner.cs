@@ -51,6 +51,7 @@ public class PickablesSpawner : Spawner<Pickable>, IHandler
     protected override void ActionOnRelease(Pickable pickable)
     {
         pickable.CanBeReleased -= Release;
+        pickable.PickedUp -= OnPickedUp;
         
         base.ActionOnRelease(pickable);
     }

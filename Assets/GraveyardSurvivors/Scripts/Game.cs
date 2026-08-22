@@ -40,6 +40,7 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         PrimeTweenConfig.SetTweensCapacity(_primeTweenCapacity);
+        PrimeTweenConfig.warnZeroDuration = false;
         
        if (Instance != null && Instance != this)
        {

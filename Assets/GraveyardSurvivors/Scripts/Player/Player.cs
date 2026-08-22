@@ -22,15 +22,14 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     [SerializeField] private Health _health;
     [SerializeField] private Wallet _wallet;
     [SerializeField] private LanternLight _light;
-
     [SerializeField] private bool _isImmortal;
     
     public event Action InteractionButtonPressed;
+    public event Action Died;
     public event Action<CharacterStats> StatsChanged;
     public event Action<float> GainedXp;
     public event Action<Item> PickedItem;
     public event Action<Enemy> EnemyDetected;
-    public event Action Died;
     
     private int _lanternsCount;
     private bool _isInLantern;

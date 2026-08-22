@@ -16,23 +16,19 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
 
     [SerializeField] private int _value = 1;
     [SerializeField] private float _timeBeforeRelease = 2f;
-
-    [SerializeField] private TweenSettings<Vector3> _settings;
-    [SerializeField] private ShakeSettings _shakeSettings;
     
     public event Action<Pickable> CanBeReleased;
     public event Action<Pickable> PickedUp;
     
     private float _minRandomValue = -1f;
     private float _maxRandomValue = 3f;
-    private float _step = 0.005f;
     private int _amountOfCycles = -1;
     private IntervalTimer _timer;
     private Collider _collider;
     private Rigidbody _rigidbody;
     private ITarget _target;
-    private Sequence _sequence;
     private CancellationTokenSource _cts;
+    private Sequence _sequence;
 
     public int Value => _value;
     public bool WasPickedUp { get; private set; }
@@ -54,6 +50,16 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
         _thrower.FinishedMoving -= OnFinishedMoving;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.TryGetComponent(out ITarget target) || target != _target)
+            return;
+        
+        _cts.Cancel();
+            
+        CanBeReleased?.Invoke(this);
+    }
+
     public void StartMoving()
     {
         _endPoint.position = _endPoint.position.GetRandomOffsetPosition(_minRandomValue, _maxRandomValue);
@@ -68,20 +74,10 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
         
         _target = target;
         
-        _settings.startValue = transform.position;
-
         _sequence = Sequence.Create(cycles: _amountOfCycles)
-            .Group(Tween.Delay(_step, () => _settings.endValue = _target.CurrentPosition)
-                .Group(Tween.Position(transform, _settings)));
-        
-        //_settings.endValue = _target.CurrentPosition
+            .Group(Tween.Delay(0, () => _mover.MoveToPosition(_target.CurrentPosition)));
         
         await _sequence.ToYieldInstruction().ToUniTask(PlayerLoopTiming.FixedUpdate, cancellationToken: _cts.Token);
-    }
-
-    private void Move()
-    {
-        _mover.MoveToPosition(_target.CurrentPosition);
     }
     
     public virtual void ResetCharacteristics()

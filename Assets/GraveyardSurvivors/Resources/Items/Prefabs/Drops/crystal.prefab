@@ -158,46 +158,6 @@ MonoBehaviour:
   _mover: {fileID: 2033409630119236268}
   _value: 1
   _timeBeforeRelease: 120
-  _settings:
-    startFromCurrent: 0
-    startValue: {x: 0, y: 0, z: 0}
-    endValue: {x: 0, y: 0, z: 0}
-    settings:
-      duration: 3.5
-      ease: 0
-      customEase:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      cycles: 1
-      cycleMode: 0
-      startDelay: 0
-      endDelay: 0
-      useUnscaledTime: 0
-      _useFixedUpdate: 0
-      _updateType: 0
-  _shakeSettings:
-    strength: {x: 1, y: 1, z: 0}
-    duration: 1
-    frequency: 3
-    enableFalloff: 1
-    falloffEase: 3
-    strengthOverTime:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    asymmetry: 1
-    easeBetweenShakes: 1
-    cycles: 1
-    startDelay: 0
-    endDelay: 0
-    useUnscaledTime: 0
-    _useFixedUpdate: 0
-    _updateType: 0
 --- !u!114 &297854425191056927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,4 +212,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af51e27f34b4b2c428427995af66fb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speed: 5

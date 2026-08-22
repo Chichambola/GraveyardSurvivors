@@ -7,5 +7,4 @@ using UnityEngine.Serialization;
 
 public class Coin : Pickable
 {
-
 }

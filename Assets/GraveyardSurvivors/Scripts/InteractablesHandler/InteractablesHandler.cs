@@ -27,6 +27,8 @@ public class InteractablesHandler : MonoBehaviour, IHandler
 
             for (int i = 0; i < count; i++)
             {
+                Debug.Log("Here");
+                
                 bool isPlaced = false;
                 
                 while (!isPlaced)
