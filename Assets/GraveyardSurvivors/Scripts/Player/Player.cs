@@ -30,6 +30,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     public event Action<float> GainedXp;
     public event Action<Item> PickedItem;
     public event Action<Enemy> EnemyDetected;
+    public event Action<Player> CanBeReleased;
+
     
     private int _lanternsCount;
     private bool _isInLantern;
@@ -47,14 +49,12 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     public bool IsLightActive => _light.IsActive;
     public bool IsAlive => CurrentHealth > 0;
     
-    public event Action<Player> CanBeReleased;
-    
     protected override void Awake()
     {
         Animator = GetComponent<Animator>();
         Rotator = GetComponent<Rotator>();
         Mover = GetComponent<Mover>();
-        Collider = GetComponent<CapsuleCollider>();
+        Collider = GetComponent<BoxCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _interactionHandler = GetComponent<InteractionHandler>();
         _inputReader = GetComponent<InputReader>();

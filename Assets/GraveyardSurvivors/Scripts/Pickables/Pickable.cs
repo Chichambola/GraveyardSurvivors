@@ -5,33 +5,31 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using PrimeTween;
+using UnityEditor.Profiling;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>, IPickable, IFollower
 {
     [SerializeField] private Transform _endPoint;
     [SerializeField] private Thrower _thrower;
-    [SerializeField] private Mover _mover;
 
     [SerializeField] private int _value = 1;
-    [SerializeField] private float _timeBeforeRelease = 2f;
+    [SerializeField] private float _timeLyingOnGround = 75f;
+    [SerializeField] private float _timeChasingTarget = 7f;
     
     public event Action<Pickable> CanBeReleased;
-    public event Action<Pickable> PickedUp;
     
     private float _minRandomValue = -1f;
     private float _maxRandomValue = 3f;
-    private int _amountOfCycles = -1;
-    private IntervalTimer _timer;
     private Collider _collider;
     private Rigidbody _rigidbody;
     private ITarget _target;
     private CancellationTokenSource _cts;
-    private Sequence _sequence;
+    private UniTask _task;
 
     public int Value => _value;
-    public bool WasPickedUp { get; private set; }
 
     private void Awake()
     {
@@ -48,6 +46,13 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
     private void OnDisable()
     {
         _thrower.FinishedMoving -= OnFinishedMoving;
+        
+        _cts?.Cancel();
+    }
+
+    private void OnDestroy()
+    {
+        _cts?.Dispose();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,52 +60,43 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
         if (!other.TryGetComponent(out ITarget target) || target != _target)
             return;
         
-        _cts.Cancel();
-            
-        CanBeReleased?.Invoke(this);
+        Release();
     }
 
-    public void StartMoving()
+    public void StartThrowing()
     {
         _endPoint.position = _endPoint.position.GetRandomOffsetPosition(_minRandomValue, _maxRandomValue);
         
         _thrower.StartMoving(transform, _endPoint.position);
     }
 
-    public async UniTaskVoid StartMoving(ITarget target)
-    {
-        _cts = new CancellationTokenSource();
-        _cts.RegisterRaiseCancelOnDestroy(gameObject);
-        
-        _target = target;
-        
-        _sequence = Sequence.Create(cycles: _amountOfCycles)
-            .Group(Tween.Delay(0, () => _mover.MoveToPosition(_target.CurrentPosition)));
-        
-        await _sequence.ToYieldInstruction().ToUniTask(PlayerLoopTiming.FixedUpdate, cancellationToken: _cts.Token);
-    }
-    
     public virtual void ResetCharacteristics()
     {
         _collider.enabled = false;
+
+        _target = null;
     }
 
     public virtual void Release()
     {
-        if (WasPickedUp)
-            return;
-        
-        WasPickedUp = true;
-        
-        PickedUp?.Invoke(this);
+        CanBeReleased?.Invoke(this);
     }
-    
+
     private void OnFinishedMoving()
     {
         _collider.enabled = true;
+
+        _cts = new CancellationTokenSource();
         
-        _timer = new IntervalTimer(_timeBeforeRelease);
-        _timer.Stopped += Release;
-        _timer.Start();
+        var token = _cts.Token;
+        
+        WaitTask(_timeLyingOnGround, token, Release).Forget();
+    }
+
+    private async UniTaskVoid WaitTask(float time, CancellationToken token ,Action action)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: token,  cancelImmediately: true);
+        
+        action.Invoke();
     }
 }

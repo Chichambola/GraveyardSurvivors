@@ -27,7 +27,6 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
     public float InitialValue => _initialRadius;
     public float TimeScale => _currentTimeScale;
     public bool IsActive { get; private set; }
-    public bool IsEqualToInitialValue => Mathf.Approximately(Value, InitialValue);
     
     private void Awake()
     {

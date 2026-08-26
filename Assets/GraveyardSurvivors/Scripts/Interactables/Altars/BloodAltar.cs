@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BloodAltar : CooldownInteractable
+public class BloodAltar : Interactable
 {
+    [SerializeField] private CooldownHandler _cooldownHandler;
     [SerializeField] private List<float> _damagePercent;
     
     private Dictionary<int,float> _damagePercentDict;
@@ -54,5 +55,28 @@ public class BloodAltar : CooldownInteractable
             IsAvailable = false;
         else
             SetValue(_damagePercentDict[_currentInteractionsAmount]);
+    }
+
+    public void StartCountdown()
+    {
+        SetVisibility(false);
+
+        IsAvailable = false;
+
+        _cooldownHandler.TimePassed += OnTimePassed;
+        
+        _cooldownHandler.StartCountdown();
+    }
+
+    private void OnTimePassed()
+    {
+        if (_currentInteractionsAmount != _maxInteractionsAmount)
+        {
+            SetVisibility(true);
+            
+            IsAvailable = false;
+        }
+        
+        _cooldownHandler.TimePassed -= OnTimePassed;
     }
 }

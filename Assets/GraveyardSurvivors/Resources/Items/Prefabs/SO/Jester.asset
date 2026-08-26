@@ -15,5 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 1fcb8ac74bb98dd23865e317baead281, type: 3}
   _name: Jester's cap
   _rarityLevel:
-    _weight: 55
-    _rarity: 2
+    _weight: 25
+    _rarity: 3

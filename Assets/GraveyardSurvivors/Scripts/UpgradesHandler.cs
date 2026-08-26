@@ -35,6 +35,7 @@ public class UpgradesHandler : MonoBehaviour
     private List<int> _indexes;
     private List<IItem> _itemsToShow;
     private List<IItem> _itemsList;
+    private List<ERarityLevel> _eRarityLevels;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class UpgradesHandler : MonoBehaviour
         _indexes = new List<int>();
         _itemsList = new List<IItem>();
         _itemsToShow = new List<IItem>();
+        _eRarityLevels = new List<ERarityLevel>();
     }
 
     private void OnEnable()
@@ -94,8 +96,10 @@ public class UpgradesHandler : MonoBehaviour
             
             while (isFound != true || searchAmount > _searchCount)
             {
-                var item = GetItem();
+                var level = GetRarityLevel();
 
+                var item = GetItem(level.Rarity);
+                
                 if (!_itemsToShow.Contains(item))
                 {
                     _itemsToShow.Add(item);
@@ -113,25 +117,57 @@ public class UpgradesHandler : MonoBehaviour
 
             if (searchAmount > _searchCount)
             {
-                var item = GetItem();
+                var level = GetRarityLevel();
+                
+                var item = GetItem(level.Rarity);
                 
                 _itemsToShow.Add(item);
             }
         }
+        
+        _eRarityLevels.Clear();
     }
 
-    private IItem GetItem()
+    private IItem GetItem(ERarityLevel rarity)
     {
-        RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
+        Debug.Log(rarity);
         
-        var items = _itemsList.GetWeightedItems(level.Rarity);
-
+        var items = _itemsList.GetWeightedItems(rarity);
+     
+        Debug.Log(items.Count());
+        
         var weightedObject = UserUtils.GetElementByWeight(items);
-
+        
         if (weightedObject is not IItem item)
             throw new Exception($"Found item does not implement IItem");
         
         return item;
+    }
+    
+    private RarityLevel GetRarityLevel()
+    {
+        RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
+
+        if (level.Rarity == ERarityLevel.Legendary && !_eRarityLevels.Contains(ERarityLevel.Legendary))
+        {
+            _eRarityLevels.Add(level.Rarity);
+        }
+        else
+        {
+            List<RarityLevel> remainingLevels = new List<RarityLevel>();
+            
+            foreach (var rarityLevel in _levels.Weights)
+            {
+                if (rarityLevel.Rarity != ERarityLevel.Legendary)
+                {
+                    remainingLevels.Add(rarityLevel);
+                }
+            }
+
+            level = UserUtils.GetElementByWeight(remainingLevels);
+        }
+
+        return level;
     }
 
     private void ChangeBackgroundOpacity(float alphaValue)
@@ -157,15 +193,15 @@ public class UpgradesHandler : MonoBehaviour
 
         if (upgrade is Item item)
         {
-            if (upgrade is Weapon weapon)
-            {
-                WeaponSelected?.Invoke(weapon);
-                
-                return;
-            }
-            
             ItemSelected?.Invoke(item);
             
+            return;
+        }
+        
+        if (upgrade is Weapon weapon)
+        {
+            WeaponSelected?.Invoke(weapon);
+                
             return;
         }
     }

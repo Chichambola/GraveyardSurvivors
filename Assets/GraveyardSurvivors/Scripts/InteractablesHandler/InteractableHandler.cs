@@ -8,19 +8,6 @@ public abstract class InteractableHandler : MonoBehaviour
     [SerializeField] protected InteractableSpawner InteractableSpawner;
     
     protected IPlayer Player;
-
-    public static InteractableHandler Instance { get; private set; }
-    
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        
-        Instance = this;
-    }
     
     public void Init(IPlayer player)
     {

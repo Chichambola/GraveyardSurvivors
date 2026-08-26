@@ -13,7 +13,8 @@ public class InteractablesHandler : MonoBehaviour, IHandler
     [SerializeField] private SerializableDictionary<InteractableHandler, int> _interactables;
     [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;
     [SerializeField] private PlacementVerifier _placementVerifier;
-
+    [SerializeField] private int _errorThreshold = 10;
+    
     public void Init(IPlayer player)
     {
         if (_interactables == null)
@@ -26,17 +27,21 @@ public class InteractablesHandler : MonoBehaviour, IHandler
             int count = _interactables[interactable];
 
             for (int i = 0; i < count; i++)
-            {
-                Debug.Log("Here");
-                
+            {                
                 bool isPlaced = false;
+
+                int triesAmount = 0;
                 
                 while (!isPlaced)
                 {
                     Vector3 position = _spawnCollidersHandler.GetRandomPosition();
-                    
-                    if (!_placementVerifier.IsPlacementValid(position)) 
+
+                    if (!_placementVerifier.IsPlacementValid(position) && triesAmount <= _errorThreshold)
+                    {
+                        triesAmount++;
+                        
                         continue;
+                    }
                     
                     isPlaced = true;
                     

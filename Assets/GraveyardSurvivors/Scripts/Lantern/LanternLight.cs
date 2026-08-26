@@ -84,9 +84,6 @@ public class LanternLight : MonoBehaviour, ILantern
 
     public void ResetRadius(float speed)
     {
-        if (_radius.IsEqualToInitialValue) 
-            return;
-        
         if (!_radius.IsActive)
             _radius.SetActive(true);
         

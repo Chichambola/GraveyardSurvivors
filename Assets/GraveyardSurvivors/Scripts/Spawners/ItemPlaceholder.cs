@@ -34,7 +34,7 @@ public class ItemPlaceholder : MonoBehaviour, IThrowable, IPoolable<ItemPlacehol
         CanBeReleased?.Invoke(this);
     }
 
-    public void StartMoving()
+    public void StartThrowing()
     {
         _thrower.StartMoving(transform, _endPoint.position);
     }

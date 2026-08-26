@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class PickablesSpawner : Spawner<Pickable>, IHandler
 {
+    [SerializeField] private ParticleEffectSpawner _particleEffectSpawner;
     [SerializeField] private Vector3 _spawnOffset;
     
     private Vector3 _spawnPosition;
@@ -35,7 +36,6 @@ public class PickablesSpawner : Spawner<Pickable>, IHandler
     protected override void ActionOnGet(Pickable pickable)
     {
         pickable.CanBeReleased += Release;
-        pickable.PickedUp += OnPickedUp;
         
         float yRotation = Random.Range(_minRotation, _highestRotation);
         
@@ -45,19 +45,17 @@ public class PickablesSpawner : Spawner<Pickable>, IHandler
         
         base.ActionOnGet(pickable);
         
-        pickable.StartMoving();
+        pickable.StartThrowing();
     }
 
     protected override void ActionOnRelease(Pickable pickable)
     {
         pickable.CanBeReleased -= Release;
-        pickable.PickedUp -= OnPickedUp;
+        
+        pickable.ResetCharacteristics();
+
+        _particleEffectSpawner.Spawn(pickable.transform.position);
         
         base.ActionOnRelease(pickable);
-    }
-    
-    private void OnPickedUp(Pickable pickable)
-    {
-        pickable.StartMoving(_player as ITarget).Forget();
     }
 }

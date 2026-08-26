@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
 public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
 {
     private ParticleSystem _particleSystem;
-    private Coroutine _coroutine;
+    private UniTask _task;
     private float _duration;
+    private CancellationTokenSource _cts;
     
     public event Action<ParticleEffect> CanBeReleased;
 
@@ -19,12 +22,19 @@ public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
 
     public void ResetCharacteristics()
     {
-        _particleSystem.transform.position = Vector3.zero;
+        _particleSystem.Stop();
         
         _duration = 0;
-        
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+    }
+
+    private void OnDisable()
+    {
+        _cts?.Cancel();
+    }
+
+    private void OnDestroy()
+    {
+        _cts?.Dispose();
     }
 
     public void Release()
@@ -42,6 +52,10 @@ public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
         var systemMain = _particleSystem.main;
 
         systemMain.duration = duration;
+        
+        var curve = systemMain.startLifetime;
+        curve.constant = duration;
+        systemMain.startLifetime = curve;
         
         _duration = duration;
     }
@@ -62,27 +76,19 @@ public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
     
     public void StartPlaying()
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        _cts = new CancellationTokenSource();
 
-        _coroutine = StartCoroutine(DurationRoutine());
+        var token = _cts.Token;
+
+        WaitTask(_duration, token, Release).Forget();
         
         _particleSystem.Play();
     }
-
-    private IEnumerator DurationRoutine()
+    
+    private async UniTaskVoid WaitTask(float time, CancellationToken token, Action action)
     {
-        float elapsedTime = 0f;
+        await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: token,  cancelImmediately: true).SuppressCancellationThrow();
         
-        while (elapsedTime <= _duration)
-        {
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        _particleSystem.Stop();
-        
-        Release();
+        action.Invoke();
     }
 }

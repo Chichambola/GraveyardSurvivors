@@ -7,14 +7,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
-public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
+[RequireComponent(typeof(Rigidbody))]
+public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>, ITarget
 {
     [SerializeField] protected DamageZone DamageZone;
+    
     [Header("Services")]
     [SerializeField] protected PlayerDetector PlayerDetector;
     [SerializeField] private TextMeshProUGUI _health;
     [SerializeField] private Defender _defender;
+
+    [Header("Collider values")]
+    [SerializeField] private Vector3 _colliderSize;
+    [SerializeField] private Vector3 _center;
     
     public event Action<Enemy> CanBeReleased;
     public event Action<Enemy> NoHealthLeft;
@@ -25,7 +30,6 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     protected RunState RunState;
     private Coroutine _attackRoutine;
     private Rigidbody _rigidbody;
-    private CapsuleCollider _collider;
     private List<IEffect<IAttacker>> _currentEffects;
     private float _currentHealth;
     private float _storedDamage;
@@ -55,17 +59,16 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
 
     protected override void Awake()
     {
-        _collider = GetComponent<CapsuleCollider>();
+        Collider = GetComponent<BoxCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _currentEffects = new List<IEffect<IAttacker>>();
         
         StateMachine = new StateMachine();
-        
         IdleState = new IdleState(this, Animator);
         _dieState = new DieState(this, Animator);
         RunState = new RunState(this, Animator);
     }
-    
+
     protected override void Update()
     {
         StateMachine.Update();
@@ -79,6 +82,13 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     protected virtual void OnEnable()
     {
         InitializeStateMachine();
+    }
+
+    private void Start()
+    {
+        Collider.center = _center;
+        Collider.size = _colliderSize;
+        DamageZone.SetSettings(_colliderSize, _center);
     }
 
     public void ResetCharacteristics() { }
@@ -147,12 +157,12 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
     {
         if (isResetting)
         {
-            _collider.center -= offsetAfterDeath;
+            Collider.center -= offsetAfterDeath;
             DamageZone.gameObject.transform.position -= offsetAfterDeath;
         }
         else
         {
-            _collider.center += offsetAfterDeath;
+            Collider.center += offsetAfterDeath;
             DamageZone.gameObject.transform.position += offsetAfterDeath;
         }
     }
@@ -225,5 +235,12 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>
         
         effect.EffectCompleted -= RemoveEffect;
         _currentEffects.Remove(effect);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        
+        Gizmos.DrawWireCube(_center, _colliderSize);
     }
 }

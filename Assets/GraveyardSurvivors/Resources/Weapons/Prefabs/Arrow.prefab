@@ -4848,6 +4848,7 @@ GameObject:
   - component: {fileID: 6151096663406304906}
   - component: {fileID: -3601342103368116306}
   - component: {fileID: 1928845370352144240}
+  - component: {fileID: 8984992257652616130}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -4984,9 +4985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6263200880ca0ca48af0ae1440727df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _follower: {fileID: 8984992257652616130}
   _enemyDetector: {fileID: 1928845370352144240}
-  _mover: {fileID: 6151096663406304906}
-  _rotator: {fileID: -3601342103368116306}
 --- !u!114 &6151096663406304906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5025,3 +5025,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376f178f1126a03698003016d7267e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8984992257652616130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806495649573723666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7457d47239212e468e603e57e5f060e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mover: {fileID: 6151096663406304906}
+  _rotator: {fileID: -3601342103368116306}

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(Rotator), typeof(Mover))]
-[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(BoxCollider))]
 public abstract class CharacterBase : MonoBehaviour, IStateHandler
 {
     [Header("Base")]
@@ -10,7 +10,7 @@ public abstract class CharacterBase : MonoBehaviour, IStateHandler
     [SerializeField] protected Rotator Rotator;
     [SerializeField] protected Mover Mover;
     
-    protected CapsuleCollider Collider;
+    protected BoxCollider Collider;
     protected StateMachine StateMachine;
     
     protected abstract void Awake();

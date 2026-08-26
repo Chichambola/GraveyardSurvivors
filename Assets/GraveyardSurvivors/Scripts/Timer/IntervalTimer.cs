@@ -39,9 +39,4 @@ public class IntervalTimer : Timer
             Stop();
         }
     }
-
-    public void AddDuration(int duration)
-    {
-        InitialTime += duration;
-    }
 }

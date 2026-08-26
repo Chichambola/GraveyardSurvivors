@@ -8126,7 +8126,7 @@ GameObject:
   - component: {fileID: 246702825217911721}
   - component: {fileID: 2537338560559562492}
   - component: {fileID: 6464455514646944566}
-  - component: {fileID: 5188540845198924746}
+  - component: {fileID: 2228592035936887339}
   m_Layer: 3
   m_Name: Ranger
   m_TagString: Player
@@ -8181,7 +8181,7 @@ MonoBehaviour:
   _health: {fileID: 7806447276525855132}
   _wallet: {fileID: 2418341122684004869}
   _light: {fileID: 3474814700427343827}
-  _isImmortal: 0
+  _isImmortal: 1
 --- !u!114 &1658106383447107767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8283,8 +8283,8 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!136 &5188540845198924746
-CapsuleCollider:
+--- !u!65 &2228592035936887339
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8301,11 +8301,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.6
-  m_Height: 3.4318647
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.25, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 1.2071822, y: 2.814032, z: 1}
+  m_Center: {x: -0.039941613, y: 1.3884705, z: 0}
 --- !u!1 &7901969633852552731
 GameObject:
   m_ObjectHideFlags: 0
@@ -8573,7 +8571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &51430420703791245
 Transform:
   m_ObjectHideFlags: 0

@@ -82,8 +82,8 @@ public class WeaponBow : Weapon
         }
     }
     
-    private void OnProjectileReleased(IAttacker attacker)
+    private void OnProjectileReleased(ITarget target)
     {
-        AttackerDetected?.Invoke(attacker, this);
+        AttackerDetected?.Invoke(target as IAttacker, this);
     }
 }

@@ -20,20 +20,19 @@ public class ParticleEffectSpawner : Spawner<ParticleEffect>
     protected override void ActionOnGet(ParticleEffect effect)
     {
         effect.transform.position = _spawnPosition;
-        effect.transform.parent = null;
         effect.CanBeReleased += Release;
         ActiveObjects.Add(effect);
         
-        base.ActionOnGet(effect);
-        
         effect.SetDuration(_duration);
         effect.SetRadius(_radius);
+        
+        base.ActionOnGet(effect);
+        
         effect.StartPlaying();
     }
 
     protected override void ActionOnRelease(ParticleEffect effect)
     {
-        effect.transform.parent = transform;
         effect.CanBeReleased -= Release;
         effect.ResetCharacteristics();
         ActiveObjects.Remove(effect);

@@ -1,72 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &320391534394814035
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1681658680915706366}
-  - component: {fileID: 3324958902838253126}
-  - component: {fileID: 2491473788055411636}
-  m_Layer: 7
-  m_Name: DamageZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1681658680915706366
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320391534394814035}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9007132564956147045}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3324958902838253126
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320391534394814035}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.5615233, y: 2.8782542, z: 1.188621}
-  m_Center: {x: 0.049887367, y: 1.4206616, z: 0.1762769}
---- !u!114 &2491473788055411636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320391534394814035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81eaa5ab05461bd4e9f8c1414fbe9401, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damageOnCollision: 3
 --- !u!1 &710374475767555388
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,7 +688,7 @@ GameObject:
   - component: {fileID: 2864853422003173727}
   - component: {fileID: 1879320688110641685}
   - component: {fileID: 5052325448032058343}
-  - component: {fileID: 4375096103313578800}
+  - component: {fileID: 1637412890415778171}
   m_Layer: 7
   m_Name: Zombie
   m_TagString: Untagged
@@ -772,7 +705,7 @@ Transform:
   m_GameObject: {fileID: 7841497988087309809}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.23831034, y: 0, z: 6.2361555}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -781,7 +714,7 @@ Transform:
   - {fileID: 4124540036425300235}
   - {fileID: 8996193519472596575}
   - {fileID: 6800221008874116930}
-  - {fileID: 1681658680915706366}
+  - {fileID: 3291146868051746474}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7745078345119053515
@@ -821,10 +754,12 @@ MonoBehaviour:
   Animator: {fileID: 7745078345119053515}
   Rotator: {fileID: 1879320688110641685}
   Mover: {fileID: 2864853422003173727}
-  DamageZone: {fileID: 2491473788055411636}
+  DamageZone: {fileID: 780742202952632304}
   PlayerDetector: {fileID: 6375594758851993861}
   _health: {fileID: 3678190649255506134}
   _defender: {fileID: 5106020596504560185}
+  _colliderSize: {x: 1.46, y: 2.5, z: 1.33}
+  _center: {x: 0, y: 1.31, z: 0.21}
   _weapon:
     _underlyingValue: {fileID: 3266976154770957663}
 --- !u!114 &2864853422003173727
@@ -880,8 +815,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!136 &4375096103313578800
-CapsuleCollider:
+--- !u!65 &1637412890415778171
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -895,14 +830,12 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.7296906
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.3729208, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8119190812028583179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +963,73 @@ Transform:
   - {fileID: 8474371603643728847}
   m_Father: {fileID: 9039157804380808082}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8868855682751744681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3291146868051746474}
+  - component: {fileID: 826716123180882043}
+  - component: {fileID: 780742202952632304}
+  m_Layer: 7
+  m_Name: DamageZOne
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3291146868051746474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8868855682751744681}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9007132564956147045}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &826716123180882043
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8868855682751744681}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &780742202952632304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8868855682751744681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81eaa5ab05461bd4e9f8c1414fbe9401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageOnCollision: 3
 --- !u!1 &9075575847436807250
 GameObject:
   m_ObjectHideFlags: 0

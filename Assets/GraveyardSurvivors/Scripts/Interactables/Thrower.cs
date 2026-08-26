@@ -16,17 +16,18 @@ public class Thrower : MonoBehaviour
 
     public event Action FinishedMoving;
 
-    private Sequence _throwerTween;
-
-    public void StopMoving()
-    {
-        FinishedMoving?.Invoke();
-        
-        _throwerTween.Stop();
-    }
+    private Sequence _sequence;
     
     public void StartMoving(Transform throwable, Vector3 endPoint)
     {
-        _throwerTween = PrimeTweenExtension.Jump(throwable, endPoint, _duration, _jumpPower, _numberofJumps).OnComplete(StopMoving);
+        _sequence = Sequence.Create()
+            .Group(PrimeTweenExtension.Jump(throwable, endPoint, _duration, _jumpPower, _numberofJumps).OnComplete(StopMoving));
+    }
+    
+    private void StopMoving()
+    {
+        FinishedMoving?.Invoke();
+        
+        _sequence.Stop();
     }
 }

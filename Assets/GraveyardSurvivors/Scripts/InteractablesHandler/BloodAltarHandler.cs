@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class BloodAltarHandler : InteractableHandler
 {
+    [SerializeField] private float _divider = 1.25f;
+    
     protected override void OnInteractableChosen<T>(T interactable)
     {
         if (interactable is not BloodAltar altar)
@@ -23,7 +25,7 @@ public class BloodAltarHandler : InteractableHandler
         
         altar.IncreaseInteractionAmount();
 
-        float moneyAmount = Mathf.Round(necessaryHealth / 2);
+        float moneyAmount = necessaryHealth / _divider;
         
         Player.TakeDamage(necessaryHealth);
         Player.ReceiveMoney(moneyAmount);

@@ -8,7 +8,7 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
 {
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
-    
+
     public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
     
     protected override void OnInteractableChosen<T>(T interactable)

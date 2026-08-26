@@ -37,4 +37,11 @@ public class DamageZone : MonoBehaviour
     }
 
     public void Upgrade(float damage) => _damageOnCollision += damage;
+
+    public void SetSettings(Vector3 size, Vector3 center)
+    {
+        _collider.size = size;
+
+        _collider.center = center;
+    }
 }

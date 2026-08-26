@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 9198884861547997829}
   - component: {fileID: 6576034993086518009}
   - component: {fileID: 1613184244237165454}
-  - component: {fileID: 2750361499293111056}
+  - component: {fileID: 5969756115567548245}
   m_Layer: 7
   m_Name: ArmoredSkeleton
   m_TagString: Untagged
@@ -384,7 +384,7 @@ Transform:
   m_GameObject: {fileID: 1741476326664864120}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2938797, y: 0, z: 0.22624016}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -439,6 +439,8 @@ MonoBehaviour:
   PlayerDetector: {fileID: 3810879339430432190}
   _health: {fileID: 463873145867478184}
   _defender: {fileID: 2601827664011398758}
+  _colliderSize: {x: 1.3, y: 3, z: 1.35}
+  _center: {x: 0, y: 1.51, z: 0}
   _weapon:
     _underlyingValue: {fileID: 2449316190531277775}
 --- !u!114 &9198884861547997829
@@ -494,8 +496,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!136 &2750361499293111056
-CapsuleCollider:
+--- !u!65 &5969756115567548245
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -512,11 +514,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.54
-  m_Height: 2.9550395
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.2875181, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2919642962639320762
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,8 +740,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8984258, y: 2.8782542, z: 1.7767737}
-  m_Center: {x: -0.07796381, y: 0, z: -0.17586829}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3680220431082829727
 MonoBehaviour:
   m_ObjectHideFlags: 0

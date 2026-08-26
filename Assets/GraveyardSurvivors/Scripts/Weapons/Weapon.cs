@@ -14,7 +14,6 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem, IWeightedObject
     
     private float _bonusDamage;
     private string _description;
-    private RarityLevel _rarityLevel;
     
     public virtual event Action<IAttacker, IWeapon> AttackerDetected;
     
@@ -27,7 +26,7 @@ public abstract class Weapon : MonoBehaviour, IWeapon, IItem, IWeightedObject
     public string CurrentDescription => _description;
     public Sprite Sprite => _itemInfo.Sprite;
     public string Name => _itemInfo.Name;
-    public ERarityLevel Rarity => _rarityLevel.Rarity;
+    public ERarityLevel Rarity => _itemInfo.Rarity;
 
     private void OnDisable()
     {

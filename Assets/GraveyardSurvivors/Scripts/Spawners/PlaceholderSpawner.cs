@@ -25,7 +25,7 @@ public class PlaceholderSpawner : Spawner<ItemPlaceholder>
         
         base.ActionOnGet(placeholder);
         
-       placeholder.StartMoving();
+       placeholder.StartThrowing();
     }
 
     protected override void ActionOnRelease(ItemPlaceholder placeholder)

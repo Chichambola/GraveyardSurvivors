@@ -6,4 +6,5 @@ using UnityEngine;
 public interface ITarget
 {
     public Vector3 CurrentPosition { get; }
+    public bool IsAlive { get; }
 }

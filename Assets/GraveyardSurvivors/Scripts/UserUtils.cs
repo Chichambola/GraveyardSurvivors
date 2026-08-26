@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using AYellowpaper;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -95,18 +97,22 @@ public static class UserUtils
         float randomValue = Random.Range(0, totalWeight);
         float currentWeight = 0;
         
+        T lastItem = default;
+        
         foreach (var item in weightedObjects)
         {
             if (item.Weight <= 0)
                 throw new Exception($"{item}'s weight should not be 0 or less than 0");
             
             currentWeight += item.Weight;
+
+            lastItem = item;
             
             if (randomValue < currentWeight)
                 return item;
         }
         
-        return default(T);
+        return lastItem;
     }
     
     public static IEnumerable<IWeightedObject> GetWeightedItems(this List<IItem> list,ERarityLevel rarity)

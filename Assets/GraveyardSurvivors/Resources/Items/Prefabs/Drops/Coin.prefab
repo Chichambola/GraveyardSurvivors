@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 6382296687967610808}
   - component: {fileID: 3971443133013662731}
   - component: {fileID: 5550019293873393314}
-  - component: {fileID: 3413562999161063872}
+  - component: {fileID: -5149678717130624073}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -211,10 +211,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _endPoint: {fileID: 4706741937018459665}
   _thrower: {fileID: 8145135701270782164}
-  _mover: {fileID: 3413562999161063872}
+  _follower: {fileID: -5149678717130624073}
   _value: 1
-  _timeBeforeRelease: 120
---- !u!114 &3413562999161063872
+  _timeLyingOnGround: 75
+  _timeChasingTarget: 3
+--- !u!114 &-5149678717130624073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,10 +224,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5969257773788388218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af51e27f34b4b2c428427995af66fb5a, type: 3}
+  m_Script: {fileID: 11500000, guid: b7457d47239212e468e603e57e5f060e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 2
 --- !u!1 &7416902752058137248
 GameObject:
   m_ObjectHideFlags: 0

@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 117811364892704532}
   - component: {fileID: 2245322540743517103}
   - component: {fileID: -4501492033182133253}
+  - component: {fileID: 1841104102983670577}
   m_Layer: 8
   m_Name: BloodAltar
   m_TagString: Untagged
@@ -306,8 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Outline: {fileID: 7152924963427175835}
   ValueViewer: {fileID: 2245322540743517103}
-  MaxInteractionsAmount: 2
-  _countdownTime: 1.5
+  _cooldownHandler: {fileID: 1841104102983670577}
   _damagePercent:
   - 50
   - 73
@@ -342,6 +342,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &1841104102983670577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4527466070629496173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd7edc5da4beae4085c4c452e00ae4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _countdownTime: 2
 --- !u!1 &8066315922587424164
 GameObject:
   m_ObjectHideFlags: 0
