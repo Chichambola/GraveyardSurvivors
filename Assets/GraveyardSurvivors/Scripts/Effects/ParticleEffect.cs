@@ -8,10 +8,11 @@ using UnityEngine;
 [RequireComponent(typeof(ParticleSystem))]
 public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
 {
+    private Vector3 _stopPosition = new Vector3(0,-90,0);
     private ParticleSystem _particleSystem;
+    private CancellationTokenSource _cts;
     private UniTask _task;
     private float _duration;
-    private CancellationTokenSource _cts;
     
     public event Action<ParticleEffect> CanBeReleased;
 
@@ -20,25 +21,28 @@ public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
         _particleSystem = GetComponent<ParticleSystem>();
     }
 
-    public void ResetCharacteristics()
+    private void OnDisable()
     {
         _particleSystem.Stop();
         
-        _duration = 0;
-    }
-
-    private void OnDisable()
-    {
-        _cts?.Cancel();
+        _particleSystem.Clear();
     }
 
     private void OnDestroy()
     {
+        _cts?.Cancel();
         _cts?.Dispose();
     }
 
+    public void ResetCharacteristics()
+    {
+        _particleSystem.transform.localPosition = _stopPosition;
+    }
+    
     public void Release()
     {
+        _cts?.Cancel();
+        
         CanBeReleased?.Invoke(this);
     }
 
@@ -50,12 +54,7 @@ public class ParticleEffect : MonoBehaviour, IPoolable<ParticleEffect>
             return;
         
         var systemMain = _particleSystem.main;
-
         systemMain.duration = duration;
-        
-        var curve = systemMain.startLifetime;
-        curve.constant = duration;
-        systemMain.startLifetime = curve;
         
         _duration = duration;
     }

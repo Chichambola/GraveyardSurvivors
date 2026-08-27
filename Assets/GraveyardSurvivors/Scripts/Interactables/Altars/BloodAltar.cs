@@ -74,7 +74,7 @@ public class BloodAltar : Interactable
         {
             SetVisibility(true);
             
-            IsAvailable = false;
+            IsAvailable = true;
         }
         
         _cooldownHandler.TimePassed -= OnTimePassed;

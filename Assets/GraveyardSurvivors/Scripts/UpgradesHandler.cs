@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using AYellowpaper;
 using PrimeTween;
 using Sherbert.Framework.Generic;
@@ -35,7 +36,7 @@ public class UpgradesHandler : MonoBehaviour
     private List<int> _indexes;
     private List<IItem> _itemsToShow;
     private List<IItem> _itemsList;
-    private List<ERarityLevel> _eRarityLevels;
+    private List<RarityLevel> _rarityLevels;
 
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class UpgradesHandler : MonoBehaviour
         _indexes = new List<int>();
         _itemsList = new List<IItem>();
         _itemsToShow = new List<IItem>();
-        _eRarityLevels = new List<ERarityLevel>();
+        _rarityLevels = new List<RarityLevel>();
     }
 
     private void OnEnable()
@@ -88,86 +89,54 @@ public class UpgradesHandler : MonoBehaviour
     {
         _itemsList = _itemsHandler.GetItemsForLevelUp();
         
+        _rarityLevels.AddRange(_levels.Weights);
+        
         for (int i = 0; i < _upgradeWindows.Count; i++)
         {
             bool isFound = false;
-
-            int searchAmount = 0;
             
-            while (isFound != true || searchAmount > _searchCount)
+            while (isFound != true)
             {
-                var level = GetRarityLevel();
-
-                var item = GetItem(level.Rarity);
+                var level = UserUtils.GetElementByWeight(_rarityLevels);
                 
-                if (!_itemsToShow.Contains(item))
+                if (TryGetItem(level.Rarity, out IItem item))
                 {
+                    if (_itemsToShow.Contains(item))
+                        continue;
+                    
                     _itemsToShow.Add(item);
                         
+                    _itemsList.Remove(item);
+                    
                     isFound = true;
-
-                    if (item != null)
-                        _itemsList.Remove(item);
-                    else
-                        throw new Exception(item.Name);
                 }
-
-                searchAmount++;
-            }
-
-            if (searchAmount > _searchCount)
-            {
-                var level = GetRarityLevel();
-                
-                var item = GetItem(level.Rarity);
-                
-                _itemsToShow.Add(item);
-            }
-        }
-        
-        _eRarityLevels.Clear();
-    }
-
-    private IItem GetItem(ERarityLevel rarity)
-    {
-        Debug.Log(rarity);
-        
-        var items = _itemsList.GetWeightedItems(rarity);
-     
-        Debug.Log(items.Count());
-        
-        var weightedObject = UserUtils.GetElementByWeight(items);
-        
-        if (weightedObject is not IItem item)
-            throw new Exception($"Found item does not implement IItem");
-        
-        return item;
-    }
-    
-    private RarityLevel GetRarityLevel()
-    {
-        RarityLevel level = UserUtils.GetElementByWeight(_levels.Weights);
-
-        if (level.Rarity == ERarityLevel.Legendary && !_eRarityLevels.Contains(ERarityLevel.Legendary))
-        {
-            _eRarityLevels.Add(level.Rarity);
-        }
-        else
-        {
-            List<RarityLevel> remainingLevels = new List<RarityLevel>();
-            
-            foreach (var rarityLevel in _levels.Weights)
-            {
-                if (rarityLevel.Rarity != ERarityLevel.Legendary)
+                else
                 {
-                    remainingLevels.Add(rarityLevel);
+                    if (_rarityLevels.Count <= 0)
+                        throw new Exception($"You ran out of items");
+                    
+                    _rarityLevels.Remove(level);
                 }
             }
-
-            level = UserUtils.GetElementByWeight(remainingLevels);
         }
+        
+        _rarityLevels.Clear();
+    }
 
-        return level;
+    private bool TryGetItem(ERarityLevel rarity, out IItem item)
+    {
+        var items = _itemsList.GetWeightedItems(rarity);
+
+        if (UserUtils.GetElementByWeight(items) is IItem tempItem)
+        {
+            item = tempItem;
+            
+            return true;
+        }
+        
+        item = null;
+        
+        return false;
     }
 
     private void ChangeBackgroundOpacity(float alphaValue)

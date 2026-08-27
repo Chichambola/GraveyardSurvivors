@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ParticleEffectSpawner : Spawner<ParticleEffect>
 {
@@ -20,6 +22,7 @@ public class ParticleEffectSpawner : Spawner<ParticleEffect>
     protected override void ActionOnGet(ParticleEffect effect)
     {
         effect.transform.position = _spawnPosition;
+        effect.transform.parent = transform;
         effect.CanBeReleased += Release;
         ActiveObjects.Add(effect);
         

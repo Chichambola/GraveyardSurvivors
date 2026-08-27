@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class PickablesSpawner : Spawner<Pickable>, IHandler
 {
     [SerializeField] private ParticleEffectSpawner _particleEffectSpawner;
+    [SerializeField] private float _particleDuration = 2f;
     [SerializeField] private Vector3 _spawnOffset;
     
     private Vector3 _spawnPosition;
@@ -54,7 +55,7 @@ public class PickablesSpawner : Spawner<Pickable>, IHandler
         
         pickable.ResetCharacteristics();
 
-        _particleEffectSpawner.Spawn(pickable.transform.position);
+        _particleEffectSpawner.Spawn(pickable.transform.position, duration: _particleDuration);
         
         base.ActionOnRelease(pickable);
     }

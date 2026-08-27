@@ -12,7 +12,6 @@ public class Follower : MonoBehaviour
     [SerializeField] private Mover _mover;
     [SerializeField] private Rotator _rotator;
     
-    private int _amountOfCycles = -1;
     private Sequence _sequence;
     private CancellationTokenSource _cts;
     private ITarget _target;
@@ -60,5 +59,7 @@ public class Follower : MonoBehaviour
 
             await UniTask.WaitForFixedUpdate(token);
         }
+        
+        StopMoving();
     }
 }

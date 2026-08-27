@@ -13,18 +13,25 @@ public class CooldownHandler : MonoBehaviour
     public event Action TimePassed;
     
     private CancellationTokenSource _cts;
-    
+
+    private void OnDestroy()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+    }
+
     public void StartCountdown()
     {
         _cts = new CancellationTokenSource();
-        _cts.RegisterRaiseCancelOnDestroy(gameObject);
         
-        CooldownRoutine().Forget();
+        var token = _cts.Token;
+        
+        CooldownRoutine(token).Forget();
     }
     
-    private async UniTask CooldownRoutine()
+    private async UniTaskVoid CooldownRoutine(CancellationToken token)
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(_countdownTime), cancellationToken: _cts.Token);
+        await UniTask.Delay(TimeSpan.FromSeconds(_countdownTime), cancellationToken: token);
         
         TimePassed?.Invoke();
         

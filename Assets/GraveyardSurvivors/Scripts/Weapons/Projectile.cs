@@ -9,8 +9,7 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
 {
     [SerializeField] private Follower _follower;
     [SerializeField] private EnemyDetector _enemyDetector;
-
-
+    
     public event Action<Projectile> CanBeReleased;
     public event Action<Projectile> HitEnemy;
     
