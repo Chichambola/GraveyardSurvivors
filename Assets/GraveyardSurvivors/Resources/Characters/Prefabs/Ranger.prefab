@@ -2388,7 +2388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 930483005040703314}
   _text: {fileID: 2659084682683424908}
-  _initialValue: 0
+  _initialValue: 10000
 --- !u!1 &5940739415731318439
 GameObject:
   m_ObjectHideFlags: 0
@@ -8181,7 +8181,7 @@ MonoBehaviour:
   _health: {fileID: 7806447276525855132}
   _wallet: {fileID: 2418341122684004869}
   _light: {fileID: 3474814700427343827}
-  _isImmortal: 1
+  _isImmortal: 0
 --- !u!114 &1658106383447107767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8571,7 +8571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &51430420703791245
 Transform:
   m_ObjectHideFlags: 0

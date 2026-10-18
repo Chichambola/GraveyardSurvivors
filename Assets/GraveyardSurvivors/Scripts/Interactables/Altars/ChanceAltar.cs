@@ -64,7 +64,7 @@ public class ChanceAltar : Interactable, IChanceInteractable
         {
             SetVisibility(true);
             
-            IsAvailable = false;
+            IsAvailable = true;
         }
         
         _cooldownHandler.TimePassed -= OnTimePassed;
