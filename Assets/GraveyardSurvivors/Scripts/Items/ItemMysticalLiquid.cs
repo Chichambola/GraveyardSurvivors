@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemMysticalLiquid : Item, IBuff
 {
+    [Header("Crit multiplier")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"+{_increaseValue}% to crit multiplier";

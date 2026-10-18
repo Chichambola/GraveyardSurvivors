@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemDeckOfCards : Item, IBuff
 {
+    [Header("Attack speed")]
     [SerializeField] private int _increaseValue;
     
     public override string CurrentDescription => $"+{_increaseValue}% to attack speed";

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemJackOLantern : Item, IBuff
 {
+    [Header("Attack radius")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"+{_increaseValue}% to attack radius";

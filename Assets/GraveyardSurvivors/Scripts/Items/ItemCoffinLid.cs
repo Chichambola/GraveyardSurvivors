@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class ItemCoffinLid : Item, IBuff
 {    
+    [Header("Armor")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"+{_increaseValue}% to armor";

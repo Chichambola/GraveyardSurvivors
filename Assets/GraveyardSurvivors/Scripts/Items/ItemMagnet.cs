@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemMagnet : Item, IBuff
 {
+    [Header("Pick up radius")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"+{_increaseValue}% to pick up radius";

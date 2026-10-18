@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemWitchesBroom : Item, IBuff
 {
+    [Header("Movement speed")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"+{_increaseValue} to movement speed";

@@ -143,15 +143,15 @@ public class Attacker : MonoBehaviour
     private void OnStatsChanged(CharacterStats stats)
     {
         if (Mathf.Approximately(stats.AttackSpeed, _currentAttackSpeed))
+        {
             return;
-        
-        float attackSpeed = stats.AttackSpeed - _currentAttackSpeed;
+        }
         
         _currentAttackSpeed = stats.AttackSpeed;
 
         foreach (var weapon in _currentWeapons)
         {
-            SetWeaponCooldown(weapon, attackSpeed);
+            SetWeaponCooldown(weapon, _currentAttackSpeed);
         }
     }
 

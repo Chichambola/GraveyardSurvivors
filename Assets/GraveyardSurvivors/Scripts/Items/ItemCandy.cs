@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemCandy : Item, IBuff
 {
+    [Header("Health regeneration")]
     [SerializeField] private int _increaseValue;
     
     public override string CurrentDescription => $"+{_increaseValue}% to health regeneration";

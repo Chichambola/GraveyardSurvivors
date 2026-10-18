@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemHolyWater : Item, IBuff
 {
+    [Header("Block chance")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"+{_increaseValue}% to block chance";

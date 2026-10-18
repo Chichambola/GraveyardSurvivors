@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class ItemBirchSap : Item, IBuff
 {
+    [Header("Attack speed")]
     [SerializeField] private int _increaseValue;
     
     public override string CurrentDescription => $"+{_increaseValue}% to attack speed";

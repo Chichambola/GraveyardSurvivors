@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemJesterCap : Item, IBuff
 {
+    [Header("Crit chance")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"{_increaseValue} to crit chance.";

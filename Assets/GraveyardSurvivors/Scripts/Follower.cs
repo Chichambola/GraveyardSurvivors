@@ -11,6 +11,8 @@ public class Follower : MonoBehaviour
 {
     [SerializeField] private Mover _mover;
     [SerializeField] private Rotator _rotator;
+
+    public event Action CannotReachTarget;
     
     private Sequence _sequence;
     private CancellationTokenSource _cts;
@@ -59,7 +61,27 @@ public class Follower : MonoBehaviour
 
             await UniTask.WaitForFixedUpdate(token);
         }
+
+        if (!_target.IsAlive)
+        {
+            CannotReachTarget?.Invoke();
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+
+        if (_target == null)
+        {
+            return;
+        }
         
-        StopMoving();
+        Gizmos.color = Color.red;
+        
+        Gizmos.DrawLine(transform.position, _target.CurrentPosition);
     }
 }

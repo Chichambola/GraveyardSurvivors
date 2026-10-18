@@ -20,6 +20,8 @@ public class Health : MonoBehaviour
     private CancellationTokenSource _ctsHealing;
     private CancellationTokenSource _ctsDamage;
     private int _damageReduceAfterDamage = 70;
+    private float _currentValue;
+    private float _maxValue;
     private bool _isTakingLessDamage;
     private bool _isOnCooldown;
 
@@ -31,14 +33,24 @@ public class Health : MonoBehaviour
 
     private void OnEnable()
     {
+        _player.StatsChanged += UpdateStats;
+        
         _isTakingLessDamage = false;
         _isOnCooldown = false;
         
         HealingTask().Forget();
     }
 
-    public void UpdateStats() => _statsViewer.UpdateStats(_player.CurrentHealth, _player.CurrentStats.MaxHealth);
+    private void OnDisable()
+    {
+        _player.StatsChanged -= UpdateStats;
+    }
 
+    private void UpdateStats(CharacterStats stats)
+    {
+        _statsViewer.UpdateStats(_player.CurrentHealth, stats.MaxHealth);
+    }
+    
     private async UniTask ReduceDamageTask()
     {
         while (!_ctsDamage.IsCancellationRequested)
@@ -98,5 +110,10 @@ public class Health : MonoBehaviour
         ReduceDamageTask().Forget();
         
         return true;
+    }
+    
+    private void UpdateStats()
+    {
+        _statsViewer.UpdateStats(_player.CurrentHealth, _player.MaxHealth);
     }
 }

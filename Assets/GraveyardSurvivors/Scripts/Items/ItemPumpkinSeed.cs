@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemPumpkinSeed : Item, IBuff
 {
+    [Header("Max health")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"+{_increaseValue}% to max health";

@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(InteractionHandler), typeof(Rigidbody))]
 [RequireComponent(typeof(InputReader))]
@@ -152,8 +149,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
             return;
         
         CurrentHealth -= damage;
-            
-        _health.UpdateStats();
+        
+        StatsChanged?.Invoke(CurrentStats);
 
         if (CurrentHealth <= 0)
         {

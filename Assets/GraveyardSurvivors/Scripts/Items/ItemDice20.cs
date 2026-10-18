@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemDice20 : Item, IBuff
 {    
+    [Header("Luck")]
     [SerializeField] private int _increaseValue;
 
     public override string CurrentDescription => $"+{_increaseValue}% to luck";

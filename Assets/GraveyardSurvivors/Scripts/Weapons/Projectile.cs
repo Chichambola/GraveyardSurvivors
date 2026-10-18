@@ -20,13 +20,15 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
     private void OnEnable()
     {
         _enemyDetector.EnemyDetected += OnEnemyDetected;
+        _follower.CannotReachTarget += OnFollowerCannotReachTarget;
     }
 
     private void OnDisable()
     {
         _enemyDetector.EnemyDetected -= OnEnemyDetected;
+        _follower.CannotReachTarget -= OnFollowerCannotReachTarget;
     }
-    
+
     public void ResetCharacteristics() => _target = null;
 
     public void Release() => CanBeReleased?.Invoke(this);
@@ -51,5 +53,14 @@ public class Projectile : MonoBehaviour, IPoolable<Projectile>
         HitEnemy?.Invoke(this);
             
         _follower.StopMoving();
+        
+        Release();
+    }
+    
+    private void OnFollowerCannotReachTarget()
+    {
+        _follower.StopMoving();
+        
+        Release();
     }
 }
