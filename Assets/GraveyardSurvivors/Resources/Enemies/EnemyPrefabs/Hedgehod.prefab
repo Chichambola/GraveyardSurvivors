@@ -622,6 +622,7 @@ GameObject:
   - component: {fileID: 3456306083640340297}
   - component: {fileID: 4081031930227366315}
   - component: {fileID: 250117638020182699}
+  - component: {fileID: 4416723278226536619}
   m_Layer: 7
   m_Name: Hedgehod
   m_TagString: Untagged
@@ -647,6 +648,7 @@ Transform:
   - {fileID: 6285016578781508150}
   - {fileID: 7068930569126460878}
   - {fileID: 609518662718852624}
+  - {fileID: 6012822022640433246}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8896866391641432355
@@ -687,9 +689,12 @@ MonoBehaviour:
   Rotator: {fileID: 3456306083640340297}
   Mover: {fileID: 5529676922395853904}
   DamageZone: {fileID: 4714903918488013307}
+  _minimapIcon: {fileID: 2005421670697648770}
   PlayerDetector: {fileID: 1476116877671921111}
   _health: {fileID: 323071770899056441}
   _defender: {fileID: 8495916584587225802}
+  _colliderSize: {x: 0, y: 0, z: 0}
+  _center: {x: 0, y: 0, z: 0}
   _runawayDistance: 15
   _layerMask:
     serializedVersion: 2
@@ -772,3 +777,91 @@ CapsuleCollider:
   m_Height: 1.1693377
   m_Direction: 1
   m_Center: {x: 0, y: 0.4501238, z: -0.054113746}
+--- !u!65 &4416723278226536619
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8829684809993541676}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &518413107729854310
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1506159078949066517}
+    m_Modifications:
+    - target: {fileID: 2683646665500074735, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_Name
+      value: MinimapIconEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+--- !u!212 &2005421670697648770 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2082199715334139364, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+  m_PrefabInstance: {fileID: 518413107729854310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6012822022640433246 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6070870148519302968, guid: b3499e26f87b2f349b2daee546cc39b3, type: 3}
+  m_PrefabInstance: {fileID: 518413107729854310}
+  m_PrefabAsset: {fileID: 0}

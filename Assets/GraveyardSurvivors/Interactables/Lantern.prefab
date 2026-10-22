@@ -159,10 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b377165e09d8bae5a2e9592d7928a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _light: {fileID: 5372547986141576864}
-  _shrinkRateIncrease: 0.001
-  _damageDealer: {fileID: 7019022825427032780}
-  _playerDetector: {fileID: 772581832034430526}
 --- !u!135 &4068012156491645257
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -242,6 +238,7 @@ Transform:
   m_Children:
   - {fileID: 3239114171425904785}
   - {fileID: 5482072163598042044}
+  - {fileID: 2177147547158145895}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -154.16, z: 0}
 --- !u!1 &5289209436834222759
@@ -5136,6 +5133,90 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 2
+--- !u!1 &6345660616206989730
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2177147547158145895}
+  - component: {fileID: 7040834126059982312}
+  m_Layer: 10
+  m_Name: lantern
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2177147547158145895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345660616206989730}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.69074386, y: -0.15123814, z: -0.15123814, w: 0.69074386}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.6, y: 4.6, z: 4.6}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3959166087010103205}
+  m_LocalEulerAnglesHint: {x: -90, y: -24.7, z: 0}
+--- !u!212 &7040834126059982312
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345660616206989730}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: a98ab89c78355be4f987b40afa184f5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.64, y: 0.64}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &7787167248822388500
 GameObject:
   m_ObjectHideFlags: 0
@@ -5323,7 +5404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detector: {fileID: 772581832034430526}
-  _buff: {fileID: 4537586408860069423}
+  _healAmount: 1
   _cooldown: 1.5
 --- !u!114 &4537586408860069423
 MonoBehaviour:
@@ -5384,9 +5465,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8191ea2729bbd86cdac64cf4254696c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lightArea: {fileID: 4315086829996280237}
   _light: {fileID: 7729122762419119094}
-  _collider: {fileID: 4068012156491645257}
-  _radius: 3
+  _radius: {fileID: 0}
+  _thresholdValidator: {fileID: 0}
   _disableThreshold: 0.8
-  _shrinkRate: 0.005
+  _shrinkTime: 25
+  _rateWhenGainingEnergy: 1
+  _maxTimeScale: 2

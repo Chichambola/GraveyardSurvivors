@@ -715,6 +715,7 @@ Transform:
   - {fileID: 8996193519472596575}
   - {fileID: 6800221008874116930}
   - {fileID: 3291146868051746474}
+  - {fileID: 2475085931997410698}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7745078345119053515
@@ -755,6 +756,7 @@ MonoBehaviour:
   Rotator: {fileID: 1879320688110641685}
   Mover: {fileID: 2864853422003173727}
   DamageZone: {fileID: 780742202952632304}
+  _minimapIcon: {fileID: 7709072041720713046}
   PlayerDetector: {fileID: 6375594758851993861}
   _health: {fileID: 3678190649255506134}
   _defender: {fileID: 5106020596504560185}
@@ -1164,3 +1166,78 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1001 &3830774792351164634
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9007132564956147045}
+    m_Modifications:
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905572173330786188, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_Color.g
+      value: 0.048720345
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905572173330786188, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354038143669381255, guid: 366edf60b183c2e4990e413682902743, type: 3}
+      propertyPath: m_Name
+      value: MinimapIcon
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 366edf60b183c2e4990e413682902743, type: 3}
+--- !u!4 &2475085931997410698 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1689097156928544080, guid: 366edf60b183c2e4990e413682902743, type: 3}
+  m_PrefabInstance: {fileID: 3830774792351164634}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &7709072041720713046 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6905572173330786188, guid: 366edf60b183c2e4990e413682902743, type: 3}
+  m_PrefabInstance: {fileID: 3830774792351164634}
+  m_PrefabAsset: {fileID: 0}

@@ -11,6 +11,7 @@ using UnityEngine.Serialization;
 public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>, ITarget
 {
     [SerializeField] protected DamageZone DamageZone;
+    [SerializeField] private SpriteRenderer _minimapIcon;
     
     [Header("Services")]
     [SerializeField] protected PlayerDetector PlayerDetector;
@@ -68,7 +69,7 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>, ITarge
         _dieState = new DieState(this, Animator);
         RunState = new RunState(this, Animator);
     }
-
+    
     protected override void Update()
     {
         StateMachine.Update();
@@ -81,6 +82,8 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>, ITarge
 
     protected virtual void OnEnable()
     {
+        _minimapIcon.enabled = true;
+        
         InitializeStateMachine();
     }
 
@@ -195,6 +198,8 @@ public abstract class Enemy : CharacterBase, IAttacker, IPoolable<Enemy>, ITarge
     
     protected virtual void Die()
     {
+        _minimapIcon.enabled = false;
+        
         NoHealthLeft?.Invoke(this);
         
         _movementEffectCount = 0;

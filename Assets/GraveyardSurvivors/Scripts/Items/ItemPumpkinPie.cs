@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPumpkinSeed : Item, IBuff
+public class ItemPumpkinPie : Item, IBuff
 {
     [Header("Max health")]
     [SerializeField] private int _increaseValue;
