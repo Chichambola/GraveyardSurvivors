@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10565,7 +10565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemSpawner: {fileID: 2055380388}
   _itemsToDropPrefabs:
-  - _underlyingValue: {fileID: -6795875221895891607, guid: 6548f24377d81df42a1242d04aa49566, type: 3}
+  - _underlyingValue: {fileID: 5387887072497450721, guid: 6548f24377d81df42a1242d04aa49566, type: 3}
   - _underlyingValue: {fileID: -7635428409179756100, guid: 80d50f06a33dcff449b0c9b1a450cdc3, type: 3}
   - _underlyingValue: {fileID: 7111968728577630430, guid: 4d70d33fb54921646826d70a3fac7680, type: 3}
   - _underlyingValue: {fileID: -7049433452083003737, guid: b68acefe98ffa4a49b4d175f68059bc1, type: 3}

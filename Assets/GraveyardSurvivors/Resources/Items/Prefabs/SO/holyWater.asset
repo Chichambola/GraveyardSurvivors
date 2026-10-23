@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a01e5b95c4973f9933558dcf298178, type: 3}
   m_Name: holyWater
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 1fcb8ac74bb98dd23865e317baead281, type: 3}
+  _sprite: {fileID: 21300000, guid: 2f4d026d484f10a4fb06121ef884de3b, type: 3}
   _name: Holy water
   _rarityLevel:
     _weight: 90

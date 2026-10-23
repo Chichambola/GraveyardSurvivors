@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a01e5b95c4973f9933558dcf298178, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 1fcb8ac74bb98dd23865e317baead281, type: 3}
+  _sprite: {fileID: 21300000, guid: f28484a21a07cf943b14748d5e6889d2, type: 3}
   _name: Poision
   _rarityLevel:
     _weight: 75

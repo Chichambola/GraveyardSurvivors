@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6181936772671151368
+--- !u!1 &2305243744249866776
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4085418736172098927}
-  - component: {fileID: 8123590568473238742}
-  - component: {fileID: 4252974414907243659}
-  - component: {fileID: -5600268751410814440}
-  - component: {fileID: 2840532805630495736}
+  - component: {fileID: 8386427611202974726}
+  - component: {fileID: 3199158357044021969}
   m_Layer: 0
-  m_Name: heartOfNecropolis
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4085418736172098927
+--- !u!4 &8386427611202974726
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6181936772671151368}
+  m_GameObject: {fileID: 2305243744249866776}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.252, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 1171829524704048796}
-  m_Father: {fileID: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4085418736172098927}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &8123590568473238742
+--- !u!212 &3199158357044021969
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6181936772671151368}
+  m_GameObject: {fileID: 2305243744249866776}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -82,12 +78,48 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.25, y: 2.25}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &6181936772671151368
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4085418736172098927}
+  - component: {fileID: 4252974414907243659}
+  - component: {fileID: -5600268751410814440}
+  - component: {fileID: 2840532805630495736}
+  m_Layer: 0
+  m_Name: heartOfNecropolis
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4085418736172098927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181936772671151368}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1171829524704048796}
+  - {fileID: 8386427611202974726}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4252974414907243659
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -107,8 +139,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.1115355, y: 2.356484, z: 0.58004856}
-  m_Center: {x: 0.0061717033, y: 0.0110990405, z: -0.20997572}
+  m_Size: {x: 2.1115355, y: 2.66705, z: 0.58004856}
+  m_Center: {x: 0.0061717033, y: 1.3255575, z: -0.20997572}
 --- !u!54 &-5600268751410814440
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,7 +163,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -149,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 655bf4a68967e715eac91a22e22e9eb1, type: 2}
+  _renderer: {fileID: 3199158357044021969}
   _increaseValue: 60
   _decreasePercent: 50
 --- !u!1001 &518983044310608844
@@ -161,15 +194,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6.12
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6.12
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6.12
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -177,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.337
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
       propertyPath: m_LocalPosition.z

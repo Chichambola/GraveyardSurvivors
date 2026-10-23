@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a01e5b95c4973f9933558dcf298178, type: 3}
   m_Name: Mystical liquid
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 1fcb8ac74bb98dd23865e317baead281, type: 3}
+  _sprite: {fileID: 21300000, guid: 63f994d5bfb06be4e8c2c1d12e7c2ef5, type: 3}
   _name: Mystical liquid
   _rarityLevel:
     _weight: 20

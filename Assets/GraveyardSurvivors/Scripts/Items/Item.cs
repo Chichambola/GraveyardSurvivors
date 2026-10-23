@@ -1,18 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector.Demos.RPGEditor;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeightedObject, IItem
 {
     [SerializeField] private ItemInfo _info;
+    [SerializeField] private SpriteRenderer _renderer;
     
     public event Action<Item> CanBeReleased;
     
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
-    private SpriteRenderer _spriteRenderer;
 
     public Sprite Sprite => _info.Sprite;
     public string Name => _info.Name;
@@ -24,7 +26,6 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeighte
     { 
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<BoxCollider>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void ResetCharacteristics() { }
@@ -34,6 +35,6 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeighte
     public void Hide()
     {
         _collider.enabled = false;
-        _spriteRenderer.enabled = false;
+        _renderer.enabled = false;
     }
 }
