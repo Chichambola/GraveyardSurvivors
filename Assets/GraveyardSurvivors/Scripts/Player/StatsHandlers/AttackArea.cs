@@ -11,34 +11,27 @@ public abstract class AttackArea : MonoBehaviour
     [SerializeField] protected int NumberOfColliders = 50;
 
     private Dictionary<Collider, IAttacker> _validColliders;
+    private List<IAttacker> _tempAttackers;
 
     protected virtual void Awake()
     {
         _validColliders = new Dictionary<Collider, IAttacker>();
+        _tempAttackers = new List<IAttacker>(NumberOfColliders);
     }
-
-    protected abstract void OnEnable();
-
-    protected abstract void OnValidate();
-
-    public virtual void SetActive(bool value) { }
-
-    public virtual void SetSize(float value) {}
-    public virtual void SetSize() {}
-
-    public abstract void AddMultiplier(float multiplier);
+    
+    public abstract void Upgrade(float multiplier = 0f);
     
     public abstract bool TryGetAttackers(out List<IAttacker> attackers);
     
     protected bool TryGetAttackers(out List<IAttacker> attackers, Collider[] hitColliders, int hits)
     {
-        var tempAttackers = new List<IAttacker>();
+        _tempAttackers.Clear();
         
         for (int i = 0; i < hits; i++)
         {
             if (_validColliders.ContainsKey(hitColliders[i]))
             {
-                tempAttackers.Add(_validColliders[hitColliders[i]]);
+                _tempAttackers.Add(_validColliders[hitColliders[i]]);
             }
             else
             {
@@ -47,15 +40,15 @@ public abstract class AttackArea : MonoBehaviour
                 
                 _validColliders.Add(hitColliders[i], attacker);
                 
-                tempAttackers.Add(attacker);
+                _tempAttackers.Add(attacker);
             }
         }
 
-        if (tempAttackers.Count > 0)
+        if (_tempAttackers.Count > 0)
         {
             attackers = new List<IAttacker>();
             
-            attackers.AddRange(tempAttackers);
+            attackers.AddRange(_tempAttackers);
 
             return true;
         }

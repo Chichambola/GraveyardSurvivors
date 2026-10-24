@@ -10,7 +10,6 @@ using Random = UnityEngine.Random;
 public class WeaponIronSword : Weapon
 {
     [SerializeField] private MeleeAttackStrategy _attackStrategy;
-    [SerializeField] private AttackArea _area;
     [SerializeField] private ParticleSystem _attackParticles;
     [SerializeField] private KnockBack _knockBack;
 
@@ -117,7 +116,7 @@ public class WeaponIronSword : Weapon
         {
             yield return wait;
             
-            _area.SetActive(_attackParticles.particleCount > 0);
+            _attackStrategy.SetActive(_attackParticles.particleCount > 0);
         }
     }
 

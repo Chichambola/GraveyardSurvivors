@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class MeleeAttackStrategy : AttackStrategy
 {
-    [SerializeField] private AttackArea _area;
+    [SerializeField] private BoxAttackArea _area;
     [SerializeField] private float _radiusPercentGain = 5f;
     
     public override event Action<IAttacker> AttackerDetected;
@@ -16,8 +16,6 @@ public class MeleeAttackStrategy : AttackStrategy
 
     public override void Execute()
     {
-        _area.SetSize();
-        
         if (_area.TryGetAttackers(out List<IAttacker> detectedAttackers))
         {
             foreach (var attacker in detectedAttackers)
@@ -29,6 +27,8 @@ public class MeleeAttackStrategy : AttackStrategy
 
     public override void Upgrade()
     {
-        _area.AddMultiplier(_radiusPercentGain);
+        _area.Upgrade(_radiusPercentGain);
     }
+    
+    public void SetActive(bool value) => _area.SetActive(value);
 }

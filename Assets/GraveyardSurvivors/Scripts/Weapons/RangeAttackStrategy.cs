@@ -18,6 +18,8 @@ public class RangeAttackStrategy : AttackStrategy
 
     private int _count;
     private int _currentProjectileAmount;
+    private List<IAttacker> _sortedAttackers;
+    private IAttacker _closestAttacker;
 
     public int ProjectilePerUpgrade => _projectilePerUpgrade;
     public int InitialProjectileAmount => _initialProjectileAmount;
@@ -25,6 +27,8 @@ public class RangeAttackStrategy : AttackStrategy
     private void Awake()
     {
         _currentProjectileAmount = _initialProjectileAmount;
+
+        _sortedAttackers = new List<IAttacker>();
     }
 
     public override void Upgrade()
@@ -60,7 +64,7 @@ public class RangeAttackStrategy : AttackStrategy
 
     private bool TryFindClosestAttackers(AttackArea attackArea, out List<IAttacker> sortedAttackers)
     {
-        sortedAttackers = new List<IAttacker>();
+        _sortedAttackers.Clear();
         
         if (attackArea.TryGetAttackers(out List<IAttacker> currentAttackers))
         {
@@ -68,7 +72,7 @@ public class RangeAttackStrategy : AttackStrategy
             {
                 float minDistance = float.MaxValue;
 
-                IAttacker closestAttacker = null;
+                _closestAttacker = null;
 
                 foreach (var attacker in currentAttackers)
                 {
@@ -80,21 +84,23 @@ public class RangeAttackStrategy : AttackStrategy
                     {
                         minDistance = distance;
 
-                        closestAttacker = attacker;
+                        _closestAttacker = attacker;
                     }
                 }
                 
-                if (closestAttacker != null)
+                if (_closestAttacker != null && !_sortedAttackers.Contains(_closestAttacker))
                 {
-                    sortedAttackers.Add(closestAttacker);
+                    _sortedAttackers.Add(_closestAttacker);
 
-                    currentAttackers.Remove(closestAttacker);
+                    currentAttackers.Remove(_closestAttacker);
                 }
             }
         }
 
-        if (sortedAttackers.Count > 0)
+        if (_sortedAttackers.Count > 0)
         {
+            sortedAttackers = _sortedAttackers;
+            
             return true;
         }
         else

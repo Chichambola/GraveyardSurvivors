@@ -18,29 +18,21 @@ public class BoxAttackArea : AttackArea
         _initialSize = _collider.size;
     }
 
-    protected override void OnEnable()
+    protected void OnEnable()
     {
         _collider.size = _initialSize;
     }
 
-    protected override void OnValidate()
+    protected void OnValidate()
     {
         GetComponent<BoxCollider>().isTrigger = true;
     }
 
-    public override void SetActive(bool value)
+    public void SetActive(bool value)
     {
         _collider.enabled = value;
     }
-
-    public override void SetSize()
-    {
-        _currentSize = _collider.size;
-        
-        _collider.size = _currentSize;
-    }
-
-
+    
     public override bool TryGetAttackers(out List<IAttacker> attackers)
     {
         float scaleOffset = 0.5f;
@@ -57,7 +49,7 @@ public class BoxAttackArea : AttackArea
         return isAnyAttackers;
     }
 
-    public override void AddMultiplier(float multiplier)
+    public override void Upgrade(float multiplier)
     {
         if (multiplier != 0)
         {

@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ProjectileSpawner : Spawner<Projectile>
 {
-    [SerializeField] private Transform _gunPoint;
+    [SerializeField] private List<Transform> _gunPoint;
     
     public event Action<ITarget> ProjectileHitEnemy;
     
@@ -22,8 +23,10 @@ public class ProjectileSpawner : Spawner<Projectile>
     protected override void ActionOnGet(Projectile projectile)
     {
         ActiveObjects.Add(projectile);
+
+        var s = Random.Range(0, _gunPoint.Count);
         
-        projectile.transform.position = _gunPoint.transform.position;
+        projectile.transform.position = _gunPoint[s].position;
         projectile.gameObject.transform.parent = null;
         
         projectile.CanBeReleased += Release;

@@ -41,6 +41,7 @@ public class Game : MonoBehaviour
     {
         PrimeTweenConfig.SetTweensCapacity(_primeTweenCapacity);
         PrimeTweenConfig.warnZeroDuration = false;
+        QualitySettings.vSyncCount = 0;
         
        if (Instance != null && Instance != this)
        {

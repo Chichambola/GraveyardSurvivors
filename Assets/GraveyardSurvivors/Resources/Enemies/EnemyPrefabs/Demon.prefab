@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da772bfeb20ae5240ac095259920cd03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemInfo: {fileID: 0}
+  _itemInfo: {fileID: 11400000, guid: 6c1bce1e96fdf690087862c031883eff, type: 2}
   BonusDamagePerUpgrade: 10
   Cooldown: 2
   _damage: 25

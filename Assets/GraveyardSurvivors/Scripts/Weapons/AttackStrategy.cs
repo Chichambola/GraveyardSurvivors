@@ -9,5 +9,4 @@ public abstract class AttackStrategy : MonoBehaviour
     public virtual event Action AttackExecuted;
     public abstract void Execute();
     public abstract void Upgrade();
-    public virtual void Reset() { }
 }

@@ -18,22 +18,15 @@ public class SphereAttackArea : AttackArea
         _initialRadius = _collider.radius;
     }
 
-    protected override void OnEnable()
+    protected void OnEnable()
     {
         _collider.radius = _initialRadius;
     }
 
-    protected override void OnValidate()
+    protected void OnValidate()
     {
         GetComponent<SphereCollider>().isTrigger = true;
         GetComponent<SphereCollider>().transform.localScale = new Vector3(_scaleOffset, _scaleOffset, _scaleOffset);
-    }
-
-    public override void SetSize(float value)
-    {
-        float radius = value;
-        
-        _collider.radius = radius;
     }
 
     public override bool TryGetAttackers(out List<IAttacker> attackers)
@@ -47,7 +40,7 @@ public class SphereAttackArea : AttackArea
         return isAnyAttackers;
     }
 
-    public override void AddMultiplier(float multiplier)
+    public override void Upgrade(float multiplier = 0f)
     {
         if (multiplier != 0)
         {

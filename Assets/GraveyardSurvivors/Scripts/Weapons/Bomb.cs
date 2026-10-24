@@ -39,11 +39,6 @@ public class Bomb : Weapon
         base.Upgrade();
     }
 
-    public override void Reset()
-    {
-        _attackStrategy.Reset();
-    }
-
     public override void StopAttacking()
     {
         _attackStrategy.Stop();

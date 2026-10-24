@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class BombAttackStrategy : AttackStrategy
 {
-    [SerializeField] private AttackArea _attackArea;
+    [SerializeField] private SphereAttackArea _attackArea;
     [SerializeField] private ParticleEffectSpawner _particleSpawner;
     [SerializeField] private MeshRenderer _radiusSphere;
     [SerializeField] private MeshRenderer _expandingSphere;
@@ -75,7 +75,6 @@ public class BombAttackStrategy : AttackStrategy
         if (_isExpanding) return;
         
         _isExpanding = true;
-        _attackArea.SetSize(_currentRadius);  
         
         _targetRadius = new Vector3(_currentRadius, _currentRadius, _currentRadius);
         _radiusSphere.gameObject.transform.localScale = _targetRadius;
@@ -94,11 +93,6 @@ public class BombAttackStrategy : AttackStrategy
         _currentRadius = _currentRadius.AddPercentToNumber(tempRadiusPercent);
     }
 
-    public override void Reset()
-    {
-        _currentDuration = _initialDuration;
-    }
-
     public void Stop()
     {
         ChangeSpheresVisibility(false);
@@ -108,6 +102,8 @@ public class BombAttackStrategy : AttackStrategy
         _radiusSphere.gameObject.transform.localScale = Vector3.zero;
         
         _expandingTween.Stop();
+        
+        _currentDuration = _initialDuration;
     }
     
     private void LookForAttackers()
