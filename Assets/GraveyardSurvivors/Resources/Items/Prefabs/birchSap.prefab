@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2615356867073464387}
+  - component: {fileID: -4722422550531824380}
   - component: {fileID: -9017330893883213566}
   - component: {fileID: -4478980104806933535}
-  - component: {fileID: -4722422550531824380}
   m_Layer: 0
   m_Name: birchSap
   m_TagString: Untagged
@@ -36,6 +36,22 @@ Transform:
   - {fileID: 5139612380541187415}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-4722422550531824380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72866264957235694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b218b1cbf038eaee7b692ba778fdedc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _info: {fileID: 11400000, guid: d8bad0f53fe664cf29572c1b1b29ab25, type: 2}
+  _itemRenderer: {fileID: 7593609920620886993}
+  _minimapIcon: {fileID: 1416946540829892980}
+  _increaseValue: 5
 --- !u!65 &-9017330893883213566
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -84,21 +100,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-4722422550531824380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72866264957235694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b218b1cbf038eaee7b692ba778fdedc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _info: {fileID: 11400000, guid: d8bad0f53fe664cf29572c1b1b29ab25, type: 2}
-  _renderer: {fileID: 7593609920620886993}
-  _increaseValue: 5
 --- !u!1 &116067267987900675
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +257,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
+--- !u!212 &1416946540829892980 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6905572173330786188, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
+  m_PrefabInstance: {fileID: 5512269685893515000}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6561574201773218728 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}

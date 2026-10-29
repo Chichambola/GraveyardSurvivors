@@ -26,6 +26,13 @@ public static class UserUtils
 
         return finalNumber;
     }
+    
+    public static float RoundToFifths(this float value)
+    {
+        value = Mathf.Ceil(value * 2) / 2;
+
+        return value;
+    }
 
     public static int AddPercentToNumber(this int originalNumber, float percent)
     {
@@ -60,6 +67,18 @@ public static class UserUtils
         originalValue += availablePercent;
         
         return originalValue;
+    }
+    
+    public static int GetClampedValue(this int originalValue, float increasePercent, float maxThreshold = 100f)
+    {
+        if (originalValue >= maxThreshold)
+            return originalValue;
+
+        float leftPercent = maxThreshold - originalValue;
+        
+        float availablePercent = leftPercent * increasePercent / maxThreshold;
+
+        return (int)MathF.Round(MathF.Min(originalValue + availablePercent, maxThreshold));
     }
     
     public static float GetClampedValueInverse(this float originalValue, float decreasePercent, float minThreshold = 0f)
@@ -122,13 +141,6 @@ public static class UserUtils
             .Select(item => item)
             .OfType<IWeightedObject>()
             .ToList();
-    }
-
-    public static float RoundToFifths(this float value)
-    {
-        value = Mathf.Ceil(value * 2) / 2;
-
-        return value;
     }
 
     public static Vector3 GetRandomOffsetPosition(this Vector3 position, float minValue, float maxValue)

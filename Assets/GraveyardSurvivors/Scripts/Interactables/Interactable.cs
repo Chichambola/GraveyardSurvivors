@@ -26,11 +26,11 @@ public class Interactable: MonoBehaviour, IInteractable, IPoolable<Interactable>
         _isShowingValue = value;
     }
 
-    public virtual void SetValue(float value)
+    public virtual void Set(float value)
     {
         Value = value;
         
-        ValueViewer.SetValue(value);
+        ValueViewer.Set(value);
     }
 
     public virtual void ProcessInteraction()

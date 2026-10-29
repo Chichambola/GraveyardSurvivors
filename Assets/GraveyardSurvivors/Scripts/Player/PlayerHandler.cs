@@ -69,9 +69,9 @@ public class PlayerHandler : MonoBehaviour
     {
         float tempXp = _player.CurrentStats.XpMultiplier * value;
 
-        tempXp = tempXp.RoundToFifths();
+        tempXp = Mathf.RoundToInt(tempXp.RoundToFifths());
 
-        _experienceHandler.GainExperience(tempXp);
+        _experienceHandler.GainExperience((int)tempXp);
     }
 
     private void OnItemSelected(Item item)

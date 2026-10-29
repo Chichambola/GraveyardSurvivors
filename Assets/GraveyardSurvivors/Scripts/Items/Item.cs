@@ -9,7 +9,8 @@ using UnityEngine.Serialization;
 public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeightedObject, IItem
 {
     [SerializeField] private ItemInfo _info;
-    [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private SpriteRenderer _itemRenderer;
+    [SerializeField] private SpriteRenderer _minimapIcon;
     
     public event Action<Item> CanBeReleased;
     
@@ -35,6 +36,7 @@ public abstract class Item : MonoBehaviour, IPoolable<Item>, IPickable, IWeighte
     public void Hide()
     {
         _collider.enabled = false;
-        _renderer.enabled = false;
+        _itemRenderer.enabled = false;
+        _minimapIcon.enabled = false;
     }
 }

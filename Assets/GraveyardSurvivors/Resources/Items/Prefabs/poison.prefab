@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: efc7209f092befe4c843a76fdd6d5594, type: 2}
-  _renderer: {fileID: 4535416130287061572}
+  _itemRenderer: {fileID: 4535416130287061572}
+  _minimapIcon: {fileID: 7905351494861927063}
   _poisonEffect:
     _duration: 2
     _tickInterval: 1
@@ -116,7 +117,7 @@ GameObject:
   - component: {fileID: 4003069103617470713}
   - component: {fileID: 4535416130287061572}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5182,5 +5183,10 @@ PrefabInstance:
 --- !u!4 &2670659777808566347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
+  m_PrefabInstance: {fileID: 3630171784653640987}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &7905351494861927063 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6905572173330786188, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
   m_PrefabInstance: {fileID: 3630171784653640987}
   m_PrefabAsset: {fileID: 0}

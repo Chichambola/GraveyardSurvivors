@@ -23,8 +23,8 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
     
     public event Action InteractionButtonPressed;
     public event Action Died;
-    public event Action<CharacterStats> StatsChanged;
     public event Action<float> GainedXp;
+    public event Action<CharacterStats> StatsChanged;
     public event Action<Item> PickedItem;
     public event Action<Enemy> EnemyDetected;
     public event Action<Player> CanBeReleased;

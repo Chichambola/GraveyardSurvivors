@@ -9,8 +9,8 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
 
-    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
-    
+    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Value);
+
     protected override void OnInteractableChosen<T>(T interactable)
     {
         if (interactable is not ChanceAltar altar)
@@ -23,18 +23,18 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
             return;
         }
         
-        RarityLevel rarityLevel = UserUtils.GetElementByWeight(altar.Weights);
+        RarityLevel level = UserUtils.GetElementByWeight(altar.Weights);
 
-        if (rarityLevel == null)
-            throw new Exception(nameof(rarityLevel));
+        if (level == null)
+            throw new Exception(nameof(level));
 
         Player.ReduceMoney(altar.CurrentCost);
         
         altar.StartCountdown();
         
-        CanDrop(rarityLevel.Rarity, altar);
+        CanDrop(level.Rarity, altar);
             
-        altar.SetValue(_costHandler.IncreaseCost(altar.CurrentCost));
+        altar.Set(_costHandler.Increase(altar.CurrentCost));
     }
     
     private void CanDrop(ERarityLevel rarityLevel, ChanceAltar altar)
@@ -47,7 +47,7 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
         {
             altar.IncreaseInteractionsAmount();
             
-            _itemsHandler.SpawnRandomItem(altar.transform.position, rarityLevel);   
+            _itemsHandler.SpawnRandomItem(altar.ItemStartPosition, rarityLevel);   
         }
     }
 }

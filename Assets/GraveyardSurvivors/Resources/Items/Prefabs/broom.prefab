@@ -97,7 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 8abb2609b477666c5a6328721e688328, type: 2}
-  _renderer: {fileID: 3569951056745554776}
+  _itemRenderer: {fileID: 3569951056745554776}
+  _minimapIcon: {fileID: 2767315632313116213}
   _increaseValue: 5
 --- !u!1 &1144966282459167912
 GameObject:
@@ -110,7 +111,7 @@ GameObject:
   - component: {fileID: 1339000804274370125}
   - component: {fileID: 3569951056745554776}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,6 +257,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
+--- !u!212 &2767315632313116213 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6905572173330786188, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
+  m_PrefabInstance: {fileID: 8769352530982109625}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7980975849568836841 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}

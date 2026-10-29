@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 7666682112827414848}
   - component: {fileID: 6115175908981016313}
   - component: {fileID: 297854425191056927}
-  - component: {fileID: 291827191435213836}
+  - component: {fileID: 110025897992103338}
   m_Layer: 0
   m_Name: crystal
   m_TagString: Untagged
@@ -182,29 +182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _endPoint: {fileID: 5797063111407392113}
   _thrower: {fileID: 297854425191056927}
-  _follower: {fileID: 291827191435213836}
   _value: 1
-  _timeBeforeRelease: 120
-  _settings:
-    startFromCurrent: 0
-    startValue: {x: 0, y: 0, z: 0}
-    endValue: {x: 0, y: 0, z: 0}
-    settings:
-      duration: 0
-      ease: 0
-      customEase:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      cycles: 0
-      cycleMode: 0
-      startDelay: 0
-      endDelay: 0
-      useUnscaledTime: 0
-      _useFixedUpdate: 0
-      _updateType: 0
+  _timeLyingOnGround: 75
 --- !u!114 &297854425191056927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,9 +197,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpPower: 1.5
-  _duration: 1.5
+  _duration: 0.5
   _numberofJumps: 1
---- !u!114 &291827191435213836
+  _groundDetector: {fileID: 110025897992103338}
+--- !u!114 &110025897992103338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,8 +209,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5707968204327750564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7457d47239212e468e603e57e5f060e, type: 3}
+  m_Script: {fileID: 11500000, guid: 84fe63372f594b89b090a59b1c956c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
-  _speedInscreasePercent: 5
+  _numberOfColliders: 50
+  _mask:
+    serializedVersion: 2
+    m_Bits: 2048

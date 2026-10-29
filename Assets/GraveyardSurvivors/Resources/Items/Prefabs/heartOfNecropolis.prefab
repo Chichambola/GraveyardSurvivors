@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8386427611202974726}
   - component: {fileID: 3199158357044021969}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 655bf4a68967e715eac91a22e22e9eb1, type: 2}
-  _renderer: {fileID: 3199158357044021969}
+  _itemRenderer: {fileID: 3199158357044021969}
+  _minimapIcon: {fileID: 6405887894566833216}
   _increaseValue: 60
   _decreasePercent: 50
 --- !u!1001 &518983044310608844
@@ -260,5 +261,10 @@ PrefabInstance:
 --- !u!4 &1171829524704048796 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1689097156928544080, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
+  m_PrefabInstance: {fileID: 518983044310608844}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &6405887894566833216 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6905572173330786188, guid: 2fddc00e2ea69e5438206f192b4d8ab9, type: 3}
   m_PrefabInstance: {fileID: 518983044310608844}
   m_PrefabAsset: {fileID: 0}

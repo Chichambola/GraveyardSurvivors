@@ -32,7 +32,7 @@ public class BloodAltar : Interactable
         if (_damagePercentDict.Count == 0)
             throw new Exception();
         
-        SetValue(_damagePercentDict[_currentInteractionsAmount]);
+        Set(_damagePercentDict[_currentInteractionsAmount]);
     }
 
     public override void ResetCharacteristics()
@@ -54,7 +54,7 @@ public class BloodAltar : Interactable
         if(_currentInteractionsAmount >= _maxInteractionsAmount)
             IsAvailable = false;
         else
-            SetValue(_damagePercentDict[_currentInteractionsAmount]);
+            Set(_damagePercentDict[_currentInteractionsAmount]);
     }
 
     public void StartCountdown()

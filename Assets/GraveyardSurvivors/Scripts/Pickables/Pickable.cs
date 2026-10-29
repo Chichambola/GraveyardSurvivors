@@ -14,10 +14,8 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
 {
     [SerializeField] private Transform _endPoint;
     [SerializeField] private Thrower _thrower;
-
     [SerializeField] private int _value = 1;
     [SerializeField] private float _timeLyingOnGround = 75f;
-    [SerializeField] private float _timeChasingTarget = 7f;
     
     public event Action<Pickable> CanBeReleased;
     
@@ -90,13 +88,13 @@ public abstract class Pickable : MonoBehaviour, IThrowable, IPoolable<Pickable>,
         
         var token = _cts.Token;
         
-        WaitTask(_timeLyingOnGround, token, Release).Forget();
+        WaitTask(_timeLyingOnGround, token).Forget();
     }
 
-    private async UniTaskVoid WaitTask(float time, CancellationToken token ,Action action)
+    private async UniTaskVoid WaitTask(float time, CancellationToken token)
     {
         await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: token,  cancelImmediately: true);
         
-        action.Invoke();
+        Release();
     }
 }

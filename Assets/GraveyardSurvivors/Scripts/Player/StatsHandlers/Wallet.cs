@@ -14,15 +14,10 @@ public class Wallet : MonoBehaviour
 
     public float CurrentMoneyAmount => _currentMoneyAmount;
     
-    private void OnEnable()
+    private void Start()
     {
         _currentMoneyAmount = _initialValue;
         
-        UpdateValue();
-    }
-    
-    private void Start()
-    {
         UpdateValue();
     }
 
@@ -44,6 +39,6 @@ public class Wallet : MonoBehaviour
 
     private void UpdateValue()
     {
-        _text.text = $"Money: {_currentMoneyAmount}";
+        _text.text = $"{_currentMoneyAmount}";
     }
 }

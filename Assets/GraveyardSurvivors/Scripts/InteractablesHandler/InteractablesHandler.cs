@@ -49,14 +49,20 @@ public class InteractablesHandler : MonoBehaviour, IHandler
 
                     interactable.Spawn(position);
                 }
-                
-                if (interactable is IPriceOwner priceOwner)
-                {
-                    priceOwner.InitializePrices();
-                } 
             }
         }
         
         Physics.autoSyncTransforms = false;
+    }
+
+    private void Start()
+    {
+        foreach (var interactable in _interactables.Keys)
+        {
+            if (interactable is IPriceOwner priceOwner)
+            {
+                priceOwner.InitializePrices();
+            }
+        }
     }
 }

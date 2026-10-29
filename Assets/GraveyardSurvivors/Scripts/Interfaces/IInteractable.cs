@@ -7,6 +7,6 @@ public interface IInteractable
 {
     public bool IsShowingValue { get; }
     public bool IsCurrentlyAvailable { get; }
-   void SetVisibility(bool value);
+    void SetVisibility(bool value);
     void ProcessInteraction();
 }

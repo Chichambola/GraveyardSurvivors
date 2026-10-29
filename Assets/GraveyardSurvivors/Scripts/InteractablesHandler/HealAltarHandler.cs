@@ -11,7 +11,7 @@ public class HealAltarHandler : InteractableHandler, IPriceOwner
 
     private static int _altarsWithPlayerAroundCount;
     
-    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
+    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Value);
 
     public static void IncreaseCount()
     {
@@ -41,6 +41,6 @@ public class HealAltarHandler : InteractableHandler, IPriceOwner
         
         altar.IncreaseInteractionAmount();
         
-        altar.SetValue(_costHandler.IncreaseCost(altar.Value));
+        altar.Set(_costHandler.Increase(altar.Value));
     }
 }

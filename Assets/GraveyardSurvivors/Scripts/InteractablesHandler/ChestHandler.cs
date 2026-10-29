@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,15 +13,23 @@ public class ChestHandler : InteractableHandler, IPriceOwner
 {
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
+    [SerializeField] private TextMeshProUGUI _textCost;
     
-    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Cost);
-    
+    public void InitializePrices()
+    {
+        float value = _costHandler.Value;
+        
+        _textCost.text = $"{value}";
+        
+        InteractableSpawner.SetValueForObjects(value);
+    }
+
     protected override void OnInteractableChosen<T>(T interactable)
     {
         if (interactable is not Chest chest)
             throw new Exception(nameof(chest));
         
-        if (Player.MoneyAmount < _costHandler.Cost)
+        if (Player.MoneyAmount < _costHandler.Value)
         {
             Debug.Log("Not enough money");
         }
@@ -29,18 +37,20 @@ public class ChestHandler : InteractableHandler, IPriceOwner
         {
             chest.Open();
             
-            Player.ReduceMoney(_costHandler.Cost);
+            Player.ReduceMoney(_costHandler.Value);
             
             RarityLevel rarityLevel = UserUtils.GetElementByWeight(chest.Weights);
 
             if (rarityLevel == null)
                 throw new Exception(nameof(rarityLevel));
             
-            _itemsHandler.SpawnRandomItem(chest.transform.position, rarityLevel.Rarity);
+            _itemsHandler.SpawnRandomItem(chest.ItemStartPosition, rarityLevel.Rarity);
             
-            _costHandler.IncreaseCost();
+            _costHandler.Increase();
+
+            _textCost.text = $"{_costHandler.Value}";
         }
         
-        InteractableSpawner.SetValueForObjects(_costHandler.Cost);
+        InteractableSpawner.SetValueForObjects(_costHandler.Value);
     }
 }

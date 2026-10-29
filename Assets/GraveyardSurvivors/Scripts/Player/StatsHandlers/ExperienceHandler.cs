@@ -1,27 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using PrimeTween;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using Sequence = PrimeTween.Sequence;
 
 public class ExperienceHandler : MonoBehaviour
 {
     [SerializeField] private float _experienceIncreasePercent = 155;
-    [SerializeField] private float _initialTargetXp = 50;
-    [SerializeField] private float _maxXp = 5000;
-    [Header("Slider settings")]
-    [SerializeField] private Slider _slider;
-    [SerializeField] private float _duration = 0.5f;
-    [SerializeField] private Ease _ease = Ease.InOutSine;
-
+    [SerializeField] private int _initialTargetXp = 50;
+    [SerializeField] private int _maxXp = 5000;
+    [SerializeField] private SliderHandler _slider;
+    
     public event Action PlayerReachedThreshold; 
     
-    private float _currentXp;
-    private float _targetXp;
-    private float _minXp = 10;
-    private TweenSettings<float> _tweenSettings;
+    private const int MinXp = 10;
+    private const int MinCurrentXp = 0;
+    private int _currentXp;
+    private int _targetXp;
+    private int _lastXp;
 
     private void Awake()
     {
@@ -32,60 +32,44 @@ public class ExperienceHandler : MonoBehaviour
         
         _targetXp = _initialTargetXp;
         _currentXp = 0;
-        
-        _tweenSettings = new();
     }
 
     private void OnEnable()
     {
-        _tweenSettings.settings.duration = _duration;
-        _tweenSettings.settings.ease = _ease;
-        _tweenSettings.settings.useUnscaledTime = true;
-        
-        ResetSliderValue();
+        _slider.Set(MinCurrentXp,_targetXp);
     }
 
     private void OnValidate()
     {
-        if (_initialTargetXp <= _minXp)
+        if (_initialTargetXp <= MinXp)
         {
-            _initialTargetXp = _minXp;
+            _initialTargetXp = MinXp;
         }
     }
-    
-    public void GainExperience(float experience)
-    {
-        float currentXp = _currentXp;
-        
-        _currentXp += experience;
 
+    public async UniTask GainExperience(int experience)
+    {
+        _currentXp += experience;
+        
         if (_currentXp >= _targetXp)
         {
             PlayerReachedThreshold?.Invoke();
+            
+            await _slider.UpdateSlider(_targetXp);
             
             _currentXp -= _targetXp;
 
             var percent = _targetXp.GetClampedValue(_experienceIncreasePercent, _maxXp);
 
-            _targetXp = _targetXp.AddPercentToNumber(percent).RoundToFifths();
-            
-            ResetSliderValue();
+            _targetXp = _targetXp.AddPercentToNumber(percent);
+
+            _slider.Set(MinCurrentXp,_targetXp);
+
+            _slider.UpdateSlider(_currentXp).Forget();
         }
-        
-        UpdateText(currentXp, _currentXp);
-    }
-
-    private void UpdateText(float current, float target)
-    {
-        _tweenSettings.startValue = current;
-        _tweenSettings.endValue = target;
-        
-        Tween.UISliderValue(_slider, _tweenSettings);
-    }
-
-    private void ResetSliderValue()
-    {
-        _slider.maxValue = _targetXp;
-        _slider.value = 0;
+        else
+        {
+            await _slider.UpdateSlider(_currentXp);
+        }
     }
 }

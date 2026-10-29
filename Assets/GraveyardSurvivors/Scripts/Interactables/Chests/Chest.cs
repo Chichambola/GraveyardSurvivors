@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using PrimeTween;
 using TMPro;
@@ -15,12 +16,13 @@ using Tween = PrimeTween.Tween;
 [RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
 public class Chest : Interactable, IChanceInteractable
 {
+    [SerializeField] private Transform _itemStartPositon;
     [Header("Lid opening")]
-    [SerializeField] private Transform _openingPart;
     [SerializeField] private float _openingDuration = 2f;
-    [SerializeField] private Quaternion _openingRotation;
-    [SerializeField] private Ease _openingEase;
     [SerializeField] private float _countdownTime = 3;
+    [SerializeField] private Quaternion _openingRotation;
+    [SerializeField] private Transform _openingPart;
+    [SerializeField] private Ease _openingEase;
     [Header("Weights")]
     [SerializeField] private RarityLevelHandler _levels;
     
@@ -33,7 +35,8 @@ public class Chest : Interactable, IChanceInteractable
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
 
-    public List<RarityLevel> Weights => _levels.Weights;
+    public List<RarityLevel> Weights => _levels.Weights.ToList();
+    public Vector3 ItemStartPosition => _itemStartPositon.position;
 
     private void Awake()
     {

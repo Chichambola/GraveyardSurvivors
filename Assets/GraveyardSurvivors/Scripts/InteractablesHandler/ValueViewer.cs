@@ -21,7 +21,7 @@ public class ValueViewer : MonoBehaviour
         _text.enabled = isShowing;
     }
 
-    public void SetValue(float value)
+    public void Set(float value)
     {
         _value = value;
         

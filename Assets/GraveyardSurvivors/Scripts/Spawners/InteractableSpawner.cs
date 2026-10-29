@@ -25,7 +25,7 @@ public class InteractableSpawner : Spawner<Interactable>
         
         foreach (var interactable in ActiveObjects)
         {
-            interactable.SetValue(value);
+            interactable.Set(value);
         }
     }
     

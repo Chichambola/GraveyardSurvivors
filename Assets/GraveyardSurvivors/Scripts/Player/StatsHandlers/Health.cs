@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -15,13 +16,12 @@ public class Health : MonoBehaviour
     [Header("Services")] 
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
-    [SerializeField] private StatsViewer _statsViewer;
+    [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private SliderHandler _slider;
     
     private CancellationTokenSource _ctsHealing;
     private CancellationTokenSource _ctsDamage;
     private int _damageReduceAfterDamage = 70;
-    private float _currentValue;
-    private float _maxValue;
     private bool _isTakingLessDamage;
     private bool _isOnCooldown;
 
@@ -48,7 +48,9 @@ public class Health : MonoBehaviour
 
     private void UpdateStats(CharacterStats stats)
     {
-        _statsViewer.UpdateStats(_player.CurrentHealth, stats.MaxHealth);
+        _slider.Set(_player.CurrentHealth, stats.MaxHealth);
+        
+        UpdateVisuals();
     }
     
     private async UniTask ReduceDamageTask()
@@ -74,11 +76,11 @@ public class Health : MonoBehaviour
     {
         while (!_ctsHealing.Token.IsCancellationRequested)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(_healCooldown), DelayType.UnscaledDeltaTime, cancellationToken: _ctsHealing.Token);
-
+            await UniTask.Delay(TimeSpan.FromSeconds(_healCooldown), DelayType.DeltaTime, cancellationToken: _ctsHealing.Token);
+            
             _player.Heal(_player.CurrentStats.HealthRegeneration);
 
-            UpdateStats();
+            UpdateVisuals();
         }
     }
 
@@ -111,9 +113,14 @@ public class Health : MonoBehaviour
         
         return true;
     }
-    
-    private void UpdateStats()
+
+    private void UpdateVisuals()
     {
-        _statsViewer.UpdateStats(_player.CurrentHealth, _player.MaxHealth);
+        float currentValue = _player.CurrentHealth;
+        float maxHealth = _player.MaxHealth;
+            
+        _text.text = $"{currentValue : #.#} / {maxHealth} \n";
+        
+        _slider.UpdateSlider(currentValue).Forget();
     }
 }
