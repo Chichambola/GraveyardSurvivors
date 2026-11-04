@@ -21,9 +21,9 @@ public class BloodAltarHandler : InteractableHandler
             return;
         }
 
-        altar.StartCountdown();
-        
         altar.IncreaseInteractionAmount();
+        
+        altar.StartCountdown();
 
         float moneyAmount = necessaryHealth / _divider;
         

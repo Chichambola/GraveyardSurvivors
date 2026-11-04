@@ -1,22 +1,47 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
+using PrimeTween;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class BloodAltar : Interactable
 {
     [SerializeField] private CooldownHandler _cooldownHandler;
     [SerializeField] private List<float> _damagePercent;
+    [Header("Blood drop animation")]
+    [SerializeField] private Transform _startPosition;
+    [SerializeField] private SpriteRenderer _bloodSprite;
+    [SerializeField] private float _yOffset = 3f;
+    [SerializeField] private float _dropDuration = 1f;
+    [Header("Blood animation")]
+    [SerializeField] private GameObject _blood;
+    [SerializeField] private float _scaleDuration = 1f;
     
+    private const float MaxScale = 1f;
+    private const float InitialYOffset = 99999f;
     private Dictionary<int,float> _damagePercentDict;
+    private bool _isOnCooldown;
+    private float _initialScale;
     private int _maxInteractionsAmount;
     private int _currentInteractionsAmount;
 
     private void OnEnable()
     {
+        _isOnCooldown = false;
+        
+        _bloodSprite.transform.position = new Vector3(_bloodSprite.transform.position.x, InitialYOffset, _bloodSprite.transform.position.z);
+        
         FillDictionary();
     }
-    
+
+    private void OnDisable()
+    {
+        if (_isOnCooldown)
+            _cooldownHandler.TimePassed -= OnTimePassed;
+    }
+
     private void FillDictionary()
     {
         _damagePercentDict = new Dictionary<int,float>();
@@ -32,7 +57,11 @@ public class BloodAltar : Interactable
         if (_damagePercentDict.Count == 0)
             throw new Exception();
         
-        Set(_damagePercentDict[_currentInteractionsAmount]);
+        _initialScale = MaxScale / _damagePercentDict.Count;
+        
+        float value = _damagePercentDict[_currentInteractionsAmount];             
+            
+        Set(value);
     }
 
     public override void ResetCharacteristics()
@@ -42,41 +71,57 @@ public class BloodAltar : Interactable
         IsAvailable = true;
     }
     
-    public float GetDamagePercent()
-    {
-        return _damagePercentDict[_currentInteractionsAmount];
-    }
+    public float GetDamagePercent() => _damagePercentDict[_currentInteractionsAmount];
 
     public void IncreaseInteractionAmount()
     {
         _currentInteractionsAmount ++;
 
-        if(_currentInteractionsAmount >= _maxInteractionsAmount)
+        if (_currentInteractionsAmount >= _maxInteractionsAmount)
+        {
             IsAvailable = false;
+        }
         else
-            Set(_damagePercentDict[_currentInteractionsAmount]);
+        {
+            float value = _damagePercentDict[_currentInteractionsAmount];             
+            
+            Set(value);
+        }
     }
 
     public void StartCountdown()
     {
-        SetVisibility(false);
+        _bloodSprite.transform.position = _startPosition.position;
 
-        IsAvailable = false;
-
-        _cooldownHandler.TimePassed += OnTimePassed;
+        float targetScale = _initialScale;
         
+        if (_currentInteractionsAmount != 0)
+            targetScale = _initialScale * _currentInteractionsAmount;
+        
+        Sequence.Create()
+            .Chain(Tween.LocalPositionY(_bloodSprite.transform, _bloodSprite.transform.position.y - _yOffset, _dropDuration))
+            .Chain(Tween.Scale(_blood.transform, targetScale, _scaleDuration));
+        
+        SetActive(false);
+
+        _isOnCooldown = true;
+        _cooldownHandler.TimePassed += OnTimePassed;
         _cooldownHandler.StartCountdown();
     }
 
     private void OnTimePassed()
     {
         if (_currentInteractionsAmount != _maxInteractionsAmount)
-        {
-            SetVisibility(true);
-            
-            IsAvailable = true;
-        }
+            SetActive(true);
+        
+        _isOnCooldown = false;
         
         _cooldownHandler.TimePassed -= OnTimePassed;
+    }
+    
+    private void SetActive(bool isActive)
+    {
+        SetVisibility(isActive);
+        IsAvailable = isActive;
     }
 }
