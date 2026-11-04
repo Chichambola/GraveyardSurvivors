@@ -496,8 +496,10 @@ MonoBehaviour:
   _bloodSprite: {fileID: 9198107407412367383}
   _yOffset: 3
   _dropDuration: 1
+  _dropEase: 19
   _blood: {fileID: 400851431460826536}
   _scaleDuration: 1
+  _scaleEase: 1
 --- !u!114 &2245322540743517103
 MonoBehaviour:
   m_ObjectHideFlags: 0
