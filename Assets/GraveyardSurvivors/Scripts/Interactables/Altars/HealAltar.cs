@@ -19,10 +19,12 @@ public class HealAltar : Interactable
     [SerializeField] private float _healAmount = 3f;
     [SerializeField] private PlayerDetector _playerDetector;
     [SerializeField] private RadiusEffectScaler _radiusEffectScaler;
+    [SerializeField] private WaterAnimationHandler _animationHandler;
     
     private const float DefaultRadiusMultiplier = 2f;
-    private int _currentInteractionsAmount;
     private float _radius;
+    private float _initialRadius;
+    private int _currentInteractionsAmount;
     private ILightCarrier _lightCarrier;
     private CancellationTokenSource _cts;
 
@@ -31,12 +33,14 @@ public class HealAltar : Interactable
         if (_maxInteractionsAmount <= 0)
             _maxInteractionsAmount = 0;
         
-        SetMultipliersCount();
+        DetermineMultipliersCount();
     }
 
     private void OnEnable()
     {
         _radiusEffectScaler.SetActive(false);
+        
+        _animationHandler.Init(_radiusMultipliers.Count);
 
         if (_radiusMultipliers.Count == 0) 
             throw new Exception("You need more multipliers!");
@@ -49,6 +53,12 @@ public class HealAltar : Interactable
     {
         _playerDetector.PlayerDetected -= OnPlayerDetected;
         _playerDetector.PlayerLeft -= OnPlayerLeft;
+    }
+
+    private void OnDestroy()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
     }
 
     public void IncreaseInteractionAmount()
@@ -68,6 +78,8 @@ public class HealAltar : Interactable
         
         _radiusEffectScaler.ChangeRadius(_radius, _cooldown);
         
+        _animationHandler.StartAnimation(_currentInteractionsAmount);
+        
         if (_currentInteractionsAmount == _maxInteractionsAmount)
         {
             IsAvailable = false;
@@ -86,9 +98,8 @@ public class HealAltar : Interactable
         _lightCarrier.PauseLight();
 
         _cts = new CancellationTokenSource();
-        _cts.RegisterRaiseCancelOnDestroy(gameObject);
 
-        HealTask().Forget();
+        HealTask(_cts.Token).Forget();
     }
 
     private void OnPlayerLeft()
@@ -103,17 +114,17 @@ public class HealAltar : Interactable
         _lightCarrier = null;
     }
     
-    private async UniTask HealTask()
+    private async UniTask HealTask(CancellationToken token)
     {
         while (!_cts.IsCancellationRequested)
         {
             _lightCarrier.Heal(_healAmount);
             
-            await UniTask.Delay(TimeSpan.FromSeconds(_cooldown), cancellationToken: _cts.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_cooldown), cancellationToken: token);
         }
     }
     
-    private void SetMultipliersCount()
+    private void DetermineMultipliersCount()
     {
         int targetNumber;
 

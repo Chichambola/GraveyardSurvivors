@@ -147,7 +147,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ddccc83c49eff06ce9547096fdbd8a26, type: 2}
+  - {fileID: 2100000, guid: 68fb9a28081c2004ab34bd21e83eba1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: 2245322540743517103}
   - component: {fileID: 1841104102983670577}
   - component: {fileID: 2436023021117182289}
+  - component: {fileID: 3707122182627783340}
   m_Layer: 8
   m_Name: BloodAltar
   m_TagString: Untagged
@@ -495,11 +496,27 @@ MonoBehaviour:
   _startPosition: {fileID: 2482627369991865023}
   _bloodSprite: {fileID: 9198107407412367383}
   _yOffset: 3
-  _dropDuration: 1
-  _dropEase: 19
-  _blood: {fileID: 400851431460826536}
-  _scaleDuration: 1
-  _scaleEase: 1
+  _settings:
+    startFromCurrent: 0
+    startValue: 0
+    endValue: 0
+    settings:
+      duration: 1
+      ease: 10
+      customEase:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      cycles: 1
+      cycleMode: 0
+      startDelay: 0
+      endDelay: 0
+      useUnscaledTime: 0
+      _useFixedUpdate: 0
+      _updateType: 0
+  _animationHandler: {fileID: 3707122182627783340}
 --- !u!114 &2245322540743517103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +565,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5871922, y: 2.9157517, z: 1}
   m_Center: {x: 0.13598186, y: 0.95787585, z: 0}
+--- !u!114 &3707122182627783340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4527466070629496173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cadb7f1d2a4667bd7b2b78ffac452b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _water: {fileID: 400851431460826536}
+  _scaleDuration: 1
+  _scaleEase: 10
+  _isShrinking: 0
 --- !u!1 &5003335841280892744
 GameObject:
   m_ObjectHideFlags: 0

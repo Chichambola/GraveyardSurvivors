@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using PrimeTween;
 using TMPro.EditorUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BloodAltar : Interactable
@@ -15,14 +16,9 @@ public class BloodAltar : Interactable
     [SerializeField] private Transform _startPosition;
     [SerializeField] private SpriteRenderer _bloodSprite;
     [SerializeField] private float _yOffset = 3f;
-    [SerializeField] private float _dropDuration = 1f;
-    [SerializeField] private Ease _dropEase;
-    [Header("Blood animation")]
-    [SerializeField] private GameObject _blood;
-    [SerializeField] private float _scaleDuration = 1f;
-    [SerializeField] private Ease _scaleEase;
+    [SerializeField] private TweenSettings<float> _settings;
+    [SerializeField] private WaterAnimationHandler _animationHandler;
     
-    private const float MaxScale = 1f;
     private const float InitialYOffset = 99999f;
     private Dictionary<int,float> _damagePercentDict;
     private bool _isOnCooldown;
@@ -37,6 +33,8 @@ public class BloodAltar : Interactable
         _bloodSprite.transform.position = new Vector3(_bloodSprite.transform.position.x, InitialYOffset, _bloodSprite.transform.position.z);
         
         FillDictionary();
+        
+        _animationHandler.Init(_damagePercentDict.Count);
     }
 
     private void OnDisable()
@@ -59,8 +57,6 @@ public class BloodAltar : Interactable
         
         if (_damagePercentDict.Count == 0)
             throw new Exception();
-        
-        _initialScale = MaxScale / _damagePercentDict.Count;
         
         float value = _damagePercentDict[_currentInteractionsAmount];             
             
@@ -94,27 +90,15 @@ public class BloodAltar : Interactable
 
     public void StartCountdown()
     {
-        StartAnimation();
+        Tween tween = Tween.LocalPositionY(_bloodSprite.transform, _settings);
+        
+        _animationHandler.StartAnimation(_currentInteractionsAmount, tween);
 
         SetActive(false);
 
         _isOnCooldown = true;
         _cooldownHandler.TimePassed += OnTimePassed;
         _cooldownHandler.StartCountdown();
-    }
-
-    private void StartAnimation()
-    {
-        _bloodSprite.transform.position = _startPosition.position;
-
-        float targetScale = _initialScale;
-        
-        if (_currentInteractionsAmount != 0)
-            targetScale = _initialScale * _currentInteractionsAmount;
-        
-        Sequence.Create()
-            .Group(Tween.LocalPositionY(_bloodSprite.transform, _bloodSprite.transform.position.y - _yOffset, _dropDuration))
-            .Group(Tween.Scale(_blood.transform, targetScale, _scaleDuration));
     }
 
     private void OnTimePassed()

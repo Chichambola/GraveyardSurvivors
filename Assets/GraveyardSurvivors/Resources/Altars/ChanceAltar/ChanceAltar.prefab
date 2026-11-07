@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 7383748214435183856}
   - component: {fileID: 1748850567577588802}
   m_Layer: 0
-  m_Name: Scene
+  m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,7 +297,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ce9f89553c723354cb8268b8890b746b, type: 2}
+  - {fileID: 2100000, guid: 68fb9a28081c2004ab34bd21e83eba1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 2341674204381077299}
   - component: {fileID: 2052611475912459161}
   m_Layer: 10
-  m_Name: chancealtar
+  m_Name: icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
