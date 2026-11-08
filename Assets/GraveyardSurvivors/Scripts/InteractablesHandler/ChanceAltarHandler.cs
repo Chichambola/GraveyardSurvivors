@@ -4,19 +4,54 @@ using System.Collections.Generic;
 using UnityEditor.Profiling;
 using UnityEngine;
 
-public class ChanceAltarHandler : InteractableHandler, IPriceOwner
+public class ChanceAltarHandler : InteractableHandler, IPriceOwner, IInteractableHandler
 {
+    [SerializeField] private InteractableSpawner _interactableSpawner;
+    [SerializeField] private int _initialSpawnCount = 10;
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
+    
+    private IPlayer _player;
 
-    public void InitializePrices() => InteractableSpawner.SetValueForObjects(_costHandler.Value);
+    public int InitialCount => _initialSpawnCount;
 
-    protected override void OnInteractableChosen<T>(T interactable)
+    public void Init(IPlayer player)
+    {
+        _player = player;
+    }
+    
+    private void OnValidate()
+    {
+        if (_initialSpawnCount < 0)
+        {
+            _initialSpawnCount = 0;
+        }
+    }
+
+
+    private void OnEnable()
+    {
+        _interactableSpawner.InteractableWasChosen += OnInteractableChosen;
+    }
+
+    private void OnDisable()
+    {
+        _interactableSpawner.InteractableWasChosen -= OnInteractableChosen;
+    }
+
+    public void Spawn(Vector3 position)
+    {
+        _interactableSpawner.Spawn(position);
+    }
+    
+    public void InitializePrices() => _interactableSpawner.SetValueForObjects(_costHandler.Value);
+
+    private void OnInteractableChosen<T>(T interactable)
     {
         if (interactable is not ChanceAltar altar)
             throw new Exception(nameof(altar));
         
-        if (Player.MoneyAmount < altar.CurrentCost)
+        if (_player.MoneyAmount < altar.CurrentCost)
         {
             Debug.Log($"Not enough money");
             
@@ -28,7 +63,7 @@ public class ChanceAltarHandler : InteractableHandler, IPriceOwner
         if (level == null)
             throw new Exception(nameof(level));
 
-        Player.ReduceMoney(altar.CurrentCost);
+        _player.ReduceMoney(altar.CurrentCost);
         
         altar.StartCountdown();
         

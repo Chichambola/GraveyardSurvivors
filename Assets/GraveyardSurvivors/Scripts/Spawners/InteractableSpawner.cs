@@ -9,13 +9,13 @@ public class InteractableSpawner : Spawner<Interactable>
     
     public event Action<Interactable> InteractableWasChosen;
 
-    public void Spawn(Vector3 position)
+    public Interactable Spawn(Vector3 position)
     {
         var offset = new Vector3(0,ObjectPrefab.transform.position.y, 0);
         
         _spawnPoint = position + offset;
 
-        GetObject();
+        return GetObject();
     }
 
     public void SetValueForObjects(float value)

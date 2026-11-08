@@ -20,6 +20,9 @@ public class HealAltar : Interactable
     [SerializeField] private PlayerDetector _playerDetector;
     [SerializeField] private RadiusEffectScaler _radiusEffectScaler;
     [SerializeField] private WaterAnimationHandler _animationHandler;
+
+    public event Action DetectedPlayer;
+    public event Action LostPlayer;
     
     private const float DefaultRadiusMultiplier = 2f;
     private float _radius;
@@ -91,7 +94,7 @@ public class HealAltar : Interactable
         if (player is not ILightCarrier carrier)
             return;
 
-        HealAltarHandler.IncreaseCount();
+        DetectedPlayer?.Invoke();
         
         _lightCarrier = carrier;
 
@@ -106,11 +109,8 @@ public class HealAltar : Interactable
     {
         _cts?.Cancel();
         
-        HealAltarHandler.DecreaseCount();
-        
-        if (HealAltarHandler.CanStartLight())
-            _lightCarrier.StartLight();    
-        
+        LostPlayer?.Invoke();
+
         _lightCarrier = null;
     }
     

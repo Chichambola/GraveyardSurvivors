@@ -9,11 +9,37 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class ChestHandler : InteractableHandler, IPriceOwner
+public class ChestHandler : MonoBehaviour, IPriceOwner, IInteractableHandler
 {
+    [SerializeField] private InteractableSpawner _interactableSpawner;
+    [SerializeField] private int _initialSpawnCount = 10;
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
     [SerializeField] private TextMeshProUGUI _textCost;
+
+    private IPlayer _player;
+
+    public int InitialCount => _initialSpawnCount;
+
+    private void OnEnable()
+    {
+        _interactableSpawner.InteractableWasChosen += OnInteractableChosen;
+    }
+
+    private void OnDisable()
+    {
+        _interactableSpawner.InteractableWasChosen -= OnInteractableChosen;
+    }
+
+    public void Init(IPlayer player)
+    {
+        _player = player;
+    }
+
+    public void Spawn(Vector3 position)
+    {
+        _interactableSpawner.Spawn(position);
+    }
     
     public void InitializePrices()
     {
@@ -21,15 +47,17 @@ public class ChestHandler : InteractableHandler, IPriceOwner
         
         _textCost.text = $"{value}";
         
-        InteractableSpawner.SetValueForObjects(value);
+        _interactableSpawner.SetValueForObjects(value);
     }
 
-    protected override void OnInteractableChosen<T>(T interactable)
+    
+    
+    private void OnInteractableChosen<T>(T interactable)
     {
         if (interactable is not Chest chest)
             throw new Exception(nameof(chest));
         
-        if (Player.MoneyAmount < _costHandler.Value)
+        if (_player.MoneyAmount < _costHandler.Value)
         {
             Debug.Log("Not enough money");
         }
@@ -37,7 +65,7 @@ public class ChestHandler : InteractableHandler, IPriceOwner
         {
             chest.Open();
             
-            Player.ReduceMoney(_costHandler.Value);
+            _player.ReduceMoney(_costHandler.Value);
             
             RarityLevel rarityLevel = UserUtils.GetElementByWeight(chest.Weights);
 
@@ -51,6 +79,6 @@ public class ChestHandler : InteractableHandler, IPriceOwner
             _textCost.text = $"{_costHandler.Value}";
         }
         
-        InteractableSpawner.SetValueForObjects(_costHandler.Value);
+        _interactableSpawner.SetValueForObjects(_costHandler.Value);
     }
 }

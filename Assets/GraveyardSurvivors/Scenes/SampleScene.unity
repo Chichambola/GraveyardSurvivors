@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3339,7 +3339,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370f7c249a543634b913218592c7ba99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractableSpawner: {fileID: 386456283}
+  _interactableSpawner: {fileID: 0}
+  _initialSpawnCount: 10
   _costHandler: {fileID: 386456284}
 --- !u!114 &386456283
 MonoBehaviour:
@@ -5903,7 +5904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42e64ce5b9b45a4781b1a3ae6e6a96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractableSpawner: {fileID: 721916096}
+  _interactableSpawner: {fileID: 0}
+  _initialSpawnCount: 10
   _coinSpawner: {fileID: 1012258921}
   _xpSpawner: {fileID: 1035285751}
 --- !u!1 &722507729
@@ -9955,7 +9957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c42036a07961fc4ebafc5d2dd95535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractableSpawner: {fileID: 1140258360}
+  _interactableSpawner: {fileID: 0}
+  _initialSpawnCount: 10
   _itemsHandler: {fileID: 1204296356}
   _costHandler: {fileID: 1140258361}
   _textCost: {fileID: 1332768541}
@@ -22005,7 +22008,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0e242efc953d40b21d302614c520c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractableSpawner: {fileID: 1806162022}
+  _interactableSpawner: {fileID: 0}
+  _initialSpawnCount: 10
   _itemsHandler: {fileID: 1204296356}
   _costHandler: {fileID: 1806162023}
 --- !u!114 &1806162022
@@ -30049,13 +30053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-    keys:
-    - {fileID: 1140258358}
-    - {fileID: 1806162021}
-    - {fileID: 2138666185}
-    - {fileID: 386456282}
-    - {fileID: 721916097}
-    values: 0000000000000000320000000000000000000000
+  - _underlyingValue: {fileID: 0}
   _spawnCollidersHandler: {fileID: 283037511}
   _placementVerifier: {fileID: 1994042615}
   _errorThreshold: 10
@@ -30683,7 +30681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d60ee368f4d21851a69b302f319d805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractableSpawner: {fileID: 2138666186}
+  _interactableSpawner: {fileID: 0}
+  _initialSpawnCount: 10
   _divider: 1.25
 --- !u!114 &2138666186
 MonoBehaviour:

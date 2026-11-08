@@ -2,15 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper;
 using Sherbert.Framework.Generic;
 using Unity.Mathematics;
 using UnityEditor.Profiling;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class InteractablesHandler : MonoBehaviour, IHandler
 {
-    [SerializeField] private SerializableDictionary<InteractableHandler, int> _interactables;
+    [SerializeField] private List<InterfaceReference<IInteractableHandler, MonoBehaviour>> _interactables;
     [SerializeField] private SpawnCollidersHandler _spawnCollidersHandler;
     [SerializeField] private PlacementVerifier _placementVerifier;
     [SerializeField] private int _errorThreshold = 10;
@@ -22,9 +24,11 @@ public class InteractablesHandler : MonoBehaviour, IHandler
 
         Physics.autoSyncTransforms = true;
         
-        foreach (var interactable in _interactables.Keys)
+        foreach (var interactable in _interactables)
         {
-            int count = _interactables[interactable];
+            var currentInteractable = interactable.Value;
+            
+            int count = currentInteractable.InitialCount;
 
             for (int i = 0; i < count; i++)
             {                
@@ -45,9 +49,9 @@ public class InteractablesHandler : MonoBehaviour, IHandler
                     
                     isPlaced = true;
                     
-                    interactable.Init(player);
+                    currentInteractable.Init(player);
 
-                    interactable.Spawn(position);
+                    currentInteractable.Spawn(position);
                 }
             }
         }
@@ -57,9 +61,9 @@ public class InteractablesHandler : MonoBehaviour, IHandler
 
     private void Start()
     {
-        foreach (var interactable in _interactables.Keys)
+        foreach (var interactable in _interactables)
         {
-            if (interactable is IPriceOwner priceOwner)
+            if (interactable.Value is IPriceOwner priceOwner)
             {
                 priceOwner.InitializePrices();
             }
