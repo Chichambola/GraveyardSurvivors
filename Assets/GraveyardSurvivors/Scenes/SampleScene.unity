@@ -3339,8 +3339,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370f7c249a543634b913218592c7ba99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 0}
-  _initialSpawnCount: 10
+  _interactableSpawner: {fileID: 386456283}
+  _initialSpawnCount: 0
   _costHandler: {fileID: 386456284}
 --- !u!114 &386456283
 MonoBehaviour:
@@ -5904,8 +5904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42e64ce5b9b45a4781b1a3ae6e6a96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 0}
-  _initialSpawnCount: 10
+  _interactableSpawner: {fileID: 721916096}
+  _initialSpawnCount: 0
   _coinSpawner: {fileID: 1012258921}
   _xpSpawner: {fileID: 1035285751}
 --- !u!1 &722507729
@@ -9957,8 +9957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c42036a07961fc4ebafc5d2dd95535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 0}
-  _initialSpawnCount: 10
+  _interactableSpawner: {fileID: 1140258360}
+  _initialSpawnCount: 0
   _itemsHandler: {fileID: 1204296356}
   _costHandler: {fileID: 1140258361}
   _textCost: {fileID: 1332768541}
@@ -22008,8 +22008,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0e242efc953d40b21d302614c520c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 0}
-  _initialSpawnCount: 10
+  _interactableSpawner: {fileID: 1806162022}
+  _initialSpawnCount: 0
   _itemsHandler: {fileID: 1204296356}
   _costHandler: {fileID: 1806162023}
 --- !u!114 &1806162022
@@ -30053,7 +30053,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactables:
-  - _underlyingValue: {fileID: 0}
+  - _underlyingValue: {fileID: 721916097}
+  - _underlyingValue: {fileID: 1140258358}
+  - _underlyingValue: {fileID: 386456282}
+  - _underlyingValue: {fileID: 1806162021}
+  - _underlyingValue: {fileID: 2138666185}
   _spawnCollidersHandler: {fileID: 283037511}
   _placementVerifier: {fileID: 1994042615}
   _errorThreshold: 10
@@ -30681,7 +30685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d60ee368f4d21851a69b302f319d805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 0}
+  _interactableSpawner: {fileID: 2138666186}
   _initialSpawnCount: 10
   _divider: 1.25
 --- !u!114 &2138666186
