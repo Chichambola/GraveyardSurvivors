@@ -6,8 +6,7 @@ using Random = UnityEngine.Random;
 
 public class BarrelHandler : MonoBehaviour, IInteractableHandler
 {
-    [SerializeField] private InteractableSpawner _interactableSpawner;
-    [SerializeField] private int _initialSpawnCount = 10;
+    [SerializeField] private InteractableHandlerBase _base;
     [SerializeField] private PickablesSpawner _coinSpawner;
     [SerializeField] private PickablesSpawner _xpSpawner;
 
@@ -15,34 +14,26 @@ public class BarrelHandler : MonoBehaviour, IInteractableHandler
     private int _maxPickablesAmount = 8;
     private IPlayer _player;
 
-    public int InitialCount => _initialSpawnCount;
+    public int InitialCount => _base.InitialCount;
 
     public void Init(IPlayer player)
     {
         _player = player;
     }
 
-    private void OnValidate()
-    {
-        if (_initialSpawnCount < 0)
-        {
-            _initialSpawnCount = 0;
-        }
-    }
-
     private void OnEnable()
     {
-        _interactableSpawner.InteractableWasChosen += OnInteractableChosen;
+        _base.HandleChosenObject += OnInteractableChosen;
     }
 
     private void OnDisable()
     {
-        _interactableSpawner.InteractableWasChosen -= OnInteractableChosen;
+        _base.HandleChosenObject -= OnInteractableChosen;
     }
 
     public void Spawn(Vector3 position)
     {
-        _interactableSpawner.Spawn(position);
+        _base.Spawn(position);
     }
     
     private void OnInteractableChosen<T>(T interactable)

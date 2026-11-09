@@ -11,24 +11,23 @@ using Random = UnityEngine.Random;
 
 public class ChestHandler : MonoBehaviour, IPriceOwner, IInteractableHandler
 {
-    [SerializeField] private InteractableSpawner _interactableSpawner;
-    [SerializeField] private int _initialSpawnCount = 10;
+    [SerializeField] private InteractableHandlerBase _base;
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
     [SerializeField] private TextMeshProUGUI _textCost;
 
     private IPlayer _player;
 
-    public int InitialCount => _initialSpawnCount;
+    public int InitialCount => _base.InitialCount;
 
     private void OnEnable()
     {
-        _interactableSpawner.InteractableWasChosen += OnInteractableChosen;
+        _base.HandleChosenObject += OnInteractableChosen;
     }
 
     private void OnDisable()
     {
-        _interactableSpawner.InteractableWasChosen -= OnInteractableChosen;
+        _base.HandleChosenObject -= OnInteractableChosen;
     }
 
     public void Init(IPlayer player)
@@ -38,7 +37,7 @@ public class ChestHandler : MonoBehaviour, IPriceOwner, IInteractableHandler
 
     public void Spawn(Vector3 position)
     {
-        _interactableSpawner.Spawn(position);
+        _base.Spawn(position);
     }
     
     public void InitializePrices()
@@ -47,7 +46,7 @@ public class ChestHandler : MonoBehaviour, IPriceOwner, IInteractableHandler
         
         _textCost.text = $"{value}";
         
-        _interactableSpawner.SetValueForObjects(value);
+        _base.SetValueForObjects(value);
     }
 
     
@@ -79,6 +78,6 @@ public class ChestHandler : MonoBehaviour, IPriceOwner, IInteractableHandler
             _textCost.text = $"{_costHandler.Value}";
         }
         
-        _interactableSpawner.SetValueForObjects(_costHandler.Value);
+        _base.SetValueForObjects(_costHandler.Value);
     }
 }

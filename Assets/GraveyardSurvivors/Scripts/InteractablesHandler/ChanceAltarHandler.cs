@@ -4,47 +4,38 @@ using System.Collections.Generic;
 using UnityEditor.Profiling;
 using UnityEngine;
 
-public class ChanceAltarHandler : InteractableHandler, IPriceOwner, IInteractableHandler
+public class ChanceAltarHandler : MonoBehaviour, IPriceOwner, IInteractableHandler
 {
-    [SerializeField] private InteractableSpawner _interactableSpawner;
-    [SerializeField] private int _initialSpawnCount = 10;
+    [SerializeField] private InteractableHandlerBase _base;
     [SerializeField] private ItemsHandler _itemsHandler;
     [SerializeField] private CostHandler _costHandler;
     
     private IPlayer _player;
 
-    public int InitialCount => _initialSpawnCount;
+    public int InitialCount => _base.InitialCount;
 
     public void Init(IPlayer player)
     {
         _player = player;
     }
-    
-    private void OnValidate()
-    {
-        if (_initialSpawnCount < 0)
-        {
-            _initialSpawnCount = 0;
-        }
-    }
 
 
     private void OnEnable()
     {
-        _interactableSpawner.InteractableWasChosen += OnInteractableChosen;
+        _base.HandleChosenObject += OnInteractableChosen;
     }
 
     private void OnDisable()
     {
-        _interactableSpawner.InteractableWasChosen -= OnInteractableChosen;
+        _base.HandleChosenObject -= OnInteractableChosen;
     }
 
     public void Spawn(Vector3 position)
     {
-        _interactableSpawner.Spawn(position);
+        _base.Spawn(position);
     }
     
-    public void InitializePrices() => _interactableSpawner.SetValueForObjects(_costHandler.Value);
+    public void InitializePrices() => _base.SetValueForObjects(_costHandler.Value);
 
     private void OnInteractableChosen<T>(T interactable)
     {

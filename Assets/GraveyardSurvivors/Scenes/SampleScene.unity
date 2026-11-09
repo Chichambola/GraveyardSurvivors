@@ -3305,6 +3305,7 @@ GameObject:
   - component: {fileID: 386456282}
   - component: {fileID: 386456283}
   - component: {fileID: 386456284}
+  - component: {fileID: 386456285}
   m_Layer: 0
   m_Name: LightAlterHandler
   m_TagString: Untagged
@@ -3339,8 +3340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370f7c249a543634b913218592c7ba99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 386456283}
-  _initialSpawnCount: 0
+  _interactableHandler: {fileID: 386456285}
   _costHandler: {fileID: 386456284}
 --- !u!114 &386456283
 MonoBehaviour:
@@ -3372,6 +3372,20 @@ MonoBehaviour:
   _value: 15
   _increasePercent: 15
   _costThreshold: 1000
+--- !u!114 &386456285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386456280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fe5bdc4e2f42dc8aa47e119b31c44f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableSpawner: {fileID: 386456283}
+  _initialSpawnCount: 10
 --- !u!1 &392500514
 GameObject:
   m_ObjectHideFlags: 0
@@ -5855,6 +5869,7 @@ GameObject:
   - component: {fileID: 721916095}
   - component: {fileID: 721916097}
   - component: {fileID: 721916096}
+  - component: {fileID: 721916098}
   m_Layer: 0
   m_Name: BarrelHandler
   m_TagString: Untagged
@@ -5904,10 +5919,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d42e64ce5b9b45a4781b1a3ae6e6a96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 721916096}
-  _initialSpawnCount: 0
+  _base: {fileID: 721916098}
   _coinSpawner: {fileID: 1012258921}
   _xpSpawner: {fileID: 1035285751}
+--- !u!114 &721916098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721916094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fe5bdc4e2f42dc8aa47e119b31c44f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableSpawner: {fileID: 721916096}
+  _initialSpawnCount: 10
 --- !u!1 &722507729
 GameObject:
   m_ObjectHideFlags: 0
@@ -9938,6 +9966,7 @@ GameObject:
   - component: {fileID: 1140258358}
   - component: {fileID: 1140258360}
   - component: {fileID: 1140258361}
+  - component: {fileID: 1140258362}
   m_Layer: 0
   m_Name: ChestHandler
   m_TagString: Untagged
@@ -9957,8 +9986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c42036a07961fc4ebafc5d2dd95535e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 1140258360}
-  _initialSpawnCount: 0
+  _base: {fileID: 1140258362}
   _itemsHandler: {fileID: 1204296356}
   _costHandler: {fileID: 1140258361}
   _textCost: {fileID: 1332768541}
@@ -10007,6 +10035,20 @@ MonoBehaviour:
   _value: 20
   _increasePercent: 20
   _costThreshold: 1000
+--- !u!114 &1140258362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140258357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fe5bdc4e2f42dc8aa47e119b31c44f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableSpawner: {fileID: 1140258360}
+  _initialSpawnCount: 10
 --- !u!1 &1178791856
 GameObject:
   m_ObjectHideFlags: 0
@@ -21974,6 +22016,7 @@ GameObject:
   - component: {fileID: 1806162021}
   - component: {fileID: 1806162022}
   - component: {fileID: 1806162023}
+  - component: {fileID: 1806162024}
   m_Layer: 0
   m_Name: ChanceAltarHandler
   m_TagString: Untagged
@@ -22008,8 +22051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0e242efc953d40b21d302614c520c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 1806162022}
-  _initialSpawnCount: 0
+  _base: {fileID: 1806162024}
   _itemsHandler: {fileID: 1204296356}
   _costHandler: {fileID: 1806162023}
 --- !u!114 &1806162022
@@ -22042,6 +22084,20 @@ MonoBehaviour:
   _value: 15
   _increasePercent: 20
   _costThreshold: 1000
+--- !u!114 &1806162024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806162018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fe5bdc4e2f42dc8aa47e119b31c44f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableSpawner: {fileID: 1806162022}
+  _initialSpawnCount: 10
 --- !u!1 &1806638885
 GameObject:
   m_ObjectHideFlags: 0
@@ -30651,6 +30707,7 @@ GameObject:
   - component: {fileID: 2138666184}
   - component: {fileID: 2138666185}
   - component: {fileID: 2138666186}
+  - component: {fileID: 2138666187}
   m_Layer: 0
   m_Name: BloodAltarHandler
   m_TagString: Untagged
@@ -30685,7 +30742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d60ee368f4d21851a69b302f319d805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableSpawner: {fileID: 2138666186}
+  _base: {fileID: 2138666187}
   _initialSpawnCount: 10
   _divider: 1.25
 --- !u!114 &2138666186
@@ -30703,6 +30760,20 @@ MonoBehaviour:
   ObjectPrefab: {fileID: 117811364892704532, guid: 1d7b49d2062c37280b0109ae9b6b629a, type: 3}
   PoolCapacity: 0
   MaxPoolCapacity: 20
+--- !u!114 &2138666187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138666183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fe5bdc4e2f42dc8aa47e119b31c44f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableSpawner: {fileID: 2138666186}
+  _initialSpawnCount: 10
 --- !u!1 &2140803116
 GameObject:
   m_ObjectHideFlags: 0

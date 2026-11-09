@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BloodAltarHandler : MonoBehaviour, IInteractableHandler
 {
-    [SerializeField] private InteractableSpawner _interactableSpawner;
+    [SerializeField] private InteractableHandlerBase _base;
     [SerializeField] private int _initialSpawnCount = 10;
     [SerializeField] private float _divider = 1.25f;
     
@@ -28,17 +28,17 @@ public class BloodAltarHandler : MonoBehaviour, IInteractableHandler
 
     private void OnEnable()
     {
-        _interactableSpawner.InteractableWasChosen += OnInteractableChosen;
+        _base.HandleChosenObject += OnInteractableChosen;
     }
 
     private void OnDisable()
     {
-        _interactableSpawner.InteractableWasChosen -= OnInteractableChosen;
+        _base.HandleChosenObject -= OnInteractableChosen;
     }
 
     public void Spawn(Vector3 position)
     {
-        _interactableSpawner.Spawn(position);
+        _base.Spawn(position);
     }
     
     private void OnInteractableChosen<T>(T interactable)
