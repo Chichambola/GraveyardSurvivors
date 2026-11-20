@@ -2156,7 +2156,7 @@ MonoBehaviour:
     MovementSpeed: 2
     MoneyForKill: 0
     XpForKill: 0
-    LanternEnergy: 0
+    LanternEnergy: 4
     IncomingDamageMultiplier: 0
   _isAvailable: 0
   _coinSpawner: {fileID: 1012258921}
@@ -3385,7 +3385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 386456283}
-  _initialSpawnCount: 10
+  _initialSpawnCount: 5
 --- !u!1 &392500514
 GameObject:
   m_ObjectHideFlags: 0
@@ -5935,7 +5935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 721916096}
-  _initialSpawnCount: 10
+  _initialSpawnCount: 30
 --- !u!1 &722507729
 GameObject:
   m_ObjectHideFlags: 0
@@ -7666,7 +7666,7 @@ MonoBehaviour:
     MovementSpeed: 0
     MoneyForKill: 0
     XpForKill: 0
-    LanternEnergy: 0
+    LanternEnergy: 3
     IncomingDamageMultiplier: 0
   _isAvailable: 0
   _coinSpawner: {fileID: 1012258921}
@@ -10048,7 +10048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 1140258360}
-  _initialSpawnCount: 10
+  _initialSpawnCount: 30
 --- !u!1 &1178791856
 GameObject:
   m_ObjectHideFlags: 0
@@ -13229,7 +13229,7 @@ MonoBehaviour:
     MovementSpeed: 0
     MoneyForKill: 1
     XpForKill: 1
-    LanternEnergy: 0
+    LanternEnergy: 3
     IncomingDamageMultiplier: 0
   _isAvailable: 0
   _coinSpawner: {fileID: 1012258921}
@@ -22097,7 +22097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 1806162022}
-  _initialSpawnCount: 10
+  _initialSpawnCount: 15
 --- !u!1 &1806638885
 GameObject:
   m_ObjectHideFlags: 0
@@ -23162,7 +23162,7 @@ MonoBehaviour:
     MovementSpeed: 0
     MoneyForKill: 0
     XpForKill: 0
-    LanternEnergy: 0
+    LanternEnergy: 1
     IncomingDamageMultiplier: 0
   _isAvailable: 1
   _coinSpawner: {fileID: 1012258921}
@@ -30603,7 +30603,7 @@ MonoBehaviour:
     MovementSpeed: 0
     MoneyForKill: 0
     XpForKill: 1
-    LanternEnergy: 1
+    LanternEnergy: 2
     IncomingDamageMultiplier: 0
   _isAvailable: 0
   _coinSpawner: {fileID: 1012258921}
@@ -30773,7 +30773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 2138666186}
-  _initialSpawnCount: 10
+  _initialSpawnCount: 5
 --- !u!1 &2140803116
 GameObject:
   m_ObjectHideFlags: 0

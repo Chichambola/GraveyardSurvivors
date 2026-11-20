@@ -15,10 +15,14 @@ public class HealAltar : Interactable
     [Header("Altar specific fields")]
     [SerializeField] private int _maxInteractionsAmount = 3;
     [SerializeField] private List<float> _radiusMultipliers;
+    [Header("Heal values")]
     [SerializeField] private float _cooldown = 1.5f;
     [SerializeField] private float _healAmount = 3f;
+    [Header("Services")]
     [SerializeField] private PlayerDetector _playerDetector;
     [SerializeField] private RadiusEffectScaler _radiusEffectScaler;
+    [SerializeField] private float _radiusBeforeFirstUse = 1.5f;
+    [SerializeField] private float _duration = 1f;
     [SerializeField] private WaterAnimationHandler _animationHandler;
 
     public event Action DetectedPlayer;
@@ -26,7 +30,6 @@ public class HealAltar : Interactable
     
     private const float DefaultRadiusMultiplier = 2f;
     private float _radius;
-    private float _initialRadius;
     private int _currentInteractionsAmount;
     private ILightCarrier _lightCarrier;
     private CancellationTokenSource _cts;
@@ -41,6 +44,8 @@ public class HealAltar : Interactable
 
     private void OnEnable()
     {
+        _radius = _radiusBeforeFirstUse;
+        
         _radiusEffectScaler.SetActive(false);
         
         _animationHandler.Init(_radiusMultipliers.Count);
@@ -79,7 +84,7 @@ public class HealAltar : Interactable
 
         _radiusEffectScaler.SetInitialRadius(_radius);
         
-        _radiusEffectScaler.ChangeRadius(_radius, _cooldown);
+        _radiusEffectScaler.ChangeRadius(_radius, _duration);
         
         _animationHandler.StartAnimation(_currentInteractionsAmount);
         

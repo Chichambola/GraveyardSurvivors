@@ -16,7 +16,7 @@ MonoBehaviour:
     MaxHealth: 25
     Armor: -5
     MovementSpeed: 25
-    AttackSpeed: 0
     MoneyForKill: 5
     XpForKill: 6
-    LanternEnergy: 11
+    LanternEnergy: 12
+    IncomingDamageMultiplier: 0

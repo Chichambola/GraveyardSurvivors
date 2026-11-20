@@ -18,5 +18,5 @@ MonoBehaviour:
     MovementSpeed: -20
     MoneyForKill: 2
     XpForKill: 3
-    LanternEnergy: 5
+    LanternEnergy: 6
     IncomingDamageMultiplier: 0

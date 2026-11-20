@@ -145,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68fb9a28081c2004ab34bd21e83eba1c, type: 2}
+  - {fileID: 2100000, guid: 026df5bad5d9c04f4a751ebe2fad6103, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -238,13 +238,15 @@ MonoBehaviour:
   ValueViewer: {fileID: 8423225458018734472}
   _maxInteractionsAmount: 3
   _radiusMultipliers:
-  - 2
-  - 2.5
-  - 3
+  - 0.85
+  - 1
+  - 1.5
   _cooldown: 1.5
   _healAmount: 3
   _playerDetector: {fileID: 8558618992425322940}
   _radiusEffectScaler: {fileID: 4937403608112018003}
+  _radiusBeforeFirstUse: 1.5
+  _duration: 1
   _animationHandler: {fileID: 6655737106173114442}
 --- !u!114 &6655737106173114442
 MonoBehaviour:
@@ -300,7 +302,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 2.3673031, y: 1, z: 2.0450935}
-  m_Center: {x: 0.6836503, y: 0, z: -0.5225471}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4158972715467035714
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -460,7 +462,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.445, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1101601054562338264}
   - {fileID: 5771986158554699347}

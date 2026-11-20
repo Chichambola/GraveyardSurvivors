@@ -54,9 +54,9 @@ public class RadiusEffectScaler : MonoBehaviour, IValueOwner
         _area.gameObject.SetActive(value);
     }
 
-    public void SetTimeScale(float timeScale) => _currentTimeScale = timeScale;
+    public void SetTimeScale(float value) => _currentTimeScale = value;
     
-    public void SetInitialRadius(float radius) => _initialRadius = radius;
+    public void SetInitialRadius(float value) => _initialRadius = value;
     
     public void StopChanging()
     {
