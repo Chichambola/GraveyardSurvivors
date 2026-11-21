@@ -8,5 +8,4 @@ public abstract class AttackStrategy : MonoBehaviour
     public abstract event Action<IAttacker> AttackerDetected;
     public virtual event Action AttackExecuted;
     public abstract void Execute();
-    public abstract void Upgrade();
 }

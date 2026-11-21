@@ -84,7 +84,7 @@ public class BombAttackStrategy : AttackStrategy
         _expandingTween = Tween.Scale(_expandingSphere.gameObject.transform, _targetRadius, _currentDuration).OnComplete(LookForAttackers);
     }
 
-    public override void Upgrade()
+    public void Upgrade()
     {
         float tempDurationPercent = _currentDuration.GetClampedValueInverse(_upgradeDurationPercent, _minDurationThreshold);
         float tempRadiusPercent = _currentRadius.GetClampedValue(_upgradeRadiusPercent, _maxRadiusThreshold);

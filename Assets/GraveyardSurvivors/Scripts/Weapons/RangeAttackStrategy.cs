@@ -31,7 +31,7 @@ public class RangeAttackStrategy : AttackStrategy
         _sortedAttackers = new List<IAttacker>();
     }
 
-    public override void Upgrade()
+    public void Upgrade()
     {
         _currentProjectileAmount += _projectilePerUpgrade;
     }

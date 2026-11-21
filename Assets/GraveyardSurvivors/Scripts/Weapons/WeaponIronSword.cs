@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using PrimeTween;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,20 +10,21 @@ using Random = UnityEngine.Random;
 
 public class WeaponIronSword : Weapon
 {
+    [Header("Strategy")]
     [SerializeField] private MeleeAttackStrategy _attackStrategy;
-    [SerializeField] private ParticleSystem _attackParticles;
+    [SerializeField] private float _radiusPercentGain = 5f;
+    [Header("Services")]
+    [SerializeField] private IronSwordSpawner _spawner;
     [SerializeField] private KnockBack _knockBack;
 
     public override event Action<IAttacker, IWeapon> AttackerDetected;
 
-    private Coroutine _attackingRoutine;
-    private WaitForSeconds _attackWait;
-    private Coroutine _visibilityRoutine;
-    private float _waitTime = 0.1f;
     private Vector3 _debugPos;
+    private WaitForSeconds _attackWait;
+    private Coroutine _attackingRoutine;
     
     public override string UpgradeDescription => $"Add +{BonusDamagePerUpgrade} damage. \n" +
-                                                 $"Add +{_attackStrategy.RadiusPercentGain}% to attack radius.\n" +
+                                                 $"Add +{_radiusPercentGain}% to attack radius.\n" +
                                                  $"Add +{_knockBack.KnockBackPercentGain}% to knock back force;";
 
     public override string BaseDescription => $"Melee weapon.\n" +
@@ -31,6 +33,7 @@ public class WeaponIronSword : Weapon
     private void OnEnable()
     {
         _attackStrategy.AttackerDetected += OnAttackerDetected;
+        _spawner.ReleasedAllObjects += OnReleasedAllObjects;
         
         _attackWait = new WaitForSeconds(Cooldown);
     }
@@ -38,15 +41,16 @@ public class WeaponIronSword : Weapon
     private void OnDisable()
     {
         _attackStrategy.AttackerDetected -= OnAttackerDetected;
+        _spawner.ReleasedAllObjects -= OnReleasedAllObjects;
     }
 
     public override void Upgrade()
     {
-        _attackStrategy.Upgrade();
+        _attackStrategy.Upgrade(_radiusPercentGain);
         
         _knockBack.Upgrade();
-        
-        IncreaseParticleSize();
+
+        _spawner.Upgrade(_radiusPercentGain);
         
         base.Upgrade();
     }
@@ -55,17 +59,14 @@ public class WeaponIronSword : Weapon
     {
         if (_attackingRoutine != null)
             StopCoroutine(_attackingRoutine);
-
-        if (_visibilityRoutine != null)
-            StopCoroutine(_visibilityRoutine);
-
-        _visibilityRoutine = StartCoroutine(VisibilityRoutine());
+        
         _attackingRoutine = StartCoroutine(AttackingRoutine());
     }
 
     public override void StopAttacking()
     {
-        
+        if (_attackingRoutine != null)
+            StopCoroutine(_attackingRoutine);
     }
 
     public override void SetCooldown(float cooldown)
@@ -73,20 +74,6 @@ public class WeaponIronSword : Weapon
         base.SetCooldown(cooldown);
         
         _attackWait = new WaitForSeconds(cooldown);
-    }
-
-    private void SetParticleSystemDuration(float duration)
-    {
-        _attackParticles.Stop();
-
-        if (_attackParticles.isPlaying)
-            return;
-
-        var slashMain = _attackParticles.main;
-
-        slashMain.duration = duration;
-
-        _attackParticles.Play();
     }
 
     private void OnAttackerDetected(IAttacker attacker)
@@ -102,30 +89,16 @@ public class WeaponIronSword : Weapon
         {
             yield return _attackWait;
             
+            _attackStrategy.SetActive(true);
+            
             _attackStrategy.Execute();
             
-            SetParticleSystemDuration(Cooldown);
+            _spawner.Spawn(Cooldown);
         }
     }
-
-    private IEnumerator VisibilityRoutine()
+    
+    private void OnReleasedAllObjects()
     {
-        var wait = new WaitForSeconds(_waitTime);
-        
-        while (enabled)
-        {
-            yield return wait;
-            
-            _attackStrategy.SetActive(_attackParticles.particleCount > 0);
-        }
-    }
-
-    private void IncreaseParticleSize()
-    {
-        var xScale = _attackParticles.transform.localScale.x.AddPercentToNumber(_attackStrategy.RadiusPercentGain);
-        var yScale = _attackParticles.transform.localScale.y.AddPercentToNumber(_attackStrategy.RadiusPercentGain);
-        var zScale = _attackParticles.transform.localScale.z.AddPercentToNumber(_attackStrategy.RadiusPercentGain);
-
-        _attackParticles.transform.localScale = new Vector3(xScale, yScale, zScale);
+        _attackStrategy.SetActive(false);
     }
 }
