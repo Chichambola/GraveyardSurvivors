@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Cinemachine;
 using Cysharp.Threading.Tasks;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,11 +15,13 @@ public class Health : MonoBehaviour
     [SerializeField] private float _healCooldown;
     [SerializeField] private float _reduceDamageTime = 1f;
     [SerializeField] private float _reduceDamageCooldown = 2f;
+    
     [Header("Services")] 
     [SerializeField] private Defender _defender;
     [SerializeField] private Evader _evader;
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private SliderHandler _slider;
+    [SerializeField] private OutcomePresenter _outcomePresenter;
     
     private CancellationTokenSource _ctsHealing;
     private CancellationTokenSource _ctsDamage;
@@ -88,14 +92,14 @@ public class Health : MonoBehaviour
     {
         if (_evader.CanEvade(_player.CurrentStats.EvasionChance, _player.CurrentStats.Luck))
         {
-            Debug.Log("Evaded");
+            _outcomePresenter.Show(EOutcome.Evaded);
 
             return false;
         }
 
         if (_defender.TryBlockDamage(_player.CurrentStats.BlockChance, _player.CurrentStats.Luck, ref damage))
         {
-            Debug.Log("Blocked");
+            _outcomePresenter.Show(EOutcome.Blocked);
         }
 
         damage = damage.AddPercentToNumber(_player.CurrentStats.IncomingDamageMultiplier);

@@ -21,6 +21,7 @@ public class BloodAltar : Interactable
     
     private const float InitialYOffset = 99999f;
     private Dictionary<int,float> _damagePercentDict;
+    private Vector3 _initialPosition;
     private bool _isOnCooldown;
     private float _initialScale;
     private int _maxInteractionsAmount;
@@ -28,9 +29,10 @@ public class BloodAltar : Interactable
 
     private void OnEnable()
     {
+        _initialPosition = _bloodSprite.transform.localPosition;
+
         _isOnCooldown = false;
-        
-        _bloodSprite.transform.position = new Vector3(_bloodSprite.transform.position.x, InitialYOffset, _bloodSprite.transform.position.z);
+        _bloodSprite.enabled = false;
         
         FillDictionary();
         
@@ -90,6 +92,12 @@ public class BloodAltar : Interactable
 
     public void StartCountdown()
     {
+        _bloodSprite.enabled = true;
+        
+        _bloodSprite.transform.localPosition = _initialPosition;
+        _settings.startValue = _bloodSprite.transform.position.y;
+        _settings.endValue = _bloodSprite.transform.position.y + _yOffset;
+        
         Tween tween = Tween.LocalPositionY(_bloodSprite.transform, _settings);
         
         _animationHandler.StartAnimation(_currentInteractionsAmount, tween);
