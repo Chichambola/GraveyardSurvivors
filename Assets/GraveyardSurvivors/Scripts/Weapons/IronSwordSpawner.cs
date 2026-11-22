@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class IronSwordSpawner : Spawner<Blade>
 {
+    [SerializeField] private Transform _spawnPoint;
+    
     public event Action ReleasedAllObjects;
     
     private const int Capacity = 60;
@@ -37,6 +40,9 @@ public class IronSwordSpawner : Spawner<Blade>
         blade.CanBeReleased += Release;
         
         base.ActionOnGet(blade);
+        
+        blade.transform.parent = transform;
+        blade.transform.position = _spawnPoint.position;
         
         _blades.Add(blade);
         ActiveObjects.Add(blade);

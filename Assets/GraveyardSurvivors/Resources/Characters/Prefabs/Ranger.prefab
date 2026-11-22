@@ -906,11 +906,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062f84f9a8a04d46b49eefb1a797b2d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defenseOutcomes:
-    keys: 0000000001000000
-    values:
-    - {fileID: 21300000, guid: f5c8f84a2211de448bbe419e3c1a40c8, type: 3}
-    - {fileID: 21300000, guid: 1315ae84b7bfabc4d819d1465d635e1a, type: 3}
+  _outcomes:
+    keys: 
+    values: []
   _spawner: {fileID: 19030428525640468}
 --- !u!114 &19030428525640468
 MonoBehaviour:
@@ -3717,6 +3715,7 @@ MonoBehaviour:
   _player: {fileID: 930483005040703314}
   _weaponsPrefab:
   - {fileID: 5638386864590902357, guid: d1bc6255757afec44bd558b59a3b3598, type: 3}
+  - {fileID: 7916467909278291421, guid: a95a28e2e12c7634eb50289e0439b2ef, type: 3}
   _damageEffects: []
   references:
     version: 2

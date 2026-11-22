@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.04818227, g: 0.055568732, b: 0.05500888, a: 1}
+  m_IndirectSpecularColor: {r: 0.04818389, g: 0.055570774, b: 0.055008933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3385,11 +3385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 386456283}
-<<<<<<< Updated upstream
   _initialSpawnCount: 5
-=======
-  _initialSpawnCount: 0
->>>>>>> Stashed changes
 --- !u!1 &392500514
 GameObject:
   m_ObjectHideFlags: 0
@@ -5939,11 +5935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 721916096}
-<<<<<<< Updated upstream
   _initialSpawnCount: 30
-=======
-  _initialSpawnCount: 0
->>>>>>> Stashed changes
 --- !u!1 &722507729
 GameObject:
   m_ObjectHideFlags: 0
@@ -10056,11 +10048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 1140258360}
-<<<<<<< Updated upstream
   _initialSpawnCount: 30
-=======
-  _initialSpawnCount: 0
->>>>>>> Stashed changes
 --- !u!1 &1178791856
 GameObject:
   m_ObjectHideFlags: 0
@@ -22109,11 +22097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 1806162022}
-<<<<<<< Updated upstream
   _initialSpawnCount: 15
-=======
-  _initialSpawnCount: 0
->>>>>>> Stashed changes
 --- !u!1 &1806638885
 GameObject:
   m_ObjectHideFlags: 0
@@ -30789,11 +30773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableSpawner: {fileID: 2138666186}
-<<<<<<< Updated upstream
   _initialSpawnCount: 5
-=======
-  _initialSpawnCount: 100
->>>>>>> Stashed changes
 --- !u!1 &2140803116
 GameObject:
   m_ObjectHideFlags: 0

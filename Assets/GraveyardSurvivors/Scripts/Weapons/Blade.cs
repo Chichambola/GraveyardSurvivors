@@ -5,23 +5,21 @@ using Cysharp.Threading.Tasks;
 using PrimeTween;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Blade : MonoBehaviour, IPoolable<Blade>
 {
     [SerializeField] private float _yOffset = 25f;
     
     public event Action<Blade> CanBeReleased;
 
-    private Quaternion _initialRotation;
+    private Vector3 _initialRotation;
     private Tween _tween;
-    private TweenSettings<Quaternion> _tweenSettings;
-    private Rigidbody _rigidbody;
-    private BoxCollider _collider;
+    private TweenSettings<Vector3> _tweenSettings;
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _collider = GetComponent<BoxCollider>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnValidate()
@@ -31,12 +29,14 @@ public class Blade : MonoBehaviour, IPoolable<Blade>
 
     private void OnEnable()
     {
-        _initialRotation = transform.rotation;
+        _initialRotation = transform.rotation.eulerAngles;
     }
-    
+
     public void ResetCharacteristics()
     {
-        transform.rotation = _initialRotation;
+        var rotation = transform.rotation;
+        rotation.eulerAngles = _initialRotation;
+        transform.rotation = rotation;
     }
 
     public void Release()
@@ -52,7 +52,7 @@ public class Blade : MonoBehaviour, IPoolable<Blade>
     public void StartSpin()
     {
         _tweenSettings.startValue = _initialRotation;
-        var endValue = new Quaternion(_initialRotation.x, _initialRotation.y + _yOffset, _initialRotation.z, _initialRotation.w);
+        var endValue = new Vector3(_initialRotation.x, _initialRotation.y + _yOffset, _initialRotation.z);
         
         _tweenSettings.endValue = endValue;
 
@@ -70,7 +70,7 @@ public class Blade : MonoBehaviour, IPoolable<Blade>
     
     private async UniTask Spin()
     {
-        _tween = Tween.Rotation(transform, _tweenSettings).OnComplete(Release);
+        _tween = Tween.LocalRotation(transform, _tweenSettings).OnComplete(Release);
 
         await _tween;
     }
