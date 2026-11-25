@@ -22,11 +22,6 @@ public class Blade : MonoBehaviour, IPoolable<Blade>
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnValidate()
-    {
-        GetComponent<BoxCollider>().isTrigger = true;
-    }
-
     private void OnEnable()
     {
         _initialRotation = transform.rotation.eulerAngles;
