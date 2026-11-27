@@ -158,11 +158,11 @@ public class Player : CharacterBase, IBuffable, IAttacker, IPlayer, ILightCarrie
         }
     }
     
-    public bool HasWeapon(Weapon weapon) => _attacker.HasWeapon(weapon);
+    public bool HasWeapon(Weapon weapon) => _attacker.Has(weapon);
 
     public void ProcessWeapon(Weapon weapon) => _attacker.ProcessWeapon(weapon);
 
-    public void AddEffect(Effect effect) => _attacker.AddEffect(effect);
+    public void AddEffect(Effect effect) => _attacker.Add(effect);
 
     public void ApplyEffect(IEffect<IAttacker> effectFactory) { }
 

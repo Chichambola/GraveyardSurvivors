@@ -87,13 +87,13 @@ public class WeaponIronSword : Weapon
     {
         while (enabled)
         {
-            yield return _attackWait;
-            
             _attackStrategy.SetActive(true);
             
             _attackStrategy.Execute();
             
             _spawner.Spawn(Cooldown);
+            
+            yield return _attackWait;
         }
     }
     

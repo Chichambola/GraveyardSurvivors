@@ -64,17 +64,17 @@ public class Attacker : MonoBehaviour
 
     public void ProcessWeapon(Weapon weapon)
     {
-        if (HasWeapon(weapon))
+        if (Has(weapon))
         {
-            UpgradeWeapon(weapon);
+            Upgrade(weapon);
         }
         else
         {
-            AddWeapon(weapon);
+            Add(weapon);
         }
     }
 
-    public bool HasWeapon(Weapon weapon)
+    public bool Has(Weapon weapon)
     {
         var type = weapon.GetType();
 
@@ -83,7 +83,7 @@ public class Attacker : MonoBehaviour
         return tempWeapon != null;
     }
 
-    public void AddEffect(Effect effect)
+    public void Add(Effect effect)
     {
         _damageEffects.Add(effect);
     }
@@ -133,7 +133,7 @@ public class Attacker : MonoBehaviour
             
         weapon.AttackerDetected += OnAttackerDetected;
             
-        SetWeaponCooldown(weapon, _currentAttackSpeed);
+        SetCooldown(weapon, _currentAttackSpeed);
         
         weapon.Attack();
         
@@ -151,11 +151,11 @@ public class Attacker : MonoBehaviour
 
         foreach (var weapon in _currentWeapons)
         {
-            SetWeaponCooldown(weapon, _currentAttackSpeed);
+            SetCooldown(weapon, _currentAttackSpeed);
         }
     }
 
-    private void SetWeaponCooldown(Weapon weapon, float attackSpeed)
+    private void SetCooldown(Weapon weapon, float attackSpeed)
     {
         float cooldown = weapon.CurrentCooldown;
 
@@ -164,14 +164,14 @@ public class Attacker : MonoBehaviour
         weapon.SetCooldown(cooldown);
     }
     
-    private void UpgradeWeapon(Weapon upgrade)
+    private void Upgrade(Weapon upgrade)
     {
         var type = upgrade.GetType();
         
         _currentWeapons.FirstOrDefault(w => w.GetType() == type)?.Upgrade();
     }
 
-    private void AddWeapon(Weapon weapon)
+    private void Add(Weapon weapon)
     {
         weapon = CreateWeapon(weapon);
         
